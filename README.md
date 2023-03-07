@@ -1,6 +1,7 @@
 Frontend readme file
 
 # pokusaj komita
+Dodat prvi test branch
 
 
 # Banka2Front

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {ButtonModule} from "primeng/button";
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './components/placeholder-component/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {InputTextModule} from "primeng/inputtext";
 import {RippleModule} from "primeng/ripple";
@@ -14,8 +14,8 @@ import {CardModule} from "primeng/card";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 
-import { LoginComponent } from './login-component/login.component';
-import { UsersComponent } from './users/users.component';
+import { LoginComponent } from './components/login-component/login.component';
+import { UsersComponent } from './components/users-component/users.component';
 
 
 @NgModule({

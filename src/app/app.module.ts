@@ -17,6 +17,7 @@ import { TableModule } from 'primeng/table';
 
 import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
+import { ActivityPipe } from './pipes/activity-pipe.pipe';
 
 
 
@@ -27,7 +28,8 @@ import { UsersComponent } from './components/users/users.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    UsersComponent
+    UsersComponent,
+    ActivityPipe
   ],
   imports: [
     BrowserModule,
@@ -44,6 +46,9 @@ import { UsersComponent } from './components/users/users.component';
     HttpClientModule,
     TableModule
   ],
+  // exports: [
+  //   ActivityPipe
+  // ],
   providers: [],
   bootstrap: [AppComponent]
 })

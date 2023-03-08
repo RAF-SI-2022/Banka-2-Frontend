@@ -1,9 +1,7 @@
 Frontend readme file
 
 # pokusaj komita
-Dodat prvi test branch
-Dodat test2 branch
-pokusaj 3
+testing
 
 
 

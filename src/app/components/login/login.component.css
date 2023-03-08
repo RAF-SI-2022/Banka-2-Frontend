@@ -1,4 +1,18 @@
 .container {
   display: flex;
   justify-content: center;
+  margin-top: 150px;
+}
+
+.card {
+  width: 500px;
+  border-radius: 5px;
+  border-style: none;
+}
+
+.image-container {
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  background-color: #3B82F6;
 }

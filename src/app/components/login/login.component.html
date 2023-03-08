@@ -4,7 +4,7 @@
       <div class="image-container mx-auto mt-2 mb-5">
         <i class="pi pi-user mt-3 mt-4 text-white" style="font-size: 6rem"></i>
       </div>
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" (submit)="login()">
         <div class="mb-3">
           <span class="p-input-icon-left w-100">
             <i class="pi pi-user"></i>

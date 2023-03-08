@@ -12,8 +12,15 @@ import {PasswordModule} from "primeng/password";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CardModule} from "primeng/card";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import {LoginComponent} from "./components/login/login.component";
+import { TableModule } from 'primeng/table';
+
+
+import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
+import { ActivityPipe } from './pipes/activity-pipe.pipe';
+
+
+
 
 
 
@@ -21,7 +28,8 @@ import { UsersComponent } from './components/users/users.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    UsersComponent
+    UsersComponent,
+    ActivityPipe
   ],
   imports: [
     BrowserModule,
@@ -36,7 +44,11 @@ import { UsersComponent } from './components/users/users.component';
     BrowserAnimationsModule,
     CardModule,
     HttpClientModule,
+    TableModule
   ],
+  // exports: [
+  //   ActivityPipe
+  // ],
   providers: [],
   bootstrap: [AppComponent]
 })

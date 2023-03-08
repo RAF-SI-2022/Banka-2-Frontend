@@ -4,7 +4,6 @@ import {ButtonModule} from "primeng/button";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoginComponent } from './login-component/login.component';
 import {InputTextModule} from "primeng/inputtext";
 import {RippleModule} from "primeng/ripple";
 import {CheckboxModule} from "primeng/checkbox";
@@ -12,12 +11,18 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {PasswordModule} from "primeng/password";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CardModule} from "primeng/card";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+
+
+import { LoginComponent } from './login-component/login.component';
+import { UsersComponent } from './users/users.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +35,8 @@ import {CardModule} from "primeng/card";
     PasswordModule,
     ButtonModule,
     BrowserAnimationsModule,
-    CardModule
+    CardModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

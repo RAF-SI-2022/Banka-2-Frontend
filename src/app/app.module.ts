@@ -12,7 +12,7 @@ import {PasswordModule} from "primeng/password";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CardModule} from "primeng/card";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { LoginComponent } from './components/login-component/login.component';
+import {LoginComponent} from "./components/login/login.component";
 import { UsersComponent } from './components/users/users.component';
 
 

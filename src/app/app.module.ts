@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {ButtonModule} from "primeng/button";
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './components/placeholder-component/app.component';
+import { AppComponent } from './components/app-component/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {InputTextModule} from "primeng/inputtext";
 import {RippleModule} from "primeng/ripple";

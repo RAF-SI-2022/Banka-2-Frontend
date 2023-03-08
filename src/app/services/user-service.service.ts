@@ -40,8 +40,8 @@ export class UserService {
   }
 
   //TODO ubaciti parametre jos
-  updateUser(id: number): Observable<any>{
-    return this.httpClient.put(this.updateUserUrl + id,{})// i ovde parametre
+  updateUser(id: number, email: String, password: String, firstName: String, lastName: String, JMBG: String, position: String, phoneNumber: String, active: boolean): Observable<any>{
+    return this.httpClient.put(this.updateUserUrl + id,{email: email, password: password, firstName: firstName, lastName: lastName, JMBG: JMBG, position: position, phoneNumber: phoneNumber, active: active})// i ovde parametre
   }
 
   deleteUser(id: number): Observable<any>{

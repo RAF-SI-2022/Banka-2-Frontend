@@ -1,8 +1,8 @@
-<div class="container">
-  <div class="card p-5">
+<div class="container mt-5">
+  <div class="card p-5 w-50 shadow">
     <form [formGroup]="loginForm">
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <label for="exampleInputEmail1" class="form-label">Email</label>
         <input [formControlName]="'email'" type="email" class="form-control" id="exampleInputEmail1"
                aria-describedby="emailHelp" required>
       </div>
@@ -11,7 +11,7 @@
         <input [formControlName]="'password'" type="password" class="form-control" id="exampleInputPassword1" required>
       </div>
       <div class="text-center">
-        <p-button label="Neki label"></p-button>
+        <p-button label="Login"></p-button>
       </div>
     </form>
   </div>

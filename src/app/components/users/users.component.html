@@ -1,1 +1,46 @@
-<p>users works!</p>
+<div>
+    <p-table [value]="users">
+        <ng-template pTemplate="caption">
+            <div class="table-header">
+                Lista korisnika
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Global Search" />
+                </span> 
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Ime i prezime</th>
+                <th>JMBG</th>
+                <th>Pozicija</th>
+                <th>Broj telefona</th>
+                <th>Aktivan</th>
+                <th>Ostale opcije</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>{{user.id}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.first_name }} {{user.last_name}}</td>
+                <!-- <td>{{user.last_name}}</td> -->
+                <td>{{user.jmbg}}</td>
+                <td>{{user.pozicija}}</td>
+                <td>{{user.broj_telefona}}</td>
+                <!-- <td>{{user.aktivan}}</td> -->
+                <td>
+                    <span class="p-column-title">Status</span>
+                    <span [class]="'customer-badge status-' + user.aktivan">{{user.aktivan}}</span>
+                </td>
+                <td>
+                    <p-button label="Izmeni"></p-button>
+                    <p-button label="Aktiviraj/Deaktiviraj"></p-button>
+                    <!-- <p-button label="Reset limit"></p-button> -->
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

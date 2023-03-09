@@ -2,7 +2,7 @@ Frontend readme file
 
 # pokusaj komita
 testing2
-sss
+sssasdfadsf
 
 
 # Banka2Front

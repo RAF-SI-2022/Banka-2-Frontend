@@ -11,6 +11,7 @@ import {AuthService} from "../../services/auth.service";
 export class LoginComponent {
 
   loginForm: FormGroup;
+  isLoading: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
@@ -24,7 +25,7 @@ export class LoginComponent {
 
   login() {
     alert("Login button works!")
-    // TODO: otkomentarisati kada back tim zavrsi login
+    // TODO: otkomentarisati kada back tim zavrsi login, dodati isLoading
     // this.authService.login(
     //   this.loginForm.get('email')?.value,
     //   this.loginForm.get('password')?.value

@@ -1,12 +1,16 @@
 <div>
-    <p-table [value]="users" class="p-datatable-header">
+    <p-table [value]="users" class="p-datatable-header" 
+    [rowHover]="true" [rows]="2" [showCurrentPageReport]="true"
+    [paginator]="true" [alwaysShowPaginator]="false" 
+    currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} korisnika"
+    [filterDelay]="10">
         <ng-template pTemplate="caption">
             <div class="table-header">
                 Lista korisnika
-                <span class="p-input-icon-left">
+                <!-- <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Global Search" />
-                </span> 
+                    <input pInputText type="text"  placeholder="Global Search" />
+                </span>  -->
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -83,11 +87,14 @@
                 </td>
                 <td>
                     <!-- <p-button label="Izmeni" class="buttonPadding"></p-button> -->
-                    <button pButton pRipple type="button" label="Izmeni" class="p-button-secondary"></button>&nbsp;
-                    <button *ngIf="user.aktivan === 1" pButton pRipple type="button" label="Deaktiviraj" class="p-button-danger"></button>
-                    <button *ngIf="user.aktivan === 2" pButton pRipple type="button" label="Aktiviraj" class="p-button-success"></button>
+                    <button (click)="openEditPopup()" pButton pRipple type="button" label="Izmeni" class="p-button-secondary p-button-text"></button>
+                    <button (click)="deactivateUser(user.id)" *ngIf="user.aktivan === 1" pButton pRipple type="button" label="Deaktiviraj" class="p-button-danger p-button-text"></button>
+                    <button (click)="activateUser(user.id)" *ngIf="user.aktivan === 2" pButton pRipple type="button" label="Aktiviraj" class="p-button-success p-button-text"></button>
                 </td>
             </tr>
         </ng-template>
+        <!-- <ng-template let-item pTemplate="paginatordropdownitem">
+            {{item.value}} - per page asas
+        </ng-template> -->
     </p-table>
 </div>

@@ -13,6 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CardModule} from "primeng/card";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TableModule } from 'primeng/table';
+import { FormsModule } from '@angular/forms';
 
 
 import { LoginComponent } from './components/login/login.component';
@@ -51,7 +52,9 @@ import {DropdownModule} from "primeng/dropdown";
     HttpClientModule,
     TableModule,
     DialogModule,
-    DropdownModule
+    DropdownModule,
+    TableModule,
+    FormsModule
   ],
   // exports: [
   //   ActivityPipe

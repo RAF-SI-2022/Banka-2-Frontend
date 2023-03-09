@@ -11,8 +11,9 @@ import {AuthService} from "../../services/auth.service";
 export class LoginComponent {
 
   loginForm: FormGroup;
+  isLoading: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, ) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
       email: '',
       password: ''

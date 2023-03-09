@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { UserService } from '../../services/user-service.service';
-import { User } from '../models/users.model';
+import { User } from '../../models/users.model';
 
 @Component({
   selector: 'app-users',
@@ -41,46 +41,48 @@ export class UsersComponent {
 
   ngOnInit(){
 
-    let obj1 = {
-      id: 1,
-      email: "Filip@gmail.com",
-      first_name: "filip",
-      last_name: "jovanovic",
-      jmbg: 123456,
-      pozicija: "Debil",
+    //todo ovo da se skloni kada se endpoint aktivira
 
-      broj_telefona: "+381/612345678",
-      aktivan: 1,
-    }
-
-    let obj2 = {
-      id: 2,
-      email: "Srdja@gmail.com",
-      first_name: "Srdja",
-      last_name: "Lazic",
-      jmbg: 123456,
-      pozicija: "Doktor",
-
-      broj_telefona: "+381/612345678",
-      aktivan: 2,
-    }
-    let obj3 = {
-      id: 3,
-      email: "Relja@gmail.com",
-      first_name: "relja",
-      last_name: "ivanovic",
-      jmbg: 123456,
-      pozicija: "Lider",
-
-      broj_telefona: "+381/612345678",
-      aktivan: 1,
-    }
+    // let obj1 = {
+    //   id: 1,
+    //   email: "Filip@gmail.com",
+    //   first_name: "filip",
+    //   last_name: "jovanovic",
+    //   jmbg: 123456,
+    //   pozicija: "Debil",
+    //
+    //   broj_telefona: "+381/612345678",
+    //   aktivan: 1,
+    // }
+    //
+    // let obj2 = {
+    //   id: 2,
+    //   email: "Srdja@gmail.com",
+    //   first_name: "Srdja",
+    //   last_name: "Lazic",
+    //   jmbg: 123456,
+    //   pozicija: "Doktor",
+    //
+    //   broj_telefona: "+381/612345678",
+    //   aktivan: 2,
+    // }
+    // let obj3 = {
+    //   id: 3,
+    //   email: "Relja@gmail.com",
+    //   first_name: "relja",
+    //   last_name: "ivanovic",
+    //   jmbg: 123456,
+    //   pozicija: "Lider",
+    //
+    //   broj_telefona: "+381/612345678",
+    //   aktivan: 1,
+    // }
     // console.log(obj)
 
 
-    this.users.push(obj1)
-    this.users.push(obj2)
-    this.users.push(obj3)
+    // this.users.push(obj1)
+    // this.users.push(obj2)
+    // this.users.push(obj3)
 
     this.roles = [
       {label: 'Doktor', value: 'Doktor'},
@@ -119,7 +121,7 @@ export class UsersComponent {
   activateUser(id:number){
     for(const item of this.users){
       if(item.id == id){
-        item.aktivan = 1;
+        item.active = true;
       }
     }
     // this.userService.activateUser(id)
@@ -141,7 +143,7 @@ export class UsersComponent {
   deactivateUser(id:number){
     for(const item of this.users){
       if(item.id == id){
-        item.aktivan = 2;
+        item.active = false;
       }
     }
     // this.userService.deactivateUser(id)

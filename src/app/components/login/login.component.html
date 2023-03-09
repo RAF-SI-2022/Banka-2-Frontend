@@ -1,19 +1,38 @@
-<div class="container mt-5">
-  <div class="card p-5 w-50 shadow">
-    <form [formGroup]="loginForm">
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email</label>
-        <input [formControlName]="'email'" type="email" class="form-control" id="exampleInputEmail1"
-               aria-describedby="emailHelp" required>
+<div class="background">
+  <div class="container">
+    <div class="card p-5 shadow text-center">
+      <div class="image-container mx-auto mt-2 mb-5">
+        <i class="pi pi-user mt-3 mt-4 text-white" style="font-size: 6rem"></i>
       </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input [formControlName]="'password'" type="password" class="form-control" id="exampleInputPassword1" required>
+      <form [formGroup]="loginForm" (submit)="login()">
+        <div class="mb-3">
+          <span class="p-input-icon-left w-100">
+            <i class="pi pi-user"></i>
+            <input class="w-100" [formControlName]="'email'" type="email" pInputText required placeholder="Email">
+          </span>
+        </div>
+        <div class="mb-3">
+          <span class="p-input-icon-left w-100">
+            <i class="pi pi-key"></i>
+            <input class="w-100" [formControlName]="'password'" type="password" pInputText required placeholder="Password">
+          </span>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button pButton pRipple label="LOGIN" class="w-100"></button>
+          </div>
+        </div>
+      </form>
+      <div class="row mt-3">
+        <div class="col-6 text-start">
+          <p-checkbox class="me-2" [binary]="true" inputId="binary"></p-checkbox>
+          <small>Remember Me</small>
+        </div>
+        <div class="col-6 text-end">
+          <small>Forgot Password?</small>
+        </div>
       </div>
-      <div class="text-center">
-        <p-button label="Login"></p-button>
-      </div>
-    </form>
+    </div>
   </div>
 </div>
 

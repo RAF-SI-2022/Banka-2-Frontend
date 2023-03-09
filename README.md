@@ -1,7 +1,9 @@
 Frontend readme file
 
 # pokusaj komita
-testing2
+testing2 --
+
+asd
 
 
 

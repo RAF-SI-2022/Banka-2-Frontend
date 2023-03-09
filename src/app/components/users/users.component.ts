@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { UserService } from '../../services/user-service.service';
-import { User } from '../../models/users.model';
 import {MenuItem} from "primeng/api";
 import {MenuItemContent} from "primeng/menu";
+import {User} from "../../model";
 
 @Component({
   selector: 'app-users',
@@ -12,7 +12,9 @@ import {MenuItemContent} from "primeng/menu";
 })
 export class UsersComponent {
 
-  users: User[] = []; // prazno da ne bi bacalo greske
+  users: User[] = []; // prazno da ne bi bacalo greske //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
+
+
   displayDialog: boolean = false;
   items: MenuItem[];
 
@@ -126,24 +128,28 @@ export class UsersComponent {
   }
 
   getUsers(){
-    this.userService.getAllUsers()
-    .subscribe({
-      next: val =>{
-        this.users = val
-        //strpati sve podatke u listu usera
-      },
-      error: err =>{
-        //alertovati error
-      }
-    })
+
+    // this.userService.getAllUsers()     //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
+    // .subscribe({
+    //   next: val =>{
+    //     this.users = val
+    //     //strpati sve podatke u listu usera
+    //   },
+    //   error: err =>{
+    //     //alertovati error
+    //   }
+    // })
+
   }
 
   activateUser(id:number){
-    for(const item of this.users){
-      if(item.id == id){
-        item.active = true;
-      }
-    }
+
+    // for(const item of this.users){
+    //   if(item.id == id){//todo ovde ti se buni jer User ne poseduje polje id, necu da ostavim error ne zakomentarisan
+    //     item.active = true;
+    //   }
+    // }
+
     // this.userService.activateUser(id)
     // .subscribe({
     //   next: val=>{
@@ -161,11 +167,13 @@ export class UsersComponent {
     // alert(id)
   }
   deactivateUser(id:number){
-    for(const item of this.users){
-      if(item.id == id){
-        item.active = false;
-      }
-    }
+
+    // for(const item of this.users){
+    //   if(item.id == id){todo ovde ti se buni jer User ne poseduje polje id, necu da ostavim error ne zakomentarisan
+    //     item.active = false;
+    //   }
+    // }
+
     // this.userService.deactivateUser(id)
     // .subscribe({
     //   next: val=>{

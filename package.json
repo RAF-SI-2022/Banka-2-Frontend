@@ -21,6 +21,7 @@
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
+    "cypress": "^12.7.0",
     "primeflex": "^3.3.0",
     "primeicons": "^6.0.1",
     "primeng": "^15.2.0",

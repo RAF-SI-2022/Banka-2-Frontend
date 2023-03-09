@@ -1,16 +1,16 @@
-export interface User{
-    id: number,
-    email: string,
-    firstName: string,
-    lastName: string,
-    jmbg: number,
-    phone: number,
-    jobPosition: string,
+export interface UserModel{
+    id: number
+    email: string
+    firstName: string
+    lastName: string
+    password: string
+    jmbg: number
+    phone: number
+    jobPosition: string
     active: boolean
     permissions: Permission[]
-
 }
 export interface Permission{
-    id: number,
+    id: number
     permissionName: string
 }

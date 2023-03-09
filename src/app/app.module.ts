@@ -19,6 +19,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { ActivityPipe } from './pipes/activity-pipe.pipe';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { AddUserComponent } from './components/add-user/add-user.component';
 
 
 
@@ -30,7 +31,8 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     LoginComponent,
     UsersComponent,
     ActivityPipe,
-    EditUserComponent
+    EditUserComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,

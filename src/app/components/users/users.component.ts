@@ -11,11 +11,20 @@ import { User } from '../models/users.model';
 export class UsersComponent {
 
   users: User[] = []; // prazno da ne bi bacalo greske
+  displayDialog: boolean = false;
 
   roles!: any[];
   selectedRole!: any
 
   constructor(private userService: UserService){
+
+  }
+
+  toggleDialog(id: number) {
+    this.displayDialog = !this.displayDialog;
+  }
+
+  updateUser() {
 
   }
 
@@ -68,11 +77,11 @@ export class UsersComponent {
     }
     // console.log(obj)
 
-   
+
     this.users.push(obj1)
     this.users.push(obj2)
     this.users.push(obj3)
-   
+
     this.roles = [
       {label: 'Doktor', value: 'Doktor'},
       {label: 'Lider', value: 'Lider'},
@@ -81,9 +90,9 @@ export class UsersComponent {
       // {label: 'Renewal', value: 'renewal'},
       // {label: 'Proposal', value: 'proposal'}
   ]
-   
+
     // console.log(this.users)
-     
+
     //this.getUsers()
   }
 
@@ -115,7 +124,7 @@ export class UsersComponent {
     }
     // this.userService.activateUser(id)
     // .subscribe({
-    //   next: val=>{  
+    //   next: val=>{
     //     alert("success")
     //     for(const item of this.users){
     //       if(item.id == id){

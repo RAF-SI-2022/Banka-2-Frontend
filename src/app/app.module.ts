@@ -13,7 +13,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CardModule} from "primeng/card";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TableModule } from 'primeng/table';
-import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 
 
@@ -21,6 +20,9 @@ import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { ActivityPipe } from './pipes/activity-pipe.pipe';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { AddUserComponent } from './components/add-user/add-user.component';
+import {DialogModule} from "primeng/dialog";
+import {DropdownModule} from "primeng/dropdown";
 
 
 
@@ -32,7 +34,8 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     LoginComponent,
     UsersComponent,
     ActivityPipe,
-    EditUserComponent
+    EditUserComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,9 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     CardModule,
     HttpClientModule,
     TableModule,
+    DialogModule,
     DropdownModule,
+    TableModule,
     FormsModule
   ],
   // exports: [

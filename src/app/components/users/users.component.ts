@@ -65,11 +65,13 @@ export class UsersComponent {
     }
     // console.log(obj)
 
-    //this.getUsers()
+   
     this.users.push(obj1)
     this.users.push(obj2)
     this.users.push(obj3)
     // console.log(this.users)
+     
+    //this.getUsers()
   }
 
   getUsers(){
@@ -83,6 +85,55 @@ export class UsersComponent {
         //alertovati error
       }
     })
+  }
+
+  activateUser(id:number){
+    for(const item of this.users){
+      if(item.id == id){
+        item.aktivan = 1;
+      }
+    }
+    // this.userService.activateUser(id)
+    // .subscribe({
+    //   next: val=>{  
+    //     alert("success")
+    //     for(const item of this.users){
+    //       if(item.id == id){
+    //         item.aktivan = 2;
+    //       }
+    //     }
+    //   },
+    //   error: err=>{
+    //     alert("greska")
+    //   }
+    // })
+    // alert(id)
+  }
+  deactivateUser(id:number){
+    for(const item of this.users){
+      if(item.id == id){
+        item.aktivan = 2;
+      }
+    }
+    // this.userService.deactivateUser(id)
+    // .subscribe({
+    //   next: val=>{
+    //     alert("success")
+    //     for(const item of this.users){
+    //       if(item.id == id){
+    //         item.aktivan = 2;
+    //       }
+    //     }
+    //   },
+    //   error: err=>{
+    //     alert("greska")
+    //   }
+    // })
+    // alert(id)
+  }
+  openEditPopup(){
+    // popup(id)
+    alert("popup")
   }
 
 }

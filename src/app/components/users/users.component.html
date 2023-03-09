@@ -1,16 +1,18 @@
 <div>
-    <p-table [value]="users" class="p-datatable-header" 
+    <p-table #dt [value]="users" class="p-datatable-header" 
     [rowHover]="true" [rows]="2" [showCurrentPageReport]="true"
     [paginator]="true" [alwaysShowPaginator]="false" 
     currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} korisnika"
-    [filterDelay]="10">
+    [filterDelay]="10" [globalFilterFields]="['first_name','last_name','email','pozicija','jmbg']" >
         <ng-template pTemplate="caption">
-            <div class="table-header">
-                Lista korisnika
-                <!-- <span class="p-input-icon-left">
+            <div class="table-header"> 
+                Lista korisnika dodati css za alighn desno dugme 
+                <button pButton styleClass="p-button-sm" class="p-button-raised p-button-secondary p-button-text" label="Dodaj zaposlenog"></button>
+                <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text"  placeholder="Global Search" />
-                </span>  -->
+                    <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')"  placeholder="Global Search" />
+                </span> 
+                
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -25,12 +27,22 @@
                 <th pSortableColumn="email" style="min-width: 10rem">
                     <div class="flex justify-content-between align-items-center">
                         Email
-                        <!-- <p-columnFilter type="text" field="email" display="menu" class="ml-auto"></p-columnFilter> -->
+                        <p-sortIcon field="email"></p-sortIcon>
+                        <p-columnFilter type="text" field="email" display="menu" class="ml-auto"  matchMode="contains" [showMatchModes]="false" [showOperator]="false"[showAddButton]="false"></p-columnFilter>
                     </div>
                 </th>
-                <th style="min-width: 10rem">
+                <th pSortableColumn="first_name" style="min-width: 6rem">
                     <div class="flex justify-content-between align-items-center">
-                        Ime i prezime
+                        Ime
+                        <p-sortIcon field="first_name"></p-sortIcon>
+                        <p-columnFilter type="text" field="first_name" display="menu" class="ml-auto" [showMatchModes]="false" [showOperator]="false"[showAddButton]="false"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="last_name" style="min-width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Prezime
+                        <p-sortIcon field="last_name"></p-sortIcon>
+                        <p-columnFilter type="text" field="last_name" display="menu" class="ml-auto" [showMatchModes]="false" [showOperator]="false"[showAddButton]="false"></p-columnFilter>
                     </div>
                 </th>
                 <th style="min-width: 10rem">
@@ -38,9 +50,20 @@
                         JMBG
                     </div>
                 </th>
-                <th style="min-width: 7rem">
+                <th pSortableColumn="pozicija" style="min-width: 7rem">
                     <div class="flex justify-content-between align-items-center">
                         Pozicija
+                        <p-sortIcon field="pozicija"></p-sortIcon>
+                        <p-columnFilter field="pozicija" matchMode="equals" [showMatchModes]="false" [showOperator]="false"[showAddButton]="false" display="menu" class="ml-auto">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-dropdown [ngModel]="value" [options]="roles" (onChange)="filter($event.value)" placeholder="Any">
+                                    <ng-template let-option pTemplate="item">
+                                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                                    </ng-template>
+                                </p-dropdown>
+                            </ng-template>
+                        </p-columnFilter>
+                        <!-- <p-columnFilter type="text" field="position" display="menu" class="ml-auto"  matchMode="contains" [showMatchModes]="false" [showOperator]="false"[showAddButton]="false"></p-columnFilter> -->
                     </div>
                 </th>
                 <th style="min-width: 10rem">
@@ -74,10 +97,22 @@
             <tr>
                 <td>{{user.id}}</td>
                 <td>{{user.email}}</td>
-                <td>{{user.first_name }} {{user.last_name}}</td>
+                <!-- <td>{{user.first_name }} {{user.last_name}}</td> -->
+                <td>
+                    <span class="p-column-title">first_name</span>
+                    <span>{{user.first_name}}</span>
+                    <!-- <span>{{user.first_name + ' ' + user.last_name}}</span> -->
+                </td>
+                <td>
+                    <span class="p-column-title">last_name</span>
+                    <span>{{user.last_name}}</span>
+                </td>
                 <!-- <td>{{user.last_name}}</td> -->
                 <td>{{user.jmbg}}</td>
-                <td>{{user.pozicija}}</td>
+                <td>
+                    <span class="p-column-title">position</span>
+                    <span>{{user.pozicija}}</span>
+                </td>
                 <td>{{user.broj_telefona}}</td>
                 <!-- <td>{{user.aktivan}}</td> -->
                 <td>

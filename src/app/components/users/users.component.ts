@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { Table } from 'primeng/table';
 import { UserService } from '../../services/user-service.service';
 import { User } from '../models/users.model';
 
@@ -11,6 +12,8 @@ export class UsersComponent {
 
   users: User[] = []; // prazno da ne bi bacalo greske
 
+  roles!: any[];
+  selectedRole!: any
 
   constructor(private userService: UserService){
 
@@ -35,7 +38,7 @@ export class UsersComponent {
       first_name: "filip",
       last_name: "jovanovic",
       jmbg: 123456,
-      pozicija: "Doktor",
+      pozicija: "Debil",
 
       broj_telefona: "+381/612345678",
       aktivan: 1,
@@ -43,9 +46,9 @@ export class UsersComponent {
 
     let obj2 = {
       id: 2,
-      email: "Filip@gmail.com",
-      first_name: "filip",
-      last_name: "jovanovic",
+      email: "Srdja@gmail.com",
+      first_name: "Srdja",
+      last_name: "Lazic",
       jmbg: 123456,
       pozicija: "Doktor",
 
@@ -54,11 +57,11 @@ export class UsersComponent {
     }
     let obj3 = {
       id: 3,
-      email: "Filip@gmail.com",
-      first_name: "filip",
-      last_name: "jovanovic",
+      email: "Relja@gmail.com",
+      first_name: "relja",
+      last_name: "ivanovic",
       jmbg: 123456,
-      pozicija: "Doktor",
+      pozicija: "Lider",
 
       broj_telefona: "+381/612345678",
       aktivan: 1,
@@ -69,9 +72,26 @@ export class UsersComponent {
     this.users.push(obj1)
     this.users.push(obj2)
     this.users.push(obj3)
+   
+    this.roles = [
+      {label: 'Doktor', value: 'Doktor'},
+      {label: 'Lider', value: 'Lider'},
+      {label: 'Debil', value: 'Debil'},
+      // {label: 'Negotiation', value: 'negotiation'},
+      // {label: 'Renewal', value: 'renewal'},
+      // {label: 'Proposal', value: 'proposal'}
+  ]
+   
     // console.log(this.users)
      
     //this.getUsers()
+  }
+
+  // Filtriranje globalno
+  @ViewChild('dt') dt: Table | undefined;
+
+  applyFilterGlobal($event: any, stringVal: any) {
+    this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
   getUsers(){

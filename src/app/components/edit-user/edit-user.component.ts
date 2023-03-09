@@ -12,7 +12,7 @@ import { User } from 'src/app/model';
 export class EditUserComponent implements OnInit {
 
   editUserForm: FormGroup;
-  user!: User
+  user: User
 
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, ) {
@@ -27,10 +27,21 @@ export class EditUserComponent implements OnInit {
       active: Boolean,
     });
 
+    this.user = {
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      JMBG: "",
+      position: "",
+      phoneNumber: "",
+      active: true
+    }
+
   }
 
   ngOnInit(): void {
-    this.getById()
+    // this.getById()
   }
 
   updateUser(){
@@ -50,10 +61,15 @@ export class EditUserComponent implements OnInit {
     });
   }
 
+
   getById(){
     this.userService.getUserById(parseInt(<string>this.route.snapshot.paramMap.get('id')))
       .subscribe(result => {
-        this.user = result;
+
+        console.log(result)
+
+        // this.user = result;
+
       })
   }
 

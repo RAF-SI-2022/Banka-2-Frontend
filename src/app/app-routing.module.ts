@@ -14,11 +14,11 @@ const routes: Routes = [
     component: UsersComponent
   },
   {
-    path: "edituser",
+    path: "edituser/:id",
     component: EditUserComponent
   },
-  { 
-    path: '**', redirectTo: 'users' 
+  {
+    path: '**', redirectTo: 'users'
   },
 
 ];

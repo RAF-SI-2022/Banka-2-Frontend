@@ -20,6 +20,8 @@ import { UsersComponent } from './components/users/users.component';
 import { ActivityPipe } from './pipes/activity-pipe.pipe';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
+import {DialogModule} from "primeng/dialog";
+import {DropdownModule} from "primeng/dropdown";
 
 
 
@@ -47,7 +49,9 @@ import { AddUserComponent } from './components/add-user/add-user.component';
     BrowserAnimationsModule,
     CardModule,
     HttpClientModule,
-    TableModule
+    TableModule,
+    DialogModule,
+    DropdownModule
   ],
   // exports: [
   //   ActivityPipe

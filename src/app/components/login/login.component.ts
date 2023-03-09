@@ -29,20 +29,17 @@ export class LoginComponent {
   }
 
   login() {
-    alert("Login button works!")
-    // TODO: otkomentarisati kada back tim zavrsi login, dodati isLoading
-    // this.authService.login(
-    //   this.loginForm.get('email')?.value,
-    //   this.loginForm.get('password')?.value
-    // ).subscribe({
-    //   next: value => {
-    //     // uspesan login, sacuvati value (JWT) u sessionStorage
-    //     // redirekcija na pocetnu stranu
-    //   },
-    //   error: err => {
-    //     // prikazati gresku
-    //   }
-    // })
+    this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value ).subscribe({
+      next: response => {
+        localStorage.setItem("token", <string>response.body?.token)
+        console.log(localStorage.getItem("token")) //todo izbrisi print kasnije kada se zavrsi rad na servisima
+
+        this.router.navigate(["users"]); //todo kada se uradi bolji ui, treba promeniti rutu na koju idemo nakon login-a
+      },
+      error: err => {
+        console.log(err)
+      }
+    })
   }
 
 }

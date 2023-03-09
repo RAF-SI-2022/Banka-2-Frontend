@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { UserService } from '../../services/user-service.service';
 import { User } from '../models/users.model';
+import {MenuItem} from "primeng/api";
+import {MenuItemContent} from "primeng/menu";
 
 @Component({
   selector: 'app-users',
@@ -12,6 +14,8 @@ export class UsersComponent {
 
   users: User[] = []; // prazno da ne bi bacalo greske
   displayDialog: boolean = false;
+  items: MenuItem[];
+
 
   roles!: any[];
   selectedRole!: any
@@ -40,6 +44,11 @@ export class UsersComponent {
   }
 
   ngOnInit(){
+
+    this.items = [
+      {label: 'Početna', routerLink: ['/']},
+      {label: 'Korisnici', routerLink: ['/users']}
+    ];
 
     let obj1 = {
       id: 1,

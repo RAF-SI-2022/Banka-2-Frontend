@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 
@@ -12,11 +12,16 @@ export class LoginComponent {
 
   loginForm: FormGroup;
   isLoading: boolean = false;
+  isFormValid = false;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
-      email: '',
-      password: ''
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
+
+    this.loginForm.valueChanges.subscribe(() => {
+      this.isFormValid = this.loginForm.valid;
     });
   }
 

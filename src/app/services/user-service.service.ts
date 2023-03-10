@@ -19,9 +19,9 @@ export class UserService {
       .set('Authorization', `Bearer ${localStorage.getItem("token")}`)
   }
 
-  getAllUsers(): Observable<UserModel>{
-    return this.httpClient.get<UserModel>(
-      `${environment.apiUserServerUrl}/getAll`,
+  getAllUsers(): Observable<any>{
+    return this.httpClient.get<any>(
+      `${environment.apiUserServerUrl}`,
       { headers: this.headers })
   }
 

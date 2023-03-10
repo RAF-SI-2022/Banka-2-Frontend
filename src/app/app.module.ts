@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {ButtonModule} from "primeng/button";
 import { AppRoutingModule } from './app-routing.module';
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './components/app/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {InputTextModule} from "primeng/inputtext";
@@ -14,6 +15,8 @@ import {CardModule} from "primeng/card";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 import { LoginComponent } from './components/login/login.component';
@@ -38,7 +41,8 @@ import {BreadcrumbModule} from "primeng/breadcrumb";
     ActivityPipe,
     EditUserComponent,
     AddUserComponent,
-    HomeComponent
+    HomeComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -58,7 +62,8 @@ import {BreadcrumbModule} from "primeng/breadcrumb";
     DropdownModule,
     TableModule,
     FormsModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    ToastrModule.forRoot()
   ],
   // exports: [
   //   ActivityPipe

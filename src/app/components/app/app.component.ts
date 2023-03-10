@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import {ToastrService} from "ngx-toastr";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,9 +11,25 @@ import {ToastrService} from "ngx-toastr";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private primengConfig: PrimeNGConfig, private toastr: ToastrService) {}
+  userLogged: boolean = false;
+
+  constructor(private primengConfig: PrimeNGConfig,private router: Router, private toastr: ToastrService) {}
+
   ngOnInit() {
+
     this.primengConfig.ripple = true;
+  }
+
+  checkIsLoggedIn(){
+    if(localStorage.getItem('token') !== null){
+      return true;
+    }
+    return false;
+  }
+
+  logOut(){
+    localStorage.clear()
+    this.router.navigate(['/login']);
   }
 
   title = 'Banka2_front';

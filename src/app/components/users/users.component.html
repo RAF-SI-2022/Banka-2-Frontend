@@ -5,10 +5,10 @@
   </div>
   <div *ngIf="loading">
     <p-table #dt [value]="users" class="p-datatable-header"
-            [rowHover]="true" [rows]="2" [showCurrentPageReport]="true"
+            [rowHover]="true" [rows]="8" [showCurrentPageReport]="true"
             [paginator]="true" [alwaysShowPaginator]="false"
             currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} korisnika"
-            [filterDelay]="10" [globalFilterFields]="['first_name','last_name','email','pozicija','jmbg']">
+            [filterDelay]="10" [globalFilterFields]="['firstName','lastName','email','jobPosition','jmbg']">
       <ng-template pTemplate="caption">
         <div class="table-header row">
           <div class="col-4 text-start table-name">
@@ -26,10 +26,10 @@
           <div class="col-4 text-end">
             <button pButton pRipple styleClass="p-button-sm"
                     class="p-button-raised p-button-secondary add-employee-btn-lg"
-                    label="Dodaj zaposlenog" icon="pi pi-plus"></button>
+                    label="Dodaj zaposlenog" icon="pi pi-plus"  (click)="toggleAddUserDialog()"></button>
             <button pButton pRipple styleClass="p-button-sm"
                     class="p-button-raised p-button-secondary add-employee-btn-sm"
-                    icon="pi pi-plus"></button>
+                    icon="pi pi-plus"  (click)="toggleAddUserDialog()"></button>
           </div>
         </div>
       </ng-template>
@@ -71,11 +71,11 @@
               JMBG
             </div>
           </th>
-          <th pSortableColumn="position" style="min-width: 7rem">
+          <th pSortableColumn="jobPosition" style="min-width: 7rem">
             <div class="flex justify-content-between align-items-center">
               Pozicija
-              <p-sortIcon field="position"></p-sortIcon>
-              <p-columnFilter field="position" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+              <p-sortIcon field="jobPosition"></p-sortIcon>
+              <p-columnFilter field="jobPosition" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
                               [showAddButton]="false" display="menu" class="ml-auto">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                   <p-dropdown [ngModel]="value" [options]="roles" (onChange)="filter($event.value)"
@@ -173,36 +173,28 @@
           <button pButton pRipple label="Izbrisi" (click)="deleteUser()"></button>
 </p-dialog>
 
-<!-- TODO: ne sme JMBG da se menja -->
+<!-- EDIT USER -->
 
 <p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
           header="Izmena korisnika" [(visible)]="displayDialog" [modal]="true">
 
-  <div class="edit-user-form">
+  <div class="edit-user-form" *ngIf="editingUser !== undefined">
     <form class="edit-user-form pt-4 pb-4 gap-4">
       <span class="p-float-label">
-        <input id="name-input" class="w-100" type="text" pInputText>
+        <input id="name-input" class="w-100" type="text" pInputText [value]="editingUser.firstName">
         <label for="name-input">Ime</label>
       </span>
       <span class="p-float-label">
-        <input id="surname-input" class="w-100" type="text" pInputText>
+        <input id="surname-input" class="w-100" type="text" pInputText [value]="editingUser.lastName">
         <label for="surname-input">Prezime</label>
       </span>
       <span class="p-float-label">
-        <input id="email-input" class="w-100" type="email" pInputText>
+        <input id="email-input" class="w-100" type="email" pInputText [value]="editingUser.email">
         <label for="email-input">Email</label>
       </span>
       <span class="p-float-label">
-        <input id="phone-input" class="w-100" type="text" pInputText>
+        <input id="phone-input" class="w-100" type="text" pInputText [value]="editingUser.phone">
         <label for="phone-input">Broj telefona</label>
-      </span>
-      <span class="p-float-label">
-        <input id="jmbg-input" class="w-100" type="text" pInputText>
-        <label for="jmbg-input">JMBG</label>
-      </span>
-      <span class="p-float-label">
-        <input id="limit-input" class="w-100" type="text" pInputText>
-        <label for="limit-input">Limit</label>
       </span>
       <div class="row mb-5">
         <div class="col-6 text-start">
@@ -220,3 +212,61 @@
     <button pButton pRipple label="Izmeni" class="w-100" (click)="updateUser()"></button>
   </ng-template>
 </p-dialog>
+
+<!-- ADD USER -->
+
+<p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
+          header="Dodaj korisnika" [(visible)]="displayAddUserDialog" [modal]="true">
+
+
+  <div class="edit-user-form">
+    <form [formGroup]="addUserForm" (submit)="addUser()" class="edit-user-form pt-4 pb-4 gap-4">
+      <span class="p-float-label">
+        <input [formControlName]="'firstName'" id="name-input" class="w-100" type="text" pInputText>
+        <label for="name-input">Ime</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'lastName'" id="surname-input" class="w-100" type="text" pInputText>
+        <label for="surname-input">Prezime</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'email'" id="email-input" class="w-100" type="email" pInputText>
+        <label for="email-input">Email</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'password'" id="password-input" class="w-100" type="password" pInputText>
+        <label for="password-input">Lozinka</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'phone'" id="phone-input" class="w-100" type="text" pInputText>
+        <label for="phone-input">Broj telefona</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'jmbg'" id="jmbg-input" class="w-100" type="text" pInputText>
+        <label for="jmbg-input">JMBG</label>
+      </span>
+      <div class="row mb-5">
+        <div class="col-6 text-start">
+          <p-dropdown [formControlName]="'jobPosition'" optionLabel="position" placeholder="Pozicija"></p-dropdown>
+        </div>
+        <!-- <div class="col-6 text-end">
+          <p-multiSelect [options]="permissions" [(ngModel)]="selectedPermissions" display="chip" defaultLabel="Odaberi permisije" optionLabel="permissionName" selectedItemsLabel="{0} items selected"></p-multiSelect>
+        </div> -->
+
+
+        <div class="col-6 text-end">
+          <p-checkbox [formControlName]="'active'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
+          <small>Aktivan</small>
+        </div>
+      </div>
+      <!-- <ng-template pTemplate="footer"> -->
+        <button type="submit" pButton pRipple label="Dodaj" class="w-100"></button>
+      <!-- </ng-template> -->
+
+    </form>
+  </div>
+
+
+
+</p-dialog>
+

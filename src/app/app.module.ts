@@ -16,6 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 
 
@@ -41,6 +42,7 @@ import {BreadcrumbModule} from "primeng/breadcrumb";
 
   ],
   imports: [
+    MultiSelectModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,

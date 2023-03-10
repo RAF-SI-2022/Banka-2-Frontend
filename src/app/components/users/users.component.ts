@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { UserService } from '../../services/user-service.service';
-import {MenuItem, MessageService} from "primeng/api";
-import {MenuItemContent} from "primeng/menu";
-import {UserModel} from "../../models/users.model";
+import {MenuItem} from "primeng/api";
+import {Permission, UserModel} from "../../models/users.model";
 import {ToastrService} from "ngx-toastr";
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-users',
@@ -15,9 +15,16 @@ export class UsersComponent {
 
   users: UserModel[]; // prazno da ne bi bacalo greske //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
 
-
+  selectedPermissions: Permission[];
+  permissions: Permission[];
   displayDialog: boolean = false;
+  displayAddUserDialog: boolean = false;
   items: MenuItem[];
+  editingUser: UserModel;
+
+  addUserForm: FormGroup;
+
+
 
 
   roles!: any[];
@@ -28,7 +35,46 @@ export class UsersComponent {
   displayConfirmationDialog: boolean = false;
   selectedUserId: number = -1
 
-  constructor(private userService: UserService, private toastr: ToastrService){
+
+
+  constructor(private userService: UserService, private toastr: ToastrService, private formBuilder: FormBuilder){
+    this.selectedPermissions = [];
+    this.permissions = [
+      {
+        id: 1,
+        permissionName: "ADMIN_USER"
+      },
+      {
+        id: 1,
+        permissionName: "CREATE_USERS"
+      },
+      {
+        id: 1,
+        permissionName: "CREATE_USERS"
+      },
+      {
+        id: 1,
+        permissionName: "CREATE_USERS"
+      }
+    ]
+
+    this.addUserForm = this.formBuilder.group({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      permissions: new FormArray([]),
+      jobPosition: '',
+      active: false,
+      jmbg: '',
+      phone: '',
+
+    });
+
+  }
+
+  printPermissions(){
+    console.log(this.selectedPermissions);
 
   }
 
@@ -42,6 +88,7 @@ export class UsersComponent {
     this.userService.getUserById(id).subscribe({
       next: val =>{
         console.log(val)
+        this.editingUser = val;
         //strpati sve podatke u listu usera
       },
       error: err =>{
@@ -49,6 +96,10 @@ export class UsersComponent {
       }
     })
     this.displayDialog = !this.displayDialog;
+  }
+
+  toggleAddUserDialog() {
+    this.displayAddUserDialog = !this.displayAddUserDialog;
   }
 
   updateUser() {
@@ -77,6 +128,10 @@ export class UsersComponent {
   // ToastrService.success/error/warning/info/show()
   showToastDelete(){
     this.toastr.error("Korisnik obrisan")
+  }
+
+  showToastAdd(){
+    this.toastr.success("Korisnik dodat")
   }
 
   // Filtriranje globalno
@@ -119,8 +174,7 @@ export class UsersComponent {
           console.log(val)
           this.users = this.users.filter(user => user.id != this.selectedUserId);
           this.showToastDelete()
-          this.selectedUserId = -1
-          this.displayConfirmationDialog = !this.displayConfirmationDialog
+          //strpati sve podatke u listu usera
         },
         error: err =>{
           console.log(err)
@@ -175,6 +229,43 @@ export class UsersComponent {
     //   }
     // })
     // alert(id)
+  }
+
+  addUser(){
+
+    // TODO premisije i pozicije
+
+    this.userService.createNewUser(
+      this.addUserForm.get('firstName')?.value,
+      this.addUserForm.get('lastName')?.value,
+      this.addUserForm.get('email')?.value,
+      this.addUserForm.get('password')?.value,
+      [],
+      "master baiter",
+      this.addUserForm.get('active')?.value,
+      this.addUserForm.get('jmbg')?.value,
+      this.addUserForm.get('phone')?.value
+
+    ).subscribe({
+      next: val =>{
+        console.log(val)
+
+    // TODO push novog user u array
+
+        // this.users.push(val)
+        this.getUsers()
+        this.showToastAdd()
+
+        this.displayAddUserDialog = false
+        //strpati sve podatke u listu usera
+      },
+      error: err =>{
+        //alertovati error
+      }
+    })
+
+
+
   }
 
 }

@@ -1,12 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { UserService } from '../../services/user-service.service';
-import {MenuItem, MessageService} from "primeng/api";
-import {MenuItemContent} from "primeng/menu";
-import {Permission, UserCreateDTO, UserModel} from "../../models/users.model";
+import {MenuItem} from "primeng/api";
+import {Permission, UserModel} from "../../models/users.model";
 import {ToastrService} from "ngx-toastr";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-users',

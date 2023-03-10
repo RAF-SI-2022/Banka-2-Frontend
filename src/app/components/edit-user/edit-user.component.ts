@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup} from "@angular/forms";
 import { UserService } from 'src/app/services/user-service.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import { User } from 'src/app/model';
+import {UserModel} from "../../models/users.model";
 
 @Component({
   selector: 'app-edit-user',
@@ -12,7 +13,9 @@ import { User } from 'src/app/model';
 export class EditUserComponent implements OnInit {
 
   editUserForm: FormGroup;
-  user: User
+  user: User//todo koristi usera iz users.model.ts a ne model.ts cisto da bi bilo vise konzistentno
+
+  CHANGEUSER: UserModel
 
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, ) {
@@ -45,7 +48,9 @@ export class EditUserComponent implements OnInit {
   }
 
   updateUser(){
-    this.userService.updateUser(this.user, parseInt(<string>this.route.snapshot.paramMap.get('id')),).subscribe(result => {
+
+    //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
+    this.userService.updateUser(this.CHANGEUSER, parseInt(<string>this.route.snapshot.paramMap.get('id')),).subscribe(result => {
       alert("Successfully updated");
       this.router.navigate(['/users']);
     });
@@ -71,9 +76,9 @@ export class EditUserComponent implements OnInit {
         this.user.email = result.email
         this.user.firstName = result.firstName
         this.user.lastName = result.lastName
-        this.user.JMBG = result.JMBG
-        this.user.position= result.position
-        this.user.phoneNumber= result.phoneNumber
+        this.user.JMBG = String(result.jmbg)
+        this.user.position= result.jobPosition
+        this.user.phoneNumber= String(result.phone)
         this.user.active= result.active
       })
   }

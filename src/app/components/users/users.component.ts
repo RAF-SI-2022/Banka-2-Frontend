@@ -23,9 +23,20 @@ export class UsersComponent {
   roles!: any[];
   selectedRole!: any
 
+  loading: boolean = true;
+
+  displayConfirmationDialog: boolean = false;
+  selectedUserId: number = -1
+
   constructor(private userService: UserService, private toastr: ToastrService){
 
   }
+
+  toggleConfirmationDialog(id: number){
+    this.displayConfirmationDialog = !this.displayConfirmationDialog;
+    this.selectedUserId = id
+  }
+
 
   toggleDialog(id: number) {
     this.userService.getUserById(id).subscribe({
@@ -82,6 +93,7 @@ export class UsersComponent {
     .subscribe({
       next: val =>{
         this.users = val;
+        this.loading = true
         //strpati sve podatke u listu usera
       },
       error: err =>{
@@ -91,29 +103,39 @@ export class UsersComponent {
 
   }
 
-  deleteUser(id: number) {
-    this.userService.deleteUser(id)     //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
+  clearSelectedUserId(){
+    this.selectedUserId = -1
+    this.displayConfirmationDialog = !this.displayConfirmationDialog
+  }
+
+  deleteUser() {
+    if(this.selectedUserId === -1){
+      alert("greska")
+      return;
+    }
+    this.userService.deleteUser(this.selectedUserId)     //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
       .subscribe({
         next: val =>{
           console.log(val)
-          this.users = this.users.filter(user => user.id != id);
+          this.users = this.users.filter(user => user.id != this.selectedUserId);
           this.showToastDelete()
-          //strpati sve podatke u listu usera
+          this.selectedUserId = -1
+          this.displayConfirmationDialog = !this.displayConfirmationDialog
         },
         error: err =>{
-          //alertovati error
           console.log(err)
+          this.selectedUserId = -1
+          this.displayConfirmationDialog = !this.displayConfirmationDialog
         }
       })
   }
 
   activateUser(id:number){
-
-    // for(const item of this.users){
-    //   if(item.id == id){//todo ovde ti se buni jer User ne poseduje polje id, necu da ostavim error ne zakomentarisan
-    //     item.active = true;
-    //   }
-    // }
+    for(const item of this.users){
+      if(item.id == id){
+        item.active = true;
+      }
+    }
 
     // this.userService.activateUser(id)
     // .subscribe({
@@ -132,12 +154,11 @@ export class UsersComponent {
     // alert(id)
   }
   deactivateUser(id:number){
-
-    // for(const item of this.users){
-    //   if(item.id == id){todo ovde ti se buni jer User ne poseduje polje id, necu da ostavim error ne zakomentarisan
-    //     item.active = false;
-    //   }
-    // }
+    for(const item of this.users){
+      if(item.id == id){
+        item.active = false;
+      }
+    }
 
     // this.userService.deactivateUser(id)
     // .subscribe({

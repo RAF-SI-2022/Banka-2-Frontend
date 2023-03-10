@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { UserService } from '../../services/user-service.service';
-import {MenuItem} from "primeng/api";
+import {MenuItem, MessageService} from "primeng/api";
 import {MenuItemContent} from "primeng/menu";
-import {User} from "../../model";
+import {UserModel} from "../../models/users.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-users',
@@ -12,7 +13,7 @@ import {User} from "../../model";
 })
 export class UsersComponent {
 
-  users: User[] = []; // prazno da ne bi bacalo greske //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
+  users: UserModel[]; // prazno da ne bi bacalo greske //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
 
 
   displayDialog: boolean = false;
@@ -22,11 +23,20 @@ export class UsersComponent {
   roles!: any[];
   selectedRole!: any
 
-  constructor(private userService: UserService){
+  constructor(private userService: UserService, private toastr: ToastrService){
 
   }
 
   toggleDialog(id: number) {
+    this.userService.getUserById(id).subscribe({
+      next: val =>{
+        console.log(val)
+        //strpati sve podatke u listu usera
+      },
+      error: err =>{
+        //alertovati error
+      }
+    })
     this.displayDialog = !this.displayDialog;
   }
 
@@ -35,6 +45,7 @@ export class UsersComponent {
   }
 
   ngOnInit(){
+
 
     this.items = [
       {label: 'Početna', routerLink: ['/']},
@@ -49,9 +60,12 @@ export class UsersComponent {
   ]
 
 
-    //this.getUsers()
+    this.getUsers()
+  }
 
-
+  // ToastrService.success/error/warning/info/show()
+  showToastDelete(){
+    this.toastr.error("Korisnik obrisan")
   }
 
   // Filtriranje globalno
@@ -64,17 +78,33 @@ export class UsersComponent {
   // Dovlacenje svih usera
   getUsers(){
 
-    // this.userService.getAllUsers()     //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
-    // .subscribe({
-    //   next: val =>{
-    //     this.users = val
-    //     //strpati sve podatke u listu usera
-    //   },
-    //   error: err =>{
-    //     //alertovati error
-    //   }
-    // })
+    this.userService.getAllUsers()     //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
+    .subscribe({
+      next: val =>{
+        this.users = val;
+        //strpati sve podatke u listu usera
+      },
+      error: err =>{
+        //alertovati error
+      }
+    })
 
+  }
+
+  deleteUser(id: number) {
+    this.userService.deleteUser(id)     //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
+      .subscribe({
+        next: val =>{
+          console.log(val)
+          this.users = this.users.filter(user => user.id != id);
+          this.showToastDelete()
+          //strpati sve podatke u listu usera
+        },
+        error: err =>{
+          //alertovati error
+          console.log(err)
+        }
+      })
   }
 
   activateUser(id:number){

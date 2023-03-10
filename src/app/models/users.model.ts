@@ -4,8 +4,8 @@ export interface UserModel{
     firstName: string
     lastName: string
     password: string
-    jmbg: number
-    phone: number
+    jmbg: string
+    phone: string
     jobPosition: string
     active: boolean
     permissions: Permission[]
@@ -13,4 +13,16 @@ export interface UserModel{
 export interface Permission{
     id: number
     permissionName: string
+}
+
+export interface UserCreateDTO{
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+    permissions: Permission[]
+    jobPosition: string
+    active: boolean
+    jmbg: string
+    phone: string 
 }

@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {environment} from "../../environments/environment";
-import {UserModel} from "../models/users.model";
+import {UserCreateDTO, UserModel} from "../models/users.model";
 
 @Injectable({
   providedIn: 'root'
@@ -31,10 +31,15 @@ export class UserService {
       { headers: this.headers })
   }
 
-  createNewUser(user: UserModel): Observable<UserModel>{//todo kada bude imao UI proveri dali je dobar
-    return this.httpClient.post<UserModel>(
+  // LUKA NE DIRAJ ARGUMENTE
+
+  createNewUser(firstName: string, lastName: string, email: string, password: string, 
+    permissions: any, jobPosition: string,active : string, jmbg: string, phone : string  
+    ): Observable<any>{//todo kada bude imao UI proveri dali je dobar
+    return this.httpClient.post<UserCreateDTO>(
       `${environment.apiUserServerUrl}/register`,
-      {user},
+      {firstName: firstName, lastName:lastName, email:email, password:password
+      ,permissions: permissions, jobPosition: jobPosition, active:active, jmbg: jmbg, phone:phone},
       { headers: this.headers })
   }
 

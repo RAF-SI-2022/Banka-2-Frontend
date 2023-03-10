@@ -1,11 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { UserService } from '../../services/user-service.service';
-import {MenuItem, MessageService} from "primeng/api";
-import {MenuItemContent} from "primeng/menu";
-import {Permission, UserCreateDTO, UserModel} from "../../models/users.model";
+import {MenuItem} from "primeng/api";
+import {Permission, UserModel} from "../../models/users.model";
 import {ToastrService} from "ngx-toastr";
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-users',
@@ -21,6 +20,7 @@ export class UsersComponent {
   displayDialog: boolean = false;
   displayAddUserDialog: boolean = false;
   items: MenuItem[];
+  editingUser: UserModel;
 
   addUserForm: FormGroup;
 
@@ -29,7 +29,6 @@ export class UsersComponent {
 
   roles!: any[];
   selectedRole!: any
-
 
 
 
@@ -71,13 +70,14 @@ export class UsersComponent {
 
   printPermissions(){
     console.log(this.selectedPermissions);
-    
+
   }
 
   toggleDialog(id: number) {
     this.userService.getUserById(id).subscribe({
       next: val =>{
         console.log(val)
+        this.editingUser = val;
         //strpati sve podatke u listu usera
       },
       error: err =>{
@@ -235,7 +235,7 @@ export class UsersComponent {
         // this.users.push(val)
         this.getUsers()
         this.showToastAdd()
-        
+
         this.displayAddUserDialog = false
         //strpati sve podatke u listu usera
       },
@@ -243,7 +243,7 @@ export class UsersComponent {
         //alertovati error
       }
     })
-   
+
 
 
   }

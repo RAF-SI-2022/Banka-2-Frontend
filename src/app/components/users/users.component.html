@@ -163,31 +163,23 @@
 <p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
           header="Izmena korisnika" [(visible)]="displayDialog" [modal]="true">
 
-  <div class="edit-user-form">
+  <div class="edit-user-form" *ngIf="editingUser !== undefined">
     <form class="edit-user-form pt-4 pb-4 gap-4">
       <span class="p-float-label">
-        <input id="name-input" class="w-100" type="text" pInputText>
+        <input id="name-input" class="w-100" type="text" pInputText [value]="editingUser.firstName">
         <label for="name-input">Ime</label>
       </span>
       <span class="p-float-label">
-        <input id="surname-input" class="w-100" type="text" pInputText>
+        <input id="surname-input" class="w-100" type="text" pInputText [value]="editingUser.lastName">
         <label for="surname-input">Prezime</label>
       </span>
       <span class="p-float-label">
-        <input id="email-input" class="w-100" type="email" pInputText>
+        <input id="email-input" class="w-100" type="email" pInputText [value]="editingUser.email">
         <label for="email-input">Email</label>
       </span>
       <span class="p-float-label">
-        <input id="phone-input" class="w-100" type="text" pInputText>
+        <input id="phone-input" class="w-100" type="text" pInputText [value]="editingUser.phone">
         <label for="phone-input">Broj telefona</label>
-      </span>
-      <span class="p-float-label">
-        <input id="jmbg-input" class="w-100" type="text" pInputText>
-        <label for="jmbg-input">JMBG</label>
-      </span>
-      <span class="p-float-label">
-        <input id="limit-input" class="w-100" type="text" pInputText>
-        <label for="limit-input">Limit</label>
       </span>
       <div class="row mb-5">
         <div class="col-6 text-start">
@@ -195,7 +187,7 @@
         </div>
         <div class="col-6 text-end">
           <p-checkbox class="me-2" [binary]="true" inputId="binary"></p-checkbox>
-          <small>Zahtevati odobravanje svake porudžbine</small>
+          <small>Zahtevati odobravanje svake porudžbine?</small>
         </div>
       </div>
     </form>

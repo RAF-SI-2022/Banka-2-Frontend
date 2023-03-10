@@ -5,6 +5,7 @@ import {MenuItem, MessageService} from "primeng/api";
 import {MenuItemContent} from "primeng/menu";
 import {UserModel} from "../../models/users.model";
 import {ToastrService} from "ngx-toastr";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-users',
@@ -18,6 +19,7 @@ export class UsersComponent {
 
   displayDialog: boolean = false;
   items: MenuItem[];
+  editingUser: UserModel;
 
 
   roles!: any[];
@@ -31,6 +33,7 @@ export class UsersComponent {
     this.userService.getUserById(id).subscribe({
       next: val =>{
         console.log(val)
+        this.editingUser = val;
         //strpati sve podatke u listu usera
       },
       error: err =>{

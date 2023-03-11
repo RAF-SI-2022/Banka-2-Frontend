@@ -21,10 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   checkIsLoggedIn(){
-    if(localStorage.getItem('token') !== null){
-      return true;
-    }
-    return false;
+    return localStorage.getItem('token') !== null;
   }
 
   logOut(){

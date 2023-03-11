@@ -27,6 +27,8 @@ import {DialogModule} from "primeng/dialog";
 import {DropdownModule} from "primeng/dropdown";
 import { HomeComponent } from './components/home/home.component';
 import {BreadcrumbModule} from "primeng/breadcrumb";
+import { AddUserComponent } from './components/add-user/add-user.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 
 
@@ -39,6 +41,8 @@ import {BreadcrumbModule} from "primeng/breadcrumb";
     UsersComponent,
     ActivityPipe,
     HomeComponent,
+    AddUserComponent,
+    EditUserComponent,
 
   ],
   imports: [

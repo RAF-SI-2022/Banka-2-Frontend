@@ -26,7 +26,7 @@
           <div class="col-4 text-end">
             <button pButton pRipple styleClass="p-button-sm"
                     class="p-button-raised p-button-secondary add-employee-btn-lg"
-                    label="Dodaj zaposlenog" icon="pi pi-plus"  (click)="toggleAddUserDialog()"></button>
+                    label="Dodaj zaposlenog" icon="pi pi-plus"  (click)="callAddUserChild()"></button>
             <button pButton pRipple styleClass="p-button-sm"
                     class="p-button-raised p-button-secondary add-employee-btn-sm"
                     icon="pi pi-plus"  (click)="toggleAddUserDialog()"></button>
@@ -145,7 +145,7 @@
           </td>
           <td>
             <!-- <p-button label="Izmeni" class="buttonPadding"></p-button> -->
-            <button (click)="toggleDialog(user.id)" pButton pRipple type="button" label="Izmeni"
+            <button (click)="callEditUserChild(user.id)" pButton pRipple type="button" label="Izmeni"
                     class="p-button-secondary p-button-outlined me-2"></button>
             <button (click)="deactivateUser(user.id)" *ngIf="user.active" pButton pRipple type="button"
                     label="Deaktiviraj" class="p-button-danger p-button-outlined me-2"></button>
@@ -175,98 +175,97 @@
 
 <!-- EDIT USER -->
 
-<p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
-          header="Izmena korisnika" [(visible)]="displayDialog" [modal]="true">
+<!--<p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"-->
+<!--          header="Izmena korisnika" [(visible)]="displayDialog" [modal]="true">-->
 
-  <div class="edit-user-form" *ngIf="editingUser !== undefined">
-    <form class="edit-user-form pt-4 pb-4 gap-4">
-      <span class="p-float-label">
-        <input id="name-input" class="w-100" type="text" pInputText [value]="editingUser.firstName">
-        <label for="name-input">Ime</label>
-      </span>
-      <span class="p-float-label">
-        <input id="surname-input" class="w-100" type="text" pInputText [value]="editingUser.lastName">
-        <label for="surname-input">Prezime</label>
-      </span>
-      <span class="p-float-label">
-        <input id="email-input" class="w-100" type="email" pInputText [value]="editingUser.email">
-        <label for="email-input">Email</label>
-      </span>
-      <span class="p-float-label">
-        <input id="phone-input" class="w-100" type="text" pInputText [value]="editingUser.phone">
-        <label for="phone-input">Broj telefona</label>
-      </span>
-      <div class="row mb-5">
-        <div class="col-6 text-start">
-          <p-dropdown optionLabel="position" placeholder="Pozicija"></p-dropdown>
-        </div>
-        <div class="col-6 text-end">
-          <p-checkbox class="me-2" [binary]="true" inputId="binary"></p-checkbox>
-          <small>Zahtevati odobravanje svake porudžbine</small>
-        </div>
-      </div>
-    </form>
-  </div>
+<!--  <div class="edit-user-form" *ngIf="editingUser !== undefined">-->
+<!--    <form class="edit-user-form pt-4 pb-4 gap-4">-->
+<!--      <span class="p-float-label">-->
+<!--        <input id="name-input" class="w-100" type="text" pInputText [value]="editingUser.firstName">-->
+<!--        <label for="name-input">Ime</label>-->
+<!--      </span>-->
+<!--      <span class="p-float-label">-->
+<!--        <input id="surname-input" class="w-100" type="text" pInputText [value]="editingUser.lastName">-->
+<!--        <label for="surname-input">Prezime</label>-->
+<!--      </span>-->
+<!--      <span class="p-float-label">-->
+<!--        <input id="email-input" class="w-100" type="email" pInputText [value]="editingUser.email">-->
+<!--        <label for="email-input">Email</label>-->
+<!--      </span>-->
+<!--      <span class="p-float-label">-->
+<!--        <input id="phone-input" class="w-100" type="text" pInputText [value]="editingUser.phone">-->
+<!--        <label for="phone-input">Broj telefona</label>-->
+<!--      </span>-->
+<!--      <div class="row mb-5">-->
+<!--        <div class="col-6 text-start">-->
+<!--          <p-dropdown optionLabel="position" placeholder="Pozicija"></p-dropdown>-->
+<!--        </div>-->
+<!--        <div class="col-6 text-end">-->
+<!--          <p-checkbox class="me-2" [binary]="true" inputId="binary"></p-checkbox>-->
+<!--          <small>Zahtevati odobravanje svake porudžbine</small>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </div>-->
 
-  <ng-template pTemplate="footer">
-    <button pButton pRipple label="Izmeni" class="w-100" (click)="updateUser()"></button>
-  </ng-template>
-</p-dialog>
+<!--  <ng-template pTemplate="footer">-->
+<!--    <button pButton pRipple label="Izmeni" class="w-100" (click)="updateUser()"></button>-->
+<!--  </ng-template>-->
+<!--</p-dialog>-->
 
 <!-- ADD USER -->
 
-<p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
-          header="Dodaj korisnika" [(visible)]="displayAddUserDialog" [modal]="true">
+<!--<p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"-->
+<!--          header="Dodaj korisnika" [(visible)]="displayAddUserDialog" [modal]="true">-->
+
+<!--  <div class="edit-user-form">-->
+<!--    <form [formGroup]="addUserForm" (submit)="addUser()" class="edit-user-form pt-4 pb-4 gap-4">-->
+<!--      <span class="p-float-label">-->
+<!--        <input [formControlName]="'firstName'" id="name-input" class="w-100" type="text" pInputText>-->
+<!--        <label for="name-input">Ime</label>-->
+<!--      </span>-->
+<!--      <span class="p-float-label">-->
+<!--        <input [formControlName]="'lastName'" id="surname-input" class="w-100" type="text" pInputText>-->
+<!--        <label for="surname-input">Prezime</label>-->
+<!--      </span>-->
+<!--      <span class="p-float-label">-->
+<!--        <input [formControlName]="'email'" id="email-input" class="w-100" type="email" pInputText>-->
+<!--        <label for="email-input">Email</label>-->
+<!--      </span>-->
+<!--      <span class="p-float-label">-->
+<!--        <input [formControlName]="'password'" id="password-input" class="w-100" type="password" pInputText>-->
+<!--        <label for="password-input">Lozinka</label>-->
+<!--      </span>-->
+<!--      <span class="p-float-label">-->
+<!--        <input [formControlName]="'phone'" id="phone-input" class="w-100" type="text" pInputText>-->
+<!--        <label for="phone-input">Broj telefona</label>-->
+<!--      </span>-->
+<!--      <span class="p-float-label">-->
+<!--        <input [formControlName]="'jmbg'" id="jmbg-input" class="w-100" type="text" pInputText>-->
+<!--        <label for="jmbg-input">JMBG</label>-->
+<!--      </span>-->
+<!--      <div class="row mb-5">-->
+<!--        <div class="col-6 text-start">-->
+<!--          <p-dropdown [formControlName]="'jobPosition'" optionLabel="position" placeholder="Pozicija"></p-dropdown>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; <div class="col-6 text-end">-->
+<!--          <p-multiSelect [options]="permissions" [(ngModel)]="selectedPermissions" display="chip" defaultLabel="Odaberi permisije" optionLabel="permissionName" selectedItemsLabel="{0} items selected"></p-multiSelect>-->
+<!--        </div> &ndash;&gt;-->
 
 
-  <div class="edit-user-form">
-    <form [formGroup]="addUserForm" (submit)="addUser()" class="edit-user-form pt-4 pb-4 gap-4">
-      <span class="p-float-label">
-        <input [formControlName]="'firstName'" id="name-input" class="w-100" type="text" pInputText>
-        <label for="name-input">Ime</label>
-      </span>
-      <span class="p-float-label">
-        <input [formControlName]="'lastName'" id="surname-input" class="w-100" type="text" pInputText>
-        <label for="surname-input">Prezime</label>
-      </span>
-      <span class="p-float-label">
-        <input [formControlName]="'email'" id="email-input" class="w-100" type="email" pInputText>
-        <label for="email-input">Email</label>
-      </span>
-      <span class="p-float-label">
-        <input [formControlName]="'password'" id="password-input" class="w-100" type="password" pInputText>
-        <label for="password-input">Lozinka</label>
-      </span>
-      <span class="p-float-label">
-        <input [formControlName]="'phone'" id="phone-input" class="w-100" type="text" pInputText>
-        <label for="phone-input">Broj telefona</label>
-      </span>
-      <span class="p-float-label">
-        <input [formControlName]="'jmbg'" id="jmbg-input" class="w-100" type="text" pInputText>
-        <label for="jmbg-input">JMBG</label>
-      </span>
-      <div class="row mb-5">
-        <div class="col-6 text-start">
-          <p-dropdown [formControlName]="'jobPosition'" optionLabel="position" placeholder="Pozicija"></p-dropdown>
-        </div>
-        <!-- <div class="col-6 text-end">
-          <p-multiSelect [options]="permissions" [(ngModel)]="selectedPermissions" display="chip" defaultLabel="Odaberi permisije" optionLabel="permissionName" selectedItemsLabel="{0} items selected"></p-multiSelect>
-        </div> -->
+<!--        <div class="col-6 text-end">-->
+<!--          <p-checkbox [formControlName]="'active'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>-->
+<!--          <small>Aktivan</small>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; <ng-template pTemplate="footer"> &ndash;&gt;-->
+<!--        <button type="submit" pButton pRipple label="Dodaj" class="w-100"></button>-->
+<!--      &lt;!&ndash; </ng-template> &ndash;&gt;-->
 
+<!--    </form>-->
+<!--  </div>-->
+<!--</p-dialog>-->
 
-        <div class="col-6 text-end">
-          <p-checkbox [formControlName]="'active'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
-          <small>Aktivan</small>
-        </div>
-      </div>
-      <!-- <ng-template pTemplate="footer"> -->
-        <button type="submit" pButton pRipple label="Dodaj" class="w-100"></button>
-      <!-- </ng-template> -->
-
-    </form>
-  </div>
-
-
-
-</p-dialog>
+<app-edit-user (editUserEvent)="updateUser($event)"></app-edit-user>
+<app-add-user (newUserEvent)="printFromChild($event)"></app-add-user>
 

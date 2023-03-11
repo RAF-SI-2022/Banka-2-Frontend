@@ -2,7 +2,7 @@
     <div class="mb-3">
         <label for="emailInput" class="form-label">Email</label>
         <input [formControlName]="'email'" [(ngModel)]="user.email" type="text" class="form-control" id="emailInput" required>
-    </div> 
+    </div>
     <div class="mb-3">
         <label for="passwordInput" class="form-label">Password</label>
         <input [formControlName]="'password'" [(ngModel)]="user.password" type="text" class="form-control" id="passwordInput" required>
@@ -31,7 +31,6 @@
         <input [formControlName]="'active'" [(ngModel)]="user.active" type="checkbox" class="form-check-input" id="exampleCheck1">
         <label class="form-check-label" for="exampleCheck1">Active</label>
     </div>
-  
+
     <button type="submit" class="btn btn-primary">Edit</button>
-  </form>
-  
+</form>

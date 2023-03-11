@@ -16,15 +16,14 @@
               Lista korisnika
             </h3>
           </div>
-          <div class="col-4 text-center">
+          <div id="searchDiv" class="col-4 text-center">
                     <span class="p-input-icon-left">
                         <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')"
-                              placeholder="Pretraži korisnike"/>
+                        <input id="search" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')"placeholder="Pretraži korisnike"/>
                     </span>
           </div>
           <div class="col-4 text-end">
-            <button pButton pRipple styleClass="p-button-sm"
+            <button id="addUserBtn" pButton pRipple styleClass="p-button-sm"
                     class="p-button-raised p-button-secondary add-employee-btn-lg"
                     label="Dodaj zaposlenog" icon="pi pi-plus"  (click)="callAddUserChild()"></button>
             <button pButton pRipple styleClass="p-button-sm"
@@ -46,7 +45,7 @@
             <div class="flex justify-content-between align-items-center">
               Email
               <p-sortIcon field="email"></p-sortIcon>
-              <p-columnFilter type="text" field="email" display="menu" class="ml-auto" matchMode="contains"
+              <p-columnFilter id="emailFilter" type="text" field="email" display="menu" class="ml-auto" matchMode="contains"
                               [showMatchModes]="false" placeholder="Unesite email" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
             </div>
           </th>
@@ -143,15 +142,15 @@
             <span>{{user.active | activityPipe}}</span>
             <!-- <span [class]='customer-badge status-unqualified'>{{user.aktivan}}</span> -->
           </td>
-          <td>
+          <td [id]="'buttons' + user.id">
             <!-- <p-button label="Izmeni" class="buttonPadding"></p-button> -->
-            <button (click)="callEditUserChild(user.id)" pButton pRipple type="button" label="Izmeni"
+            <button [id]="'editBtn' + user.id" (click)="callEditUserChild(user.id)" pButton pRipple type="button" label="Izmeni"
                     class="p-button-secondary p-button-outlined me-2"></button>
-            <button (click)="deactivateUser(user.id)" *ngIf="user.active" pButton pRipple type="button"
+            <button [id]="'deactivateBtn' + user.id" (click)="deactivateUser(user.id)" *ngIf="user.active" pButton pRipple type="button"
                     label="Deaktiviraj" class="p-button-danger p-button-outlined me-2"></button>
-            <button (click)="activateUser(user.id)" *ngIf="!user.active" pButton pRipple type="button"
+            <button [id]="'activateBtn' + user.id" (click)="activateUser(user.id)" *ngIf="!user.active" pButton pRipple type="button"
                     label="Aktiviraj" class="p-button-success p-button-outlined me-4"></button>
-            <button (click)="toggleConfirmationDialog(user.id)" pButton pRipple type="button"
+            <button [id]="'deleteBtn' + user.id" (click)="toggleConfirmationDialog(user.id)" pButton pRipple type="button"
                     icon="pi pi-trash" class="p-button-danger p-button-outlined"></button>
           </td>
         </tr>

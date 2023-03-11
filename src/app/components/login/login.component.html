@@ -1,5 +1,5 @@
 <div class="background">
- 
+
     <section class="side">
       <img src="../../../assets/img.png" alt="">
     </section>
@@ -12,11 +12,11 @@
 
           <form [formGroup]="loginForm" (submit)="login()">
             <div class="form-control">
-              <input class="w-100" [formControlName]="'email'" type="email" pInputText required placeholder="Email">
+              <input class="w-100" [formControlName]="'email'" id="email" type="email" pInputText required placeholder="Email">
                 <i class="pi pi-user"></i>
             </div>
             <div class="form-control">
-            <input class="w-100" [formControlName]="'password'" type="password" pInputText required placeholder="Password">
+            <input class="w-100" [formControlName]="'password'" id="password" type="password" pInputText required placeholder="Password">
                 <i class="pi pi-key"></i>
             </div>
 
@@ -25,7 +25,7 @@
 
         </form>
 
-        
+
           <div class="row mt-2 w-100" style="max-width: 320px;">
             <div class="col-6">
               <div class="d-flex align-items-center">
@@ -37,10 +37,10 @@
               <small>Forgot Password?</small>
             </div>
           </div>
-       
-        
-        
-        
+
+
+
+
 
       </div>
     </section>

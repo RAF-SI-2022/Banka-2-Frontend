@@ -112,7 +112,7 @@ export class UsersComponent {
   updateUser($event: any) {
     const editedUser = $event
     console.log("Ovo ");
-    
+
     console.log(editedUser)
     this.userService.updateUser(
       editedUser.id,
@@ -132,7 +132,7 @@ export class UsersComponent {
       },
       error: err =>{
         console.log(err);
-        
+
       }
     })
   }
@@ -174,12 +174,14 @@ export class UsersComponent {
 
   // Dovlacenje svih usera
   getUsers(){
-
     this.userService.getAllUsers()     //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
     .subscribe({
       next: val =>{
         this.users = val;
         this.loading = true
+
+        console.log(val)
+
         //strpati sve podatke u listu usera
       },
       error: err =>{

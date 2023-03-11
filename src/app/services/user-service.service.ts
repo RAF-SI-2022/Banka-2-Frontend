@@ -11,13 +11,22 @@ export class UserService {
 
   private headers
 
+  private token: string
 
   constructor(private httpClient: HttpClient) {
+
+    if(localStorage.getItem("token") !== null){
+      this.token = localStorage.getItem("token")!
+    }
+    else{
+      this.token = sessionStorage.getItem("token")!
+    }
+
     this.headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
-      .set('Authorization', `Bearer ${localStorage.getItem("token")}`)
-  }
+      .set('Authorization', `Bearer ${this.token}`)
+  } 
 
   getAllUsers(): Observable<any>{
     return this.httpClient.get<any>(
@@ -70,6 +79,9 @@ export class UserService {
       `${environment.apiUserServerUrl}/deactivate/` + id,
       {},
       { headers: this.headers })
+  }
+  getUserData(): Observable<any>{
+    return this.httpClient.get(`${environment.apiUserServerUrl}/email` ,{ headers: this.headers })
   }
 
 }

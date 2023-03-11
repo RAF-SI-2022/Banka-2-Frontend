@@ -18,6 +18,7 @@ export class LoginComponent {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
+      remember: false
     });
 
     this.loginForm.valueChanges.subscribe(() => {
@@ -32,13 +33,24 @@ export class LoginComponent {
   login() {
     this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value ).subscribe({
       next: response => {
-        localStorage.setItem("token", <string>response.body?.token)
-        this.router.navigate(["users"]); //todo kada se uradi bolji ui, treba promeniti rutu na koju idemo nakon login-a
+        if(this.loginForm.get('remember')?.value){
+          localStorage.setItem("token", <string>response.body?.token)
+          this.router.navigate(["users"]); //todo kada se uradi bolji ui, treba promeniti rutu na koju idemo nakon login-a
+        }
+        else{
+          sessionStorage.setItem("token", <string>response.body?.token)
+          this.router.navigate(["users"]);
+        }
       },
       error: err => {
         console.log(err)
       }
     })
+  }
+
+  forgotPass(){
+    alert("Zaboravio pass");
+    
   }
 
 }

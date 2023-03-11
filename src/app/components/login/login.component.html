@@ -17,18 +17,22 @@
                 <i class="pi pi-key"></i>
             </div>
             <button pButton pRipple label="LOGIN" class="submit" loadingIcon="pi pi-spinner " [disabled]="!isFormValid" [loading]="isLoading"></button>
-        </form>
-          <div class="row mt-2 w-100" style="max-width: 320px;">
-            <div class="col-6">
-              <div class="d-flex align-items-center">
-                <p-checkbox class="me-2" [binary]="true" inputId="binary"></p-checkbox>
-                <small>Remember Me</small>
+          
+            <div class="row mt-2 w-100" style="max-width: 320px;">
+              <div class="col-6">
+                <div class="d-flex align-items-center">
+                  <p-checkbox [formControlName]="'remember'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
+                  <small>Remember Me</small>
+                </div>
+              </div>
+              
+              <div class="col-6 text-end">
+                <a [routerLink]="'/forgot-password'">
+                  <small>Forgor Password?</small>
+                </a>
               </div>
             </div>
-            <div class="col-6 text-end">
-              <small>Forgot Password?</small>
-            </div>
-          </div>
+          </form>
       </div>
     </section>
 </div>

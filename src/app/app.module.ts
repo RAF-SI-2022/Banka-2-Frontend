@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {ButtonModule} from "primeng/button";
 import { AppRoutingModule } from './app-routing.module';
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './components/app/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {InputTextModule} from "primeng/inputtext";
@@ -14,15 +15,22 @@ import {CardModule} from "primeng/card";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import {MultiSelectModule} from 'primeng/multiselect';
+
 
 
 import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { ActivityPipe } from './pipes/activity-pipe.pipe';
-import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { AddUserComponent } from './components/add-user/add-user.component';
 import {DialogModule} from "primeng/dialog";
 import {DropdownModule} from "primeng/dropdown";
+import { HomeComponent } from './components/home/home.component';
+import {BreadcrumbModule} from "primeng/breadcrumb";
+import { AddUserComponent } from './components/add-user/add-user.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 
 
@@ -34,10 +42,15 @@ import {DropdownModule} from "primeng/dropdown";
     LoginComponent,
     UsersComponent,
     ActivityPipe,
+    HomeComponent,
+    AddUserComponent,
     EditUserComponent,
-    AddUserComponent
+    ProfileComponent,
+    ForgotPasswordComponent,
+
   ],
   imports: [
+    MultiSelectModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
@@ -54,7 +67,9 @@ import {DropdownModule} from "primeng/dropdown";
     DialogModule,
     DropdownModule,
     TableModule,
-    FormsModule
+    FormsModule,
+    BreadcrumbModule,
+    ToastrModule.forRoot()
   ],
   // exports: [
   //   ActivityPipe

@@ -1,26 +1,39 @@
-<!-- TODO: skloniti navbar ako korisnik nije ulogovan! -->
-
-<header>
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3B82F6;">
+<header *ngIf="checkIsLoggedIn()">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #724bcb;">
     <div class="container-fluid">
       <a [routerLink]="'/'" class="navbar-brand me-5">Banka</a>
       <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a [routerLink]="'/home'" class="nav-link" aria-current="page" [routerLinkActive]="['active']">Početna</a>
+            <a id="homeButton" [routerLink]="'/home'" class="nav-link" aria-current="page" [routerLinkActive]="['active']">Početna</a>
           </li>
           <li class="nav-item">
-            <a [routerLink]="'/users'" class="nav-link" aria-current="page" [routerLinkActive]="['active']">Users</a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="'/add-user'" class="nav-link" aria-current="page" [routerLinkActive]="['active']">New User</a>
+            <a id="usersButton" [routerLink]="'/users'" class="nav-link" aria-current="page" [routerLinkActive]="['active']">Korisnici</a>
           </li>
         </ul>
       </div>
     </div>
+    <ul class="navbar-nav">
+      <li class="nav-item me-3">
+        <a (click)="logOut()" class="nav-link text-nowrap logout-btn" aria-current="page">Izloguj se</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Dropdown
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+          <li><a class="dropdown-item" >Action</a></li>
+          <li><a class="dropdown-item" >Another action</a></li>
+          <li><a class="dropdown-item" >Something else here</a></li>
+        </ul>
+      </li>
+    </ul>
   </nav>
+
 </header>
 
-<!-- <div class="container pt-2"> -->
-  <router-outlet></router-outlet>
-<!-- </div> -->
+<!-- <div class="container-fluid pt-3 pe-3 ps-3">-->
+<!--   <div class="card shadow-sm">-->
+     <router-outlet></router-outlet>
+<!--   </div>-->
+<!-- </div>-->

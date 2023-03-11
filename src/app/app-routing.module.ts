@@ -1,29 +1,40 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { LoginComponent } from "./components/login/login.component";
+import {LoginComponent} from "./components/login/login.component";
 import { UsersComponent } from './components/users/users.component';
-import { AddUserComponent } from "./components/add-user/add-user.component";
+import {HomeComponent} from "./components/home/home.component";
+import {AuthGuard} from "./guards/auth-guard/auth.guard";
+import {LoginGuard} from "./guards/login.guard";
+import { ProfileComponent } from './components/profile/profile.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
     path: "login",
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [LoginGuard]
+  },
+  {
+    path: "profile",
+    component: ProfileComponent,
   },
   {
     path: "users",
-    component: UsersComponent
+    component: UsersComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: "edit-user",
-    component: EditUserComponent
+    path: "home",
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: "add-user",
-    component: AddUserComponent
+    path: "forgot-password",
+    component: ForgotPasswordComponent,
+    canActivate: [LoginGuard]
   },
   {
-    path: '**', redirectTo: 'users'
+    path: '**', redirectTo: 'home'
   },
 
 ];

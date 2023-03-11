@@ -1,36 +1,43 @@
-<form [formGroup]="editUserForm" (submit)="updateUser()">
-    <div class="mb-3">
-        <label for="emailInput" class="form-label">Email</label>
-        <input [formControlName]="'email'" [(ngModel)]="user.email" type="text" class="form-control" id="emailInput" required>
-    </div>
-    <div class="mb-3">
-        <label for="passwordInput" class="form-label">Password</label>
-        <input [formControlName]="'password'" [(ngModel)]="user.password" type="text" class="form-control" id="passwordInput" required>
-    </div>
-    <div class="mb-3">
-        <label for="firstNameInput" class="form-label">First name</label>
-        <input [formControlName]="'firstName'" [(ngModel)]="user.firstName" type="text" class="form-control" id="firstNameInput" aria-describedby="emailHelp" required>
-    </div>
-    <div class="mb-3">
-        <label for="lastNameInput" class="form-label">Last name</label>
-        <input [formControlName]="'lastName'" [(ngModel)]="user.lastName" type="text" class="form-control" id="lastNameInput" required>
-    </div>
-    <div class="mb-3">
-        <label for="JMBGInput" class="form-label">JMBG</label>
-        <input [formControlName]="'JMBG'" [(ngModel)]="user.JMBG" type="text" class="form-control" id="JMBGInput" required>
-    </div>
-    <div class="mb-3">
-        <label for="positionInput" class="form-label">Postition</label>
-        <input [formControlName]="'position'" [(ngModel)]="user.position" type="text" class="form-control" id="positionInput" required>
-    </div>
-    <div class="mb-3">
-        <label for="phoneNumberInput" class="form-label">Phone number</label>
-        <input [formControlName]="'phoneNumber'" [(ngModel)]="user.phoneNumber" type="text" class="form-control" id="phoneNumberInput" required>
-    </div>
-    <div class="form-check">
-        <input [formControlName]="'active'" [(ngModel)]="user.active" type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Active</label>
-    </div>
+<p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
+          header="Izmeni korisnika" [(visible)]="visible" [modal]="true" (onHide)="close()">
 
-    <button type="submit" class="btn btn-primary">Edit</button>
-</form>
+  <div class="edit-user-form">
+    <form [formGroup]="editUserForm" (submit)="editUser()" class="edit-user-form pt-4 pb-4 gap-4">
+      <span class="p-float-label">
+        <input [formControlName]="'firstName'" id="name-input" class="w-100" type="text" pInputText>
+        <label for="name-input">Ime</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'lastName'" id="surname-input" class="w-100" type="text" pInputText>
+        <label for="surname-input">Prezime</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'email'" id="email-input" class="w-100" type="email" pInputText>
+        <label for="email-input">Email</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'phone'" id="phone-input" class="w-100" type="text" pInputText>
+        <label for="phone-input">Broj telefona</label>
+      </span>
+      <div class="row mb-5">
+        <div class="col-6 text-start">
+          <p-dropdown [formControlName]="'jobPosition'" optionLabel="position" placeholder="Pozicija"></p-dropdown>
+        </div>
+        <!-- <div class="col-6 text-end">
+          <p-multiSelect [options]="permissions" [(ngModel)]="selectedPermissions" display="chip" defaultLabel="Odaberi permisije" optionLabel="permissionName" selectedItemsLabel="{0} items selected"></p-multiSelect>
+        </div> -->
+
+
+        <div class="col-6 text-end">
+          <p-checkbox [formControlName]="'active'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
+          <small>Aktivan</small>
+        </div>
+      </div>
+      <!-- <ng-template pTemplate="footer"> -->
+      <button type="submit" pButton pRipple label="Izmeni" class="w-100"></button>
+      <!-- </ng-template> -->
+
+    </form>
+  </div>
+</p-dialog>
+

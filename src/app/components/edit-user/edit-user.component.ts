@@ -1,62 +1,71 @@
-import { Component , OnInit } from '@angular/core';
-import { FormBuilder, FormGroup} from "@angular/forms";
-import { UserService } from 'src/app/services/user-service.service';
-import {ActivatedRoute, Router} from "@angular/router";
-import { User } from 'src/app/model';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.css']
 })
-export class EditUserComponent implements OnInit {
+export class EditUserComponent {
+
+  @Output() editUserEvent = new EventEmitter<any>();
+  @Input() openDialogEvent: boolean
+
 
   editUserForm: FormGroup;
-  user!: User
+  visible: boolean = false;
+  userId: number = -1;
+  userJmbg: string = " "
 
+  constructor(private formBuilder: FormBuilder) {
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, ) {
     this.editUserForm = this.formBuilder.group({
-      email: '',
-      password: '',
       firstName: '',
       lastName: '',
-      JMBG: '',
-      position: '',
-      phoneNumber: '',
-      active: Boolean,
-    });
-
-  }
-
-  ngOnInit(): void {
-    this.getById()
-  }
-
-  updateUser(){
-    this.userService.updateUser(
-      parseInt(<string>this.route.snapshot.paramMap.get('id')),
-       this.editUserForm.get('email')?.value,
-       this.editUserForm.get('password')?.value,
-       this.editUserForm.get('firstName')?.value,
-       this.editUserForm.get('lastName')?.value,
-       this.editUserForm.get('JMBG')?.value,
-       this.editUserForm.get('position')?.value,
-       this.editUserForm.get('phoneNumber')?.value,
-       this.editUserForm.get('active')?.value,
-    ).subscribe(result => {
-      alert("Successfully updated");
-      this.router.navigate(['/users']);
+      email: '',
+      permissions: new FormArray([]),
+      jobPosition: '',
+      active: false,
+      phone: '',
     });
   }
 
-  getById(){
-    this.userService.getUserById(parseInt(<string>this.route.snapshot.paramMap.get('id')))
-      .subscribe(result => {
-        this.user = result;
-      })
+  editUser() {
+    const user = {
+      id: this.userId,
+      firstName: this.editUserForm.get('firstName')?.value,
+      lastName: this.editUserForm.get('lastName')?.value,
+      email: this.editUserForm.get('email')?.value,
+      permissions: this.editUserForm.get('permissions')?.value,
+      jobPosition: this.editUserForm.get('jobPosition')?.value,
+      active: this.editUserForm.get('active')?.value,
+      phone: this.editUserForm.get('phone')?.value,
+      jmbg: this.userJmbg
+    };
+
+    // Saljemo parent komponenti (UsersComponent) objekat editovanog User-a
+    this.editUserEvent.emit(user)
   }
 
+  close() {
+    this.visible = false;
+    this.userId = -1;
+    this.editUserForm.reset();
+  }
 
-
+  open(user: any) {
+    console.log(user)
+    this.userId = user.id
+    this.userJmbg = user.jmbg
+    this.editUserForm.patchValue({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      permissions: user.permissions,
+      jobPosition: user.jobPosition,
+      active: user.active,
+      phone: user.phone
+    });
+    this.visible = true;
+  }
 }

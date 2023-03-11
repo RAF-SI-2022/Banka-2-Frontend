@@ -9,10 +9,10 @@ export class ActivityPipe implements PipeTransform {
 
   transform(value: unknown, ...args: unknown[]): any {
 
-    if(value === 2){
-      return "Koj sam ja klosar" 
+    if(value === true){
+      return "Aktivan"
     }
-    return "Nisi klosar :)";
+    return "Neaktivan";
   }
 
 }

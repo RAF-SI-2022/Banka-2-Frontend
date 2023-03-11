@@ -1,63 +1,87 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import {environment} from "../../environments/environment";
+import {UserCreateDTO, User} from "../models/users.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  getAllUsersUrl: string
-  getUserByIdUrl: string
-  createNewUserUrl: string
-  updateUserUrl: string
-  deleteUserUrl: string
-  activateUserUrl: string
-  deactivateUserUrl: string
+  private headers
 
+  private token: string
 
-  constructor(private httpClient: HttpClient) { 
-    this.getAllUsersUrl = 'localhost:4000/api/users/getAll';
-    this.getUserByIdUrl = 'localhost:4000/api/users/getById/';
-    this.createNewUserUrl = 'localhost:4000/api/users/create';
-    this.updateUserUrl = 'localhost:4000/api/users/update/';
-    this.deleteUserUrl = 'localhost:4000/api/users/delete/';
-    this.activateUserUrl = 'localhost:4000/api/users/activate/';
-    this.deactivateUserUrl = 'localhost:4000/api/users/deactivate/'
-    
-  }
+  constructor(private httpClient: HttpClient) {
 
-  //TODO svuda ubaciti header za bearer token
+    if(localStorage.getItem("token") !== null){
+      this.token = localStorage.getItem("token")!
+    }
+    else{
+      this.token = sessionStorage.getItem("token")!
+    }
 
+    this.headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Authorization', `Bearer ${this.token}`)
+  } 
 
   getAllUsers(): Observable<any>{
-    return this.httpClient.get(this.getAllUsersUrl)
-  }
-  
-  getUserById(id:number): Observable<any>{
-    return this.httpClient.get(this.getUserByIdUrl+id)
+    return this.httpClient.get<any>(
+      `${environment.apiUserServerUrl}`,
+      { headers: this.headers })
   }
 
-  //TODO ubaciti parametre za kreiranje
-  createNewUser(): Observable<any>{
-    return this.httpClient.post(this.createNewUserUrl,{})//i ovde ubaciti parametre
+  getUserById(id:number): Observable<User>{
+    return this.httpClient.get<User>(
+      `${environment.apiUserServerUrl}/`+id,
+      { headers: this.headers })
   }
 
-  //TODO ubaciti parametre jos
-  updateUser(id: number, email: String, password: String, firstName: String, lastName: String, JMBG: String, position: String, phoneNumber: String, active: boolean): Observable<any>{
-    return this.httpClient.put(this.updateUserUrl + id,{email: email, password: password, firstName: firstName, lastName: lastName, JMBG: JMBG, position: position, phoneNumber: phoneNumber, active: active})// i ovde parametre
+  // LUKA NE DIRAJ ARGUMENTE
+
+  createNewUser(firstName: string, lastName: string, email: string, password: string,
+    permissions: any, jobPosition: string,active : string, jmbg: string, phone : string
+    ): Observable<any>{//todo kada bude imao UI proveri dali je dobar
+    return this.httpClient.post<UserCreateDTO>(
+      `${environment.apiUserServerUrl}/register`,
+      {firstName: firstName, lastName:lastName, email:email, password:password
+      ,permissions: permissions, jobPosition: jobPosition, active:active, jmbg: jmbg, phone:phone},
+      { headers: this.headers })
   }
 
-  deleteUser(id: number): Observable<any>{
-    return this.httpClient.delete(this.deleteUserUrl + id);
+  //todo kada bude imao UI proveri dali je dobar
+  updateUser(id: number, email: string, firstName: string, lastName: string,
+    jmbg: string, jobPosition: string, phone: string, active: boolean): Observable<any>{
+    return this.httpClient.put<any>(`${environment.apiUserServerUrl}/` + id,
+      {id: id,email: email,password: "1234567891", firstName: firstName, lastName: lastName,
+        jmbg: jmbg,  phone: phone, jobPosition: jobPosition,active: active},
+      { headers: this.headers })
   }
 
-  //chat gbt kaze da posaljem ceo entitet koj menjam 
-  activateUser(id: number): Observable<any>{
-    return this.httpClient.put(this.activateUserUrl + id,{});
+  deleteUser(id: number): Observable<any>{//todo kada bude imao UI proveri dali je dobar
+    return this.httpClient.delete(`${environment.apiUserServerUrl}/` + id, { headers: this.headers })
   }
+
+  //todo cekaj da backend tim napravi endpoint pre menjanaj activate/deactivate metoda
+  activateUser(id: number): Observable<User>{
+    return this.httpClient.post<User>(
+      `${environment.apiUserServerUrl}/reactivate/` + id,
+      {},
+      { headers: this.headers });
+  }
+
+  //todo cekaj da backend tim napravi endpoint pre menjanaj activate/deactivate metoda
   deactivateUser(id: number): Observable<any>{
-    return this.httpClient.put(this.deactivateUserUrl + id,{})
+    return this.httpClient.post(
+      `${environment.apiUserServerUrl}/deactivate/` + id,
+      {},
+      { headers: this.headers })
+  }
+  getUserData(): Observable<any>{
+    return this.httpClient.get(`${environment.apiUserServerUrl}/email` ,{ headers: this.headers })
   }
 
 }

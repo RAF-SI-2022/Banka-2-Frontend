@@ -1,5 +1,5 @@
 <div>
-  <p-breadcrumb [model]="items"></p-breadcrumb>
+  <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
   <div *ngIf="!loading" class="loading-spinner center">
     <div class="spinner"></div>
   </div>
@@ -151,7 +151,7 @@
                     label="Deaktiviraj" class="p-button-danger p-button-outlined me-2"></button>
             <button (click)="activateUser(user.id)" *ngIf="!user.active" pButton pRipple type="button"
                     label="Aktiviraj" class="p-button-success p-button-outlined me-4"></button>
-            <button (click)="toggleConfirmationDialog(user.id)" pButton pRipple type="button"
+            <button (click)="openDeleteConfirmationDialog(user.id)" pButton pRipple type="button"
                     icon="pi pi-trash" class="p-button-danger p-button-outlined"></button>
           </td>
         </tr>
@@ -167,7 +167,7 @@
 <!-- TODO dodati alighment/css -->
 
 <p-dialog class="conformation-dialog" [style]="{width: '20vw'}" [breakpoints]="{'1280px': '50vw'}"
-          header="Brisanje" [visible]="displayConfirmationDialog" [modal]="true" >
+          header="Brisanje" [closable]="false" [visible]="displayConfirmationDialog" [modal]="true" >
 
   <div class="row">
     <div class="col-12 text-center mt-1 mb-4">
@@ -177,7 +177,7 @@
       <p>Da li ste sigurni da želite da obrišete ovog korisnika?</p>
     </div>
     <div class="col-6 text-end">
-      <button pButton pRipple class="p-button-secondary" label="Odustani" (click)="clearSelectedUserId()"></button>
+      <button pButton pRipple class="p-button-secondary" label="Odustani" (click)="closeDeleteConfirmationDialog()"></button>
     </div>
     <div class="col-6 text-start">
       <button pButton pRipple class="p-button-danger" label="Obriši" (click)="deleteUser()"></button>
@@ -278,6 +278,6 @@
 <!--  </div>-->
 <!--</p-dialog>-->
 
-<app-edit-user (editUserEvent)="updateUser($event)"></app-edit-user>
-<app-add-user (newUserEvent)="printFromChild($event)"></app-add-user>
+<app-edit-user (editUserEvent)="editUser($event)"></app-edit-user>
+<app-add-user (newUserEvent)="addUser($event)"></app-add-user>
 

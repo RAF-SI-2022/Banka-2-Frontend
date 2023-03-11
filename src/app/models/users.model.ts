@@ -1,4 +1,4 @@
-export interface UserModel{
+export interface User{
     id: number
     email: string
     firstName: string
@@ -24,5 +24,5 @@ export interface UserCreateDTO{
     jobPosition: string
     active: boolean
     jmbg: string
-    phone: string 
+    phone: string
 }

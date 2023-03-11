@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { UserService } from '../../services/user-service.service';
 import {MenuItem} from "primeng/api";
-import {Permission, UserModel} from "../../models/users.model";
+import {Permission, User} from "../../models/users.model";
 import {ToastrService} from "ngx-toastr";
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {AddUserComponent} from "../add-user/add-user.component";
@@ -17,27 +17,26 @@ export class UsersComponent {
 
   @ViewChild(AddUserComponent, {static : true}) addUserChild : AddUserComponent
   @ViewChild(EditUserComponent, {static : true}) editUserChild : EditUserComponent
+  // Globalni search
+  @ViewChild('dt') dt: Table | undefined;
+  applyFilterGlobal($event: any, stringVal: any) {
+    this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
+  }
 
 
-  users: UserModel[]; // prazno da ne bi bacalo greske //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
+  users: User[]; // prazno da ne bi bacalo greske //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
 
   selectedPermissions: Permission[];
   permissions: Permission[];
   displayDialog: boolean = false;
   displayAddUserDialog: boolean = false;
-  items: MenuItem[];
-  editingUser: UserModel;
-
+  // Breadcrumbs za navigaciju (Pocetna > Users)
+  breadcrumbItems: MenuItem[];
+  // editingUser: User;
   addUserForm: FormGroup;
-
-
-
-
   roles!: any[];
   selectedRole!: any
-
   loading: boolean = true;
-
   displayConfirmationDialog: boolean = false;
   selectedUserId: number = -1
 
@@ -77,70 +76,12 @@ export class UsersComponent {
     });
   }
 
-  printPermissions(){
-    console.log(this.selectedPermissions);
-
-  }
-
-  toggleConfirmationDialog(id: number){
-    this.displayConfirmationDialog = !this.displayConfirmationDialog;
-    this.selectedUserId = id
-  }
-
-
-  toggleDialog(id: number) {
-    this.userService.getUserById(id).subscribe({
-      next: val =>{
-        console.log(val)
-        this.editingUser = val;
-        //strpati sve podatke u listu usera
-      },
-      error: err =>{
-        //alertovati error
-      }
-    })
-    this.displayDialog = !this.displayDialog;
-  }
-
   toggleAddUserDialog() {
     this.displayAddUserDialog = !this.displayAddUserDialog;
   }
 
-
-  // id: id, email: email, firstName: firstName, lastName: lastName,
-  // JMBG: jmbg, position: jobPosition, phoneNumber: phone, active: active
-  updateUser($event: any) {
-    const editedUser = $event
-    console.log("Ovo ");
-    
-    console.log(editedUser)
-    this.userService.updateUser(
-      editedUser.id,
-      editedUser.email,
-      editedUser.firstName,
-      editedUser.lastName,
-      editedUser.jmbg,
-      editedUser.jobPosition,
-      editedUser.phone,
-      editedUser.active
-    )
-    .subscribe({
-      next: val =>{
-        // TODO LOGIKA ZA SORTIRANJE
-        this.editUserChild.close()
-        this.getUsers()
-      },
-      error: err =>{
-        console.log(err);
-        
-      }
-    })
-  }
-
   ngOnInit(){
-
-
-    this.items = [
+    this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/']},
       {label: 'Korisnici', routerLink: ['/users']}
     ];
@@ -151,12 +92,9 @@ export class UsersComponent {
       {label: 'Lider', value: 'Lider'},
       {label: 'Debil', value: 'Debil'}
   ]
-
-
     this.getUsers()
   }
 
-  // ToastrService.success/error/warning/info/show()
   showToastDelete(){
     this.toastr.error("Korisnik obrisan")
   }
@@ -165,17 +103,9 @@ export class UsersComponent {
     this.toastr.success("Korisnik dodat")
   }
 
-  // Filtriranje globalno
-  @ViewChild('dt') dt: Table | undefined;
-
-  applyFilterGlobal($event: any, stringVal: any) {
-    this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
-  }
-
   // Dovlacenje svih usera
   getUsers(){
-
-    this.userService.getAllUsers()     //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
+    this.userService.getAllUsers()
     .subscribe({
       next: val =>{
         this.users = val;
@@ -186,26 +116,32 @@ export class UsersComponent {
         //alertovati error
       }
     })
-
   }
 
-  clearSelectedUserId(){
+  openDeleteConfirmationDialog(id: number){
+    this.displayConfirmationDialog = true;
+    this.selectedUserId = id
+  }
+
+  closeDeleteConfirmationDialog(){
     this.selectedUserId = -1
-    this.displayConfirmationDialog = !this.displayConfirmationDialog
+    this.displayConfirmationDialog = false;
   }
 
+  // TODO: back treba da ovo implementira
   deleteUser() {
     if(this.selectedUserId === -1){
       alert("greska")
       return;
     }
-    this.userService.deleteUser(this.selectedUserId)     //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
+    this.userService.deleteUser(this.selectedUserId)
       .subscribe({
         next: val =>{
           console.log(val)
           // this.getUsers()
           this.users = this.users.filter(user => user.id != this.selectedUserId);
           this.showToastDelete()
+          this.closeDeleteConfirmationDialog()
           //strpati sve podatke u listu usera
         },
         error: err =>{
@@ -263,52 +199,46 @@ export class UsersComponent {
     // alert(id)
   }
 
-  addUser(){
-
-    // TODO premisije i pozicije
-
-    this.userService.createNewUser(
-      this.addUserForm.get('firstName')?.value,
-      this.addUserForm.get('lastName')?.value,
-      this.addUserForm.get('email')?.value,
-      this.addUserForm.get('password')?.value,
-      [],
-      "master baiter",
-      this.addUserForm.get('active')?.value,
-      this.addUserForm.get('jmbg')?.value,
-      this.addUserForm.get('phone')?.value
-
-    ).subscribe({
-      next: val =>{
-        console.log(val)
-
-    // TODO push novog user u array
-
-        // this.users.push(val)
-        this.getUsers()
-        this.showToastAdd()
-
-        this.displayAddUserDialog = false
-        //strpati sve podatke u listu usera
-      },
-      error: err =>{
-        //alertovati error
-      }
-    })
-  }
-
+  // Otvaramo AddUserComponent komponentu (child)
   callAddUserChild() {
     this.addUserChild.open();
   }
 
+  // Prosledjivanje id-a user-a child-u (komponenti EditUser)
   callEditUserChild(id: number){
-    const user = this.users.filter(user => user.id === id)[0]
-    this.editUserChild.open(user);
+    const user = this.users.find(user => user.id === id) // iz liste svih user-a uzimamo onog sa prosledjenim id
+    this.editUserChild.open(user); // editUserChild je referenca na child komponentu (EditUserComponent)
+  }
+
+  // Event stize iz child komponente (EditUserComponent)
+  editUser($event: any) {
+    const editedUser = $event
+    this.userService.updateUser(
+      editedUser.id,
+      editedUser.email,
+      editedUser.firstName,
+      editedUser.lastName,
+      editedUser.jmbg,
+      editedUser.jobPosition,
+      editedUser.phone,
+      editedUser.active
+    )
+      .subscribe({
+        next: val =>{
+          // TODO LOGIKA ZA SORTIRANJE
+          this.editUserChild.close()
+          this.getUsers()
+        },
+        error: err =>{
+          console.log(err);
+
+        }
+      })
   }
 
 
-
-  printFromChild($event: any) {
+  // Event stize iz child komponente (AddUserComponent), event je objekat User-a
+  addUser($event: any) {
     this.userService.createNewUser(
       $event.firstName,
       $event.lastName,

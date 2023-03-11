@@ -105,7 +105,7 @@ export class UsersComponent {
 
   // Dovlacenje svih usera
   getUsers(){
-    this.userService.getAllUsers()
+
     .subscribe({
       next: val =>{
         this.users = val;

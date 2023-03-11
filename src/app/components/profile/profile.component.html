@@ -2,15 +2,15 @@
     <div class="center mt-5">
         <h1>Moj profil</h1>
         <span>kruzic</span>
-        <span> ime, prezime </span>
+        <span> {{user.firstName  + ' ' + user.lastName}} </span>
     </div>
     <div class="center">
         <h2>Osnovni podaci </h2>
         <p>Ime: {{user.firstName}} </p>
-        <p>Prezime </p>
-        <p>Broj telefona: </p>
-        <p>JMBG:</p>
-        <p>Email: </p>
+        <p>Prezime  {{user.lastName}}</p>
+        <p>Broj telefona: {{user.phone}}</p>
+        <p>JMBG: {{user.jmbg}}</p>
+        <p>Email: {{user.email}}</p>
         <div class="right">
             <button> izvrsi promenu</button>
         </div>    
@@ -22,7 +22,7 @@
         <h2>Promena sifre</h2>
         
         <div class="right">
-            <span>sifra</span>
+            <span type="password" >*********</span>
             <button>promeni sifru</button>
         </div> 
     </div>

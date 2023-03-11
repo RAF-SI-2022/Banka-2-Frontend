@@ -23,13 +23,17 @@ export class AppComponent implements OnInit {
   }
 
   checkIsLoggedIn(){
-    return localStorage.getItem('token') !== null;
+    if((localStorage.getItem('token') || sessionStorage.getItem('token'))!== null){
+      return true;
+    }
+    return false;
   }
 
 
 
   logOut(){
     localStorage.clear()
+    sessionStorage.clear()
     this.router.navigate(['/login']);
   }
   

@@ -5,6 +5,8 @@ import {MenuItem} from "primeng/api";
 import {Permission, UserModel} from "../../models/users.model";
 import {ToastrService} from "ngx-toastr";
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {AddUserComponent} from "../add-user/add-user.component";
+import {EditUserComponent} from "../edit-user/edit-user.component";
 
 @Component({
   selector: 'app-users',
@@ -12,6 +14,10 @@ import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent {
+
+  @ViewChild(AddUserComponent, {static : true}) addUserChild : AddUserComponent
+  @ViewChild(EditUserComponent, {static : true}) editUserChild : EditUserComponent
+
 
   users: UserModel[]; // prazno da ne bi bacalo greske //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
 
@@ -68,9 +74,7 @@ export class UsersComponent {
       active: false,
       jmbg: '',
       phone: '',
-
     });
-
   }
 
   printPermissions(){
@@ -102,8 +106,8 @@ export class UsersComponent {
     this.displayAddUserDialog = !this.displayAddUserDialog;
   }
 
-  updateUser() {
-
+  updateUser($event: any) {
+    console.log(this.editingUser)
   }
 
   ngOnInit(){
@@ -263,9 +267,45 @@ export class UsersComponent {
         //alertovati error
       }
     })
-
-
-
   }
 
+  callAddUserChild() {
+    this.addUserChild.open();
+  }
+
+  callEditUserChild(id: number){
+    const user = this.users.filter(user => user.id === id)[0]
+    this.editUserChild.open(user);
+  }
+
+
+
+  printFromChild($event: any) {
+    this.userService.createNewUser(
+      $event.firstName,
+      $event.lastName,
+      $event.email,
+      $event.password,
+      [],
+      "master baiter",
+      $event.active,
+      $event.jmbg,
+      $event.phone
+    ).subscribe({
+      next: val =>{
+        console.log(val)
+
+        // TODO push novog user u array
+
+        // this.users.push(val)
+        this.getUsers()
+        this.showToastAdd()
+        this.addUserChild.close()
+        //strpati sve podatke u listu usera
+      },
+      error: err =>{
+        //alertovati error
+      }
+    })
+  }
 }

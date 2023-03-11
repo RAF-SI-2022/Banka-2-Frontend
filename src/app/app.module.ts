@@ -31,6 +31,7 @@ import { AddUserComponent } from './components/add-user/add-user.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
 
@@ -47,6 +48,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     EditUserComponent,
     ProfileComponent,
     ForgotPasswordComponent,
+    PageNotFoundComponent,
 
   ],
   imports: [

@@ -30,7 +30,7 @@ export class EditUserComponent {
     });
   }
 
-  addUser() {
+  editUser() {
     const user = {
       id: this.userId,
       firstName: this.editUserForm.get('firstName')?.value,
@@ -43,6 +43,7 @@ export class EditUserComponent {
       jmbg: this.userJmbg
     };
 
+    // Saljemo parent komponenti (UsersComponent) objekat editovanog User-a
     this.editUserEvent.emit(user)
   }
 

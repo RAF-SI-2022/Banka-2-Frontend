@@ -1,8 +1,8 @@
 <p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
-          header="Dodaj korisnika" [(visible)]="visible" [modal]="true" (onHide)="close()">
+          header="Izmeni korisnika" [(visible)]="visible" [modal]="true" (onHide)="close()">
 
   <div class="edit-user-form">
-    <form [formGroup]="editUserForm" (submit)="addUser()" class="edit-user-form pt-4 pb-4 gap-4">
+    <form [formGroup]="editUserForm" (submit)="editUser()" class="edit-user-form pt-4 pb-4 gap-4">
       <span class="p-float-label">
         <input [formControlName]="'firstName'" id="name-input" class="w-100" type="text" pInputText>
         <label for="name-input">Ime</label>
@@ -34,7 +34,7 @@
         </div>
       </div>
       <!-- <ng-template pTemplate="footer"> -->
-      <button type="submit" pButton pRipple label="Dodaj" class="w-100"></button>
+      <button type="submit" pButton pRipple label="Izmeni" class="w-100"></button>
       <!-- </ng-template> -->
 
     </form>

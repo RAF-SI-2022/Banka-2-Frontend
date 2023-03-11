@@ -1,3 +1,7 @@
 .navbar {
   height: 60px;
 }
+
+.logout-btn:hover {
+  cursor: pointer;
+}

@@ -73,5 +73,8 @@ export class UserService {
       {},
       { headers: this.headers })
   }
+  getUserData(): Observable<any>{
+    return this.httpClient.get(`${environment.apiUserServerUrl}/deactivate/` + 'email',{ headers: this.headers })
+  }
 
 }

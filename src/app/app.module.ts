@@ -29,6 +29,7 @@ import { HomeComponent } from './components/home/home.component';
 import {BreadcrumbModule} from "primeng/breadcrumb";
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 
@@ -43,6 +44,7 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     HomeComponent,
     AddUserComponent,
     EditUserComponent,
+    ProfileComponent,
 
   ],
   imports: [

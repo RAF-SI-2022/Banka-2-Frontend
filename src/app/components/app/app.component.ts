@@ -26,10 +26,13 @@ export class AppComponent implements OnInit {
     return localStorage.getItem('token') !== null;
   }
 
+
+
   logOut(){
     localStorage.clear()
     this.router.navigate(['/login']);
   }
+  
 
   title = 'Banka2_front';
 }

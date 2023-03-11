@@ -1,49 +1,37 @@
-
-
 <div>
   <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
   <div *ngIf="!loading" class="loading-spinner center">
     <div class="spinner"></div>
   </div>
   <div *ngIf="loading">
-
-
-    <p-table #dt [value]="users" class="p-datatable-header" 
+    <p-table #dt [value]="users" class="p-datatable-header"
             [rowHover]="true" [rows]="8" [showCurrentPageReport]="true"
             [paginator]="true" [alwaysShowPaginator]="false"
             currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} korisnika"
             [filterDelay]="10" [globalFilterFields]="['firstName','lastName','email','jobPosition','jmbg']">
-
-      <ng-template pTemplate="caption"> 
-        
+      <ng-template pTemplate="caption">
         <div class="table-header row">
           <div class="col-4 text-start table-name">
             <h3>
               Lista korisnika
             </h3>
           </div>
-
-         <div class="col-4 text-center">
-            <form action="" class="search-bar">
-              <input pInputText type="search" name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
-              <button class="search-btn" type="submit">
-                <span>Search</span>
-              </button>
-            </form>
-
-
+          <div id="searchDiv" class="col-4 text-center">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input id="search" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')"placeholder="Pretraži korisnike"/>
+                    </span>
+          </div>
           <div class="col-4 text-end">
             <button id="addUserBtn" pButton pRipple styleClass="p-button-sm"
                     class="p-button-raised p-button-secondary add-employee-btn-lg"
                     label="Dodaj zaposlenog" icon="pi pi-plus"  (click)="callAddUserChild()"></button>
-            <button pButton pRipple styleClass="p-button-sm" 
+            <button pButton pRipple styleClass="p-button-sm"
                     class="p-button-raised p-button-secondary add-employee-btn-sm"
                     icon="pi pi-plus"  (click)="toggleAddUserDialog()"></button>
           </div>
-
         </div>
       </ng-template>
-
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="id" style="min-width: 5rem">
@@ -156,16 +144,14 @@
           </td>
           <td [id]="'buttons' + user.id">
             <!-- <p-button label="Izmeni" class="buttonPadding"></p-button> -->
-
-            <button [id]="'editBtn' + user.id" pButton (click)="callEditUserChild(user.id)" label="Izmeni" type="button" class="p-button-raised p-button-rounded p-button-sm" style="max-height:2rem; max-width: 4.4rem; font-size:10px; margin-left: 3px; margin-top: 3px;"></button>
-            
-            <button [id]="'deactivateBtn' + user.id" (click)="deactivateUser(user.id)" pButton type="button" *ngIf="user.active" label="Deaktiviraj" class="p-button-danger p-button-rounded p-button-sm" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px;  margin-top: 3px" ></button>
-
-            <button [id]="'activateBtn' + user.id" (click)="activateUser(user.id)" *ngIf="!user.active" pButton type="button" label="Aktiviraj" class="p-button-success p-button-rounded p-button-sm" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px;  margin-top: 3px" ></button>
-
-            <button [id]="'deleteBtn' + user.id" (click)="toggleConfirmationDialog(user.id)" pButton type="button" icon="pi pi-trash" class="p-button-danger p-button-rounded p-button-sm" label="Obrisi" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px; text-align: center;  margin-top: 3px" ></button>
-
-
+            <button [id]="'editBtn' + user.id" (click)="callEditUserChild(user.id)" pButton pRipple type="button" label="Izmeni"
+                    class="p-button-secondary p-button-outlined me-2"></button>
+            <button [id]="'deactivateBtn' + user.id" (click)="deactivateUser(user.id)" *ngIf="user.active" pButton pRipple type="button"
+                    label="Deaktiviraj" class="p-button-danger p-button-outlined me-2"></button>
+            <button [id]="'activateBtn' + user.id" (click)="activateUser(user.id)" *ngIf="!user.active" pButton pRipple type="button"
+                    label="Aktiviraj" class="p-button-success p-button-outlined me-4"></button>
+            <button [id]="'deleteBtn' + user.id"  (click)="openDeleteConfirmationDialog(user.id)" pButton pRipple type="button"
+                    icon="pi pi-trash" class="p-button-danger p-button-outlined"></button>
           </td>
         </tr>
       </ng-template>
@@ -173,7 +159,6 @@
           {{item.value}} - per page asas
       </ng-template> -->
     </p-table>
-  
   </div>
 </div>
 

@@ -166,11 +166,23 @@
 <!-- Dialog da li ste sigurni -->
 <!-- TODO dodati alighment/css -->
 
-<p-dialog class="conformation-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
-          header="Warning"[(visible)]="displayConfirmationDialog" [modal]="true" >
-          <p>Da li ste sigurni da zelite da izbrisete ovog usera</p>
-          <button pButton pRipple label="Odustani" (click)="clearSelectedUserId()"></button>
-          <button pButton pRipple label="Izbrisi" (click)="deleteUser()"></button>
+<p-dialog class="conformation-dialog" [style]="{width: '20vw'}" [breakpoints]="{'1280px': '50vw'}"
+          header="Brisanje" [visible]="displayConfirmationDialog" [modal]="true" >
+
+  <div class="row">
+    <div class="col-12 text-center mt-1 mb-4">
+      <i class="pi pi-trash" style="font-size: 6rem; color: red"></i>
+    </div>
+    <div class="col-12 text-center mb-2">
+      <p>Da li ste sigurni da želite da obrišete ovog korisnika?</p>
+    </div>
+    <div class="col-6 text-end">
+      <button pButton pRipple class="p-button-secondary" label="Odustani" (click)="clearSelectedUserId()"></button>
+    </div>
+    <div class="col-6 text-start">
+      <button pButton pRipple class="p-button-danger" label="Obriši" (click)="deleteUser()"></button>
+    </div>
+  </div>
 </p-dialog>
 
 <!-- EDIT USER -->

@@ -26,6 +26,9 @@ export class UserService {
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${this.token}`)
+
+
+      
   } 
 
   getAllUsers(): Observable<any>{
@@ -52,14 +55,45 @@ export class UserService {
       { headers: this.headers })
   }
 
+ 
+
   //todo kada bude imao UI proveri dali je dobar
   updateUser(id: number, email: string, firstName: string, lastName: string,
-    jmbg: string, jobPosition: string, phone: string, active: boolean): Observable<any>{
+    jobPosition: string, phone: string, active: boolean): Observable<any>{
     return this.httpClient.put<any>(`${environment.apiUserServerUrl}/` + id,
-      {id: id,email: email,password: "admin", firstName: firstName, lastName: lastName,
-        jmbg: jmbg,  phone: phone, jobPosition: jobPosition,active: active},
+      {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        permissions: [],
+        jobPosition: jobPosition,
+        active: active,
+        phone: phone
+      },
       { headers: this.headers })
   }
+
+
+  updateProfile(id: number, email: string, firstName: string,
+    lastName: string, phone: string): Observable<any>{
+    return this.httpClient.put<any>(`${environment.apiUserServerUrl}/edit-profile/` + id,
+    {
+      email: email, 
+      firstName: firstName, 
+      lastName: lastName,
+      phone: phone
+    },
+    { headers: this.headers })
+  }
+
+  changePassword(id: number, password: string): Observable<any>{
+    return this.httpClient.put<any>(`${environment.apiUserServerUrl}/password/` + id,
+    {
+      password: password
+    },
+    { headers: this.headers })
+  }
+
 
   deleteUser(id: number): Observable<any>{//todo kada bude imao UI proveri dali je dobar
     return this.httpClient.delete(`${environment.apiUserServerUrl}/` + id, { headers: this.headers })

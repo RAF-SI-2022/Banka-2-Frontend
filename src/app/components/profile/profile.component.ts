@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/users.model';
 import { UserService } from 'src/app/services/user-service.service';
 
@@ -16,7 +17,7 @@ export class ProfileComponent implements OnInit{
   visible: boolean = false;
   visiblePassword: boolean = false;
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder ){
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private toastr: ToastrService ){
 
     this.editProfileForm = this.formBuilder.group({
       firstName: '',
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit{
 
     this.editPasswordForm = this.formBuilder.group({
       password: '',
+      password2: ''
     });
 
   }
@@ -70,57 +72,52 @@ export class ProfileComponent implements OnInit{
 
   editPassword(){
 
-    if(this.editPasswordForm.get('password')?.value.equals(this.editPasswordForm.get('password2')?.value))
+    if(this.editPasswordForm.get('password')?.value === this.editPasswordForm.get('password2')?.value)
     {
 
-      this.userService.updateUser(
-      this.user.id, 
-      this.user.email,
-      this.editPasswordForm.get('password')?.value,
-      this.user.firstName,
-      this.user.lastName,
-      this.user.jmbg,
-      this.user.jobPosition,
-      this.user.phone,
-      this.user.active,
-    ).subscribe({
-      next: val =>{
-        this.close()
-      },
-      error: err =>{
-        console.log(err);
+      console.log(this.editPasswordForm.get('password')?.value)
+      this.userService.changePassword(
+        this.user.id,
+        this.editPasswordForm.get('password')?.value
+        )
+        .subscribe({
+        next: val =>{
+          this.close()
+        },
+        error: err =>{
+          console.log(err);
 
-      }
-    })
+        }
+      })
   }
   else{
     // TODO dodati toast za kada korisnik unese dve razlicite sifre
-     
+    // VALIDACIJA NA HTML PRIMER U 
+    // email: ['', [Validators.required, Validators.email]],
+    // password: ['', Validators.required],
+    // i onda na html-u imas if validated nesto pogledaj na login page
+    // ngIf= isFormValid
   }
       
   }
 
   editProfile() {
 
-      this.userService.updateUser(
-      this.user.id, 
-      this.editProfileForm.get('email')?.value,
-      this.user.password,
-      this.editProfileForm.get('firstName')?.value,
-      this.editProfileForm.get('lastName')?.value,
-      this.editProfileForm.get('jmbg')?.value,
-      this.user.jobPosition,
-      this.editProfileForm.get('phone')?.value,
-      this.user.active,
-    ).subscribe({
-      next: val =>{
-        this.close()
-      },
-      error: err =>{
-        console.log(err);
+      this.userService.updateProfile(
+        this.user.id, 
+        this.editProfileForm.get('email')?.value,
+        this.editProfileForm.get('firstName')?.value,
+        this.editProfileForm.get('lastName')?.value,
+        this.editProfileForm.get('phone')?.value,)
+        .subscribe({
+        next: val =>{
+          this.close()
+        },
+        error: err =>{
+          console.log(err);
 
-      }
-    })
+        }
+      })
 
 
 

@@ -13,26 +13,27 @@ const routes: Routes = [
   {
     path: "login",
     component: LoginComponent,
-    // canActivate: [LoginGuard]
+    canActivate: [LoginGuard]
   },
   {
     path: "profile",
     component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "users",
     component: UsersComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: "home",
     component: HomeComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: "forgot-password",
     component: ForgotPasswordComponent,
-    // canActivate: [LoginGuard]
+    canActivate: [LoginGuard]
   },
   {
     path: "404-not-found",

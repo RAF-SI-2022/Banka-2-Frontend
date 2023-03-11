@@ -12,7 +12,8 @@
         <p>JMBG: {{user.jmbg}}</p>
         <p>Email: {{user.email}}</p>
         <div class="right">
-            <button> izvrsi promenu</button>
+            <button [id]="'editBtn' + user.id" (click)="setVisable()" pButton pRipple type="button" label="Izmeni"
+            class="p-button-secondary p-button-outlined me-2"></button>
         </div>    
     </div>
     
@@ -22,8 +23,64 @@
         <h2>Promena sifre</h2>
         
         <div class="right">
-            <span type="password" >*********</span>
-            <button>promeni sifru</button>
+            <!-- <span type="password" >*********</span> -->
+            <button [id]="'editBtn' + user.id" (click)="setVisablePassword()" pButton pRipple type="button" label="Promeni sifru"
+            class="p-button-secondary p-button-outlined me-2"></button>
         </div> 
     </div>
+
+    <p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
+          header="Izmeni korisnika" [(visible)]="visible" [modal]="true" (onHide)="close()">
+
+    <div class="edit-user-form">
+    <form [formGroup]="editProfileForm" (submit)="editProfile()" class="edit-user-form pt-4 pb-4 gap-4">
+      <span class="p-float-label">
+        <input [formControlName]="'firstName'" id="name-input" class="w-100" type="text" pInputText>
+        <label for="name-input">Ime</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'lastName'" id="surname-input" class="w-100" type="text" pInputText>
+        <label for="surname-input">Prezime</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'email'" id="email-input" class="w-100" type="email" pInputText>
+        <label for="email-input">Email</label>
+      </span>
+      <span class="p-float-label">
+        <input [formControlName]="'phone'" id="phone-input" class="w-100" type="text" pInputText>
+        <label for="phone-input">Broj telefona</label>
+      </span>
+
+      <!-- <ng-template pTemplate="footer"> -->
+      <button type="submit" pButton pRipple label="Izmeni" class="w-100"></button>
+      <!-- </ng-template> -->
+
+        </form>
+        </div>
+    </p-dialog>
+
+<p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
+header="Izmeni korisnika" [(visible)]="visiblePassword" [modal]="true" (onHide)="close()">
+
+<div class="edit-user-form">
+<form [formGroup]="editPasswordForm" (submit)="editPassword()" class="edit-user-form pt-4 pb-4 gap-4">
+    <span class="p-float-label">
+    <input [formControlName]="'password'" id="name-input" class="w-100" type="text" pInputText>
+    <label for="name-input">Lozinka</label>
+    </span>
+    <span class="p-float-label">
+    <input [formControlName]="'password2'" id="surname-input" class="w-100" type="text" pInputText>
+    <label for="surname-input">Ponovo unesite lozinku</label>
+    </span>
+
+
+<!-- <ng-template pTemplate="footer"> -->
+<button type="submit" pButton pRipple label="Izmeni" class="w-100"></button>
+<!-- </ng-template> -->
+
+  </form>
+  </div>
+</p-dialog>
+
+    
 </div>

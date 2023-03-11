@@ -14,6 +14,8 @@ export class EditUserComponent {
 
   editUserForm: FormGroup;
   visible: boolean = false;
+  userId: number = -1;
+  userJmbg: string = " "
 
   constructor(private formBuilder: FormBuilder) {
 
@@ -30,6 +32,7 @@ export class EditUserComponent {
 
   addUser() {
     const user = {
+      id: this.userId,
       firstName: this.editUserForm.get('firstName')?.value,
       lastName: this.editUserForm.get('lastName')?.value,
       email: this.editUserForm.get('email')?.value,
@@ -37,6 +40,7 @@ export class EditUserComponent {
       jobPosition: this.editUserForm.get('jobPosition')?.value,
       active: this.editUserForm.get('active')?.value,
       phone: this.editUserForm.get('phone')?.value,
+      jmbg: this.userJmbg
     };
 
     this.editUserEvent.emit(user)
@@ -44,11 +48,14 @@ export class EditUserComponent {
 
   close() {
     this.visible = false;
+    this.userId = -1;
     this.editUserForm.reset();
   }
 
   open(user: any) {
     console.log(user)
+    this.userId = user.id
+    this.userJmbg = user.jmbg
     this.editUserForm.patchValue({
       firstName: user.firstName,
       lastName: user.lastName,

@@ -106,8 +106,35 @@ export class UsersComponent {
     this.displayAddUserDialog = !this.displayAddUserDialog;
   }
 
+
+  // id: id, email: email, firstName: firstName, lastName: lastName,
+  // JMBG: jmbg, position: jobPosition, phoneNumber: phone, active: active
   updateUser($event: any) {
-    console.log(this.editingUser)
+    const editedUser = $event
+    console.log("Ovo ");
+    
+    console.log(editedUser)
+    this.userService.updateUser(
+      editedUser.id,
+      editedUser.email,
+      editedUser.firstName,
+      editedUser.lastName,
+      editedUser.jmbg,
+      editedUser.jobPosition,
+      editedUser.phone,
+      editedUser.active
+    )
+    .subscribe({
+      next: val =>{
+        // TODO LOGIKA ZA SORTIRANJE
+        this.editUserChild.close()
+        this.getUsers()
+      },
+      error: err =>{
+        console.log(err);
+        
+      }
+    })
   }
 
   ngOnInit(){
@@ -176,6 +203,7 @@ export class UsersComponent {
       .subscribe({
         next: val =>{
           console.log(val)
+          // this.getUsers()
           this.users = this.users.filter(user => user.id != this.selectedUserId);
           this.showToastDelete()
           //strpati sve podatke u listu usera
@@ -295,7 +323,7 @@ export class UsersComponent {
       next: val =>{
         console.log(val)
 
-        // TODO push novog user u array
+        // TODO push novog user u array zameniti sa getUsers
 
         // this.users.push(val)
         this.getUsers()

@@ -43,9 +43,12 @@ export class UserService {
       { headers: this.headers })
   }
 
-  updateUser(user: UserModel, id: number): Observable<any>{//todo kada bude imao UI proveri dali je dobar
-    return this.httpClient.put<UserModel>(`${environment.apiUserServerUrl}/` + id,
-      {email: user.email, firstName: user.firstName, lastName: user.lastName, JMBG: user.jmbg, position: user.jobPosition, phoneNumber: user.phone, active: user.active},
+  //todo kada bude imao UI proveri dali je dobar
+  updateUser(id: number, email: string, firstName: string, lastName: string, 
+    jmbg: string, jobPosition: string, phone: string, active: boolean): Observable<any>{
+    return this.httpClient.put<any>(`${environment.apiUserServerUrl}/` + id,
+      {id: id,email: email,password: "1234567891", firstName: firstName, lastName: lastName, 
+        jmbg: jmbg,  phone: phone, jobPosition: jobPosition,active: active},
       { headers: this.headers })
   }
 

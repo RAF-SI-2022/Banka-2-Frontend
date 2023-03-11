@@ -53,22 +53,20 @@ export class UserService {
   }
 
   deleteUser(id: number): Observable<any>{//todo kada bude imao UI proveri dali je dobar
-    return this.httpClient.delete(
-      `${environment.apiUserServerUrl}/` + id,
-      { headers: this.headers });
+    return this.httpClient.delete(`${environment.apiUserServerUrl}/` + id, { headers: this.headers })
   }
 
   //todo cekaj da backend tim napravi endpoint pre menjanaj activate/deactivate metoda
-  activateUser(id: number): Observable<any>{
-    return this.httpClient.put(
-      `${environment.apiUserServerUrl}/activate/` + id,
+  activateUser(id: number): Observable<User>{
+    return this.httpClient.post<User>(
+      `${environment.apiUserServerUrl}/reactivate/` + id,
       {},
       { headers: this.headers });
   }
 
   //todo cekaj da backend tim napravi endpoint pre menjanaj activate/deactivate metoda
   deactivateUser(id: number): Observable<any>{
-    return this.httpClient.put(
+    return this.httpClient.post(
       `${environment.apiUserServerUrl}/deactivate/` + id,
       {},
       { headers: this.headers })

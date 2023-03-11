@@ -153,50 +153,39 @@ export class UsersComponent {
   }
 
   activateUser(id:number){
-    for(const item of this.users){
-      if(item.id == id){
-        item.active = true;
+    this.userService.activateUser(id)
+    .subscribe({
+      next: val=>{
+        for(const item of this.users){
+          if(item.id == id){
+            item.active = true;
+            this.userService.activateUser(id)
+          }
+        }
+      },
+      error: err=>{
+        alert(err)
       }
-    }
-
-    // this.userService.activateUser(id)
-    // .subscribe({
-    //   next: val=>{
-    //     alert("success")
-    //     for(const item of this.users){
-    //       if(item.id == id){
-    //         item.aktivan = 2;
-    //       }
-    //     }
-    //   },
-    //   error: err=>{
-    //     alert("greska")
-    //   }
-    // })
-    // alert(id)
+    })
   }
-  deactivateUser(id:number){
-    for(const item of this.users){
-      if(item.id == id){
-        item.active = false;
-      }
-    }
 
-    // this.userService.deactivateUser(id)
-    // .subscribe({
-    //   next: val=>{
-    //     alert("success")
-    //     for(const item of this.users){
-    //       if(item.id == id){
-    //         item.aktivan = 2;
-    //       }
-    //     }
-    //   },
-    //   error: err=>{
-    //     alert("greska")
-    //   }
-    // })
-    // alert(id)
+  deactivateUser(id:number){
+    this.userService.deactivateUser(id)
+    .subscribe({
+      next: val=>{
+        console.log("kurac")
+        console.log(val)
+        for(const item of this.users){
+          if(item.id == id){
+            item.active = false;
+            this.userService.deactivateUser(id)
+          }
+        }
+      },
+      error: err=>{
+        alert(err.toString())
+      }
+    })
   }
 
   // Otvaramo AddUserComponent komponentu (child)

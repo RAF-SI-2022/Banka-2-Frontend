@@ -207,7 +207,6 @@ export class UsersComponent {
       editedUser.email,
       editedUser.firstName,
       editedUser.lastName,
-      editedUser.jmbg,
       editedUser.jobPosition,
       editedUser.phone,
       editedUser.active

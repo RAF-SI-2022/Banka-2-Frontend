@@ -175,6 +175,34 @@ export class UsersComponent {
   // Dovlacenje svih usera
   getUsers(){
 
+    this.users = [
+      {
+        id: 1,
+        email: 'mail@mail.com',
+        firstName: "name",
+        lastName: 'surname',
+        password: '123',
+        jmbg: '12345',
+        phone: '4231',
+        jobPosition: 'lead',
+        active: false,
+        permissions: [{ id: 1, permissionName: 'create' }]
+      },
+      {
+        id: 2,
+        email: 'mail@mail.com',
+        firstName: "name",
+        lastName: 'surname',
+        password: '123',
+        jmbg: '12345',
+        phone: '4231',
+        jobPosition: 'lead',
+        active: false,
+        permissions: [{ id: 1, permissionName: 'create' }]
+      },
+
+  ];
+
     this.userService.getAllUsers()     //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
     .subscribe({
       next: val =>{

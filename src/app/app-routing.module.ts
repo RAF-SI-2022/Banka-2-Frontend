@@ -7,6 +7,7 @@ import {AuthGuard} from "./guards/auth-guard/auth.guard";
 import {LoginGuard} from "./guards/login.guard";
 import { ProfileComponent } from './components/profile/profile.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,11 @@ const routes: Routes = [
     canActivate: [LoginGuard]
   },
   {
-    path: '**', redirectTo: 'home'
+    path: "404-not-found",
+    component: PageNotFoundComponent
+  },
+  {
+    path: '**', redirectTo: '404-not-found'
   },
 
 ];

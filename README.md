@@ -1,11 +1,4 @@
-Frontend readme file
-
-# pokusaj komita
-testing2 --
-
-asd
-
-
+# Frontend README file
 
 # Banka2Front
 

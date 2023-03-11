@@ -28,6 +28,7 @@ export class LoginComponent {
   ngOnInit(): void {
   }
 
+  // TODO: proveriti zasto ne loaduje odmah sve usere
   login() {
     this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value ).subscribe({
       next: response => {

@@ -1,31 +1,23 @@
 <div class="background">
- 
     <section class="side">
       <img src="../../../assets/img.png" alt="">
     </section>
-
     <section class="main">
       <div class="login-container">
           <p class="title">Welcome to Banka 2!</p>
           <div class="separator"></div>
           <p class="welcome-message">Please, provide login credential to proceed and have access to all our services</p>
-
           <form [formGroup]="loginForm" (submit)="login()">
             <div class="form-control">
-              <input class="w-100" [formControlName]="'email'" type="email" pInputText required placeholder="Email">
+              <input class="w-100" [formControlName]="'email'" id="email" type="email" pInputText required placeholder="Email">
                 <i class="pi pi-user"></i>
             </div>
             <div class="form-control">
-            <input class="w-100" [formControlName]="'password'" type="password" pInputText required placeholder="Password">
+            <input class="w-100" [formControlName]="'password'" id="password" type="password" pInputText required placeholder="Password">
                 <i class="pi pi-key"></i>
             </div>
-
             <button pButton pRipple label="LOGIN" class="submit" loadingIcon="pi pi-spinner " [disabled]="!isFormValid" [loading]="isLoading"></button>
-
-
         </form>
-
-        
           <div class="row mt-2 w-100" style="max-width: 320px;">
             <div class="col-6">
               <div class="d-flex align-items-center">
@@ -37,53 +29,6 @@
               <small>Forgot Password?</small>
             </div>
           </div>
-       
-        
-        
-        
-
       </div>
     </section>
 </div>
-
-
-
-<!-- <div class="background">
-  <div class="container">
-    <div class="card p-5 shadow text-center">
-      <div class="image-container mx-auto mt-2 mb-5">
-        <i class="pi pi-user mt-4 text-white" style="font-size: 6rem"></i>
-      </div>
-      <form [formGroup]="loginForm" (submit)="login()">
-        <div class="mb-3">
-          <span class="p-input-icon-left w-100">
-            <i class="pi pi-user"></i>
-            <input class="w-100" [formControlName]="'email'" type="email" pInputText required placeholder="Email">
-          </span>
-        </div>
-        <div class="mb-3">
-          <span class="p-input-icon-left w-100">
-            <i class="pi pi-key"></i>
-            <input class="w-100" [formControlName]="'password'" type="password" pInputText required placeholder="Password">
-          </span>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <button pButton pRipple label="LOGIN" class="w-100" loadingIcon="pi pi-spinner " [disabled]="!isFormValid" [loading]="isLoading"></button>
-          </div>
-        </div>
-      </form>
-      <div class="row mt-3">
-        <div class="col-6 text-start">
-          <p-checkbox class="me-2" [binary]="true" inputId="binary"></p-checkbox>
-          <small>Remember Me</small>
-        </div>
-        <div class="col-6 text-end">
-          <small>Forgot Password?</small>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-

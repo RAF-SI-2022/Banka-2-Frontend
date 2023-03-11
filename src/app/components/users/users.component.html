@@ -1,7 +1,7 @@
 
 
 <div>
-  <p-breadcrumb [model]="items"></p-breadcrumb>
+  <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
   <div *ngIf="!loading" class="loading-spinner center">
     <div class="spinner"></div>
   </div>
@@ -22,19 +22,18 @@
               Lista korisnika
             </h3>
           </div>
-          
-          <div class="col-4 text-center">
+
+         <div class="col-4 text-center">
             <form action="" class="search-bar">
               <input pInputText type="search" name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
               <button class="search-btn" type="submit">
                 <span>Search</span>
               </button>
             </form>
-          </div>
 
 
           <div class="col-4 text-end">
-            <button pButton pRipple styleClass="p-button-sm"
+            <button id="addUserBtn" pButton pRipple styleClass="p-button-sm"
                     class="p-button-raised p-button-secondary add-employee-btn-lg"
                     label="Dodaj zaposlenog" icon="pi pi-plus"  (click)="callAddUserChild()"></button>
             <button pButton pRipple styleClass="p-button-sm" 
@@ -58,7 +57,7 @@
             <div class="flex justify-content-between align-items-center">
               Email
               <p-sortIcon field="email"></p-sortIcon>
-              <p-columnFilter type="text" field="email" display="menu" class="ml-auto" matchMode="contains"
+              <p-columnFilter id="emailFilter" type="text" field="email" display="menu" class="ml-auto" matchMode="contains"
                               [showMatchModes]="false" placeholder="Unesite email" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
             </div>
           </th>
@@ -155,15 +154,16 @@
             <span>{{user.active | activityPipe}}</span>
             <!-- <span [class]='customer-badge status-unqualified'>{{user.aktivan}}</span> -->
           </td>
-          <td>
+          <td [id]="'buttons' + user.id">
             <!-- <p-button label="Izmeni" class="buttonPadding"></p-button> -->
-            <button pButton (click)="callEditUserChild(user.id)" label="Izmeni" type="button" class="p-button-raised p-button-rounded p-button-sm" style="max-height:2rem; max-width: 4.4rem; font-size:10px; margin-left: 3px; margin-top: 3px;"></button>
+
+            <button [id]="'editBtn' + user.id" pButton (click)="callEditUserChild(user.id)" label="Izmeni" type="button" class="p-button-raised p-button-rounded p-button-sm" style="max-height:2rem; max-width: 4.4rem; font-size:10px; margin-left: 3px; margin-top: 3px;"></button>
             
-            <button (click)="deactivateUser(user.id)" pButton type="button" *ngIf="user.active" label="Deaktiviraj" class="p-button-danger p-button-rounded p-button-sm" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px;  margin-top: 3px" ></button>
+            <button [id]="'deactivateBtn' + user.id" (click)="deactivateUser(user.id)" pButton type="button" *ngIf="user.active" label="Deaktiviraj" class="p-button-danger p-button-rounded p-button-sm" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px;  margin-top: 3px" ></button>
 
-            <button (click)="activateUser(user.id)" *ngIf="!user.active" pButton type="button" label="Aktiviraj" class="p-button-success p-button-rounded p-button-sm" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px;  margin-top: 3px" ></button>
+            <button [id]="'activateBtn' + user.id" (click)="activateUser(user.id)" *ngIf="!user.active" pButton type="button" label="Aktiviraj" class="p-button-success p-button-rounded p-button-sm" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px;  margin-top: 3px" ></button>
 
-            <button (click)="toggleConfirmationDialog(user.id)" pButton type="button" icon="pi pi-trash" class="p-button-danger p-button-rounded p-button-sm" label="Obrisi" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px; text-align: center;  margin-top: 3px" ></button>
+            <button [id]="'deleteBtn' + user.id" (click)="toggleConfirmationDialog(user.id)" pButton type="button" icon="pi pi-trash" class="p-button-danger p-button-rounded p-button-sm" label="Obrisi" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px; text-align: center;  margin-top: 3px" ></button>
 
 
           </td>
@@ -180,106 +180,25 @@
 <!-- Dialog da li ste sigurni -->
 <!-- TODO dodati alighment/css -->
 
-<p-dialog class="conformation-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
-          header="Warning"[(visible)]="displayConfirmationDialog" [modal]="true" >
-          <p>Da li ste sigurni da zelite da izbrisete ovog usera</p>
-          <button pButton pRipple label="Odustani" (click)="clearSelectedUserId()"></button>
-          <button pButton pRipple label="Izbrisi" (click)="deleteUser()"></button>
+<p-dialog class="conformation-dialog" [style]="{width: '20vw'}" [breakpoints]="{'1280px': '50vw'}"
+          header="Brisanje" [closable]="false" [visible]="displayConfirmationDialog" [modal]="true" >
+
+  <div class="row">
+    <div class="col-12 text-center mt-1 mb-4">
+      <i class="pi pi-trash" style="font-size: 6rem; color: red"></i>
+    </div>
+    <div class="col-12 text-center mb-2">
+      <p>Da li ste sigurni da želite da obrišete ovog korisnika?</p>
+    </div>
+    <div class="col-6 text-end">
+      <button pButton pRipple class="p-button-secondary" label="Odustani" (click)="closeDeleteConfirmationDialog()"></button>
+    </div>
+    <div class="col-6 text-start">
+      <button pButton pRipple class="p-button-danger" label="Obriši" (click)="deleteUser()"></button>
+    </div>
+  </div>
 </p-dialog>
 
-<!-- EDIT USER -->
-
-<!--<p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"-->
-<!--          header="Izmena korisnika" [(visible)]="displayDialog" [modal]="true">-->
-
-<!--  <div class="edit-user-form" *ngIf="editingUser !== undefined">-->
-<!--    <form class="edit-user-form pt-4 pb-4 gap-4">-->
-<!--      <span class="p-float-label">-->
-<!--        <input id="name-input" class="w-100" type="text" pInputText [value]="editingUser.firstName">-->
-<!--        <label for="name-input">Ime</label>-->
-<!--      </span>-->
-<!--      <span class="p-float-label">-->
-<!--        <input id="surname-input" class="w-100" type="text" pInputText [value]="editingUser.lastName">-->
-<!--        <label for="surname-input">Prezime</label>-->
-<!--      </span>-->
-<!--      <span class="p-float-label">-->
-<!--        <input id="email-input" class="w-100" type="email" pInputText [value]="editingUser.email">-->
-<!--        <label for="email-input">Email</label>-->
-<!--      </span>-->
-<!--      <span class="p-float-label">-->
-<!--        <input id="phone-input" class="w-100" type="text" pInputText [value]="editingUser.phone">-->
-<!--        <label for="phone-input">Broj telefona</label>-->
-<!--      </span>-->
-<!--      <div class="row mb-5">-->
-<!--        <div class="col-6 text-start">-->
-<!--          <p-dropdown optionLabel="position" placeholder="Pozicija"></p-dropdown>-->
-<!--        </div>-->
-<!--        <div class="col-6 text-end">-->
-<!--          <p-checkbox class="me-2" [binary]="true" inputId="binary"></p-checkbox>-->
-<!--          <small>Zahtevati odobravanje svake porudžbine</small>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
-
-<!--  <ng-template pTemplate="footer">-->
-<!--    <button pButton pRipple label="Izmeni" class="w-100" (click)="updateUser()"></button>-->
-<!--  </ng-template>-->
-<!--</p-dialog>-->
-
-<!-- ADD USER -->
-
-<!--<p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"-->
-<!--          header="Dodaj korisnika" [(visible)]="displayAddUserDialog" [modal]="true">-->
-
-<!--  <div class="edit-user-form">-->
-<!--    <form [formGroup]="addUserForm" (submit)="addUser()" class="edit-user-form pt-4 pb-4 gap-4">-->
-<!--      <span class="p-float-label">-->
-<!--        <input [formControlName]="'firstName'" id="name-input" class="w-100" type="text" pInputText>-->
-<!--        <label for="name-input">Ime</label>-->
-<!--      </span>-->
-<!--      <span class="p-float-label">-->
-<!--        <input [formControlName]="'lastName'" id="surname-input" class="w-100" type="text" pInputText>-->
-<!--        <label for="surname-input">Prezime</label>-->
-<!--      </span>-->
-<!--      <span class="p-float-label">-->
-<!--        <input [formControlName]="'email'" id="email-input" class="w-100" type="email" pInputText>-->
-<!--        <label for="email-input">Email</label>-->
-<!--      </span>-->
-<!--      <span class="p-float-label">-->
-<!--        <input [formControlName]="'password'" id="password-input" class="w-100" type="password" pInputText>-->
-<!--        <label for="password-input">Lozinka</label>-->
-<!--      </span>-->
-<!--      <span class="p-float-label">-->
-<!--        <input [formControlName]="'phone'" id="phone-input" class="w-100" type="text" pInputText>-->
-<!--        <label for="phone-input">Broj telefona</label>-->
-<!--      </span>-->
-<!--      <span class="p-float-label">-->
-<!--        <input [formControlName]="'jmbg'" id="jmbg-input" class="w-100" type="text" pInputText>-->
-<!--        <label for="jmbg-input">JMBG</label>-->
-<!--      </span>-->
-<!--      <div class="row mb-5">-->
-<!--        <div class="col-6 text-start">-->
-<!--          <p-dropdown [formControlName]="'jobPosition'" optionLabel="position" placeholder="Pozicija"></p-dropdown>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; <div class="col-6 text-end">-->
-<!--          <p-multiSelect [options]="permissions" [(ngModel)]="selectedPermissions" display="chip" defaultLabel="Odaberi permisije" optionLabel="permissionName" selectedItemsLabel="{0} items selected"></p-multiSelect>-->
-<!--        </div> &ndash;&gt;-->
-
-
-<!--        <div class="col-6 text-end">-->
-<!--          <p-checkbox [formControlName]="'active'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>-->
-<!--          <small>Aktivan</small>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      &lt;!&ndash; <ng-template pTemplate="footer"> &ndash;&gt;-->
-<!--        <button type="submit" pButton pRipple label="Dodaj" class="w-100"></button>-->
-<!--      &lt;!&ndash; </ng-template> &ndash;&gt;-->
-
-<!--    </form>-->
-<!--  </div>-->
-<!--</p-dialog>-->
-
-<app-edit-user (editUserEvent)="updateUser($event)"></app-edit-user>
-<app-add-user (newUserEvent)="printFromChild($event)"></app-add-user>
+<app-edit-user (editUserEvent)="editUser($event)"></app-edit-user>
+<app-add-user (newUserEvent)="addUser($event)"></app-add-user>
 

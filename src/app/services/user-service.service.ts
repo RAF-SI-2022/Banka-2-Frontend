@@ -56,7 +56,7 @@ export class UserService {
   updateUser(id: number, email: string, firstName: string, lastName: string,
     jmbg: string, jobPosition: string, phone: string, active: boolean): Observable<any>{
     return this.httpClient.put<any>(`${environment.apiUserServerUrl}/` + id,
-      {id: id,email: email,password: "1234567891", firstName: firstName, lastName: lastName,
+      {id: id,email: email,password: "admin", firstName: firstName, lastName: lastName,
         jmbg: jmbg,  phone: phone, jobPosition: jobPosition,active: active},
       { headers: this.headers })
   }

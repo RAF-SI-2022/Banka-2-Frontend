@@ -26,3 +26,10 @@ export interface UserCreateDTO{
     jmbg: string
     phone: string
 }
+
+export interface Job{
+  name: string
+  permissions: string []
+}
+
+

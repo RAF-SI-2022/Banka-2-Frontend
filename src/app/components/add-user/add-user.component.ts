@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Job} from "../../models/users.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-add-user',
@@ -16,26 +17,32 @@ export class AddUserComponent {
   visible: boolean = false;
   jobs: Job []
   selectedJob: Job
+  isFormValid = false;
 
-  constructor(private formBuilder: FormBuilder) {
+
+  constructor(private formBuilder: FormBuilder, private toastr: ToastrService) {
     this.addUserForm = this.formBuilder.group({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
       permissions: [],
       jobPosition: '',
       active: false,
-      jmbg: '',
-      phone: '',
-      selectedJob: ''
+      jmbg: ['', Validators.required],
+      phone: ['', Validators.required],
+      selectedJob: ['', Validators.required]
     });
 
     this.jobs = [
-      {name:"ADMIN" , permissions: ["ADMIN_USER"]},
-      {name:"SUPERVISOR" , permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
-      {name:"AGENT" , permissions: ["READ_USERS"]}
+      {name: "ADMIN", permissions: ["ADMIN_USER"]},
+      {name: "SUPERVISOR", permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
+      {name: "AGENT", permissions: ["READ_USERS"]}
     ]
+
+    this.addUserForm.valueChanges.subscribe(() => {
+      this.isFormValid = this.addUserForm.valid;
+    });
   }
 
   addUser() {
@@ -50,7 +57,6 @@ export class AddUserComponent {
       jmbg: this.addUserForm.get('jmbg')?.value,
       phone: this.addUserForm.get('phone')?.value,
     };
-
     this.newUserEvent.emit(user)
   }
 

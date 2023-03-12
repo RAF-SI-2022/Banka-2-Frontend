@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Job} from "../../models/users.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-edit-user',
@@ -20,18 +21,19 @@ export class EditUserComponent {
 
   jobs: Job []
   selectedJob: Job
+  isFormValid = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private toastr: ToastrService) {
 
     this.editUserForm = this.formBuilder.group({
-      firstName: '',
-      lastName: '',
-      email: '',
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       permissions: new FormArray([]),
       jobPosition: '',
       active: false,
-      phone: '',
-      selectedJob: ''
+      phone: ['', Validators.required],
+      selectedJob: ['', Validators.required]
     });
 
     this.jobs = [
@@ -39,23 +41,31 @@ export class EditUserComponent {
       {name:"SUPERVISOR" , permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
       {name:"AGENT" , permissions: ["READ_USERS"]}
     ]
+
+    this.editUserForm.valueChanges.subscribe(() => {
+      this.isFormValid = this.editUserForm.valid;
+    });
   }
 
   editUser() {
-    const user = {
-      id: this.userId,
-      firstName: this.editUserForm.get('firstName')?.value,
-      lastName: this.editUserForm.get('lastName')?.value,
-      email: this.editUserForm.get('email')?.value,
-      permissions: this.selectedJob.permissions,
-      jobPosition: this.selectedJob.name,
-      active: this.editUserForm.get('active')?.value,
-      phone: this.editUserForm.get('phone')?.value,
-      jmbg: this.userJmbg
-    };
+    if (this.selectedJob !== undefined) {
+      const user = {
+        id: this.userId,
+        firstName: this.editUserForm.get('firstName')?.value,
+        lastName: this.editUserForm.get('lastName')?.value,
+        email: this.editUserForm.get('email')?.value,
+        permissions: this.selectedJob.permissions,
+        jobPosition: this.selectedJob.name,
+        active: this.editUserForm.get('active')?.value,
+        phone: this.editUserForm.get('phone')?.value,
+        jmbg: this.userJmbg
+      };
+      // Saljemo parent komponenti (UsersComponent) objekat editovanog User-a
+      this.editUserEvent.emit(user)
+    }
+    else this.toastr.error("Morate izabrati poziciju")
 
-    // Saljemo parent komponenti (UsersComponent) objekat editovanog User-a
-    this.editUserEvent.emit(user)
+
   }
 
   close() {

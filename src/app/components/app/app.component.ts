@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import {ToastrService} from "ngx-toastr";
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({

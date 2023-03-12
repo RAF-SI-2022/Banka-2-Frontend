@@ -8,9 +8,9 @@ import {
   UrlTree
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import {LoginComponent} from "../../components/login/login.component";
+import {LoginComponent} from "../components/login/login.component";
 import {ToastrService} from "ngx-toastr";
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../services/auth.service";
 
 @Injectable({
   providedIn: 'root'

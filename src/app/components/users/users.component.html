@@ -1,164 +1,205 @@
-<div>
+
+<div class="body-container">
   <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
   <div *ngIf="!loading" class="loading-spinner center">
     <div class="spinner"></div>
   </div>
   <div *ngIf="loading">
-    <p-table #dt [value]="users" class="p-datatable-header"
-            [rowHover]="true" [rows]="8" [showCurrentPageReport]="true"
-            [paginator]="true" [alwaysShowPaginator]="false"
-            currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} korisnika"
-            [filterDelay]="10" [globalFilterFields]="['firstName','lastName','email','jobPosition','jmbg']">
-      <ng-template pTemplate="caption">
-        <div class="table-header row">
-          <div class="col-4 text-start table-name">
-            <h3>
-              Lista korisnika
-            </h3>
+
+    <div class="table-container">
+      <p-table #dt [value]="users" class="p-datatable-header"
+              [rowHover]="true" [rows]="8" [showCurrentPageReport]="true"
+              [paginator]="true" [alwaysShowPaginator]="false"
+              currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} korisnika"
+              [filterDelay]="10" [globalFilterFields]="['firstName','lastName','email','jobPosition','jmbg']">
+        <ng-template pTemplate="caption">
+
+          <div class="table-header row">
+            <div class="col-4 text-start table-name">
+              <h3 style="font-size: medium;">
+                Lista korisnika
+              </h3>
+            </div>
+
+            <div class="col-4 text-center">
+              <form action="" class="search-bar">
+                <input pInputText type="search" name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
+                <button class="search-btn" type="submit">
+                  <span>Search</span>
+                </button>
+              </form>
+            </div>
+
+            <div class="col-4 text-end">
+              <button id="addUserBtn" pButton pRipple styleClass="p-button-sm"
+                      class="p-button-raised p-button-secondary add-employee-btn-lg"
+                      label="Dodaj zaposlenog" icon="pi pi-plus" style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;" (click)="callAddUserChild()"></button>
+              <button pButton pRipple styleClass="p-button-sm" 
+                      class="p-button-raised p-button-secondary add-employee-btn-sm"
+                      icon="pi pi-plus"  (click)="toggleAddUserDialog()"></button>
+            </div>
           </div>
-          <div id="searchDiv" class="col-4 text-center">
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <input id="search" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')"placeholder="Pretraži korisnike"/>
-                    </span>
-          </div>
-          <div class="col-4 text-end">
-            <button id="addUserBtn" pButton pRipple styleClass="p-button-sm"
-                    class="p-button-raised p-button-secondary add-employee-btn-lg"
-                    label="Dodaj zaposlenog" icon="pi pi-plus"  (click)="callAddUserChild()"></button>
-            <button pButton pRipple styleClass="p-button-sm"
-                    class="p-button-raised p-button-secondary add-employee-btn-sm"
-                    icon="pi pi-plus"  (click)="toggleAddUserDialog()"></button>
-          </div>
-        </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th pSortableColumn="id" style="min-width: 5rem">
-            <div class="flex justify-content-between align-items-center">
-              ID
-              <p-sortIcon field="id"></p-sortIcon>
-              <!-- <p-columnFilter type="numeric" field="id" display="menu" class="ml-auto"></p-columnFilter> -->
-            </div>
-          </th>
-          <th pSortableColumn="email" style="min-width: 10rem">
-            <div class="flex justify-content-between align-items-center">
-              Email
-              <p-sortIcon field="email"></p-sortIcon>
-              <p-columnFilter id="emailFilter" type="text" field="email" display="menu" class="ml-auto" matchMode="contains"
-                              [showMatchModes]="false" placeholder="Unesite email" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
-            </div>
-          </th>
-          <th pSortableColumn="firstName" style="min-width: 6rem">
-            <div class="flex justify-content-between align-items-center">
-              Ime
-              <p-sortIcon field="firstName"></p-sortIcon>
-              <p-columnFilter type="text" field="firstName" display="menu" class="ml-auto" [showMatchModes]="false"
-                              [showOperator]="false" placeholder="Unesite ime" [showAddButton]="false"></p-columnFilter>
-            </div>
-          </th>
-          <th pSortableColumn="lastName" style="min-width: 8rem">
-            <div class="flex justify-content-between align-items-center">
-              Prezime
-              <p-sortIcon field="lastName"></p-sortIcon>
-              <p-columnFilter type="text" field="lastName" display="menu" class="ml-auto" [showMatchModes]="false"
-                              [showOperator]="false" placeholder="Unesite prezime" [showAddButton]="false"></p-columnFilter>
-            </div>
-          </th>
-          <th style="min-width: 10rem">
-            <div class="flex justify-content-between align-items-center">
-              JMBG
-            </div>
-          </th>
-          <th pSortableColumn="jobPosition" style="min-width: 7rem">
-            <div class="flex justify-content-between align-items-center">
-              Pozicija
-              <p-sortIcon field="jobPosition"></p-sortIcon>
-              <p-columnFilter field="jobPosition" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
-                              [showAddButton]="false" display="menu" class="ml-auto">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-dropdown [ngModel]="value" [options]="roles" (onChange)="filter($event.value)"
-                              placeholder="Izaberi poziciju">
-                    <ng-template let-option pTemplate="item">
-                      <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                    </ng-template>
-                  </p-dropdown>
-                </ng-template>
-              </p-columnFilter>
-              <!-- <p-columnFilter type="text" field="position" display="menu" class="ml-auto"  matchMode="contains" [showMatchModes]="false" [showOperator]="false"[showAddButton]="false"></p-columnFilter> -->
-            </div>
-          </th>
-          <th style="min-width: 10rem">
-            <div class="flex justify-content-between align-items-center">
-              Broj telefona
-            </div>
-          </th>
-          <th style="min-width: 2rem">
-            <div class="flex justify-content-between align-items-center">
-              Aktivan
-            </div>
-          </th>
-          <th style="min-width: 12rem">
-            <div class="flex justify-content-between align-items-center">
-              Ostale opcije
-            </div>
-          </th>
+        </ng-template>
+        
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="id" style="min-width: 5rem; font-size: 12px; ">
+              <div class="flex justify-content-between align-items-center">
+                ID
+                <p-sortIcon field="id"></p-sortIcon>
+                <!-- <p-columnFilter type="numeric" field="id" display="menu" class="ml-auto"></p-columnFilter> -->
+              </div>
+            </th>
+            <th pSortableColumn="email" style="min-width: 2rem; font-size: 12px;" >
+              <div class="flex justify-content-between align-items-center">
+                Email
+                <p-sortIcon field="email"></p-sortIcon>
+                <p-columnFilter id="emailFilter" type="text" field="email" display="menu" class="ml-auto" matchMode="contains"
+                                [showMatchModes]="false" placeholder="Unesite email" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="firstName" style="min-width: 8rem; font-size: 12px; ">
+              <div class="flex justify-content-between align-items-center">
+                Ime
+                <p-sortIcon field="firstName"></p-sortIcon>
+                <p-columnFilter  type="text" field="firstName" display="menu" class="ml-auto" [showMatchModes]="false"
+                                [showOperator]="false" placeholder="Unesite ime" [showAddButton]="false"></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="lastName" style="min-width: 10rem; font-size: 12px; ">
+              <div class="flex justify-content-between align-items-center">
+                Prezime
+                <p-sortIcon field="lastName"></p-sortIcon>
+                <p-columnFilter type="text" field="lastName" display="menu" class="ml-auto" [showMatchModes]="false"
+                                [showOperator]="false" placeholder="Unesite prezime" [showAddButton]="false"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 2rem; font-size: 12px; ">
+              <div class="flex justify-content-between align-items-center">
+                JMBG
+              </div>
+            </th>
+            <th pSortableColumn="jobPosition" style="min-width: 10rem; font-size: 12px; ">
+              <div class="flex justify-content-between align-items-center">
+                Pozicija
+                <p-sortIcon field="jobPosition"></p-sortIcon>
+                <p-columnFilter field="jobPosition" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu" class="ml-auto">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" 
+                                placeholder="Izaberi poziciju">
+                      <ng-template let-option pTemplate="item">
+                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-template>
+                </p-columnFilter>
+                <!-- <p-columnFilter type="text" field="position" display="menu" class="ml-auto"  matchMode="contains" [showMatchModes]="false" [showOperator]="false"[showAddButton]="false"></p-columnFilter> -->
+              </div>
+            </th>
+            <th style="max-width: 10rem; font-size: 12px;">
+              <div class="flex justify-content-between align-items-center">
+                Broj telefona
+              </div>
+            </th>
+            <th style="min-width: 2rem; font-size: 12px;">
+              <div class="flex justify-content-between align-items-center">
+                Aktivan
+              </div>
+            </th>
+            <th style="min-width: 10rem; font-size: 12px; ">
+              <div class="flex justify-content-between align-items-center">
+                Ostale opcije
+              </div>
+            </th>
 
 
-          <!-- <th>ID</th> -->
-          <!-- <th>Email</th> -->
-          <!-- <th>Ime i prezime</th> -->
-          <!-- <th>JMBG</th> -->
-          <!-- <th>Pozicija</th> -->
-          <!-- <th>Broj telefona</th> -->
-          <!-- <th>Aktivan</th> -->
-          <!-- <th>Ostale opcije</th> -->
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-user>
-        <tr>
-          <td>{{user.id}}</td>
-          <td>{{user.email}}</td>
-          <!-- <td>{{user.first_name }} {{user.last_name}}</td> -->
-          <td>
-            <span class="p-column-title">firstName</span>
-            <span>{{user.firstName}}</span>
-            <!-- <span>{{user.first_name + ' ' + user.last_name}}</span> -->
-          </td>
-          <td>
-            <span class="p-column-title">lastName</span>
-            <span>{{user.lastName}}</span>
-          </td>
-          <!-- <td>{{user.last_name}}</td> -->
-          <td>{{user.jmbg}}</td>
-          <td>
-            <span class="p-column-title">jobPosition</span>
-            <span>{{user.jobPosition}}</span>
-          </td>
-          <td>{{user.phone}}</td>
-          <!-- <td>{{user.aktivan}}</td> -->
-          <td>
-            <span class="p-column-title">active</span>
-            <span>{{user.active | activityPipe}}</span>
-            <!-- <span [class]='customer-badge status-unqualified'>{{user.aktivan}}</span> -->
-          </td>
-          <td [id]="'buttons' + user.id">
-            <!-- <p-button label="Izmeni" class="buttonPadding"></p-button> -->
-            <button [id]="'editBtn' + user.id" (click)="callEditUserChild(user.id)" pButton pRipple type="button" label="Izmeni"
-                    class="p-button-secondary p-button-outlined me-2"></button>
-            <button [id]="'deactivateBtn' + user.id" (click)="deactivateUser(user.id)" *ngIf="user.active" pButton pRipple type="button"
-                    label="Deaktiviraj" class="p-button-danger p-button-outlined me-2"></button>
-            <button [id]="'activateBtn' + user.id" (click)="activateUser(user.id)" *ngIf="!user.active" pButton pRipple type="button"
-                    label="Aktiviraj" class="p-button-success p-button-outlined me-4"></button>
-            <button [id]="'deleteBtn' + user.id"  (click)="openDeleteConfirmationDialog(user.id)" pButton pRipple type="button"
-                    icon="pi pi-trash" class="p-button-danger p-button-outlined"></button>
-          </td>
-        </tr>
-      </ng-template>
-      <!-- <ng-template let-item pTemplate="paginatordropdownitem">
-          {{item.value}} - per page asas
-      </ng-template> -->
-    </p-table>
+            <!-- <th>ID</th> -->
+            <!-- <th>Email</th> -->
+            <!-- <th>Ime i prezime</th> -->
+            <!-- <th>JMBG</th> -->
+            <!-- <th>Pozicija</th> -->
+            <!-- <th>Broj telefona</th> -->
+            <!-- <th>Aktivan</th> -->
+            <!-- <th>Ostale opcije</th> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr style="font-size: 12px;">
+            <td>{{user.id}}</td>
+            <td>{{user.email}}</td>
+            <!-- <td>{{user.first_name }} {{user.last_name}}</td> -->
+            <td>
+              <span class="p-column-title">firstName</span>
+              <span>{{user.firstName}}</span>
+              <!-- <span>{{user.first_name + ' ' + user.last_name}}</span> -->
+            </td>
+            <td>
+              <span class="p-column-title">lastName</span>
+              <span>{{user.lastName}}</span>
+            </td>
+            <!-- <td>{{user.last_name}}</td> -->
+            <td>{{user.jmbg}}</td>
+            <td>
+              <span class="p-column-title">jobPosition</span>
+              <span>{{user.jobPosition}}</span>
+            </td>
+            <td>{{user.phone}}</td>
+            <!-- <td>{{user.aktivan}}</td> -->
+            <td>
+              <span class="p-column-title">active</span>
+              <span>{{user.active | activityPipe}}</span>
+              <!-- <span [class]='customer-badge status-unqualified'>{{user.aktivan}}</span> -->
+            </td>
+            <td [id]="'buttons' + user.id">
+
+              <button [id]="'editBtn' + user.id" type="button" (click)="callEditUserChild(user.id)" class="btn-i btn-circle">
+                <span>
+                  <i class="pi pi-user-edit"></i>
+                </span>
+                <div class="wave"></div>
+              </button>
+
+
+              <button [id]="'deactivateBtn' + user.id" type="button" *ngIf="user.active" (click)="deactivateUser(user.id)" class="btn-i btn-circle">
+                <span>
+                  <i class="pi pi-lock"></i>
+                </span>
+                <div class="wave"></div>
+              </button>
+
+              <button [id]="'activateBtn' + user.id" *ngIf="!user.active" type="button" (click)="deactivateUser(user.id)" class="btn-i btn-circle">
+                <span>
+                  <i class="pi pi-lock-open"></i>
+                </span>
+                <div class="wave"></div>
+              </button>
+
+              <button [id]="'deleteBtn' + user.id" type="button" (click)="openDeleteConfirmationDialog(user.id)" class="btn-i btn-circle">
+                <span>
+                  <i class="pi pi-trash"></i>
+                </span>
+                <div class="wave"></div>
+              </button>
+            
+
+<!-- 
+              <button [id]="'editBtn' + user.id" pButton (click)="callEditUserChild(user.id)" label="Izmeni" type="button" class="p-button-raised p-button-rounded p-button-sm" style="max-height:2rem; max-width: 4.4rem; font-size:10px; margin-left: 3px; margin-top: 3px;"></button>
+              
+              <button [id]="'deactivateBtn' + user.id" (click)="deactivateUser(user.id)" pButton type="button" *ngIf="user.active" label="Deaktiviraj" class="p-button-danger p-button-rounded p-button-sm" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px;  margin-top: 3px" ></button>
+
+              <button [id]="'activateBtn' + user.id" (click)="activateUser(user.id)" *ngIf="!user.active" pButton type="button" label="Aktiviraj" class="p-button-success p-button-rounded p-button-sm" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px;  margin-top: 3px" ></button>
+
+              <button [id]="'deleteBtn' + user.id" (click)="openDeleteConfirmationDialog(user.id)" pButton type="button" icon="pi pi-trash" class="p-button-danger p-button-rounded p-button-sm" label="Obrisi" style="max-height:2rem; max-width: 5.6625rem; font-size:10px; margin-left: 3px; text-align: center;  margin-top: 3px" ></button> -->
+
+            </td>
+          </tr>
+        </ng-template>
+        <!-- <ng-template let-item pTemplate="paginatordropdownitem">
+            {{item.value}} - per page asas
+        </ng-template> -->
+      </p-table>
+    </div>
   </div>
 </div>
 

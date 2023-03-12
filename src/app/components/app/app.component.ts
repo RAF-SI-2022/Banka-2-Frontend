@@ -14,6 +14,7 @@ import { UserService } from 'src/app/services/user-service.service';
 export class AppComponent implements OnInit {
 
   userLogged: boolean = false;
+  display: boolean = false;
 
   constructor(private userService: UserService, private primengConfig: PrimeNGConfig,private router: Router, private toastr: ToastrService) {}
 
@@ -32,6 +33,9 @@ export class AppComponent implements OnInit {
   }
 
 
+  showSidebar() {
+    this.display = true;
+  }
 
   logOut(){
     localStorage.clear()
@@ -39,7 +43,7 @@ export class AppComponent implements OnInit {
     this.userService.resetToken()
     this.router.navigate(['/login']);
   }
-  
+
 
   title = 'Banka2_front';
 }

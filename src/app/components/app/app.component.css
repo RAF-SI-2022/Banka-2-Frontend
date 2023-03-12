@@ -17,3 +17,7 @@
 .pi-cog {
   color: white;
 }
+
+.sidebar-nav-item:hover{
+  background-color: #eff3f7;
+}

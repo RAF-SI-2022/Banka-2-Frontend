@@ -32,6 +32,7 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import {SidebarModule} from "primeng/sidebar";
 
 
 
@@ -51,28 +52,29 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     PageNotFoundComponent,
 
   ],
-  imports: [
-    MultiSelectModule,
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    InputTextModule,
-    RippleModule,
-    CheckboxModule,
-    ReactiveFormsModule,
-    PasswordModule,
-    ButtonModule,
-    BrowserAnimationsModule,
-    CardModule,
-    HttpClientModule,
-    TableModule,
-    DialogModule,
-    DropdownModule,
-    TableModule,
-    FormsModule,
-    BreadcrumbModule,
-    ToastrModule.forRoot()
-  ],
+    imports: [
+        MultiSelectModule,
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        InputTextModule,
+        RippleModule,
+        CheckboxModule,
+        ReactiveFormsModule,
+        PasswordModule,
+        ButtonModule,
+        BrowserAnimationsModule,
+        CardModule,
+        HttpClientModule,
+        TableModule,
+        DialogModule,
+        DropdownModule,
+        TableModule,
+        FormsModule,
+        BreadcrumbModule,
+        ToastrModule.forRoot(),
+        SidebarModule
+    ],
   // exports: [
   //   ActivityPipe
   // ],

@@ -25,13 +25,15 @@ export class AuthGuard {
     | boolean
     | UrlTree {
 
-    if(localStorage.getItem('token') || sessionStorage.getItem('token') !== null) {
       return true;
-    } else {
-      this.toastr.error("Morate se ulogovati prvo.")
-      this.router.navigate(['/login'])
-      return false
-    }
+
+    // if(localStorage.getItem('token') || sessionStorage.getItem('token') !== null) {
+    //   return true;
+    // } else {
+    //   this.toastr.error("Morate se ulogovati prvo.")
+    //   this.router.navigate(['/login'])
+    //   return false
+    // }
   }
 
 

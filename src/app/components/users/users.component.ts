@@ -205,6 +205,7 @@ export class UsersComponent {
     this.userService.updateUser(
       editedUser.id,
       editedUser.email,
+      editedUser.permissions,
       editedUser.firstName,
       editedUser.lastName,
       editedUser.jobPosition,
@@ -232,25 +233,23 @@ export class UsersComponent {
       $event.lastName,
       $event.email,
       $event.password,
-      [],
-      "master baiter",
+      $event.permissions,
+      $event.jobPosition,
       $event.active,
       $event.jmbg,
       $event.phone
     ).subscribe({
       next: val =>{
-        console.log(val)
 
-        // TODO push novog user u array zameniti sa getUsers
+        console.log(val)//todo skloni
 
-        // this.users.push(val)
         this.getUsers()
         this.showToastAdd()
         this.addUserChild.close()
         //strpati sve podatke u listu usera
       },
       error: err =>{
-        //alertovati error
+        console.log(err)
       }
     })
   }

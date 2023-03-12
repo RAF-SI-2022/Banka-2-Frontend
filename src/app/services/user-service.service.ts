@@ -28,8 +28,8 @@ export class UserService {
       .set('Authorization', `Bearer ${this.token}`)
 
 
-      
-  } 
+
+  }
 
   getAllUsers(): Observable<any>{
     return this.httpClient.get<any>(
@@ -55,17 +55,16 @@ export class UserService {
       { headers: this.headers })
   }
 
- 
+
 
   //todo kada bude imao UI proveri dali je dobar
-  updateUser(id: number, email: string, firstName: string, lastName: string,
-    jobPosition: string, phone: string, active: boolean): Observable<any>{
+  updateUser(id: number, email: string, permissions:[], firstName: string, lastName: string, jobPosition: string, phone: string, active: boolean): Observable<any>{
     return this.httpClient.put<any>(`${environment.apiUserServerUrl}/` + id,
       {
         email: email,
         firstName: firstName,
         lastName: lastName,
-        permissions: [],
+        permissions: permissions,
         jobPosition: jobPosition,
         active: active,
         phone: phone
@@ -78,8 +77,8 @@ export class UserService {
     lastName: string, phone: string): Observable<any>{
     return this.httpClient.put<any>(`${environment.apiUserServerUrl}/edit-profile/` + id,
     {
-      email: email, 
-      firstName: firstName, 
+      email: email,
+      firstName: firstName,
       lastName: lastName,
       phone: phone
     },

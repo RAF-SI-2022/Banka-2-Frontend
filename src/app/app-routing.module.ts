@@ -11,9 +11,12 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 const routes: Routes = [
   {
-    path: "login",
+    path: "",
     component: LoginComponent,
     canActivate: [LoginGuard]
+  },
+  {
+    path: "login", redirectTo: ""
   },
   {
     path: "profile",

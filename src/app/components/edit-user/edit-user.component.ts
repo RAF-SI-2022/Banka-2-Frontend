@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {Job} from "../../models/users.model";
 
 @Component({
   selector: 'app-edit-user',
@@ -17,6 +18,9 @@ export class EditUserComponent {
   userId: number = -1;
   userJmbg: string = " "
 
+  jobs: Job []
+  selectedJob: Job
+
   constructor(private formBuilder: FormBuilder) {
 
     this.editUserForm = this.formBuilder.group({
@@ -27,7 +31,14 @@ export class EditUserComponent {
       jobPosition: '',
       active: false,
       phone: '',
+      selectedJob: ''
     });
+
+    this.jobs = [
+      {name:"ADMIN" , permissions: ["ADMIN_USER"]},
+      {name:"SUPERVISOR" , permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
+      {name:"AGENT" , permissions: ["READ_USERS"]}
+    ]
   }
 
   editUser() {
@@ -36,8 +47,8 @@ export class EditUserComponent {
       firstName: this.editUserForm.get('firstName')?.value,
       lastName: this.editUserForm.get('lastName')?.value,
       email: this.editUserForm.get('email')?.value,
-      permissions: this.editUserForm.get('permissions')?.value,
-      jobPosition: this.editUserForm.get('jobPosition')?.value,
+      permissions: this.selectedJob.permissions,
+      jobPosition: this.selectedJob.name,
       active: this.editUserForm.get('active')?.value,
       phone: this.editUserForm.get('phone')?.value,
       jmbg: this.userJmbg

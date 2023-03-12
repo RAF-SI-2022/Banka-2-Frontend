@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {Job} from "../../models/users.model";
 
 @Component({
   selector: 'app-add-user',
@@ -13,20 +14,28 @@ export class AddUserComponent {
 
   addUserForm: FormGroup;
   visible: boolean = false;
+  jobs: Job []
+  selectedJob: Job
 
   constructor(private formBuilder: FormBuilder) {
-
     this.addUserForm = this.formBuilder.group({
       firstName: '',
       lastName: '',
       email: '',
       password: '',
-      permissions: new FormArray([]),
+      permissions: [],
       jobPosition: '',
       active: false,
       jmbg: '',
       phone: '',
+      selectedJob: ''
     });
+
+    this.jobs = [
+      {name:"ADMIN" , permissions: ["ADMIN_USER"]},
+      {name:"SUPERVISOR" , permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
+      {name:"AGENT" , permissions: ["READ_USERS"]}
+    ]
   }
 
   addUser() {
@@ -35,8 +44,8 @@ export class AddUserComponent {
       lastName: this.addUserForm.get('lastName')?.value,
       email: this.addUserForm.get('email')?.value,
       password: this.addUserForm.get('password')?.value,
-      permissions: this.addUserForm.get('permissions')?.value,
-      jobPosition: this.addUserForm.get('jobPosition')?.value,
+      permissions: this.selectedJob.permissions,
+      jobPosition: this.selectedJob.name,
       active: this.addUserForm.get('active')?.value,
       jmbg: this.addUserForm.get('jmbg')?.value,
       phone: this.addUserForm.get('phone')?.value,

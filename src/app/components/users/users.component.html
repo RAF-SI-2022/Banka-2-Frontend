@@ -184,7 +184,7 @@
                 <div class="wave"></div>
               </button>
 
-              <button [id]="'activateBtn' + user.id" *ngIf="!user.active" type="button" (click)="deactivateUser(user.id)" class="btn-i btn-circle">
+              <button [id]="'activateBtn' + user.id" *ngIf="!user.active" type="button" (click)="activateUser(user.id)" class="btn-i btn-circle">
                 <span>
                   <i class="pi pi-lock-open"></i>
                 </span>

@@ -23,7 +23,7 @@
                     </span>
           </div>
           <div class="col-4 text-end">
-            <button id="addUserBtn" pButton pRipple styleClass="p-button-sm"
+            <button id="addUserBtn" pButton pRipple styleClass="p-button-sm" *ngIf="getPermission('CREATE_USERS')"
                     class="p-button-raised p-button-secondary add-employee-btn-lg"
                     label="Dodaj zaposlenog" icon="pi pi-plus"  (click)="callAddUserChild()"></button>
             <button pButton pRipple styleClass="p-button-sm"
@@ -140,17 +140,17 @@
           <td>
             <span class="p-column-title">active</span>
             <span>{{user.active | activityPipe}}</span>
-            <!-- <span [class]='customer-badge status-unqualified'>{{user.aktivan}}</span> -->
+            <!-- <span [class]='customer-badge status-unqualified'>{{user.aktivan}}</span> ADMIN_USER, READ_USERS, CREATE_USERS, UPDATE_USERS, DELETE_USERS -->
           </td>
           <td [id]="'buttons' + user.id">
             <!-- <p-button label="Izmeni" class="buttonPadding"></p-button> -->
-            <button [id]="'editBtn' + user.id" (click)="callEditUserChild(user.id)" pButton pRipple type="button" label="Izmeni"
+            <button [id]="'editBtn' + user.id" (click)="callEditUserChild(user.id)" *ngIf="getPermission('UPDATE_USERS')" pButton pRipple type="button" label="Izmeni"
                     class="p-button-secondary p-button-outlined me-2"></button>
-            <button [id]="'deactivateBtn' + user.id" (click)="deactivateUser(user.id)" *ngIf="user.active" pButton pRipple type="button"
+            <button [id]="'deactivateBtn' + user.id" (click)="deactivateUser(user.id)" *ngIf="user.active && getPermission('UPDATE_USERS')" pButton pRipple type="button"
                     label="Deaktiviraj" class="p-button-danger p-button-outlined me-2"></button>
-            <button [id]="'activateBtn' + user.id" (click)="activateUser(user.id)" *ngIf="!user.active" pButton pRipple type="button"
+            <button [id]="'activateBtn' + user.id" (click)="activateUser(user.id)" *ngIf="!user.active && getPermission('UPDATE_USERS')" pButton pRipple type="button"
                     label="Aktiviraj" class="p-button-success p-button-outlined me-4"></button>
-            <button [id]="'deleteBtn' + user.id"  (click)="openDeleteConfirmationDialog(user.id)" pButton pRipple type="button"
+            <button [id]="'deleteBtn' + user.id"  (click)="openDeleteConfirmationDialog(user.id)" *ngIf="!user.active && getPermission('UPDATE_USERS')" pButton pRipple type="button"
                     icon="pi pi-trash" class="p-button-danger p-button-outlined"></button>
           </td>
         </tr>

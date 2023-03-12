@@ -27,6 +27,20 @@ export class UserService {
       .set('Authorization', `Bearer ${this.token}`)
   }
 
+  resetToken(){
+    this.token = ''
+  }
+
+  setToken(token: string){
+
+    this.headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Authorization', `Bearer ${token}`)
+
+  }
+
+
   getAllUsers(): Observable<any>{
     return this.httpClient.get<any>(
       `${environment.apiUserServerUrl}`,

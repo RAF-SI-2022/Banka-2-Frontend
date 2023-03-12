@@ -37,15 +37,18 @@ export class LoginComponent {
           localStorage.setItem("token", <string>response.body?.token)
           // console.log(response.body?.permissions)
           localStorage.setItem('permissions', JSON.stringify(response.body?.permissions))
+          this.userService.setToken(<string>response.body?.token)
           // this.userService.getUserPermissions()
           this.router.navigate(["users"]); //todo kada se uradi bolji ui, treba promeniti rutu na koju idemo nakon login-a
 
           localStorage.setItem("remember","local")//da znamo gde se nalazi
+          
         }
         else{
           sessionStorage.setItem("token", <string>response.body?.token)
           // console.log(response.body?.permissions)
           sessionStorage.setItem('permissions', JSON.stringify(response.body?.permissions))
+          this.userService.setToken(<string>response.body?.token)
           this.router.navigate(["users"]);
         }
       },

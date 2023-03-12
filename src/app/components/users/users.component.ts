@@ -62,7 +62,7 @@ export class UsersComponent {
   ngOnInit(){
 
     this.breadcrumbItems = [
-      {label: 'Početna', routerLink: ['/']},
+      {label: 'Početna', routerLink: ['/home']},
       {label: 'Korisnici', routerLink: ['/users']}
     ];
 

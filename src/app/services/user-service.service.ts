@@ -117,4 +117,8 @@ export class UserService {
     return this.httpClient.get(`${environment.apiUserServerUrl}/email` ,{ headers: this.headers })
   }
 
+  getUserPermissions(id: number): Observable<any>{
+    return this.httpClient.get(`${environment.apiUserServerUrl}/permissions` + id,{ headers: this.headers })
+  }
+
 }

@@ -23,16 +23,13 @@ export class UsersComponent {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
-
-  users: User[]; // prazno da ne bi bacalo greske //todo PROMENI USERA DA KORISTI IZ users.model.ts A NE model.ts DA BI SVI IMALI ISTI MODEL
-
+  users: User[];
   selectedPermissions: Permission[];
   permissions: Permission[];
   displayDialog: boolean = false;
   displayAddUserDialog: boolean = false;
   // Breadcrumbs za navigaciju (Pocetna > Users)
   breadcrumbItems: MenuItem[];
-  // editingUser: User;
   addUserForm: FormGroup;
   roles!: any[];
   selectedRole!: any
@@ -40,29 +37,10 @@ export class UsersComponent {
   displayConfirmationDialog: boolean = false;
   selectedUserId: number = -1
 
+  currentUserRoles: string
 
 
   constructor(private userService: UserService, private toastr: ToastrService, private formBuilder: FormBuilder){
-    this.selectedPermissions = [];
-    this.permissions = [
-      {
-        id: 1,
-        permissionName: "ADMIN_USER"
-      },
-      {
-        id: 1,
-        permissionName: "CREATE_USERS"
-      },
-      {
-        id: 1,
-        permissionName: "CREATE_USERS"
-      },
-      {
-        id: 1,
-        permissionName: "CREATE_USERS"
-      }
-    ]
-
     this.addUserForm = this.formBuilder.group({
       firstName: '',
       lastName: '',
@@ -74,6 +52,7 @@ export class UsersComponent {
       jmbg: '',
       phone: '',
     });
+
   }
 
   toggleAddUserDialog() {
@@ -86,11 +65,10 @@ export class UsersComponent {
       {label: 'Korisnici', routerLink: ['/users']}
     ];
 
-    // TODO promeniti labele i value na role
     this.roles = [
-      {label: 'Doktor', value: 'Doktor'},
-      {label: 'Lider', value: 'Lider'},
-      {label: 'Debil', value: 'Debil'}
+      {label: 'Administrator', value: 'ADMINISTRATOR'},
+      {label: 'Supervisor', value: 'SUPERVISOR'},
+      {label: 'Agent', value: 'AGENT'}
   ]
     this.getUsers()
   }
@@ -101,6 +79,17 @@ export class UsersComponent {
 
   showToastAdd(){
     this.toastr.success("Korisnik dodat")
+  }
+
+  getPermission(permission: string): boolean {
+    if (localStorage.getItem("remember") !== null){
+      if (!!localStorage.getItem("permissions")?.includes("ADMIN_USER")) return true
+      else return !!localStorage.getItem("permissions")?.includes(permission)
+    }
+    else{
+      if (!!sessionStorage.getItem("permissions")?.includes("ADMIN_USER")) return true
+      else return !!sessionStorage.getItem("permissions")?.includes(permission)
+    }
   }
 
   // Dovlacenje svih usera

@@ -34,7 +34,7 @@
         </div>
       </div>
       <!-- <ng-template pTemplate="footer"> -->
-      <button type="submit" pButton pRipple label="Izmeni" class="w-100"></button>
+      <button type="submit" pButton pRipple label="Izmeni" [disabled]="!isFormValid" class="w-100"></button>
       <!-- </ng-template> -->
 
     </form>

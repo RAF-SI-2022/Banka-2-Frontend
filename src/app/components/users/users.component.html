@@ -23,7 +23,7 @@
 
             <div class="col-4 text-center">
               <form action="" class="search-bar">
-                <input pInputText type="search" name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
+                <input pInputText name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
                 <button class="search-btn" type="submit">
                   <span>Search</span>
                 </button>
@@ -33,10 +33,10 @@
             <div class="col-4 text-end">
               <button id="addUserBtn" pButton pRipple styleClass="p-button-sm"
                       class="p-button-raised p-button-secondary add-employee-btn-lg"
-                      label="Dodaj zaposlenog" icon="pi pi-plus" style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;" (click)="callAddUserChild()"></button>
+                      label="Dodaj zaposlenog"  icon="pi pi-plus" style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;" (click)="callAddUserChild()"></button>
               <button pButton pRipple styleClass="p-button-sm" 
                       class="p-button-raised p-button-secondary add-employee-btn-sm"
-                      icon="pi pi-plus"  (click)="toggleAddUserDialog()"></button>
+                      icon="pi pi-plus"  (click)="callAddUserChild()"></button>
             </div>
           </div>
         </ng-template>
@@ -45,71 +45,88 @@
           <tr>
             <th pSortableColumn="id" style="min-width: 5rem; font-size: 12px; ">
               <div class="flex justify-content-between align-items-center">
-                ID
-                <p-sortIcon field="id"></p-sortIcon>
+                <div class="icon-container">
+                  <p style="margin-bottom: 0; margin-top: 2px;">ID</p>
+                  <p-sortIcon field="id"></p-sortIcon>
+                </div>
                 <!-- <p-columnFilter type="numeric" field="id" display="menu" class="ml-auto"></p-columnFilter> -->
               </div>
             </th>
-            <th pSortableColumn="email" style="min-width: 2rem; font-size: 12px;" >
+            <th pSortableColumn="email" style="min-width: 3rem; font-size: 12px;" >
               <div class="flex justify-content-between align-items-center">
-                Email
-                <p-sortIcon field="email"></p-sortIcon>
+                <!-- Email -->
+                <div class="icon-container">
+                  <p style="margin-bottom: 0; margin-top: 2px;">Email</p>
+                    <p-sortIcon field="email"></p-sortIcon>
+                    <p-columnFilter id="emailFilter" type="text" field="email" display="menu" class="ml-auto" matchMode="contains"
+                                    [showMatchModes]="false" placeholder="Unesite email" [showOperator]="false" [showAddButton]="false">
+                    </p-columnFilter>
+                </div>
+                <!-- <p-sortIcon field="email"></p-sortIcon>
                 <p-columnFilter id="emailFilter" type="text" field="email" display="menu" class="ml-auto" matchMode="contains"
-                                [showMatchModes]="false" placeholder="Unesite email" [showOperator]="false" [showAddButton]="false"></p-columnFilter>
+                                [showMatchModes]="false" placeholder="Unesite email" [showOperator]="false" [showAddButton]="false">
+                </p-columnFilter> -->
               </div>
             </th>
             <th pSortableColumn="firstName" style="min-width: 8rem; font-size: 12px; ">
               <div class="flex justify-content-between align-items-center">
-                Ime
-                <p-sortIcon field="firstName"></p-sortIcon>
-                <p-columnFilter  type="text" field="firstName" display="menu" class="ml-auto" [showMatchModes]="false"
+                <div class="icon-container">
+                  <p style="margin-bottom: 0; margin-top: 2px;">Ime</p>
+                  <p-sortIcon field="firstName"></p-sortIcon>
+                  <p-columnFilter  type="text" field="firstName" display="menu" class="ml-auto" [showMatchModes]="false"
                                 [showOperator]="false" placeholder="Unesite ime" [showAddButton]="false"></p-columnFilter>
+                </div>
               </div>
             </th>
             <th pSortableColumn="lastName" style="min-width: 10rem; font-size: 12px; ">
               <div class="flex justify-content-between align-items-center">
-                Prezime
-                <p-sortIcon field="lastName"></p-sortIcon>
-                <p-columnFilter type="text" field="lastName" display="menu" class="ml-auto" [showMatchModes]="false"
+                <div class="icon-container">
+                  <p style="margin-bottom: 0; margin-top: 2px;">Prezime</p>
+                  <p-sortIcon field="lastName"></p-sortIcon>
+                  <p-columnFilter type="text" field="lastName" display="menu" class="ml-auto" [showMatchModes]="false"
                                 [showOperator]="false" placeholder="Unesite prezime" [showAddButton]="false"></p-columnFilter>
+                </div>
               </div>
             </th>
             <th style="min-width: 2rem; font-size: 12px; ">
               <div class="flex justify-content-between align-items-center">
-                JMBG
+                <p style="margin-bottom: 0; margin-top: 2px;">JMBG</p>
               </div>
             </th>
             <th pSortableColumn="jobPosition" style="min-width: 10rem; font-size: 12px; ">
               <div class="flex justify-content-between align-items-center">
-                Pozicija
-                <p-sortIcon field="jobPosition"></p-sortIcon>
-                <p-columnFilter field="jobPosition" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
-                                [showAddButton]="false" display="menu" class="ml-auto">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-dropdown [ngModel]="value" 
-                                placeholder="Izaberi poziciju">
-                      <ng-template let-option pTemplate="item">
-                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                      </ng-template>
-                    </p-dropdown>
-                  </ng-template>
-                </p-columnFilter>
-                <!-- <p-columnFilter type="text" field="position" display="menu" class="ml-auto"  matchMode="contains" [showMatchModes]="false" [showOperator]="false"[showAddButton]="false"></p-columnFilter> -->
+                <div class="icon-container">
+                  <p style="margin-bottom: 0; margin-top: 2px;">Pozicija</p>
+                  <!-- Pozicija -->
+                  <p-sortIcon field="jobPosition"></p-sortIcon>
+                  <p-columnFilter field="jobPosition" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                                  [showAddButton]="false" display="menu" class="ml-auto">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-dropdown [ngModel]="value" 
+                                  placeholder="Izaberi poziciju">
+                        <ng-template let-option pTemplate="item">
+                          <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                      </p-dropdown>
+                    </ng-template>
+                  </p-columnFilter>
+                  <!-- <p-columnFilter type="text" field="position" display="menu" class="ml-auto"  matchMode="contains" [showMatchModes]="false" [showOperator]="false"[showAddButton]="false"></p-columnFilter> -->
+                </div>
               </div>
             </th>
             <th style="max-width: 10rem; font-size: 12px;">
               <div class="flex justify-content-between align-items-center">
-                Broj telefona
+                <p style="margin-bottom: 0; margin-top: 2px;">Broj telefona</p>
               </div>
             </th>
             <th style="min-width: 2rem; font-size: 12px;">
               <div class="flex justify-content-between align-items-center">
-                Aktivan
+                <p style="margin-bottom: 0; margin-top: 2px;">Aktivan</p>
               </div>
             </th>
             <th style="min-width: 10rem; font-size: 12px; ">
               <div class="flex justify-content-between align-items-center">
-                Ostale opcije
+                <p style="margin-bottom: 0; margin-top: 2px;">Ostale opcije</p>
               </div>
             </th>
 
@@ -159,7 +176,6 @@
                 </span>
                 <div class="wave"></div>
               </button>
-
 
               <button [id]="'deactivateBtn' + user.id" type="button" *ngIf="user.active" (click)="deactivateUser(user.id)" class="btn-i btn-circle">
                 <span>

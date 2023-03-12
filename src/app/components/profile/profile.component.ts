@@ -35,10 +35,14 @@ export class ProfileComponent implements OnInit{
   }
 
   ngOnInit(){
+    console.log("Pozvao sam")
     this.userService.getUserData()
     .subscribe({
       next: val =>{
+        console.log("uspeo sam")
         this.user = val
+        console.log(this.user)
+        console.log(sessionStorage.getItem("token"))
         this.editProfileForm.setValue(
           {
             firstName: this.user.firstName,
@@ -50,6 +54,7 @@ export class ProfileComponent implements OnInit{
         )
       },
       error: err =>{
+        console.log("nisam uspeo")
         console.log(err)
       }
     })

@@ -4,6 +4,38 @@
     /* border: 3px solid green; */
     padding: 10px;
 }
+
 .right {
     text-align: right;
 }
+
+.buttonPadding{
+    padding-right: 3px;
+  }
+  
+  .edit-user-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .table-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .table-name > h3 {
+    margin-bottom: 0;
+  }
+  
+  @media only screen and (max-width: 960px) {
+    .add-employee-btn-lg {
+      display: none;
+    }
+  }
+  
+  @media only screen and (min-width: 960px) {
+    .add-employee-btn-sm {
+      display: none;
+    }
+  }

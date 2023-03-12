@@ -23,7 +23,7 @@
 
             <div class="col-4 text-center">
               <form action="" class="search-bar">
-                <input pInputText type="search" name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
+                <input pInputText name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
                 <button class="search-btn" type="submit">
                   <span>Search</span>
                 </button>
@@ -159,7 +159,6 @@
                 </span>
                 <div class="wave"></div>
               </button>
-
 
               <button [id]="'deactivateBtn' + user.id" type="button" *ngIf="user.active" (click)="deactivateUser(user.id)" class="btn-i btn-circle">
                 <span>

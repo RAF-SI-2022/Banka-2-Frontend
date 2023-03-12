@@ -5,3 +5,15 @@
 .logout-btn:hover {
   cursor: pointer;
 }
+
+.dropdown-item:hover {
+  cursor: pointer;
+}
+
+.navbar-nav .nav-link.active {
+  border-bottom: 2px solid #ffffff;
+}
+
+.pi-cog {
+  color: white;
+}

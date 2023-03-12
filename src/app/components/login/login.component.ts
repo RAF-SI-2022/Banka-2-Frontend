@@ -30,20 +30,21 @@ export class LoginComponent {
   ngOnInit(): void {
   }
 
-  // TODO: proveriti zasto ne loaduje odmah sve usere
   login() {
     this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value ).subscribe({
       next: response => {
         if(this.loginForm.get('remember')?.value){
           localStorage.setItem("token", <string>response.body?.token)
-          console.log(response.body?.permissions)
+          // console.log(response.body?.permissions)
           localStorage.setItem('permissions', JSON.stringify(response.body?.permissions))
           // this.userService.getUserPermissions()
           this.router.navigate(["users"]); //todo kada se uradi bolji ui, treba promeniti rutu na koju idemo nakon login-a
+
+          localStorage.setItem("remember","local")//da znamo gde se nalazi
         }
         else{
           sessionStorage.setItem("token", <string>response.body?.token)
-          console.log(response.body?.permissions)
+          // console.log(response.body?.permissions)
           sessionStorage.setItem('permissions', JSON.stringify(response.body?.permissions))
           this.router.navigate(["users"]);
         }
@@ -56,7 +57,7 @@ export class LoginComponent {
 
   forgotPass(){
     alert("Zaboravio pass");
-    
+
   }
 
 }

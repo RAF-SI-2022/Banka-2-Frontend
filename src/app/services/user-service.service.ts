@@ -10,7 +10,6 @@ import {UserCreateDTO, User} from "../models/users.model";
 export class UserService {
 
   private headers
-
   private token: string
 
   constructor(private httpClient: HttpClient) {
@@ -26,9 +25,6 @@ export class UserService {
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${this.token}`)
-
-
-
   }
 
   getAllUsers(): Observable<any>{
@@ -43,10 +39,7 @@ export class UserService {
       { headers: this.headers })
   }
 
-  // LUKA NE DIRAJ ARGUMENTE
-
-  createNewUser(firstName: string, lastName: string, email: string, password: string,
-    permissions: any, jobPosition: string,active : string, jmbg: string, phone : string
+  createNewUser(firstName: string, lastName: string, email: string, password: string, permissions: any, jobPosition: string,active : string, jmbg: string, phone : string
     ): Observable<any>{//todo kada bude imao UI proveri dali je dobar
     return this.httpClient.post<UserCreateDTO>(
       `${environment.apiUserServerUrl}/register`,
@@ -55,9 +48,6 @@ export class UserService {
       { headers: this.headers })
   }
 
-
-
-  //todo kada bude imao UI proveri dali je dobar
   updateUser(id: number, email: string, permissions:[], firstName: string, lastName: string, jobPosition: string, phone: string, active: boolean): Observable<any>{
     return this.httpClient.put<any>(`${environment.apiUserServerUrl}/` + id,
       {
@@ -71,7 +61,6 @@ export class UserService {
       },
       { headers: this.headers })
   }
-
 
   updateProfile(id: number, email: string, firstName: string,
     lastName: string, phone: string): Observable<any>{
@@ -93,12 +82,10 @@ export class UserService {
     { headers: this.headers })
   }
 
-
   deleteUser(id: number): Observable<any>{//todo kada bude imao UI proveri dali je dobar
     return this.httpClient.delete(`${environment.apiUserServerUrl}/` + id, { headers: this.headers })
   }
 
-  //todo cekaj da backend tim napravi endpoint pre menjanaj activate/deactivate metoda
   activateUser(id: number): Observable<User>{
     return this.httpClient.post<User>(
       `${environment.apiUserServerUrl}/reactivate/` + id,
@@ -106,13 +93,13 @@ export class UserService {
       { headers: this.headers });
   }
 
-  //todo cekaj da backend tim napravi endpoint pre menjanaj activate/deactivate metoda
   deactivateUser(id: number): Observable<any>{
     return this.httpClient.post(
       `${environment.apiUserServerUrl}/deactivate/` + id,
       {},
       { headers: this.headers })
   }
+
   getUserData(): Observable<any>{
     return this.httpClient.get(`${environment.apiUserServerUrl}/email` ,{ headers: this.headers })
   }

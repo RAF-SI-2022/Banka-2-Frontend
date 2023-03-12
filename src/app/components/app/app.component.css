@@ -21,3 +21,7 @@
 .sidebar-nav-item:hover{
   background-color: #eff3f7;
 }
+
+.dropdown-menu {
+  min-width: 6rem;
+}

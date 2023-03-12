@@ -32,7 +32,7 @@ export class UserService {
   }
 
   setToken(token: string){
-
+    this.token=token
     this.headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
@@ -105,6 +105,7 @@ export class UserService {
       `${environment.apiUserServerUrl}/reactivate/` + id,
       {},
       { headers: this.headers });
+
   }
 
   deactivateUser(id: number): Observable<any>{

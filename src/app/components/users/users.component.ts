@@ -149,7 +149,7 @@ export class UsersComponent {
         for(const item of this.users){
           if(item.id == id){
             item.active = true;
-            this.userService.activateUser(id)
+            // this.userService.activateUser(id)
           }
         }
       },

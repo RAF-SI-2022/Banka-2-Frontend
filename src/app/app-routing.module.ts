@@ -8,6 +8,8 @@ import {LoginGuard} from "./guards/login.guard";
 import { ProfileComponent } from './components/profile/profile.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PageForbidenComponent } from './components/page-forbiden/page-forbiden.component';
+import { NotAuthorisedGuard } from './guards/not.authorised.guard';
 
 const routes: Routes = [
   {
@@ -26,7 +28,7 @@ const routes: Routes = [
   {
     path: "users",
     component: UsersComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, NotAuthorisedGuard]
   },
   {
     path: "home",
@@ -37,6 +39,10 @@ const routes: Routes = [
     path: "forgot-password",
     component: ForgotPasswordComponent,
     canActivate: [LoginGuard]
+  },
+  {
+    path: "403-forbiden",
+    component: PageForbidenComponent
   },
   {
     path: "404-not-found",

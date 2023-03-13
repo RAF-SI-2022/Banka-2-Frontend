@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit {
     this.editProfileForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]]
     });
 
@@ -52,7 +51,6 @@ export class ProfileComponent implements OnInit {
             {
               firstName: this.user.firstName,
               lastName: this.user.lastName,
-              email: this.user.email,
               phone: this.user.phone
             }
           )
@@ -75,7 +73,6 @@ export class ProfileComponent implements OnInit {
             {
               firstName: this.user.firstName,
               lastName: this.user.lastName,
-              email: this.user.email,
               phone: this.user.phone,
             }
           )
@@ -129,7 +126,7 @@ export class ProfileComponent implements OnInit {
 
     this.userService.updateProfile(
       this.user.id,
-      this.editProfileForm.get('email')?.value,
+      this.user.email,
       this.editProfileForm.get('firstName')?.value,
       this.editProfileForm.get('lastName')?.value,
       this.editProfileForm.get('phone')?.value,)

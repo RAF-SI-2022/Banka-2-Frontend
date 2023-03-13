@@ -44,15 +44,16 @@ export class AppComponent implements OnInit {
     return false;
   }
 
-  getPermission(permission: string): boolean {
+  getPermission(): boolean {
     if (localStorage.getItem("remember") !== null){
-      if (!!localStorage.getItem("permissions")?.includes("ADMIN_USER")) return true
-      else return !!localStorage.getItem("permissions")?.includes(permission)
+      if (!!localStorage.getItem("permissions")?.includes("ADMIN_USER")) 
+      return true
     }
     else{
-      if (!!sessionStorage.getItem("permissions")?.includes("ADMIN_USER")) return true
-      else return !!sessionStorage.getItem("permissions")?.includes(permission)
+      if (!!sessionStorage.getItem("permissions")?.includes("ADMIN_USER")) 
+      return true
     }
+    return false
   }
 
   showSidebar() {

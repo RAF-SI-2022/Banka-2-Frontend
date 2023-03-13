@@ -52,7 +52,7 @@ export class LoginComponent {
               next: val => {
 
                 if (val.active) {
-                  this.router.navigate(["users"]);
+                  this.router.navigate(["home"]);
                 } else {
                   localStorage.clear()
                   this.userNotActive = true;
@@ -81,7 +81,7 @@ export class LoginComponent {
 
                 console.log(val)
                 if (val.active) {
-                  this.router.navigate(["users"]);
+                  this.router.navigate(["home"]);
                 } else {
                   sessionStorage.clear()
                   this.userNotActive = true;

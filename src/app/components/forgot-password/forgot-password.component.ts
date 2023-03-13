@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,8 +10,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ForgotPasswordComponent {
 
-  constructor(private router: Router, private toastr: ToastrService){
+  resetPasswordForm: FormGroup;
 
+  constructor(private router: Router, private toastr: ToastrService, private formBuilder: FormBuilder){
+    this.resetPasswordForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
   }
 
 

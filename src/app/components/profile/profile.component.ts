@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/users.model';
 import { UserService } from 'src/app/services/user-service.service';
@@ -16,40 +16,45 @@ export class ProfileComponent implements OnInit{
   editPasswordForm: FormGroup;
   visible: boolean = false;
   visiblePassword: boolean = false;
+  passwordsMatch: boolean = false;
+  isFormValid: boolean
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private toastr: ToastrService ){
 
     this.editProfileForm = this.formBuilder.group({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      jmbg: '',
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]]
     });
 
     this.editPasswordForm = this.formBuilder.group({
-      password: '',
-      password2: ''
+      password: ['', Validators.required],
+      password2: ['', Validators.required],
+    });
+
+    this.editPasswordForm.valueChanges.subscribe(() => {
+      this.passwordsMatch = this.editPasswordForm.get('password')?.value === this.editPasswordForm.get('password2')?.value;
+      console.log(this.passwordsMatch)
+    });
+
+    this.editProfileForm.valueChanges.subscribe(() => {
+      this.isFormValid = this.editProfileForm.valid;
     });
 
   }
 
   ngOnInit(){
-    console.log("Pozvao sam")
     this.userService.getUserData()
     .subscribe({
       next: val =>{
-        console.log("uspeo sam")
         this.user = val
-        console.log(this.user)
-        console.log(sessionStorage.getItem("token"))
         this.editProfileForm.setValue(
           {
             firstName: this.user.firstName,
             lastName: this.user.lastName,
             email: this.user.email,
-            phone: this.user.phone,
-            jmbg: this.user.jmbg,
+            phone: this.user.phone
           }
         )
       },
@@ -60,11 +65,36 @@ export class ProfileComponent implements OnInit{
     })
   }
 
-  close() {
+  closeEditProfile() {
     this.visible = false;
-    this.visiblePassword = false;
+
+    this.userService.getUserData()
+      .subscribe({
+        next: val =>{
+          this.user = val
+          this.editProfileForm.setValue(
+            {
+              firstName: this.user.firstName,
+              lastName: this.user.lastName,
+              email: this.user.email,
+              phone: this.user.phone,
+            }
+          )
+        },
+        error: err =>{
+          console.log("nisam uspeo")
+          console.log(err)
+        }
+      })
+
+
     // this.userId = -1;
     //this.editProfileForm.reset();
+  }
+
+  closeChangePassword() {
+    this.visiblePassword = false;
+    this.editPasswordForm.reset();
   }
 
   setVisable(){
@@ -87,7 +117,7 @@ export class ProfileComponent implements OnInit{
         )
         .subscribe({
         next: val =>{
-          this.close()
+          this.closeChangePassword()
         },
         error: err =>{
           console.log(err);
@@ -97,26 +127,26 @@ export class ProfileComponent implements OnInit{
   }
   else{
     // TODO dodati toast za kada korisnik unese dve razlicite sifre
-    // VALIDACIJA NA HTML PRIMER U 
+    // VALIDACIJA NA HTML PRIMER U
     // email: ['', [Validators.required, Validators.email]],
     // password: ['', Validators.required],
     // i onda na html-u imas if validated nesto pogledaj na login page
     // ngIf= isFormValid
   }
-      
+
   }
 
   editProfile() {
 
       this.userService.updateProfile(
-        this.user.id, 
+        this.user.id,
         this.editProfileForm.get('email')?.value,
         this.editProfileForm.get('firstName')?.value,
         this.editProfileForm.get('lastName')?.value,
         this.editProfileForm.get('phone')?.value,)
         .subscribe({
         next: val =>{
-          this.close()
+          this.closeEditProfile()
         },
         error: err =>{
           console.log(err);

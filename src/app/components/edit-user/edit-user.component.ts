@@ -32,7 +32,7 @@ export class EditUserComponent {
       permissions: new FormArray([]),
       jobPosition: '',
       active: false,
-      phone: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       selectedJob: ['', Validators.required]
     });
 

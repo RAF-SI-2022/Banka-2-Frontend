@@ -21,9 +21,9 @@
             </div>
 
             <div class="col-4 text-center search-container">
-              <form action="" class="search-bar">
+              <form action="" class="search-bar" title="Pretrazi">
                 <input pInputText name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
-                <button class="search-btn" type="submit">
+                <button class="search-btn" type="submit" title="Pretrazi">
                   <span>Search</span>
                 </button>
               </form>
@@ -176,7 +176,7 @@
             <td [id]="'buttons' + user.id">
 
               <button [id]="'editBtn' + user.id" type="button" (click)="callEditUserChild(user.id)"
-                      class="btn-i btn-circle">
+                      class="btn-i btn-circle" title="Izmeni korisnika">
                 <span>
                   <i class="pi pi-user-edit"></i>
                 </span>
@@ -184,7 +184,7 @@
               </button>
 
               <button [id]="'deactivateBtn' + user.id" type="button" *ngIf="user.active"
-                      (click)="deactivateUser(user.id)" class="btn-i btn-circle">
+                      (click)="deactivateUser(user.id)" class="btn-i btn-circle" title="Deaktiviraj korisnika">
                 <span>
                   <i class="pi pi-lock"></i>
                 </span>
@@ -192,7 +192,7 @@
               </button>
 
               <button [id]="'activateBtn' + user.id" *ngIf="!user.active" type="button" (click)="activateUser(user.id)"
-                      class="btn-i btn-circle">
+                      class="btn-i btn-circle" title="Aktiviraj korisnika">
                 <span>
                   <i class="pi pi-lock-open"></i>
                 </span>
@@ -200,7 +200,7 @@
               </button>
 
               <button [id]="'deleteBtn' + user.id" type="button" (click)="openDeleteConfirmationDialog(user.id)"
-                      class="btn-i btn-circle">
+                      class="btn-i btn-circle" title="Obrisi korisnika">
                 <span>
                   <i class="pi pi-trash"></i>
                 </span>

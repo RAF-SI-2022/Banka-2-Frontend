@@ -33,7 +33,7 @@ export class UsersComponent {
   addUserForm: FormGroup;
   roles!: any[];
   selectedRole!: any
-  loading: boolean = true;
+  loading: boolean = false;
   displayConfirmationDialog: boolean = false;
   selectedUserId: number = -1
 

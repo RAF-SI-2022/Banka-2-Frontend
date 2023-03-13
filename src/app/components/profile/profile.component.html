@@ -21,25 +21,21 @@
                   </div>
                   <div class="col-sm-8">
                     <div class="card-block">
-                      <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                      <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Informacije</h6>
                       <div class="row">
                         <div class="col-sm-6">
                           <p class="m-b-10 f-w-600">Email</p>
                           <h6 class="text-muted f-w-400">{{user.email}}</h6>
                         </div>
                         <div class="col-sm-6">
-                          <p class="m-b-10 f-w-600">ID</p>
-                          <h6 class="text-muted f-w-400">{{user.id}}</h6>
-                        </div>
-                      </div>
-                      <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
-                      <div class="row">
-                        <div class="col-sm-6">
                           <p class="m-b-10 f-w-600">JMBG</p>
                           <h6 class="text-muted f-w-400">{{user.jmbg}}</h6>
                         </div>
+                      </div>
+                      <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Kontakt</h6>
+                      <div class="row">
                         <div class="col-sm-6">
-                          <p class="m-b-10 f-w-600">Phone</p>
+                          <p class="m-b-10 f-w-600">Broj telefona</p>
                           <h6 class="text-muted f-w-400">{{user.phone}}</h6>
                         </div>
                       </div>
@@ -65,7 +61,7 @@
                         <div class="left">
                           <button [id]="'editBtn' + user.id" (click)="setVisablePassword()" pButton pRipple
                                   type="button"
-                                  label="Promeni sifru"
+                                  label="Promeni šifru"
                                   class="p-button-secondary p-button-outlined me-2"></button>
                         </div>
                       </div>
@@ -82,7 +78,7 @@
 
 
   <p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
-            header="Izmeni korisnika" [(visible)]="visible" [modal]="true" (onHide)="close()">
+            header="Izmeni korisnika" [(visible)]="visible" [modal]="true" (onHide)="closeEditProfile()">
 
     <div class="edit-user-form">
       <form [formGroup]="editProfileForm" (submit)="editProfile()" class="edit-user-form pt-4 pb-4 gap-4">
@@ -104,7 +100,7 @@
     </span>
 
         <!-- <ng-template pTemplate="footer"> -->
-        <button type="submit" pButton pRipple label="Izmeni" class="w-100"></button>
+        <button type="submit" pButton pRipple label="Izmeni" class="w-100" [disabled]="!isFormValid"></button>
         <!-- </ng-template> -->
 
       </form>
@@ -112,22 +108,22 @@
   </p-dialog>
 
   <p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
-            header="Izmeni korisnika" [(visible)]="visiblePassword" [modal]="true" (onHide)="close()">
+            header="Promeni šifru" [(visible)]="visiblePassword" [modal]="true" (onHide)="closeChangePassword()">
 
     <div class="edit-user-form">
       <form [formGroup]="editPasswordForm" (submit)="editPassword()" class="edit-user-form pt-4 pb-4 gap-4">
   <span class="p-float-label">
-  <input [formControlName]="'password'" id="name-input" class="w-100" type="text" pInputText>
+  <input [formControlName]="'password'" id="name-input" class="w-100" type="password" pInputText>
   <label for="name-input">Lozinka</label>
   </span>
         <span class="p-float-label">
-  <input [formControlName]="'password2'" id="surname-input" class="w-100" type="text" pInputText>
+  <input [formControlName]="'password2'" id="surname-input" class="w-100" type="password" pInputText>
   <label for="surname-input">Ponovo unesite lozinku</label>
   </span>
 
 
         <!-- <ng-template pTemplate="footer"> -->
-        <button type="submit" pButton pRipple label="Izmeni" class="w-100"></button>
+        <button type="submit" pButton pRipple label="Izmeni" class="w-100" [disabled]="!passwordsMatch"></button>
         <!-- </ng-template> -->
 
       </form>

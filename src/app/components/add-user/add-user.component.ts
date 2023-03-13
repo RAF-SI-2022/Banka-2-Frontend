@@ -29,8 +29,8 @@ export class AddUserComponent {
       permissions: [],
       jobPosition: '',
       active: false,
-      jmbg: ['', Validators.required],
-      phone: ['', Validators.required],
+      jmbg: ['', [Validators.required, Validators.pattern(/^\d{13}$/)]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       selectedJob: ['', Validators.required]
     });
 

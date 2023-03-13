@@ -4,7 +4,7 @@ import {ToastrService} from "ngx-toastr";
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from 'src/app/services/user-service.service';
-
+import { User } from 'src/app/models/users.model';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
 
   userLogged: boolean = false;
   display: boolean = false;
+  user: User
 
   constructor(private userService: UserService, private primengConfig: PrimeNGConfig,private router: Router, private toastr: ToastrService) {}
 
@@ -23,6 +24,17 @@ export class AppComponent implements OnInit {
     //   this.router.navigate(['/login']);
     // }
     this.primengConfig.ripple = true;
+
+
+    this.userService.getUserData()
+      .subscribe({
+        next: val =>{
+          this.user = val
+        },
+        error: err =>{
+          console.log(err)
+        }
+      })
   }
 
   checkIsLoggedIn(){
@@ -37,10 +49,15 @@ export class AppComponent implements OnInit {
     this.display = true;
   }
 
+  hideSidebar() {
+    this.display = false;
+  }
+
   logOut(){
     localStorage.clear()
     sessionStorage.clear()
     this.userService.resetToken()
+    this.display = false;
     this.router.navigate(['/login']);
   }
 

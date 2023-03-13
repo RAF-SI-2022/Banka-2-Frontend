@@ -35,7 +35,7 @@ export class AddUserComponent {
     });
 
     this.jobs = [
-      {name: "ADMIN", permissions: ["ADMIN_USER"]},
+      {name: "ADMINISTRATOR", permissions: ["ADMIN_USER"]},
       {name: "SUPERVISOR", permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
       {name: "AGENT", permissions: ["READ_USERS"]}
     ]

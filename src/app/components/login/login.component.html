@@ -20,16 +20,16 @@
 
             <div class="row mt-2 w-100" style="max-width: 320px;">
               <div class="col-6">
-                <div class="d-flex align-items-center remember-me">
+                <div class="d-flex align-items-center">
                   <p-checkbox [formControlName]="'remember'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
                   <small>Remember Me</small>
                 </div>
               </div>
 
-              <div class="col-6 text-end">
-                <a [routerLink]="'/forgot-password'" style="text-decoration: none">
-                  <small>Forgor Password?</small>
-                </a>
+              <div class="col-6 text-end  ">
+                <!-- <a [routerLink]="'/forgot-password'"> -->
+                  <small [routerLink]="'/forgot-password'" style="cursor: pointer;">Forgor Password?</small>
+                <!-- </a> -->
               </div>
             </div>
           </form>

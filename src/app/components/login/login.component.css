@@ -146,4 +146,6 @@ button.submit:hover {
   margin-top: 2px;
 }
 
-
+.pointer{
+  cursor: pointer
+}

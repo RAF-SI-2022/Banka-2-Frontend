@@ -166,7 +166,6 @@ export class UsersComponent {
     this.userService.deactivateUser(id)
     .subscribe({
       next: val=>{
-        console.log("kurac")
         console.log(val)
         for(const item of this.users){
           if(item.id == id){
@@ -211,8 +210,7 @@ export class UsersComponent {
           this.getUsers()
         },
         error: err =>{
-          console.log(err);
-
+          this.toastr.error("Pogresno uneti podaci!")
         }
       })
   }
@@ -238,7 +236,7 @@ export class UsersComponent {
         //strpati sve podatke u listu usera
       },
       error: err =>{
-        console.log(err)
+        this.toastr.error("Pogresno uneti podaci!")
       }
     })
   }

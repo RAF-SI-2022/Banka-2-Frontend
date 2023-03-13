@@ -54,7 +54,7 @@ export class UserService {
   }
 
   createNewUser(firstName: string, lastName: string, email: string, password: string, permissions: any, jobPosition: string,active : string, jmbg: string, phone : string
-    ): Observable<any>{//todo kada bude imao UI proveri dali je dobar
+    ): Observable<any>{
     return this.httpClient.post<UserCreateDTO>(
       `${environment.apiUserServerUrl}/register`,
       {firstName: firstName, lastName:lastName, email:email, password:password
@@ -96,7 +96,7 @@ export class UserService {
     { headers: this.headers })
   }
 
-  deleteUser(id: number): Observable<any>{//todo kada bude imao UI proveri dali je dobar
+  deleteUser(id: number): Observable<any>{
     return this.httpClient.delete(`${environment.apiUserServerUrl}/` + id, { headers: this.headers })
   }
 

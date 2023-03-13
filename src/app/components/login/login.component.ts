@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import { UserService } from 'src/app/services/user-service.service';
+import {UserService} from 'src/app/services/user-service.service';
 import {AuthService} from "../../services/auth.service";
 import {ToastrService} from "ngx-toastr";
 
@@ -30,7 +30,7 @@ export class LoginComponent {
     });
   }
 
-  closeUserNotActive(){
+  closeUserNotActive() {
     this.userNotActive = false
   }
 
@@ -38,9 +38,9 @@ export class LoginComponent {
   }
 
   login() {
-    this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value ).subscribe({
+    this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value).subscribe({
       next: response => {
-        if(this.loginForm.get('remember')?.value){
+        if (this.loginForm.get('remember')?.value) {
           localStorage.setItem("token", <string>response.body?.token)
           // console.log(response.body?.permissions)
           localStorage.setItem('permissions', JSON.stringify(response.body?.permissions))
@@ -48,30 +48,27 @@ export class LoginComponent {
           // this.userService.getUserPermissions()
 
           this.userService.getUserData()
-          .subscribe({
-            next: val=>{
+            .subscribe({
+              next: val => {
 
-              if(val.active){
-                this.router.navigate(["users"]);
+                if (val.active) {
+                  this.router.navigate(["users"]);
+                } else {
+                  localStorage.clear()
+                  this.userNotActive = true;
+                }
+              },
+              error: err => {
+
               }
-              else{
-                localStorage.clear()
-                this.userNotActive = true;
-              }
-            },
-            error: err=>{
+            })
 
-            }
-          })
+          localStorage.setItem("remember", "local")//da znamo gde se nalazi
 
 
+          localStorage.getItem("remember")
 
-          // this.router.navigate(["users"]); //todo kada se uradi bolji ui, treba promeniti rutu na koju idemo nakon login-a
-
-          localStorage.setItem("remember","local")//da znamo gde se nalazi
-
-        }
-        else{
+        } else {
           sessionStorage.setItem("token", <string>response.body?.token)
           // console.log(response.body?.permissions)
           sessionStorage.setItem('permissions', JSON.stringify(response.body?.permissions))
@@ -79,35 +76,33 @@ export class LoginComponent {
 
 
           this.userService.getUserData()
-          .subscribe({
-            next: val=>{
+            .subscribe({
+              next: val => {
 
-              console.log(val)
-              if(val.active){
-                this.router.navigate(["users"]);
+                console.log(val)
+                if (val.active) {
+                  this.router.navigate(["users"]);
+                } else {
+                  sessionStorage.clear()
+                  this.userNotActive = true;
+                }
+              },
+              error: err => {
+
               }
-              else{
-                sessionStorage.clear()
-                this.userNotActive = true;
-              }
-            },
-            error: err=>{
-
-            }
-          })
-
+            })
 
 
           // this.router.navigate(["users"]);
         }
       },
       error: err => {
-        this.toastr.error("Losi kredencijali!")
+        console.log(err)
       }
     })
   }
 
-  forgotPass(){
+  forgotPass() {
     alert("Zaboravio pass");
 
   }

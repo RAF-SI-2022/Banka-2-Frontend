@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { User } from 'src/app/models/users.model';
-import { UserService } from 'src/app/services/user-service.service';
+import {ToastrService} from 'ngx-toastr';
+import {User} from 'src/app/models/users.model';
+import {UserService} from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit{
+export class ProfileComponent implements OnInit {
 
   user: User
   editProfileForm: FormGroup;
@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit{
   passwordsMatch: boolean = false;
   isFormValid: boolean
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private toastr: ToastrService ){
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private toastr: ToastrService) {
 
     this.editProfileForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -43,25 +43,25 @@ export class ProfileComponent implements OnInit{
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.userService.getUserData()
-    .subscribe({
-      next: val =>{
-        this.user = val
-        this.editProfileForm.setValue(
-          {
-            firstName: this.user.firstName,
-            lastName: this.user.lastName,
-            email: this.user.email,
-            phone: this.user.phone
-          }
-        )
-      },
-      error: err =>{
-        console.log("nisam uspeo")
-        console.log(err)
-      }
-    })
+      .subscribe({
+        next: val => {
+          this.user = val
+          this.editProfileForm.setValue(
+            {
+              firstName: this.user.firstName,
+              lastName: this.user.lastName,
+              email: this.user.email,
+              phone: this.user.phone
+            }
+          )
+        },
+        error: err => {
+          console.log("nisam uspeo")
+          console.log(err)
+        }
+      })
   }
 
   closeEditProfile() {
@@ -69,7 +69,7 @@ export class ProfileComponent implements OnInit{
 
     this.userService.getUserData()
       .subscribe({
-        next: val =>{
+        next: val => {
           this.user = val
           this.editProfileForm.setValue(
             {
@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit{
             }
           )
         },
-        error: err =>{
+        error: err => {
           console.log("nisam uspeo")
           console.log(err)
         }
@@ -96,63 +96,52 @@ export class ProfileComponent implements OnInit{
     this.editPasswordForm.reset();
   }
 
-  setVisable(){
+  setVisible() {
     this.visible = true;
   }
 
-  setVisablePassword(){
+  setVisiblePassword() {
     this.visiblePassword = true;
   }
 
-  editPassword(){
+  editPassword() {
 
-    if(this.editPasswordForm.get('password')?.value === this.editPasswordForm.get('password2')?.value)
-    {
+    if (this.editPasswordForm.get('password')?.value === this.editPasswordForm.get('password2')?.value) {
 
       console.log(this.editPasswordForm.get('password')?.value)
       this.userService.changePassword(
         this.user.id,
         this.editPasswordForm.get('password')?.value
-        )
+      )
         .subscribe({
-        next: val =>{
-          this.closeChangePassword()
-        },
-        error: err =>{
-          console.log(err);
+          next: val => {
+            this.closeChangePassword()
+          },
+          error: err => {
+            console.log(err);
 
-        }
-      })
-  }
-  else{
-    // TODO dodati toast za kada korisnik unese dve razlicite sifre
-    // VALIDACIJA NA HTML PRIMER U
-    // email: ['', [Validators.required, Validators.email]],
-    // password: ['', Validators.required],
-    // i onda na html-u imas if validated nesto pogledaj na login page
-    // ngIf= isFormValid
-  }
-
+          }
+        })
+    }
   }
 
   editProfile() {
 
-      this.userService.updateProfile(
-        this.user.id,
-        this.editProfileForm.get('email')?.value,
-        this.editProfileForm.get('firstName')?.value,
-        this.editProfileForm.get('lastName')?.value,
-        this.editProfileForm.get('phone')?.value,)
-        .subscribe({
-        next: val =>{
+    this.userService.updateProfile(
+      this.user.id,
+      this.editProfileForm.get('email')?.value,
+      this.editProfileForm.get('firstName')?.value,
+      this.editProfileForm.get('lastName')?.value,
+      this.editProfileForm.get('phone')?.value,)
+      .subscribe({
+        next: val => {
           this.closeEditProfile()
         },
-        error: err =>{
+        error: err => {
           console.log(err);
 
         }
       })
-
 
 
     // updateUser(id: number, email: string, firstName: string, lastName: string,

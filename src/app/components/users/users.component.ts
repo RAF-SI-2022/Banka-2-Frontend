@@ -84,20 +84,6 @@ export class UsersComponent {
     this.toastr.success("Korisnik dodat")
   }
 
-  
-
-
-  getPermission(permission: string): boolean {
-    if (localStorage.getItem("remember") !== null){
-      if (!!localStorage.getItem("permissions")?.includes("ADMIN_USER")) return true
-      else return !!localStorage.getItem("permissions")?.includes(permission)
-    }
-    else{
-      if (!!sessionStorage.getItem("permissions")?.includes("ADMIN_USER")) return true
-      else return !!sessionStorage.getItem("permissions")?.includes(permission)
-    }
-  }
-
   // Dovlacenje svih usera
   getUsers(){
     this.userService.getAllUsers()
@@ -109,13 +95,13 @@ export class UsersComponent {
         .subscribe({
           next: res=>{
             // console.log(res)
-            
+
             const currentUser = res
             this.loading = true
-            this.users = this.users.filter(user => user.email !== currentUser.email)          
+            this.users = this.users.filter(user => user.email !== currentUser.email)
           },
           error: err=>{
-            
+
           }
         })
         //strpati sve podatke u listu usera
@@ -136,7 +122,6 @@ export class UsersComponent {
     this.displayConfirmationDialog = false;
   }
 
-  // TODO: back treba da ovo implementira
   deleteUser() {
     if(this.selectedUserId === -1){
       alert("greska")
@@ -222,7 +207,6 @@ export class UsersComponent {
     )
       .subscribe({
         next: val =>{
-          // TODO LOGIKA ZA SORTIRANJE
           this.editUserChild.close()
           this.getUsers()
         },
@@ -248,9 +232,6 @@ export class UsersComponent {
       $event.phone
     ).subscribe({
       next: val =>{
-
-        console.log(val)//todo skloni
-
         this.getUsers()
         this.showToastAdd()
         this.addUserChild.close()

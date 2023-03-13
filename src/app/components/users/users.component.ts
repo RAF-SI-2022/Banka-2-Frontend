@@ -166,7 +166,6 @@ export class UsersComponent {
     this.userService.deactivateUser(id)
     .subscribe({
       next: val=>{
-        console.log("kurac")
         console.log(val)
         for(const item of this.users){
           if(item.id == id){

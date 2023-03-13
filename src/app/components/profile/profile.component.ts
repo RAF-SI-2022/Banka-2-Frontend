@@ -90,7 +90,11 @@ export class ProfileComponent implements OnInit {
 
   closeChangePassword() {
     this.visiblePassword = false;
-    this.editPasswordForm.reset();
+    this.editPasswordForm.setValue({
+      password: [''],
+      password2: [''],
+    }
+    );
   }
 
   setVisible() {
@@ -103,6 +107,11 @@ export class ProfileComponent implements OnInit {
 
   editPassword() {
 
+    if(this.editPasswordForm.get('password')?.value === undefined || 
+    this.editPasswordForm.get('password')?.value === '' || 
+    this.editPasswordForm.get('password')?.value === null){
+      alert("prazno?")
+    }
     if (this.editPasswordForm.get('password')?.value === this.editPasswordForm.get('password2')?.value) {
 
       console.log(this.editPasswordForm.get('password')?.value)

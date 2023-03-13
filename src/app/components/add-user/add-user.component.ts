@@ -57,6 +57,9 @@ export class AddUserComponent {
       jmbg: this.addUserForm.get('jmbg')?.value,
       phone: this.addUserForm.get('phone')?.value,
     };
+
+    console.log(user)
+
     this.newUserEvent.emit(user)
   }
 

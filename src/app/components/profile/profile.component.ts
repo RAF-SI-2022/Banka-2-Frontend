@@ -35,7 +35,6 @@ export class ProfileComponent implements OnInit{
 
     this.editPasswordForm.valueChanges.subscribe(() => {
       this.passwordsMatch = this.editPasswordForm.get('password')?.value === this.editPasswordForm.get('password2')?.value;
-      console.log(this.passwordsMatch)
     });
 
     this.editProfileForm.valueChanges.subscribe(() => {

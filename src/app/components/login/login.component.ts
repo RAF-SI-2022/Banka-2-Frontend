@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import { UserService } from 'src/app/services/user-service.service';
 import {AuthService} from "../../services/auth.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent {
   isLoading: boolean = false;
   isFormValid = false;
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(private userService: UserService, private toastr: ToastrService, private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -42,7 +43,7 @@ export class LoginComponent {
           this.router.navigate(["users"]); //todo kada se uradi bolji ui, treba promeniti rutu na koju idemo nakon login-a
 
           localStorage.setItem("remember","local")//da znamo gde se nalazi
-          
+
         }
         else{
           sessionStorage.setItem("token", <string>response.body?.token)
@@ -53,7 +54,7 @@ export class LoginComponent {
         }
       },
       error: err => {
-        console.log(err)
+        this.toastr.error("Losi kredencijali!")
       }
     })
   }

@@ -1,27 +1,55 @@
 export class LoginTestComponents {
 
-
   admin = {
-    mail: "admin@gmail.com",
+    mail: "anesic3119rn+banka2backend+admin@raf.rs",
     password: "admin"
   }
 
-  user = {
-    mail: "",
-    password: ""
+  testUser = {
+    mail: "test@gmail.com",
+    password: "@Testpassword1"
   }
 
-  loginAdmin(user: { mail: string; password: string }) {
-    cy.visit('http://localhost:4200/login')
+  id: number
+
+  testSessionLogin(user: { mail: string; password: string }){
+    cy.visit('http://localhost:4200/')
     cy.get('#email').type(user.mail)
     cy.get('#password').type(user.password)
     cy.get('.p-ripple').click()
+
+    cy.window().its('sessionStorage.token')
+      .should('not.be.null')
+      .should('not.be.empty')
   }
 
-  checkToken(){
+  testRememberLogin(user: { mail: string; password: string }){
+    cy.visit('http://localhost:4200/')
+    cy.get('#email').type(user.mail)
+    cy.get('#password').type(user.password)
+    cy.get('.p-checkbox-box').click()
+    cy.get('.p-ripple').click()
+
     cy.window().its('localStorage.token')
       .should('not.be.null')
       .should('not.be.empty')
+  }
+
+  testBadCredentials(){
+    cy.visit('http://localhost:4200/')
+    cy.get('#email').type("badCredentials@mail.com")
+    cy.get('#password').type("badCredentials")
+
+    !cy.get('.p-ripple').should('not.be.disabled')
+    cy.get('.p-ripple').click()
+
+    cy.get('.ng-trigger').should("have.length", 1);
+
+  }
+
+  logout() {
+    cy.get('#navbarDarkDropdownMenuLink').click()
+    cy.get(':nth-child(2) > .dropdown-item').click()
   }
 
 

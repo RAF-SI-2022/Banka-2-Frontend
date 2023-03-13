@@ -223,7 +223,7 @@
 <!-- TODO dodati alighment/css -->
 
 <p-dialog class="conformation-dialog" [style]="{width: '20vw'}" [breakpoints]="{'1280px': '50vw'}"
-          header="Brisanje" [closable]="false" [visible]="displayConfirmationDialog" [modal]="true" >
+          header="Brisanje" (onHide)="closeDeleteConfirmationDialog()" [(visible)]="displayConfirmationDialog" [modal]="true" >
 
   <div class="row">
     <div class="col-12 text-center mt-1 mb-4">

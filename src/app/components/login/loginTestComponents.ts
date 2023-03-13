@@ -10,6 +10,16 @@ export class LoginTestComponents {
     password: "@Testpassword1"
   }
 
+  profileTestUser = {
+    mail: "profileTest@gmail.com",
+    password: "@Testpassword1"
+  }
+
+  agentTestUser = {
+    mail: "agentTest@gmail.com",
+    password: "@Testpassword1"
+  }
+
   id: number
 
   testSessionLogin(user: { mail: string; password: string }){
@@ -48,9 +58,15 @@ export class LoginTestComponents {
   }
 
   logout() {
-    cy.get('#navbarDarkDropdownMenuLink').click()
+    cy.get('#navbarDarkDropdownMenuLink > .pi').click()
     cy.get(':nth-child(2) > .dropdown-item').click()
   }
 
+  login(user: { mail: string; password: string }){
+    cy.visit('http://localhost:4200/')
+    cy.get('#email').type(user.mail)
+    cy.get('#password').type(user.password)
+    cy.get('.p-ripple').click()
+  }
 
 }

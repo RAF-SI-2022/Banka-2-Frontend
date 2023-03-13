@@ -210,8 +210,7 @@ export class UsersComponent {
           this.getUsers()
         },
         error: err =>{
-          console.log(err);
-
+          this.toastr.error("Pogresno uneti podaci!")
         }
       })
   }
@@ -237,7 +236,7 @@ export class UsersComponent {
         //strpati sve podatke u listu usera
       },
       error: err =>{
-        console.log(err)
+        this.toastr.error("Pogresno uneti podaci!")
       }
     })
   }

@@ -4,9 +4,9 @@
     </section>
     <section class="main">
       <div class="login-container">
-          <p class="title">Welcome to Banka 2!</p>
+          <p class="title">Dobrodošli u Banku 2!</p>
           <div class="separator"></div>
-          <p class="welcome-message">Please, provide login credential to proceed and have access to all our services</p>
+          <p class="welcome-message">Unesite svoj email i lozinku kako biste pristupili svim našim servisima:</p>
           <form [formGroup]="loginForm" (submit)="login()">
             <div class="form-control">
               <input class="w-100" [formControlName]="'email'" id="email" type="email" pInputText required placeholder="Email">
@@ -22,12 +22,12 @@
               <div class="col-6">
                 <div class="d-flex align-items-center remember-me">
                   <p-checkbox [formControlName]="'remember'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
-                  <small>Remember Me</small>
+                  <small>Zapamti me</small>
                 </div>
               </div>
 
-              <div class="col-6 text-end  ">
-                <small class="pointer" [routerLink]="'/forgot-password'">Forgor Password?</small>
+              <div class="col-6 text-end text-nowrap">
+                <small class="pointer" [routerLink]="'/forgot-password'">Zaboravili ste lozinku?</small>
               </div>
             </div>
           </form>

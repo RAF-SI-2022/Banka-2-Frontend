@@ -37,7 +37,7 @@ export class EditUserComponent {
     });
 
     this.jobs = [
-      {name:"ADMIN" , permissions: ["ADMIN_USER"]},
+      {name:"ADMINISTRATOR" , permissions: ["ADMIN_USER"]},
       {name:"SUPERVISOR" , permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
       {name:"AGENT" , permissions: ["READ_USERS"]}
     ]
@@ -78,12 +78,22 @@ export class EditUserComponent {
     console.log(user)
     this.userId = user.id
     this.userJmbg = user.jmbg
+
+    for(const job of this.jobs){
+      if(user.jobPosition.toUpperCase() === job.name.toUpperCase()){
+        this.selectedJob = job
+      }
+    }
+    //this.selectedJob = {name:"ADMIN" , permissions: ["ADMIN_USER"]}
+
+
     this.editUserForm.patchValue({
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
       permissions: user.permissions,
-      jobPosition: user.jobPosition,
+      // jobPosition: user.jobPosition,
+      jobPosition: this.selectedJob,
       active: user.active,
       phone: user.phone
     });

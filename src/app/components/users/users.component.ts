@@ -33,7 +33,7 @@ export class UsersComponent {
   addUserForm: FormGroup;
   roles!: any[];
   selectedRole!: any
-  loading: boolean = true;
+  loading: boolean = false;
   displayConfirmationDialog: boolean = false;
   selectedUserId: number = -1
 
@@ -99,7 +99,18 @@ export class UsersComponent {
     .subscribe({
       next: val =>{
         this.users = val;
-        this.loading = true
+
+        this.userService.getUserData()
+        .subscribe({
+          next: res=>{
+            const currentUser = res
+            this.loading = true
+            this.users = this.users.filter(user => user.email !== currentUser.email)          
+          },
+          error: err=>{
+            
+          }
+        })
         //strpati sve podatke u listu usera
       },
       error: err =>{
@@ -168,7 +179,7 @@ export class UsersComponent {
         for(const item of this.users){
           if(item.id == id){
             item.active = false;
-            this.userService.deactivateUser(id)
+            //this.userService.deactivateUser(id)
           }
         }
       },

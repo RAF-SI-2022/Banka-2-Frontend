@@ -37,6 +37,8 @@ export class UsersComponent {
   displayConfirmationDialog: boolean = false;
   selectedUserId: number = -1
 
+
+
   currentUserRoles: string
 
 
@@ -82,6 +84,9 @@ export class UsersComponent {
     this.toastr.success("Korisnik dodat")
   }
 
+  
+
+
   getPermission(permission: string): boolean {
     if (localStorage.getItem("remember") !== null){
       if (!!localStorage.getItem("permissions")?.includes("ADMIN_USER")) return true
@@ -103,6 +108,8 @@ export class UsersComponent {
         this.userService.getUserData()
         .subscribe({
           next: res=>{
+            // console.log(res)
+            
             const currentUser = res
             this.loading = true
             this.users = this.users.filter(user => user.email !== currentUser.email)          

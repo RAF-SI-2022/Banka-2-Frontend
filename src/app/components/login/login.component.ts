@@ -16,7 +16,9 @@ export class LoginComponent {
   isLoading: boolean = false;
   isFormValid = false;
 
-  constructor(private userService: UserService, private toastr: ToastrService, private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
+  userNotActive: boolean = false
+
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private toastr: ToastrService, private router: Router, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -26,6 +28,10 @@ export class LoginComponent {
     this.loginForm.valueChanges.subscribe(() => {
       this.isFormValid = this.loginForm.valid;
     });
+  }
+
+  closeUserNotActive(){
+    this.userNotActive = false
   }
 
   ngOnInit(): void {
@@ -40,7 +46,27 @@ export class LoginComponent {
           localStorage.setItem('permissions', JSON.stringify(response.body?.permissions))
           this.userService.setToken(<string>response.body?.token)
           // this.userService.getUserPermissions()
-          this.router.navigate(["users"]); //todo kada se uradi bolji ui, treba promeniti rutu na koju idemo nakon login-a
+
+          this.userService.getUserData()
+          .subscribe({
+            next: val=>{
+
+              if(val.active){
+                this.router.navigate(["users"]);
+              }
+              else{
+                localStorage.clear()
+                this.userNotActive = true;
+              }
+            },
+            error: err=>{
+
+            }
+          })
+
+
+
+          // this.router.navigate(["users"]); //todo kada se uradi bolji ui, treba promeniti rutu na koju idemo nakon login-a
 
           localStorage.setItem("remember","local")//da znamo gde se nalazi
 
@@ -50,7 +76,29 @@ export class LoginComponent {
           // console.log(response.body?.permissions)
           sessionStorage.setItem('permissions', JSON.stringify(response.body?.permissions))
           this.userService.setToken(<string>response.body?.token)
-          this.router.navigate(["users"]);
+
+
+          this.userService.getUserData()
+          .subscribe({
+            next: val=>{
+
+              console.log(val)
+              if(val.active){
+                this.router.navigate(["users"]);
+              }
+              else{
+                sessionStorage.clear()
+                this.userNotActive = true;
+              }
+            },
+            error: err=>{
+
+            }
+          })
+
+
+
+          // this.router.navigate(["users"]);
         }
       },
       error: err => {

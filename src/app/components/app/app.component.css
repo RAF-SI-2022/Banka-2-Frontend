@@ -29,3 +29,11 @@
 .nav-item-align {
   margin-top: 19px;
 }
+
+.logo {
+
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}

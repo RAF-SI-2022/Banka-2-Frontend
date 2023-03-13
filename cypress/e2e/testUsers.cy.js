@@ -5,29 +5,40 @@ const loginComponents = new LoginTestComponents()
 const usersComponents = new UsersTestComponents()
 
 
-it("checkToken", function (){
-  loginComponents.loginAdmin(loginComponents.admin)
-  loginComponents.checkToken()
+it("testLogin", function (){
+  loginComponents.testSessionLogin(loginComponents.admin)
+  loginComponents.logout()
+
+  loginComponents.testRememberLogin(loginComponents.admin)
+  loginComponents.logout()
+
+  loginComponents.testBadCredentials()
 })
 
+
 it("testUsersPage", function (){
-  loginComponents.loginAdmin(loginComponents.admin)
+  loginComponents.testSessionLogin(loginComponents.admin)
 
-  usersComponents.testRouterButton()
+  usersComponents.testAddUser("firstTest2@gmail.com")//kreiramo test usera
+  cy.reload()
 
-  usersComponents.testListFilter()
+  cy.get('.p-datatable-tbody > :nth-child(1) > :nth-child(1)').invoke('text')//dobijamo prvog slobodnog usera
+      .then(text => {
+        loginComponents.id = parseInt(text)
+        cy.log("ID USERA = " + loginComponents.id)
 
-  // cy.get('#emailFilter').click()//todo uradi test za mini search filter
-  // cy.wait(500)
-  // cy.get("input[placeholder=\"Unesite email]\"")
-
-  usersComponents.testActivity(1)//id elementa liste
-
-  usersComponents.testEditUser(1)
-
-  // usersComponents.testDelete(1)
-
-  usersComponents.testAddUser()
+        usersComponents.testListFilter()
+        usersComponents.testActivateDeactivate(loginComponents.id)//id elementa liste
+        usersComponents.testActivateDeactivate(loginComponents.id)
+        usersComponents.testEditUser(loginComponents.id)
+        usersComponents.testDelete(loginComponents.id)
+        usersComponents.testAddUser("test@gmail.com")
+    });
+})
 
 
+it("testProfilePage", function (){
+  loginComponents.testSessionLogin(loginComponents.testUser)
+  usersComponents.testEditProfile()
+  usersComponents.testChangePassword()
 })

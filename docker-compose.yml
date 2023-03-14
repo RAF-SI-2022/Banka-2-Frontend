@@ -1,0 +1,7 @@
+services:
+  banka2frontend:
+    image: banka2frontend
+    expose:
+      - 80
+    ports:
+      - 80:80

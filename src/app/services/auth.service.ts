@@ -14,5 +14,13 @@ export class AuthService {
     return this.httpClient.post<LoginResponse>(`${environment.apiAuthServerUrl}/login`, { email: email, password: password }, {observe: 'response'});
   }
 
+  resetPassword(email: string) {
+    return this.httpClient.post<any>(`${environment.apiForgotPassUrl}`, { email: email }, {observe: 'response'});
+  }
+
+  submitNewPassword(password: string, token: string) {
+    return this.httpClient.post<any>(`${environment.apiPasswordRestoreUrl}`, { token: token, newPassword: password}, {observe: 'response'});
+  }
+
 
 }

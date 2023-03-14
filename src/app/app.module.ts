@@ -34,6 +34,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import {SidebarModule} from "primeng/sidebar";
 import { PageForbidenComponent } from './components/page-forbiden/page-forbiden.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 
 
@@ -52,6 +53,7 @@ import { PageForbidenComponent } from './components/page-forbiden/page-forbiden.
     ForgotPasswordComponent,
     PageNotFoundComponent,
     PageForbidenComponent,
+    ChangePasswordComponent,
 
   ],
     imports: [

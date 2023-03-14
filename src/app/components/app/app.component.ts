@@ -26,15 +26,18 @@ export class AppComponent implements OnInit {
     this.primengConfig.ripple = true;
 
 
-    this.userService.getUserData()
-      .subscribe({
-        next: val =>{
-          this.user = val
-        },
-        error: err =>{
-          console.log(err)
-        }
-      })
+    if(localStorage.getItem('token') || sessionStorage.getItem('token')){
+      this.userService.getUserData()
+        .subscribe({
+          next: val =>{
+            console.log(val)
+            this.user = val
+          },
+          error: err =>{
+            console.log(err)
+          }
+        })
+    }
   }
 
   checkIsLoggedIn(){
@@ -46,11 +49,11 @@ export class AppComponent implements OnInit {
 
   getPermission(): boolean {
     if (localStorage.getItem("remember") !== null){
-      if (!!localStorage.getItem("permissions")?.includes("ADMIN_USER")) 
+      if (!!localStorage.getItem("permissions")?.includes("ADMIN_USER"))
       return true
     }
     else{
-      if (!!sessionStorage.getItem("permissions")?.includes("ADMIN_USER")) 
+      if (!!sessionStorage.getItem("permissions")?.includes("ADMIN_USER"))
       return true
     }
     return false

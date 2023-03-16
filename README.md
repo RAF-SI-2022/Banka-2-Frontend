@@ -1,11 +1,8 @@
-Frontend readme file
-
-# pokusaj komita
-testing
-
-
+# Frontend README file
 
 # Banka2Front
+
+testing
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.1.
 

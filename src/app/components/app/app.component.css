@@ -1,0 +1,40 @@
+.navbar {
+  height: 60px;
+}
+
+.logout-btn:hover {
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  cursor: pointer;
+}
+
+.navbar-nav .nav-link.active {
+  border-bottom: 2px solid #ffffff;
+}
+
+.pi-cog {
+  color: white;
+}
+
+.sidebar-nav-item:hover{
+  background-color: #eff3f7;
+}
+
+.dropdown-menu {
+  min-width: 6rem;
+}
+
+.nav-item-align {
+  margin-top: 19px;
+}
+
+.logo {
+
+}
+
+.logo:hover {
+  transform: scale(1.1);
+  transition: all .2s ease-in-out;
+}

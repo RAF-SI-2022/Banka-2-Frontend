@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { UserService } from '../../services/user-service.service';
+import { UserService } from '../../../services/user-service.service';
 import {MenuItem} from "primeng/api";
-import {Permission, User} from "../../models/users.model";
+import {Permission, User} from "../../../models/users.model";
 import {ToastrService} from "ngx-toastr";
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {AddUserComponent} from "../add-user/add-user.component";

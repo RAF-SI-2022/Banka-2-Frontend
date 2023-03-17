@@ -20,22 +20,24 @@ import {MultiSelectModule} from 'primeng/multiselect';
 
 
 
-import { LoginComponent } from './components/login/login.component';
-import { UsersComponent } from './components/users/users.component';
+import { LoginComponent } from './components/sprint1/login/login.component';
+import { UsersComponent } from './components/sprint1/users/users.component';
 import { ActivityPipe } from './pipes/activity-pipe.pipe';
 import {DialogModule} from "primeng/dialog";
 import {DropdownModule} from "primeng/dropdown";
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './components/sprint1/home/home.component';
 import {BreadcrumbModule} from "primeng/breadcrumb";
-import { AddUserComponent } from './components/add-user/add-user.component';
-import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AddUserComponent } from './components/sprint1/add-user/add-user.component';
+import { EditUserComponent } from './components/sprint1/edit-user/edit-user.component';
+import { ProfileComponent } from './components/sprint1/profile/profile.component';
+import { ForgotPasswordComponent } from './components/sprint1/forgot-password/forgot-password.component';
+import { PageNotFoundComponent } from './components/sprint1/page-not-found/page-not-found.component';
 import {SidebarModule} from "primeng/sidebar";
-import { PageForbidenComponent } from './components/page-forbiden/page-forbiden.component';
-import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { StocksComponent } from './components/stocks/stocks.component';
+import { PageForbidenComponent } from './components/sprint1/page-forbiden/page-forbiden.component';
+import { ChangePasswordComponent } from './components/sprint1/change-password/change-password.component';
+import { StocksComponent } from './components/sprint2/stocks/stocks.component';
+import { ChangePercPipe } from './pipes/change-perc.pipe';
+import { StockDetailsComponent } from './components/sprint2/stock-details/stock-details.component';
 
 
 
@@ -56,6 +58,9 @@ import { StocksComponent } from './components/stocks/stocks.component';
     PageForbidenComponent,
     ChangePasswordComponent,
     StocksComponent,
+    ChangePercPipe,
+    StockDetailsComponent,
+
   ],
     imports: [
         MultiSelectModule,

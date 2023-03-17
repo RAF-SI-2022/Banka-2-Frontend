@@ -11,6 +11,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { PageForbidenComponent } from './components/page-forbiden/page-forbiden.component';
 import { NotAuthorisedGuard } from './guards/not.authorised.guard';
 import {ChangePasswordComponent} from "./components/change-password/change-password.component";
+import { StocksComponent } from './components/stocks/stocks.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
   {
     path: 'auth/change-password',
     component: ChangePasswordComponent
+  },
+  {
+    path: 'stocks',
+    component: StocksComponent
   },
   {
     path: '**', redirectTo: '404-not-found'

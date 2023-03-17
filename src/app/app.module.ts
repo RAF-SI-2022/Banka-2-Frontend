@@ -35,6 +35,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import {SidebarModule} from "primeng/sidebar";
 import { PageForbidenComponent } from './components/page-forbiden/page-forbiden.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { StocksComponent } from './components/stocks/stocks.component';
 
 
 
@@ -54,7 +55,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     PageNotFoundComponent,
     PageForbidenComponent,
     ChangePasswordComponent,
-
+    StocksComponent,
   ],
     imports: [
         MultiSelectModule,

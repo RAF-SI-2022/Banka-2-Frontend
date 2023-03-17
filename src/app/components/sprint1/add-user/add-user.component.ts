@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Job} from "../../models/users.model";
+import {Job} from "../../../models/users.model";
 import {ToastrService} from "ngx-toastr";
 
 @Component({

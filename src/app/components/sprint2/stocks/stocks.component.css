@@ -15,4 +15,7 @@
   background-color: #eff3f7;
   min-height: 150vh;
 }
+tr:hover{
+  cursor: pointer;
+}
 

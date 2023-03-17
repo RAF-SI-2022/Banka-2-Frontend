@@ -19,3 +19,7 @@ tr:hover{
   cursor: pointer;
 }
 
+.arrow-text-container {
+  display: flex;
+  flex-direction: row;
+}

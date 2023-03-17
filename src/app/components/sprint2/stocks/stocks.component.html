@@ -82,14 +82,17 @@
             <span>{{stock.change}}</span>
           </td>
           <!-- <td>{{user.last_name}}</td> -->
-          <td [ngStyle]="{'color': stock.change >0? 'green' : 'red'}" >
-            <div>            
-              <strong>
-                <i [ngClass]="stock.change >0 ? 'pi pi-arrow-up' : 'pi pi-arrow-down' ">
-                  
-                </i> 
-                {{stock.change | changePerc}}
-              </strong>
+          <td [ngStyle]="{'color': stock.change >0? 'green' : 'red'}">
+            <div class="arrow-text-container">
+              <div>
+                <i class="me-1"
+                   [ngClass]="stock.change >0 ? 'pi pi-arrow-up' : 'pi pi-arrow-down' "></i>
+              </div>
+              <div>
+                <strong>
+                  {{stock.change | changePerc}}
+                </strong>
+              </div>
             </div>
           </td>
           <td>

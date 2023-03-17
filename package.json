@@ -24,6 +24,7 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
+    "chart.js": "^4.2.1",
     "cypress": "^12.7.0",
     "ngx-toastr": "^16.1.0",
     "popper.js": "^1.16.1",

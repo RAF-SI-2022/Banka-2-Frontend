@@ -97,7 +97,7 @@ export class LoginComponent {
         }
       },
       error: err => {
-        this.toastr.error("Pokresni kredencijali!")
+        this.toastr.error("Pogrešni kredencijali.")
       }
     })
   }

@@ -17,6 +17,7 @@ import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {SkeletonModule} from 'primeng/skeleton';
 
 
 
@@ -83,6 +84,7 @@ import {ChartModule} from "primeng/chart";
         TableModule,
         FormsModule,
         BreadcrumbModule,
+        SkeletonModule,
         ToastrModule.forRoot(),
         SidebarModule,
         ChartModule

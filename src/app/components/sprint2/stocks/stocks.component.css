@@ -15,7 +15,7 @@
   background-color: #eff3f7;
   min-height: 150vh;
 }
-tr:hover{
+.rowHover:hover{
   cursor: pointer;
 }
 

@@ -26,9 +26,21 @@ export interface Listing {
   volume: number
 }
 
-export interface Stock {
+export interface Stock extends Listing {
   outstandingShares: number,
   dividendYield: number
+}
+
+export interface Forex extends Listing {
+  baseCurrency: Currency
+  quoteCurrency: Currency
+}
+
+export interface Futures {
+  contractSize: number,
+  contractUnit: string,
+  openInterest: number,
+  settlementDate: Date
 }
 
 

@@ -17,6 +17,10 @@ export class StocksComponent {
 
   displayDetails: boolean = false
 
+  loading: boolean = true;
+
+  BuySellOption: boolean = true;
+
   @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
 
   @ViewChild('dt') dt: Table | undefined;
@@ -33,6 +37,26 @@ export class StocksComponent {
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Berza', routerLink: ['/stocks']}
     ];
+
+    setTimeout(() => {
+      this.insertUsers()
+    }, 2000);
+  }
+
+  promeniOpciju(){
+    this.BuySellOption = !this.BuySellOption
+  }
+
+  kupiPopUp(event: MouseEvent,stock: Stock){
+    event.stopPropagation()
+    alert("Kupi " + stock.ticker)
+  }
+  prodajPopUp(event: MouseEvent,stock: Stock){
+    event.stopPropagation()
+    alert("Prodaj " + stock.ticker)
+  }
+
+  insertUsers(){
 
     const obj = {
       outstandingShares: 2,
@@ -113,8 +137,9 @@ export class StocksComponent {
     this.stocks.push(obj)
     this.stocks.push(obj1)
     this.stocks.push(obj2)
-
+    this.loading = false
   }
+
   openMoreInfoDialog(event: Stock){
     this.toastr.info(event.ticker)
     //emit

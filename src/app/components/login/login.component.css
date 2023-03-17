@@ -28,8 +28,8 @@ section.side {
 }
 
 .side img {
-  width: 60%;
-  max-width: 60%;
+  max-width: 40%;
+  height: auto;
 }
 
 .login-container {
@@ -142,8 +142,9 @@ button.submit:hover {
 
 }
 
-.remember-me {
-  margin-top: 2px;
+.login-image {
+  width: 50%;
+  height: auto;
 }
 
 .pointer{

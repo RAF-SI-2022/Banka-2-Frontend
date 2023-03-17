@@ -1,0 +1,18 @@
+.table-container {
+  margin: 70px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 20px;
+}
+
+.icon-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.body-container {
+  background-color: #eff3f7;
+  min-height: 150vh;
+}
+

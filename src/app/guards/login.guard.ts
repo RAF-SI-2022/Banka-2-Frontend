@@ -8,7 +8,6 @@ import {
   UrlTree
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import {LoginComponent} from "../components/sprint1/login/login.component";
 import {ToastrService} from "ngx-toastr";
 import {Location} from "@angular/common";
 

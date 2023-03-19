@@ -1,7 +1,12 @@
-<p-dialog [(visible)]="displayDetails">
-    <div *ngIf="displayDetails">
-        <p>{{stock.price}}</p>
-        <p>{{stock.ticker}}</p>
-    </div>
+<p-dialog [(visible)]="displayDetails" *ngIf="displayDetails">
+  <p-header>
+    {{stock.ticker}}
+  </p-header>
+  <hr>
+  <div class="chart">
+    <h5>{{stock.name}}</h5>
+    <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
+  </div>
+
 </p-dialog>
 

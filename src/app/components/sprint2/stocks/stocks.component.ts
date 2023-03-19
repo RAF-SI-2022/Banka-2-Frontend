@@ -29,7 +29,7 @@ export class StocksComponent {
   }
 
   constructor(private toastr: ToastrService) {
-    
+
   }
 
   ngOnInit() {
@@ -61,8 +61,8 @@ export class StocksComponent {
     const obj = {
       outstandingShares: 2,
       dividendYield: 3,
-      ticker: "tiker",
-      name: "string",
+      ticker: "AAPL",
+      name: "Apple Inc",
       exchange: {
         exchangeName: "string",
         exchangeAcronym: "string",
@@ -141,7 +141,6 @@ export class StocksComponent {
   }
 
   openMoreInfoDialog(event: Stock){
-    this.toastr.info(event.ticker)
     //emit
     this.stockDetailsChild.stock = event
     this.stockDetailsChild.displayDetails = true;

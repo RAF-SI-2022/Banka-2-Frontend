@@ -43,6 +43,15 @@ export interface Futures {
   settlementDate: Date
 }
 
+export interface Type {
+  name: string,
+}
+
+export interface ISO {
+  name: string,
+}
+
+
 
 
 

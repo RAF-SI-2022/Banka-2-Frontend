@@ -41,7 +41,9 @@ import { ChangePercPipe } from './pipes/change-perc.pipe';
 import { StockDetailsComponent } from './components/sprint2/stock-details/stock-details.component';
 import {ChartModule} from "primeng/chart";
 import {DividerModule} from "primeng/divider";
-
+import { BuysellComponent } from './components/sprint2/buysell/buysell.component';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {InputNumberModule} from 'primeng/inputnumber';
 
 
 
@@ -63,9 +65,12 @@ import {DividerModule} from "primeng/divider";
     StocksComponent,
     ChangePercPipe,
     StockDetailsComponent,
+    BuysellComponent,
 
   ],
   imports: [
+    InputNumberModule,
+    SelectButtonModule,
     MultiSelectModule,
     BrowserModule,
     AppRoutingModule,

@@ -30,7 +30,7 @@ export class StocksComponent {
   }
 
   constructor(private toastr: ToastrService) {
-    
+
   }
 
   ngOnInit() {
@@ -39,9 +39,7 @@ export class StocksComponent {
       {label: 'Berza', routerLink: ['/stocks']}
     ];
 
-    setTimeout(() => {
-      this.insertUsers()
-    }, 2000);
+    this.insertUsers();
   }
 
   promeniOpciju(){
@@ -62,8 +60,8 @@ export class StocksComponent {
     const obj = {
       outstandingShares: 2,
       dividendYield: 3,
-      ticker: "tiker",
-      name: "string",
+      ticker: "AAPL",
+      name: "Apple Inc",
       exchange: {
         exchangeName: "string",
         exchangeAcronym: "string",
@@ -78,9 +76,9 @@ export class StocksComponent {
         timeZone: 1
       },
       lastRefresh: new Date("2019-01-16"),
-      price: 1,
-      ask: 2,
-      bid: 3,
+      price: 100,
+      ask: 200,
+      bid: 300,
       change: 4,
       volume: 5
     }
@@ -162,7 +160,6 @@ export class StocksComponent {
 
 
   openMoreInfoDialog(event: Stock){
-    this.toastr.info(event.ticker)
     //emit
     this.stockDetailsChild.stock = event
     this.stockDetailsChild.displayDetails = true;

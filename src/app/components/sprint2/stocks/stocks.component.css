@@ -18,4 +18,6 @@
 .rowHover:hover{
   cursor: pointer;
 }
-
+::ng-deep .p-datatable-loading-overlay {
+  background-color: transparent;
+}

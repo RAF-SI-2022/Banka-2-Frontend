@@ -4,6 +4,7 @@ import {MenuItem} from "primeng/api";
 import {Stock} from "../../../models/stock-exchange.model";
 import { ToastrService } from 'ngx-toastr';
 import { StockDetailsComponent } from '../stock-details/stock-details.component';
+import { SortEvent } from 'primeng/api';
 
 @Component({
   selector: 'app-stocks',
@@ -139,6 +140,26 @@ export class StocksComponent {
     this.stocks.push(obj2)
     this.loading = false
   }
+
+
+  customSort(event: any) {
+    console.log(event)
+    event.data.sort((obj1: any, obj2: any) => {
+      let value1, value2;
+      
+        value1 = obj1.change;
+        value2 = obj2.change;
+      
+      if (value1 < value2) {
+        return event.order * -1;
+      } else if (value1 > value2) {
+        return event.order * 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
 
   openMoreInfoDialog(event: Stock){
     this.toastr.info(event.ticker)

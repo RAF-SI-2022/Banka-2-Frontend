@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
   display: boolean = false;
   user: User
 
-  constructor(private userService: UserService, private primengConfig: PrimeNGConfig,private router: Router, private toastr: ToastrService) {}
+  constructor(private userService: UserService, private primengConfig: PrimeNGConfig,private router: Router, private toastr: ToastrService) {
+  }
 
   ngOnInit() {
     // if(localStorage.getItem('token') === null) {

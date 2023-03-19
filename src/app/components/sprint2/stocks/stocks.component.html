@@ -16,11 +16,26 @@
             <h3 style="font-size: medium;">
               Berza
             </h3>
+
+          </div>
+
+
+          <div class="col-4 text-center search-container">
+            <form action="" class="search-bar" title="Pretraži">
+              <input pInputText name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
+              <button class="search-btn" type="submit" title="Pretraži">
+                <span>Search</span>
+              </button>
+            </form>
+          </div>
+
+          <div class="col-4 text-end">
             <button (click)="promeniOpciju()">Promeni opciju</button>
           </div>
+
         </div>
       </ng-template>
-      
+
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="ticker" style="width: 2rem;  font-size: 12px;">

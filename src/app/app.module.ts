@@ -40,6 +40,7 @@ import { StocksComponent } from './components/sprint2/stocks/stocks.component';
 import { ChangePercPipe } from './pipes/change-perc.pipe';
 import { StockDetailsComponent } from './components/sprint2/stock-details/stock-details.component';
 import {ChartModule} from "primeng/chart";
+import {DividerModule} from "primeng/divider";
 
 
 
@@ -64,31 +65,32 @@ import {ChartModule} from "primeng/chart";
     StockDetailsComponent,
 
   ],
-    imports: [
-        MultiSelectModule,
-        BrowserModule,
-        AppRoutingModule,
-        NgbModule,
-        InputTextModule,
-        RippleModule,
-        CheckboxModule,
-        ReactiveFormsModule,
-        PasswordModule,
-        ButtonModule,
-        BrowserAnimationsModule,
-        CardModule,
-        HttpClientModule,
-        TableModule,
-        DialogModule,
-        DropdownModule,
-        TableModule,
-        FormsModule,
-        BreadcrumbModule,
-        SkeletonModule,
-        ToastrModule.forRoot(),
-        SidebarModule,
-        ChartModule
-    ],
+  imports: [
+    MultiSelectModule,
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    InputTextModule,
+    RippleModule,
+    CheckboxModule,
+    ReactiveFormsModule,
+    PasswordModule,
+    ButtonModule,
+    BrowserAnimationsModule,
+    CardModule,
+    HttpClientModule,
+    TableModule,
+    DialogModule,
+    DropdownModule,
+    TableModule,
+    FormsModule,
+    BreadcrumbModule,
+    SkeletonModule,
+    ToastrModule.forRoot(),
+    SidebarModule,
+    ChartModule,
+    DividerModule
+  ],
   // exports: [
   //   ActivityPipe
   // ],

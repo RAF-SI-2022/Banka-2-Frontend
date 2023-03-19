@@ -21,7 +21,8 @@ export class UsersTestComponents{
     cy.get('.p-button-outlined').click()
 
     //test sortiranja
-    cy.get('[psortablecolumn="email"] > .flex > .icon-container > p-sorticon.p-element > .p-sortable-column-icon').click().click()
+    cy.get('[psortablecolumn="email"]').click().click()
+    cy.get('[psortablecolumn="id"]').click().click()
   }
 
   testEditUser(id: number){
@@ -36,19 +37,36 @@ export class UsersTestComponents{
       cy.get('#email-input').clear().type("new@gmail.com")
       cy.get('#phone-input').clear().type("111111111")
       cy.get('.p-dropdown').click()
+      cy.get('[ng-reflect-label="SUPERVISOR"] > .p-ripple').click()
       cy.get('.p-checkbox-box').click()
 
       cy.get('.edit-user-form > .p-ripple').click()
     });
   }
 
-  testActivateDeactivate(id: number){
+  // testActivateDeactivate(id: number){
+  //   cy.get("#buttons" + id).then($body => {    //od usera dobijamo dugmice
+  //     if ($body.find('#deactivateBtn' + id).length > 0) {
+  //       cy.get('#deactivateBtn' + id).click()
+  //     }
+  //     else if ($body.find('#activateBtn' + id).length > 0) {
+  //       cy.get('#activateBtn' + id).click()
+  //     }
+  //   });
+  // }
+
+  testActivate(id: number) {
+    cy.get("#buttons" + id).then($body => {    //od usera dobijamo dugmice
+      if ($body.find('#activateBtn' + id).length > 0) {
+        cy.get('#activateBtn' + id).click()
+      }
+    });
+  }
+
+  testDeactivate(id: number) {
     cy.get("#buttons" + id).then($body => {    //od usera dobijamo dugmice
       if ($body.find('#deactivateBtn' + id).length > 0) {
         cy.get('#deactivateBtn' + id).click()
-      }
-      else if ($body.find('#activateBtn' + id).length > 0) {
-        cy.get('#activateBtn' + id).click()
       }
     });
   }

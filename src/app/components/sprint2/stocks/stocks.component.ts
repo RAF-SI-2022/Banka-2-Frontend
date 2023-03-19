@@ -38,9 +38,7 @@ export class StocksComponent {
       {label: 'Berza', routerLink: ['/stocks']}
     ];
 
-    setTimeout(() => {
-      this.insertUsers()
-    }, 2000);
+    this.insertUsers();
   }
 
   promeniOpciju(){
@@ -77,9 +75,9 @@ export class StocksComponent {
         timeZone: 1
       },
       lastRefresh: new Date("2019-01-16"),
-      price: 1,
-      ask: 2,
-      bid: 3,
+      price: 100,
+      ask: 200,
+      bid: 300,
       change: 4,
       volume: 5
     }

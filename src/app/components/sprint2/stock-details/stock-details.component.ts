@@ -33,6 +33,9 @@ export class StockDetailsComponent {
 
   applyLightTheme() {
     this.basicOptions = {
+      plugins: {
+        legend: {display: false},
+      },
       scales: {
         x: {
           ticks: {

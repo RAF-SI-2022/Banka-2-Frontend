@@ -1,121 +1,187 @@
 <div class="body-container">
 
-  <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
+    <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 
-  <div class="page-container">
-    <div class="center ">
-      <div class="page-content page-container" id="page-content">
-        <div class="padding container">
-          <div class="row justify-content-center">
+    <div class="container">
 
+        <h2 class="title text-center">Trgovina</h2>
 
+        <div class="form">
             <div *ngIf=" this.selectedType.name==='FOREX'; else elseBlock">
-              <form [formGroup]="buySellForm" (ngSubmit)="onSubmit()">
-
-                <h2>Trgovina</h2>
+                <form [formGroup]="buySellForm" (ngSubmit)="onSubmit()">
 
 
-                <h3 class="feild-name">hartija vrednosti</h3>
+                    <div class="form-item row">
+                        <h3 class="feild-name">hartija vrednosti</h3>
+                    </div>
 
-                <p-dropdown [formControlName]="'type'" [options]="types" [(ngModel)]="selectedType"
+
+                    <div class="form-item row">
+                        <p-dropdown [formControlName]="'type'" [options]="types" [(ngModel)]="selectedType"
                             optionLabel="name"></p-dropdown>
+                    </div>
 
-                <p-dropdown [formControlName]="'valuta1'" [options]="iso" [(ngModel)]="selectedType"
-                            optionLabel="name"></p-dropdown>
+                    <div class="form-item row">
+                        <div class="col-2">
+                            <p-dropdown [formControlName]="'valuta1'" [options]="iso" optionLabel="name"></p-dropdown>
+                        </div>
 
-                <p-dropdown [formControlName]="'valuta2'" [options]="iso" [(ngModel)]="selectedType"
-                            optionLabel="name"></p-dropdown>
+                        <div class="col-2">
+                            <p-dropdown [formControlName]="'valuta2'" [options]="iso" optionLabel="name"></p-dropdown>
+                        </div>
 
-                <span class="p-float-label">
-                                    <p-inputNumber [formControlName]="'kolicina'" inputId="integeronly"></p-inputNumber>
-                                    <label for="float-input">Kolicina</label>
-                                </span>
-
-
-                <span class="p-float-label">
-                                    <p-inputNumber [formControlName]="'limit'" inputId="integeronly"></p-inputNumber>
-                                    <label for="float-input">Limit</label>
-                                </span>
-
-                <span class="p-float-label">
-                                    <p-inputNumber [formControlName]="'stop'" inputId="integeronly"></p-inputNumber>
-                                    <label for="float-input">Stop</label>
-                                </span>
-
-                <div>
-                  <p-checkbox [formControlName]="'allornone'" [binary]="true"></p-checkbox>
-                  <label>All or none</label>
+                    </div>
 
 
-                </div>
-                <button type="submit" pButton pRipple label="Naruci" class="w-100"></button>
-              </form>
+                    <div class="form-item row">
+                        <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'kolicina'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Kolicina</label>
+                            </span>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                    <div class="form-item row">
+                        <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'limit'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Limit</label>
+                            </span>
+
+                        </div>
+                        <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'stop'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Stop</label>
+                            </span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-item row">
+
+                        <div class="item col-2">
+                            <p-checkbox class="radio" [formControlName]="'allornone'" [binary]="true"></p-checkbox>
+                            <label>All or none</label>
+                        </div>
+                    </div>
+
+                </form>
 
             </div>
 
             <ng-template #elseBlock>
 
-              <form [formGroup]="buySellForm" (ngSubmit)="onSubmit()">
-
-                <h2>Trgovina</h2>
+                <form [formGroup]="buySellForm" (ngSubmit)="onSubmit()">
 
 
-                <h3 class="feild-name">hartija vrednosti</h3>
+                    <div class="form-item row">
+                        <h3 class="feild-name">hartija vrednosti</h3>
+                    </div>
 
-                <p-dropdown [formControlName]="'type'" [options]="types" [(ngModel)]="selectedType"
+
+                    <div class="form-item row">
+                        <p-dropdown [formControlName]="'type'" [options]="types" [(ngModel)]="selectedType"
                             optionLabel="name"></p-dropdown>
+                    </div>
 
-                <span class="p-float-label">
-                                    <input [formControlName]="'akcija'" id="float-input" type="text" pInputText>
-                                    <label for="float-input">Akcija</label>
-                                </span>
+                    <div class="form-item row ">
+                        <div class="col-3">
+                            <span class="p-float-label">
+                                <input [formControlName]="'akcija'" id="float-input" type="text" pInputText>
+                                <label for="float-input">Akcija</label>
+                            </span>
+                        </div>
 
-                <span class="p-float-label">
-                                    <p-inputNumber [formControlName]="'kolicina'" inputId="integeronly"></p-inputNumber>
-                                    <label for="float-input">Kolicina</label>
-                                </span>
-
-                <p-selectButton [formControlName]="'buysell'" [options]="stateOptions" optionLabel="label"
-                                optionValue="value"></p-selectButton>
+                    </div>
 
 
-                <span class="p-float-label">
-                                    <p-inputNumber [formControlName]="'limit'" inputId="integeronly"></p-inputNumber>
-                                    <label for="float-input">Limit</label>
-                                </span>
 
-                <span class="p-float-label">
-                                    <p-inputNumber [formControlName]="'stop'" inputId="integeronly"></p-inputNumber>
-                                    <label for="float-input">Stop</label>
-                                </span>
+                    <div class="form-item row">
+                        <div class="col-3">
 
-                <div>
-                  <p-checkbox [formControlName]="'allornone'" [binary]="true"></p-checkbox>
-                  <label>All or none</label>
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'kolicina'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Kolicina</label>
+                            </span>
+                        </div>
 
-                  <p-checkbox [formControlName]="'margin'" [binary]="true"></p-checkbox>
-                  <label>Margin</label>
-                </div>
-                <button type="submit" pButton pRipple label="Naruci" class="w-100"></button>
-              </form>
+                        <div class="col-3">
+                            <p-selectButton [formControlName]="'buysell'" [(ngModel)]="buysell" [options]="stateOptions"
+                                optionLabel="label" optionValue="value"></p-selectButton>
+                        </div>
 
+                    </div>
+
+                    <div class="form-item row">
+                        <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'limit'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Limit</label>
+                            </span>
+
+                        </div>
+                        <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'stop'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Stop</label>
+                            </span>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="form-item row">
+
+                        <div class="item col-2">
+                            <p-checkbox class="radio" [formControlName]="'allornone'" [binary]="true"></p-checkbox>
+                            <label>All or none</label>
+                        </div>
+
+                        <div class="item col-2">
+                            <p-checkbox class="radio" [formControlName]="'margin'" [binary]="true"></p-checkbox>
+                            <label>Margin</label>
+                        </div>
+                    </div>
+
+
+                    <p-dialog class="form-item text-center" header="Potvrda" [(visible)]="display" [style]="{width: '50vw'}">
+                        <h3 class="form-item"> Da li ste sigurni da zelite da oabavite ovu traznakciju?</h3>
+                        <button class="form-item" type="submit" pButton pRipple label="Naruci" class="w-50"></button>
+                        
+                    </p-dialog>
+
+                </form>
 
             </ng-template>
 
+        
 
-          </div>
+            <div class="form-item row text-center">
+                <div class="col">
+                    <button (click)="showDialog()" pButton pRipple label="Naruci" class="w-50"></button>
+
+                </div>
+            </div>
+
 
 
         </div>
 
-      </div>
+
+
+
+
+
 
     </div>
-
-  </div>
-
-  <div class="flex">
-
-  </div>
-
-</div>

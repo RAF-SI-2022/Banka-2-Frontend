@@ -31,7 +31,7 @@ export class BuysellComponent {
 
   buySellForm: FormGroup;
 
- 
+
 
   constructor(private formBuilder: FormBuilder,private userService: UserService) {
     this.types = [
@@ -45,7 +45,7 @@ export class BuysellComponent {
       {name: 'ERN'},{name: 'ETB'},{name: 'EUR'},{name: 'FJD'},{name: 'FKP'},{name: 'GBP'},{name: 'GHS'},{name: 'GIP'},{name: 'GMD'},{name: 'GNF'},{name: 'GTQ'},{name: 'GYD'},{name: 'HKD'},{name: 'HNL'},{name: 'HRK'},{name: 'HTG'},{name: 'HUF'},{name: 'ICP'},{name: 'IDR'},{name: 'ILS'},{name: 'INR'},{name: 'IQD'},{name: 'IRR'},{name: 'ISK'},{name: 'JEP'},{name: 'JMD'},{name: 'JPY'},{name: 'KES'},{name: 'KGS'},{name: 'KHR'},{name: 'KMF'},{name: 'KPW'},{name: 'KRW'},{name: 'KWD'},{name: 'KYD'},{name: 'KZT'},{name: 'LAK'},{name: 'LBP'},{name: 'LKR'},{name: 'LRD'},{name: 'LSL'},{name: 'LYD'},{name: 'MAD'},{name: 'MDL'},{name: 'MGA'},{name: 'MKD'},{name: 'MMK'},{name: 'MNT'},{name: 'MOP'},{name: 'MRO'},{name: 'MRU'},
       {name: 'MUR'},{name: 'MVR'},{name: 'MWK'},{name: 'MXN'},{name: 'MYR'},{name: 'MZN'},{name: 'NAD'},{name: 'NGN'},{name: 'NOK'},{name: 'NPR'},{name: 'NZD'},{name: 'OMR'},{name: 'PAB'},{name: 'PEN'},{name: 'PGK'},{name: 'PHP'},{name: 'PKR'},{name: 'PLN'},{name: 'PYG'},{name: 'QAR'},{name: 'RON'},{name: 'RSD'},{name: 'RUB'},{name: 'RUR'},{name: 'RWF'},{name: 'SAR'},{name: 'SBDf'},{name: 'SCR'},{name: 'SDG'},{name: 'SEK'},{name: 'SGD'},{name: 'SHP'},{name: 'SLL'},{name: 'SOS'},{name: 'SRD'},{name: 'SYP'},{name: 'SZL'},{name: 'THB'},{name: 'TJS'},{name: 'TMT'},{name: 'TND'},{name: 'TOP'},{name: 'TRY'},{name: 'TTD'},{name: 'TWD'},{name: 'TZS'},{name: 'UAH'},{name: 'UGX'},
       {name: 'USD'},{name: 'UYU'},{name: 'UZS'},{name: 'VND'},{name: 'VUV'},{name: 'WST'},{name: 'XAF'},{name: 'XCD'},{name: 'XDR'},{name: 'XOF'},{name: 'XPF'},{name: 'YER'},{name: 'ZAR'},{name: 'ZMW'},{name: 'ZWL'},
-      
+
     ];
 
     this.buySellForm = this.formBuilder.group({
@@ -64,7 +64,10 @@ export class BuysellComponent {
 
 
 
-   this.stateOptions = [{label: 'Buy', value: 'buy'}, {label: 'Sell', value: 'sell'}];
+   this.stateOptions = [
+     {label: 'Buy', value: 'buy'},
+     {label: 'Sell', value: 'sell'}
+   ];
   }
 
 
@@ -72,8 +75,8 @@ export class BuysellComponent {
 
   ngOnInit() {
 
-    
-    
+
+
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Porudzbine', routerLink: ['/buysell']}
@@ -84,8 +87,8 @@ export class BuysellComponent {
 
   onSubmit(){
 
-    
-    
+
+
   }
 
 }

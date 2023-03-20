@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {SkeletonModule} from 'primeng/skeleton';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 
 
@@ -94,7 +95,8 @@ import {InputNumberModule} from 'primeng/inputnumber';
     ToastrModule.forRoot(),
     SidebarModule,
     ChartModule,
-    DividerModule
+    DividerModule,
+    InputSwitchModule
   ],
   // exports: [
   //   ActivityPipe

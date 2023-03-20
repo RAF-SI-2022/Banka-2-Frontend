@@ -53,10 +53,10 @@ export class BuysellComponent {
       akcija: [''],
       valuta1: [''],
       valuta2: [''],
-      kolicina: [Number],
+      kolicina: [],
       buysell: ['buy'],
-      limit: [Number],
-      stop: [Number],
+      limit: [],
+      stop: [],
       allornone: [Boolean] ,
       margin:[Boolean]
 

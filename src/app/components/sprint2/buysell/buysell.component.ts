@@ -53,12 +53,12 @@ export class BuysellComponent {
       akcija: [''],
       valuta1: [''],
       valuta2: [''],
-      kolicina: [Number],
-      buysell: ['buy'],
-      limit: [Number],
-      stop: [Number],
-      allornone: [Boolean] ,
-      margin:[Boolean]
+      kolicina: [],
+      buysell: [''],
+      limit: [],
+      stop: [],
+      allornone: false,
+      margin: false
 
     });
 
@@ -84,7 +84,53 @@ export class BuysellComponent {
 
   onSubmit(){
 
-    
+    if(this.buySellForm.get('type')?.value.name===('STOCKS'))
+    {
+      console.log(
+          "Type:", this.buySellForm.get('type')?.value.name, 
+          " Akcija:", this.buySellForm.get('akcija')?.value,
+          " Kolicina:", this.buySellForm.get('kolicina')?.value,
+          " Buy Sell:", this.buySellForm.get('buysell')?.value,
+          " Limit:", this.buySellForm.get('limit')?.value,
+          " Stop:", this.buySellForm.get('stop')?.value,
+          " AON:", this.buySellForm.get('allornone')?.value,
+          " Margin:", this.buySellForm.get('margin')?.value,
+          
+          )
+    }
+
+    else if(this.buySellForm.get('type')?.value.name===('FUTURES'))
+    {
+      console.log(
+        "Type:", this.buySellForm.get('type')?.value.name, 
+        " Akcija:", this.buySellForm.get('akcija')?.value,
+        " Kolicina:", this.buySellForm.get('kolicina')?.value,
+        " Buy Sell:", this.buySellForm.get('buysell')?.value,
+        " Limit:", this.buySellForm.get('limit')?.value,
+        " Stop:", this.buySellForm.get('stop')?.value,
+        " AON:", this.buySellForm.get('allornone')?.value,
+        " Margin:", this.buySellForm.get('margin')?.value,
+        
+        )
+    }
+
+    else if(this.buySellForm.get('type')?.value.name===('FOREX'))
+    {
+
+      console.log(
+        "Type:", this.buySellForm.get('type')?.value.name, 
+        " Valuta1:", this.buySellForm.get('valuta1')?.value.name,
+        " Valuta2:", this.buySellForm.get('valuta1')?.value.name,
+        " Kolicina:", this.buySellForm.get('kolicina')?.value,
+        " Limit:", this.buySellForm.get('limit')?.value,
+        " Stop:", this.buySellForm.get('stop')?.value,
+        " AON:", this.buySellForm.get('allornone')?.value,
+
+        
+        )
+
+    }
+
     
   }
 

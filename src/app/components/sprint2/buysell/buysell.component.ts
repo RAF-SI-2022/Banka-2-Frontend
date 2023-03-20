@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import {MenuItem} from "primeng/api";
 import { ISO, Type } from 'src/app/models/stock-exchange.model';
 import { UserService } from 'src/app/services/user-service.service';
+import {ConfirmationService} from 'primeng/api';
 
 
 @Component({
@@ -25,11 +26,11 @@ export class BuysellComponent {
 
   buysell: string = "buy";
 
-  AllorNone: boolean = false;
 
-  Margin: boolean = false;
 
   buySellForm: FormGroup;
+
+  display: boolean = false;
 
  
 
@@ -62,8 +63,6 @@ export class BuysellComponent {
 
     });
 
-
-
    this.stateOptions = [{label: 'Buy', value: 'buy'}, {label: 'Sell', value: 'sell'}];
   }
 
@@ -80,6 +79,10 @@ export class BuysellComponent {
     ];
 
 
+  }
+
+  showDialog() {
+    this.display = true;
   }
 
   onSubmit(){
@@ -133,5 +136,6 @@ export class BuysellComponent {
 
     
   }
+
 
 }

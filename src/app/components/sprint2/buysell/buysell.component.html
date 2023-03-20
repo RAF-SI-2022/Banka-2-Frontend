@@ -74,16 +74,6 @@
                         </div>
                     </div>
 
-
-                    <div class="form-item row text-center">
-                        <div class="col">
-                            <button type="submit" pButton pRipple label="Naruci" class="w-50"></button>
-
-                        </div>
-                    </div>
-
-
-
                 </form>
 
             </div>
@@ -162,32 +152,29 @@
                             <p-checkbox class="radio" [formControlName]="'margin'" [binary]="true"></p-checkbox>
                             <label>Margin</label>
                         </div>
-
-
-
-                    </div>
-
-                    <div class="form-item row text-center">
-                        <div class="col">
-                            <button type="submit" pButton pRipple label="Naruci" class="w-50"></button>
-
-                        </div>
                     </div>
 
 
-
-
-
-
+                    <p-dialog class="form-item text-center" header="Potvrda" [(visible)]="display" [style]="{width: '50vw'}">
+                        <h3 class="form-item"> Da li ste sigurni da zelite da oabavite ovu traznakciju?</h3>
+                        <button class="form-item" type="submit" pButton pRipple label="Naruci" class="w-50"></button>
+                        
+                    </p-dialog>
 
                 </form>
 
-
-
-
-
             </ng-template>
 
+        
+
+            <div class="form-item row text-center">
+                <div class="col">
+                    <button (click)="showDialog()" pButton pRipple label="Naruci" class="w-50"></button>
+
+                </div>
+            </div>
+
+
 
         </div>
 
@@ -195,11 +182,6 @@
 
 
 
-        <div class="flex">
 
-
-
-
-        </div>
 
     </div>

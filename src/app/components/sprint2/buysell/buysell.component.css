@@ -1,0 +1,33 @@
+.title {
+  margin: 30px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 20px;
+}
+
+.feild-name {
+  font-size: 15px;
+}
+
+
+.form {
+  margin: 30px;
+  padding: 30px;
+  background-color: #e6e6e6;
+  border-radius: 20px;
+  border-color: black;
+  border-width: 5px;
+
+
+}
+
+.form-item {
+
+  padding: 13px;
+
+}
+
+.radio {
+  padding-right: 5px;
+}
+

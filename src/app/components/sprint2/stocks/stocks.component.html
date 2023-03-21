@@ -18,7 +18,7 @@
                 Berza
               </h3>
               <!-- style="display: inline;" -->
-                <p-inputSwitch [(ngModel)]="glupost" 
+                <p-inputSwitch [(ngModel)]="glupost"
                 (ngModelChange)="promeniOpciju()"  class="custom-input-switch"></p-inputSwitch>
               <h3 style="font-size: medium;">
                 Moje akcije
@@ -37,17 +37,17 @@
           </div>
 
           <div class="col-4 text-end">
-            <button (click)="refresh()" 
+            <button (click)="refresh()"
               pButton pRipple styleClass="p-button-sm"
               class="p-button-raised p-button-secondary add-employee-btn-lg"
               label="Refresh" icon="bi bi-arrow-repeat"
               style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
-              
+
             </button>
             <button pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
                     class="p-button-raised p-button-secondary add-employee-btn-sm"
                     icon="bi bi-arrow-repeat" (click)="refresh()"></button>
-                    
+
             <!-- <button pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
                     class="p-button-raised p-button-secondary add-employee-btn-sm"
                     icon="pi pi-plus" (click)="callAddUserChild()"></button> -->
@@ -67,7 +67,7 @@
 
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="ticker" style="width: 2rem;  font-size: 12px;">
+          <th pSortableColumn="ticker" style="font-size: 12px;">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Oznaka</p>
@@ -75,7 +75,7 @@
               </div>
             </div>
           </th>
-          <th pSortableColumn="price" style="width: 2rem; font-size: 12px;">
+          <th pSortableColumn="price" style="font-size: 12px;">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Cena</p>
@@ -83,7 +83,7 @@
               </div>
             </div>
           </th>
-          <th pSortableColumn="volume" style="width: 3rem; font-size: 12px; ">
+          <th pSortableColumn="volume" style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Volume</p>
@@ -91,7 +91,7 @@
               </div>
             </div>
           </th>
-          <th pSortableColumn="change" style="width: 3rem; font-size: 12px; ">
+          <th pSortableColumn="change" style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Promena</p>
@@ -99,14 +99,14 @@
               </div>
             </div>
           </th>
-          <th style="width: 12rem; font-size: 12px; ">
+          <th style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Promena u procentima</p>
               </div>
             </div>
           </th>
-          <th pSortableColumn="lastRefresh" style="width: 40rem; font-size: 12px; ">
+          <th pSortableColumn="lastRefresh" style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Poslednje ažuriranje</p>
@@ -189,7 +189,7 @@
           </td>
           <td>
             <span class="p-column-title">jobPosition</span>
-            <span>{{stock.lastRefresh}}</span>
+            <span>{{stock.lastRefresh | date:'dd.MM.YYYY HH:mm' }} </span>
           </td>
           <td>
             <button *ngIf="BuySellOption" type="button" (click)="kupiPopUp($event,stock)"

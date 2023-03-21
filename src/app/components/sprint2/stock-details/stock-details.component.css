@@ -37,6 +37,22 @@
   float: left;
 }
 
+::ng-deep .p-selectbutton .p-button.p-highlight {
+  background: #7768AE;
+  border-color: #7768AE;
+  color: #ffffff;
+}
+
+::ng-deep .p-buttonset {
+  margin-bottom: 24px;
+}
+
+::ng-deep .p-selectbutton .p-button.p-highlight:hover {
+  background: #594a98;
+  border-color: #594a98;
+  color: #ffffff;
+}
+
 td {
   width: 50%;
 }

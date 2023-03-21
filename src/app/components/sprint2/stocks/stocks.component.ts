@@ -35,10 +35,10 @@ export class StocksComponent {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
-  constructor(private toastr: ToastrService, private authSrvc: AuthService) {
+  constructor(private toastr: ToastrService) {
   }
 
-  
+
 
   ngOnInit() {
     this.breadcrumbItems = [
@@ -222,12 +222,32 @@ export class StocksComponent {
     this.loading = false
   }
 
+
+  customSort(event: any) {
+    console.log(event)
+    event.data.sort((obj1: any, obj2: any) => {
+      let value1, value2;
+
+        value1 = obj1.change;
+        value2 = obj2.change;
+
+      if (value1 < value2) {
+        return event.order * -1;
+      } else if (value1 > value2) {
+        return event.order * 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+
   openMoreInfoDialog(event: Stock){
     // Slanje podataka na details dialog
 
     this.stockDetailsChild.stock = event
     this.stockDetailsChild.displayDetails = true;
-
+    this.stockDetailsChild.resetPeriodOption()
     //OPENDIALOG() ili set bool na true
   }
   refresh(){

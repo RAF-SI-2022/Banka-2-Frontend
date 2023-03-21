@@ -6,7 +6,7 @@
 
     <div class="title-container">
       <div class="img-container">
-        <img class="logo" src="https://logo.clearbit.com/apple.com"/>
+        <img class="logo" src="https://logo.clearbit.com/https://www.ruby-lang.org/"/>
       </div>
       <div>
         <h2 style="font-weight: bolder" class="mb-1">{{stock.ticker}}</h2>
@@ -35,11 +35,18 @@
     </div>
   </div>
   <div class="information-container">
-    <div class="chart-container" >
+    <div class="chart-container text-center" >
+      <p-selectButton (ngModelChange)="updateChart()" [options]="periodOptions" [(ngModel)]="selectedPeriodOption" optionLabel="period">
+        <ng-template class="mb-5" let-item>
+          <small>{{item.period}}</small>
+        </ng-template>
+      </p-selectButton>
       <p-chart height="300px" [responsive]="true" type="line" [data]="basicData" [options]="basicOptions"></p-chart>
     </div>
   </div>
   <div class="details-container">
+
+
 
     <!--    HARDKODOVANI PODACI, TREBA UBACITI PRAVE!-->
 

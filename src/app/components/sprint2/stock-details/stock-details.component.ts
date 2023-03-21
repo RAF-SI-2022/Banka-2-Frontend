@@ -13,6 +13,9 @@ export class StockDetailsComponent {
   stock: Stock
   basicData: any;
   basicOptions: any;
+  variable = true;
+  periodOptions: any[];
+  selectedPeriodOption: any
 
 
   constructor() {
@@ -35,6 +38,16 @@ export class StockDetailsComponent {
     };
 
     this.applyTheme();
+
+    this.periodOptions = [
+      {period: '1d'},
+      {period: '5d'},
+      {period: '1m'},
+      {period: '6m'},
+      {period: '1y'},
+      {period: 'ytd'}
+    ];
+    this.selectedPeriodOption = this.periodOptions[0]
   }
 
   applyTheme() {
@@ -83,6 +96,14 @@ export class StockDetailsComponent {
         }
       }
     };
+  }
+
+  updateChart() {
+    console.log(this.selectedPeriodOption)
+  }
+
+  resetPeriodOption() {
+    this.selectedPeriodOption = this.periodOptions[0]
   }
 
 }

@@ -33,10 +33,10 @@ export class StocksComponent {
   }
 
   constructor(private toastr: ToastrService, private authSrvc: AuthService) {
- 
+
   }
 
-  
+
 
   ngOnInit() {
     this.breadcrumbItems = [
@@ -44,7 +44,7 @@ export class StocksComponent {
       {label: 'Berza', routerLink: ['/stocks']}
     ];
 
-    
+
 
     // setTimeout(()=>{                           // <<<---using ()=> syntax
     //   this.insertUsers();
@@ -194,7 +194,7 @@ export class StocksComponent {
       volume: 1
     }
     this.stocks = []
-    
+
     this.stocks.push(obj)
     this.stocks.push(obj1)
     // this.stocks.push(obj2)
@@ -206,10 +206,10 @@ export class StocksComponent {
     console.log(event)
     event.data.sort((obj1: any, obj2: any) => {
       let value1, value2;
-      
+
         value1 = obj1.change;
         value2 = obj2.change;
-      
+
       if (value1 < value2) {
         return event.order * -1;
       } else if (value1 > value2) {
@@ -225,6 +225,7 @@ export class StocksComponent {
     //emit
     this.stockDetailsChild.stock = event
     this.stockDetailsChild.displayDetails = true;
+    this.stockDetailsChild.resetPeriodOption()
     //OPENDIALOG() ili set bool na true
   }
   refresh(){

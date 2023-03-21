@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {SkeletonModule} from 'primeng/skeleton';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 
 
@@ -96,6 +97,7 @@ import {StyleClassModule} from "primeng/styleclass";
     SidebarModule,
     ChartModule,
     DividerModule,
+    InputSwitchModule,
     StyleClassModule
   ],
   // exports: [

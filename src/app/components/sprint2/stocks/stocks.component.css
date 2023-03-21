@@ -429,4 +429,13 @@ th {
   /* justify-content: center;
    */
 }
+::ng-deep .p-datatable-loading-overlay {
+  background-color: transparent;
+}
+::ng-deep .p-inputswitch.p-inputswitch-checked:not(.p-disabled) .p-inputswitch-slider {
+  background-color: #7768ae;
+}
+::ng-deep .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+  background-color: #5e4c9c;
+}
 

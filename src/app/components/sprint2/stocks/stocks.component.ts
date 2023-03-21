@@ -17,13 +17,16 @@ export class StocksComponent {
   breadcrumbItems: MenuItem[];
   stocks: Stock[]
 
+  allStocks: Stock[]
+  myStocks: Stock[]
+
   displayDetails: boolean = false
 
   loading: boolean = true;
 
   BuySellOption: boolean = true;
+  switch: boolean = false;
 
-  glupost: boolean = false;
 
   @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
 
@@ -33,7 +36,6 @@ export class StocksComponent {
   }
 
   constructor(private toastr: ToastrService, private authSrvc: AuthService) {
- 
   }
 
   
@@ -45,10 +47,12 @@ export class StocksComponent {
     ];
 
     
+    // TODO timeout za testiranje
 
-    // setTimeout(()=>{                           // <<<---using ()=> syntax
+    // setTimeout(()=>{ 
     //   this.insertUsers();
     // }, 2000);
+
     this.insertUsers();
   }
 
@@ -61,27 +65,23 @@ export class StocksComponent {
     }
     this.BuySellOption = !this.BuySellOption
 
-    // this.authSrvc.getLogo()
-    // .subscribe({
-    //   next: val =>{
-    //     console.log(val)
-    //   },
-    //   error: err =>{
-    //     console.log("puko sam")
-    //   }
-    // })
-
   }
 
   kupiPopUp(event: MouseEvent,stock: Stock){
     event.stopPropagation()
+
     //TODO OTVORITI DIALOG ZA KUPOVINU SA VEC POSTAVLJENIM PODACIMA
-    alert("Kupi " + stock.ticker)
+
+    this.toastr.info("kupi popup " + stock.ticker)
+    // alert("Kupi " + stock.ticker)
   }
   prodajPopUp(event: MouseEvent,stock: Stock){
     event.stopPropagation()
+
     //TODO OTVORITI DIALOG ZA PRODAJU SA VEC POSTAVLJENIM PODACIMA
-    alert("Prodaj " + stock.ticker)
+
+    this.toastr.info("Prodaj popup " + stock.ticker)
+    // alert("Prodaj " + stock.ticker)
   }
 
   changeUsers(){
@@ -111,9 +111,19 @@ export class StocksComponent {
       volume: 1
     }
 
+    // TODO Ovde treba da se odradi filtriranje samo nasih stockova
+    this.myStocks = []
+    this.myStocks.push(obj2)
 
-    this.stocks = []
-    this.stocks.push(obj2)
+    // Ovde se ubacuju nasi stockovi u listu za prikazivanje 
+    this.stocks = this.myStocks
+
+    // za testiranje prazne tabele
+    // TODO ovo moze da se setuje kada je error u responsu baze
+    // Ili cak taj msg koji ce se prikazivati kada je prazna lista da bude bindovan na error msg
+  
+    // this.stocks = []
+
   }
 
   insertUsers(){
@@ -165,7 +175,7 @@ export class StocksComponent {
       price: 4,
       ask: 52,
       bid: 6,
-      change: -2,
+      change: 0,
       volume: 1
     }
     const obj2 = {
@@ -193,42 +203,53 @@ export class StocksComponent {
       change: 5,
       volume: 1
     }
-    this.stocks = []
-    
-    this.stocks.push(obj)
-    this.stocks.push(obj1)
-    // this.stocks.push(obj2)
+
+
+    // TODO u allStocks cemo stavljati sve stokove iz baze
+
+    this.allStocks = []
+    this.allStocks.push(obj)
+    this.allStocks.push(obj1)
+
+    // Ovde te stokove stavljamo u listu za prikazivanje na tabeli
+
+    this.stocks = this.allStocks
+
+    // za testiranje prazne tabele
+    // this.stocks = []
+
+
     this.loading = false
   }
 
-
-  customSort(event: any) {
-    console.log(event)
-    event.data.sort((obj1: any, obj2: any) => {
-      let value1, value2;
-      
-        value1 = obj1.change;
-        value2 = obj2.change;
-      
-      if (value1 < value2) {
-        return event.order * -1;
-      } else if (value1 > value2) {
-        return event.order * 1;
-      } else {
-        return 0;
-      }
-    });
-  }
-
-
   openMoreInfoDialog(event: Stock){
-    //emit
+    // Slanje podataka na details dialog
+
     this.stockDetailsChild.stock = event
     this.stockDetailsChild.displayDetails = true;
+
     //OPENDIALOG() ili set bool na true
   }
   refresh(){
-    alert("refresh")
+
+    //TODO ovde ide logika i poziv na servis koji ce pozvati refresh i resetovati tabelu na berza mode
+    //I odmah za njim i filtriranje za userove hartije
+    this.loading = true;
+    this.stocks = []
+    setTimeout(()=>{ 
+      this.insertUsers()
+      this.BuySellOption = true
+      this.switch = false
+      this.loading = false
+    }, 2000);
+
+
+    // {
+    //   this.insertUsers()
+    //   this.BuySellOption = true
+    //   this.switch = false
+    // }
+    // alert("refresh")
   }
 
 }

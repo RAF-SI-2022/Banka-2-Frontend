@@ -42,10 +42,8 @@ export class LoginComponent {
       next: response => {
         if (this.loginForm.get('remember')?.value) {
           localStorage.setItem("token", <string>response.body?.token)
-          // console.log(response.body?.permissions)
           localStorage.setItem('permissions', JSON.stringify(response.body?.permissions))
           this.userService.setToken(<string>response.body?.token)
-          // this.userService.getUserPermissions()
 
           this.userService.getUserData()
             .subscribe({
@@ -56,7 +54,9 @@ export class LoginComponent {
                 } else {
                   localStorage.clear()
                   this.userNotActive = true;
+                  this.userService.resetToken()
                 }
+                
               },
               error: err => {
 
@@ -70,7 +70,6 @@ export class LoginComponent {
 
         } else {
           sessionStorage.setItem("token", <string>response.body?.token)
-          // console.log(response.body?.permissions)
           sessionStorage.setItem('permissions', JSON.stringify(response.body?.permissions))
           this.userService.setToken(<string>response.body?.token)
 
@@ -85,15 +84,13 @@ export class LoginComponent {
                 } else {
                   sessionStorage.clear()
                   this.userNotActive = true;
+                  this.userService.resetToken()
                 }
               },
               error: err => {
 
               }
             })
-
-
-          // this.router.navigate(["users"]);
         }
       },
       error: err => {

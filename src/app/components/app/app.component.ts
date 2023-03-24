@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from 'src/app/services/user-service.service';
 import { User } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -17,17 +18,17 @@ export class AppComponent implements OnInit {
   display: boolean = false;
   user: User
 
-  constructor(private userService: UserService, private primengConfig: PrimeNGConfig,private router: Router, private toastr: ToastrService) {
+  constructor(private authService: AuthService, private userService: UserService, private primengConfig: PrimeNGConfig,private router: Router, private toastr: ToastrService) {
   }
 
   ngOnInit() {
-    // if(localStorage.getItem('token') === null) {
-    //   this.router.navigate(['/login']);
-    // }
     this.primengConfig.ripple = true;
 
 
-    if(localStorage.getItem('token') || sessionStorage.getItem('token')){
+
+    // u slucaju refresha da se povuku podaci o useru
+    if(this.userService.getToken()){
+      console.log("imam token")
       this.userService.getUserData()
         .subscribe({
           next: val =>{
@@ -39,6 +40,29 @@ export class AppComponent implements OnInit {
           }
         })
     }
+
+    // na login da se ponovo povuku podaci o useru
+    this.authService.loginEvent()
+      .subscribe(()=>{
+        console.log("uso sam")
+        this.userService.getUserData()
+        
+        .subscribe({
+          next: val =>{
+            console.log(val)
+            console.log("posle eventa")
+            this.user = val
+          },
+          error: err =>{
+            console.log(err)
+            console.log("posle eventa ERR")
+          }
+        })
+      }) 
+
+
+
+
   }
 
   checkIsLoggedIn(){

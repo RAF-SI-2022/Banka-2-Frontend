@@ -40,6 +40,10 @@ export class UserService {
 
   }
 
+  getToken(){
+    return this.token !== null
+  }
+
 
   getAllUsers(): Observable<any>{
     return this.httpClient.get<any>(

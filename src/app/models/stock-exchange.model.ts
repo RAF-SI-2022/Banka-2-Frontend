@@ -6,12 +6,13 @@ export interface Currency {
 }
 
 export interface Exchange {
-  exchangeName: string,
+  exchangeName: string, // New york stock
   exchangeAcronym: string,
-  exchangeMICCode: string,
+  exchangeMICCode: string, // NYCT
   polity: string,
   currency: Currency,
   timeZone: number
+  // radi: true/false
 }
 
 export interface Listing {

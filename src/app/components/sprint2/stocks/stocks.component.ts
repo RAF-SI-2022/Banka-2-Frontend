@@ -49,8 +49,9 @@ export class StocksComponent {
     
     // TODO timeout za testiranje
 
+    // TODO timeout 30minuta za refresh
     // setTimeout(()=>{ 
-    //   this.insertUsers();
+    //   this.refresh();
     // }, 2000);
 
     this.insertUsers();
@@ -73,6 +74,7 @@ export class StocksComponent {
     //TODO OTVORITI DIALOG ZA KUPOVINU SA VEC POSTAVLJENIM PODACIMA
 
     this.toastr.info("kupi popup " + stock.ticker)
+    this.refresh()
     // alert("Kupi " + stock.ticker)
   }
   prodajPopUp(event: MouseEvent,stock: Stock){
@@ -81,6 +83,7 @@ export class StocksComponent {
     //TODO OTVORITI DIALOG ZA PRODAJU SA VEC POSTAVLJENIM PODACIMA
 
     this.toastr.info("Prodaj popup " + stock.ticker)
+    this.refresh()
     // alert("Prodaj " + stock.ticker)
   }
 

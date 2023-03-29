@@ -6,28 +6,28 @@
     <p-table #dt  [value]="stocks" class="p-datatable-header"
              [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
              [paginator]="true" [alwaysShowPaginator]="false"
-             [loading]="loading" [loadingIcon]="''" 
+             [loading]="loading" [loadingIcon]="''"
              currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} hartija"
              [globalFilterFields]="['ticker']">
       <ng-template pTemplate="caption">
 
         <div class="table-header row">
-          <div class="col-4 text-start table-name">
+          <div class="col-6 col-lg-4 col-md-4 text-start table-name">
             <div style="display:flex; align-items: center; gap: 8px;">
-              <h3 style="font-size: medium;">
+              <h3 class="berza-mojeakcije-text">
                 Berza
               </h3>
               <!-- style="display: inline;" -->
-                <p-inputSwitch [(ngModel)]="switch" 
+                <p-inputSwitch [(ngModel)]="switch"
                 (ngModelChange)="promeniOpciju()"  class="custom-input-switch"></p-inputSwitch>
-              <h3 style="font-size: medium;">
+              <h3 class="berza-mojeakcije-text">
                 Moje akcije
               </h3>
             </div>
           </div>
 
 
-          <div class="col-4 text-center search-container">
+          <div class="col-6 col-lg-4 col-md-4 text-center search-container">
             <form action="" class="search-bar" title="Pretraži">
               <input pInputText name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
               <button class="search-btn" type="submit" title="Pretraži">
@@ -36,7 +36,7 @@
             </form>
           </div>
 
-          <div class="col-4 text-end">
+          <div class="col-4 col-md-4 text-end">
             <button (click)="refresh()"
               pButton pRipple styleClass="p-button-sm"
               class="p-button-raised p-button-secondary add-employee-btn-lg"
@@ -142,7 +142,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <!-- TODO centrirati ovo u tabelu --> 
+          <!-- TODO centrirati ovo u tabelu -->
           <td [attr.colspan]="7">
             <div class="text-center">
               <span *ngIf="BuySellOption">Nema podataka za prikazivanje</span>

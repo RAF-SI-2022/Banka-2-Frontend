@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { Stock } from 'src/app/models/stock-exchange.model';
-import {StockService} from "../../../services/stock.service";
+import {UIChart} from "primeng/chart";
 
 @Component({
   selector: 'app-stock-details',
@@ -17,6 +17,7 @@ export class StockDetailsComponent {
   periodOptions: any[];
   selectedPeriodOption: any
 
+  @ViewChild("chart") chart: UIChart;
 
   constructor() {
     this.basicData = {
@@ -94,12 +95,33 @@ export class StockDetailsComponent {
             color: '#ebedef'
           }
         }
+      },
+      animation: {
+        duration: 1000,
+        easing: 'easeInOutCubic'
       }
     };
   }
 
   updateChart() {
     console.log(this.selectedPeriodOption)
+    this.basicData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+        {
+          label: 'First Dataset',
+          data: [22, 66, 44, 33, 88, 22, 66],
+          fill: {
+            target: 'origin',
+            above: 'rgba(135,236,122,0.29)',   // Area will be red above the origin
+          },
+          borderColor: '#7fc418',
+          tension: .3,
+          pointRadius: 1,
+          pointHoverRadius: 10,
+        }
+      ]
+    };
   }
 
   resetPeriodOption() {

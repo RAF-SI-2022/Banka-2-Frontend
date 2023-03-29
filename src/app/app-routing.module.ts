@@ -13,6 +13,7 @@ import { NotAuthorisedGuard } from './guards/not.authorised.guard';
 import {ChangePasswordComponent} from "./components/sprint1/change-password/change-password.component";
 import {StocksComponent} from "./components/sprint2/stocks/stocks.component";
 import { BuysellComponent } from './components/sprint2/buysell/buysell.component';
+import {StockOptionsComponent} from "./components/sprint2/stock-options/stock-options.component";
 import { PurchasesComponent } from './components/sprint2/purchases/purchases.component';
 
 const routes: Routes = [
@@ -69,9 +70,13 @@ const routes: Routes = [
     component: PurchasesComponent
   },
   {
+    path: "stock-options/:name",
+    component: StockOptionsComponent
+  },
+  {
     path: '**', redirectTo: '404-not-found'
   }
-  
+
 ];
 
 @NgModule({

@@ -13,6 +13,7 @@ import { NotAuthorisedGuard } from './guards/not.authorised.guard';
 import {ChangePasswordComponent} from "./components/sprint1/change-password/change-password.component";
 import {StocksComponent} from "./components/sprint2/stocks/stocks.component";
 import { BuysellComponent } from './components/sprint2/buysell/buysell.component';
+import { PurchasesComponent } from './components/sprint2/purchases/purchases.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,10 @@ const routes: Routes = [
    {
     path: "buysell",
     component: BuysellComponent
+  },
+  {
+    path: "purchases",
+    component: PurchasesComponent
   },
   {
     path: '**', redirectTo: '404-not-found'

@@ -52,6 +52,18 @@ export interface ISO {
   name: string,
 }
 
+export interface Transaction {
+  exchangeMICCode: string, // NYCT
+  transaction : string,
+  hartija: string,
+  volume: number,
+  price: number,
+  status: string,
+  zavrsena: string,
+  lastModifed: Date,
+}
+
+
 
 
 

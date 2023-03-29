@@ -46,6 +46,8 @@ import { BuysellComponent } from './components/sprint2/buysell/buysell.component
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {StyleClassModule} from "primeng/styleclass";
+import { StockOptionsComponent } from './components/sprint2/stock-options/stock-options.component';
+import {ColorPickerModule} from "primeng/colorpicker";
 
 
 
@@ -68,6 +70,7 @@ import {StyleClassModule} from "primeng/styleclass";
     ChangePercPipe,
     StockDetailsComponent,
     BuysellComponent,
+    StockOptionsComponent,
 
   ],
   imports: [
@@ -98,7 +101,8 @@ import {StyleClassModule} from "primeng/styleclass";
     ChartModule,
     DividerModule,
     InputSwitchModule,
-    StyleClassModule
+    StyleClassModule,
+    ColorPickerModule
   ],
   // exports: [
   //   ActivityPipe

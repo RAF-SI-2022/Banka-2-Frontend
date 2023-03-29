@@ -46,6 +46,7 @@ import { BuysellComponent } from './components/sprint2/buysell/buysell.component
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {StyleClassModule} from "primeng/styleclass";
+import { PurchasesComponent } from './components/sprint2/purchases/purchases.component';
 import { StockOptionsComponent } from './components/sprint2/stock-options/stock-options.component';
 import {ColorPickerModule} from "primeng/colorpicker";
 
@@ -71,6 +72,7 @@ import {ColorPickerModule} from "primeng/colorpicker";
     StockDetailsComponent,
     BuysellComponent,
     StockOptionsComponent,
+    PurchasesComponent,
 
   ],
   imports: [

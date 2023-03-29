@@ -14,6 +14,7 @@ import {ChangePasswordComponent} from "./components/sprint1/change-password/chan
 import {StocksComponent} from "./components/sprint2/stocks/stocks.component";
 import { BuysellComponent } from './components/sprint2/buysell/buysell.component';
 import {StockOptionsComponent} from "./components/sprint2/stock-options/stock-options.component";
+import { PurchasesComponent } from './components/sprint2/purchases/purchases.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,10 @@ const routes: Routes = [
    {
     path: "buysell",
     component: BuysellComponent
+  },
+  {
+    path: "purchases",
+    component: PurchasesComponent
   },
   {
     path: "stock-options/:name",

@@ -49,6 +49,8 @@ import {StyleClassModule} from "primeng/styleclass";
 import { PurchasesComponent } from './components/sprint2/purchases/purchases.component';
 import { StockOptionsComponent } from './components/sprint2/stock-options/stock-options.component';
 import {ColorPickerModule} from "primeng/colorpicker";
+import { BuyStockComponent } from './components/sprint2/buy-stock/buy-stock.component';
+import { SellStockComponent } from './components/sprint2/sell-stock/sell-stock.component';
 
 
 
@@ -73,6 +75,8 @@ import {ColorPickerModule} from "primeng/colorpicker";
     BuysellComponent,
     StockOptionsComponent,
     PurchasesComponent,
+    BuyStockComponent,
+    SellStockComponent,
 
   ],
   imports: [

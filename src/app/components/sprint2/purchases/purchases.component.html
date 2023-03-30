@@ -40,11 +40,6 @@
                     icon="bi bi-arrow-repeat" (click)="refresh()"></button>
           </div>
 
-        
-          <div class="col-4">
-            <p-dropdown [options]="filter" [(ngModel)]="selectedType" optionLabel="name"></p-dropdown>
-        </div>
-
 
         </div>
       </ng-template>
@@ -96,6 +91,18 @@
                 <div class="icon-container">
                     <p style="margin-bottom: 0; margin-top: 2px;">Status</p>
                     <p-sortIcon field="change"></p-sortIcon>
+
+                    <p-columnFilter field="status" matchMode="equals" [showMatchModes]="false" [showOperator]="false"
+                    [showAddButton]="false" display="menu" class="ml-auto">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown [ngModel]="value" [options]="status" (onChange)="filter($event.value)"
+                                    placeholder="Izaberi status">
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                        </p-dropdown>
+                    </ng-template>
+                    </p-columnFilter>
                 </div>
                 </div>
             </th>
@@ -103,16 +110,16 @@
                 <div class="flex justify-content-between align-items-center">
                 <div class="icon-container">
                     <p style="margin-bottom: 0; margin-top: 2px;">Zavrsena</p>
-                    <p-sortIcon field="change"></p-sortIcon>
+                    <p-sortIcon field="zavrsena"></p-sortIcon>
                 </div>
                 </div>
             </th>
 
-            <th pSortableColumn="lastRefresh" style="font-size: 12px; ">
+            <th pSortableColumn="lastModifed" style="font-size: 12px; ">
                 <div class="flex justify-content-between align-items-center">
                 <div class="icon-container">
                     <p style="margin-bottom: 0; margin-top: 2px;">Poslednje modifikacija</p>
-                    <p-sortIcon field="lastRefresh"></p-sortIcon>
+                    <p-sortIcon field="lastModifed"></p-sortIcon>
                 </div>
                 </div>
             </th>
@@ -131,6 +138,12 @@
             <tr class="rowHover"  style="font-size: 12px;">
              <td>{{transaction.hartija}}</td>
              <td>{{transaction.transaction}}</td>
+             <td>{{transaction.exchangeMICCode}}</td>
+             <td>{{transaction.volume}}</td>
+             <td>{{transaction.price}}</td>
+             <td>{{transaction.status}}</td>
+             <td>{{transaction.zavrsena}}</td>
+             <td>{{transaction.lastModifed}}</td>
             </tr>
            
         </ng-template>

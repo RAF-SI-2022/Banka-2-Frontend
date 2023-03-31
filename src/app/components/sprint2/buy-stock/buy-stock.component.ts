@@ -9,7 +9,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class BuyStockComponent {
 
   buyStockForm: FormGroup;
-  buyStockVisible: boolean = false;
+  buyStockVisible: boolean = true;
 //TODO:pokupiti limit od usera i stock name iz stocka
   constructor(private formBuilder: FormBuilder) {
     this.buyStockForm = this.formBuilder.group({
@@ -22,8 +22,15 @@ export class BuyStockComponent {
     })
   }
 
-  submitBuyStock(){
-    alert("buy");
+  submitBuyStock() {
+    if (this.buyStockForm.valid) {
+      alert("buy");
+    } else {
+      this.buyStockForm.markAllAsTouched();
+      alert('Niste popunili sva polja!');
+      //Nakon prvog izbacenog alerta , nastavlja da baca gresku jer je stockName jos uvek null
+
+    }
   }
 
   setBuyStockVisible(){

@@ -1,0 +1,35 @@
+contract_name,contract_size,contract_unit,maintenance_margin,type
+corn,5000,bushel,1600,Type1
+soybean,5000,bushel,2700,Type1
+soybean oil,60000,pound,2100,Type1
+soybean meal,180000,pound,1750,Type1
+Chicago wheat,5000,bushel,2500,Type1
+live cattle,40000,pound,1600,Type1
+wheat,5000,bushel,2600,Type1
+feeder cattle,50000,pound,2850,Type1
+lean hog,40000,pound,1750,Type1
+pork cutout,40000,pound,1900,Type1
+nonfat dry milk,44000,pound,2150,Type1
+class 3 milk,200000,pound,1500,Type1
+class 4 milk,200000,pound,1500,Type1
+cash-settled butter,20000,pound,2100,Type1
+cash-settled cheese,20000,pound,2200,Type1
+block cheese,2000,pound,2100,Type1
+oats,5000,bushel,1800,Type1
+rough rice,180000,pound,1400,Type1
+urea,200000,pound,8000,Type1
+lumber,27500,board feet,1350,Type1
+crude oil,1000,barrel,5300,Type1
+natural gas,10000,MMBtu,3700,Type1
+gasoline,42000,gallon,6500,Type2
+e-mini crude oil,500,barrel,2750,Type2
+NY harbor ULSD,42000,gallon,7000,Type2
+micro crude oil,100,barrel,550,Type2
+Henry Hub natural gas,10000,MMBtu,3800,Type2
+buckeye jet fuel,42000,gallon,8000,Type2
+gold,100,troy ounce,8000,Type2
+silver,5000,troy ounce,9500,Type2
+platinum,50,troy ounce,3700,Type2
+copper,25000,pound,6100,Type2
+aluminum,50000,pound,3600,Type2
+e-mini copper,12500,pound,3050,Type2

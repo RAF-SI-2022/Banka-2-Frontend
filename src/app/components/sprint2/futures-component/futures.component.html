@@ -1,0 +1,25 @@
+<div class="futures-container container mt-5">
+  <div>
+    <div *ngFor="let futureMapItem of futuresSingleMap | keyvalue; index as i" class="mb-3 text-center">
+      <h1> {{futureMapItem.key}}</h1>
+      <div *ngFor="let future of futureMapItem.value; index as j">
+        <div *ngIf="j % 3 === 0" class="row mb-3">
+          <p-card [routerLink]="'/future/' + futureMapItem.value[j].futureName" class="future-card col-lg-4"
+                  [header]="futureMapItem.value[j].futureName">
+            <p>{{futureMapItem.key}}</p>
+          </p-card>
+          <p-card [routerLink]="'/future/' + futureMapItem.value[j+1].futureName"
+                  *ngIf="j+1 < futureMapItem.value.length" class="future-card col-lg-4"
+                  [header]="futureMapItem.value[j+1].futureName">
+            <p>{{futureMapItem.key}}</p>
+          </p-card>
+          <p-card [routerLink]="'/future/' + futureMapItem.value[j+2].futureName"
+                  *ngIf="j+2 < futureMapItem.value.length" class="future-card col-lg-4"
+                  [header]="futureMapItem.value[j+2].futureName">
+            <p>{{futureMapItem.key}}</p>
+          </p-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

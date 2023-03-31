@@ -46,11 +46,11 @@ export class StocksComponent {
       {label: 'Berza', routerLink: ['/stocks']}
     ];
 
-    
+
     // TODO timeout za testiranje
 
     // TODO timeout 30minuta za refresh
-    // setTimeout(()=>{ 
+    // setTimeout(()=>{
     //   this.refresh();
     // }, 2000);
 
@@ -104,7 +104,9 @@ export class StocksComponent {
           currencySymbol: "string",
           polity: "string"
         },
-        timeZone: 3
+        timeZone: 3,
+        openTime: "1",
+        closeTime: "1"
       },
       lastRefresh: new Date("2012-01-16"),
       price: 4,
@@ -118,13 +120,13 @@ export class StocksComponent {
     this.myStocks = []
     this.myStocks.push(obj2)
 
-    // Ovde se ubacuju nasi stockovi u listu za prikazivanje 
+    // Ovde se ubacuju nasi stockovi u listu za prikazivanje
     this.stocks = this.myStocks
 
     // za testiranje prazne tabele
     // TODO ovo moze da se setuje kada je error u responsu baze
     // Ili cak taj msg koji ce se prikazivati kada je prazna lista da bude bindovan na error msg
-  
+
     // this.stocks = []
 
   }
@@ -147,7 +149,9 @@ export class StocksComponent {
           currencySymbol: "string",
           polity: "string"
         },
-        timeZone: 1
+        timeZone: 1,
+        openTime: "1",
+        closeTime: "1"
       },
       lastRefresh: new Date("2019-01-16"),
       price: 100,
@@ -172,7 +176,9 @@ export class StocksComponent {
           currencySymbol: "string",
           polity: "string"
         },
-        timeZone: 3
+        timeZone: 3,
+        openTime: "1",
+        closeTime: "1"
       },
       lastRefresh: new Date("2012-01-16"),
       price: 4,
@@ -197,7 +203,9 @@ export class StocksComponent {
           currencySymbol: "string",
           polity: "string"
         },
-        timeZone: 3
+        timeZone: 3,
+        openTime: "1",
+        closeTime: "1"
       },
       lastRefresh: new Date("2012-01-16"),
       price: 4,
@@ -249,6 +257,7 @@ export class StocksComponent {
     // Slanje podataka na details dialog
 
     this.stockDetailsChild.stock = event
+    this.stockDetailsChild.getStockDetails(event.ticker);
     this.stockDetailsChild.displayDetails = true;
     this.stockDetailsChild.resetPeriodOption()
     //OPENDIALOG() ili set bool na true
@@ -259,7 +268,7 @@ export class StocksComponent {
     //I odmah za njim i filtriranje za userove hartije
     this.loading = true;
     this.stocks = []
-    setTimeout(()=>{ 
+    setTimeout(()=>{
       this.insertUsers()
       this.BuySellOption = true
       this.switch = false

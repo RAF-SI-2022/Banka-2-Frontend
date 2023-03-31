@@ -3,9 +3,7 @@ import { Component } from '@angular/core';
 import {MenuItem} from "primeng/api";
 import { Transaction, Type } from 'src/app/models/stock-exchange.model';
 
-interface Filter {
-  name: string;
-}
+
 
 @Component({
   selector: 'app-purchases',
@@ -16,32 +14,30 @@ export class PurchasesComponent {
 
   breadcrumbItems: MenuItem[];
 
-  filter: Filter[];
-
-  selectedType: Filter = {name: 'Sve'};
-
   transactions: Transaction[]
 
   loading: boolean = true;
 
+  status!: any[];
+
   constructor(){
 
-    this.filter = [
-      {name: 'Sve'},
-      {name: 'Zavrsene'},
-      {name: 'Odobrene'},
-      {name: 'Odbijene'},
-      {name: 'Na cekanju'},
-    ];
-
   }
-
+ 
 
   ngOnInit() {
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Prudzbine', routerLink: ['/purchases']}
     ];
+
+    this.status = [
+      {label: 'Sve', value: ''},
+      {label: 'Zavrsene', value: 'ZAVRSENA'},
+      {label: 'Odobrene', value: 'ODOBRENA'},
+      {label: 'Odbijene', value: 'ODBIJENA'},
+      {label: 'Na cekanju', value: 'NA CEKANJU'}
+  ]
     
     this.insertTrans();
 
@@ -78,9 +74,22 @@ export class PurchasesComponent {
 
     }
 
+    const obj2 = {
+      exchangeMICCode: "APP", // NYCT
+      transaction : "Kupovina",
+      hartija: "AKCIJA",
+      volume: 6,
+      price: 20,
+      status: "Odbijena",
+      zavrsena: "Ne",
+      lastModifed: new Date("2012-01-17"),
+
+    }
+
     this.transactions = []
 
     this.transactions.push(obj)
+    this.transactions.push(obj2)
 
     setTimeout(()=>{ 
       this.loading = false;

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MenuItem} from "primeng/api";
 import {ISO, Type} from 'src/app/models/stock-exchange.model';
 import {UserService} from 'src/app/services/user-service.service';
@@ -27,7 +27,21 @@ export class BuysellComponent {
 
   buySellForm: FormGroup;
 
+  stocksForm: FormGroup;
+
+  futuresForm: FormGroup;
+
+  forexForm: FormGroup;
+
+  isStocksValid: boolean = false;
+
+  isFuturesValid: boolean = false;
+
+  isForexValid: boolean = false;
+
   display: boolean = false;
+
+  
 
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
@@ -45,19 +59,57 @@ export class BuysellComponent {
 
     ];
 
-    this.buySellForm = this.formBuilder.group({
+    this.stocksForm = this.formBuilder.group({
       type: [''],
-      akcija: [''],
-      valuta1: [''],
-      valuta2: [''],
-      kolicina: [],
+      akcija: ['', Validators.required],
+      kolicina: [null,Validators.required],
       buysell: [''],
-      limit: [],
-      stop: [],
+      limit: [null, Validators.required],
+      stop: [null, Validators.required],
       allornone: false,
       margin: false
 
     });
+
+
+    this.futuresForm = this.formBuilder.group({
+      type: [''],
+      akcija: ['', Validators.required],
+      kolicina: [null,Validators.required],
+      buysell: [''],
+      limit: [null, Validators.required],
+      stop: [null, Validators.required],
+      allornone: false,
+      margin: false
+
+    });
+
+
+    this.forexForm = this.formBuilder.group({
+      type: [''],
+      valuta1: [ {name: 'AED'}, Validators.required],
+      valuta2: [  {name: 'AED'}, Validators.required],
+      kolicina: [null, Validators.required],
+      buysell: [''],
+      limit: [null, Validators.required],
+      stop: [null, Validators.required],
+      allornone: false,
+      margin: false
+
+    });
+
+    this.stocksForm.valueChanges.subscribe(() => {
+      this.isStocksValid = this.stocksForm.valid;
+    });
+
+    this.futuresForm.valueChanges.subscribe(() => {
+      this.isFuturesValid = this.futuresForm.valid;
+    });
+
+    this.forexForm.valueChanges.subscribe(() => {
+      this.isForexValid = this.forexForm.valid;
+    });
+
 
     this.stateOptions = [{label: 'Buy', value: 'buy'}, {label: 'Sell', value: 'sell'}];
   }
@@ -80,39 +132,50 @@ export class BuysellComponent {
 
   onSubmit() {
 
-    if (this.buySellForm.get('type')?.value.name === ('STOCKS')) {
-      console.log(
-        "Type:", this.buySellForm.get('type')?.value.name,
-        " Akcija:", this.buySellForm.get('akcija')?.value,
-        " Kolicina:", this.buySellForm.get('kolicina')?.value,
-        " Buy Sell:", this.buySellForm.get('buysell')?.value,
-        " Limit:", this.buySellForm.get('limit')?.value,
-        " Stop:", this.buySellForm.get('stop')?.value,
-        " AON:", this.buySellForm.get('allornone')?.value,
-        " Margin:", this.buySellForm.get('margin')?.value,
-      )
-    } else if (this.buySellForm.get('type')?.value.name === ('FUTURES')) {
-      console.log(
-        "Type:", this.buySellForm.get('type')?.value.name,
-        " Akcija:", this.buySellForm.get('akcija')?.value,
-        " Kolicina:", this.buySellForm.get('kolicina')?.value,
-        " Buy Sell:", this.buySellForm.get('buysell')?.value,
-        " Limit:", this.buySellForm.get('limit')?.value,
-        " Stop:", this.buySellForm.get('stop')?.value,
-        " AON:", this.buySellForm.get('allornone')?.value,
-        " Margin:", this.buySellForm.get('margin')?.value,
-      )
-    } else if (this.buySellForm.get('type')?.value.name === ('FOREX')) {
+    this.display = false
+
+    if(this.selectedType.name ==="FOREX"){
 
       console.log(
-        "Type:", this.buySellForm.get('type')?.value.name,
-        " Valuta1:", this.buySellForm.get('valuta1')?.value.name,
-        " Valuta2:", this.buySellForm.get('valuta1')?.value.name,
-        " Kolicina:", this.buySellForm.get('kolicina')?.value,
-        " Limit:", this.buySellForm.get('limit')?.value,
-        " Stop:", this.buySellForm.get('stop')?.value,
-        " AON:", this.buySellForm.get('allornone')?.value,
+        "Type:", this.forexForm.get('type')?.value.name,
+        " Valuta1:", this.forexForm.get('valuta1')?.value.name,
+        " Valuta2:", this.forexForm.get('valuta2')?.value.name,
+        " Kolicina:", this.forexForm.get('kolicina')?.value,
+        " Limit:", this.forexForm.get('limit')?.value,
+        " Stop:", this.forexForm.get('stop')?.value,
+        " AON:", this.forexForm.get('allornone')?.value,
       )
+    }
+
+    else if(this.selectedType.name ==="STOCKS"){
+
+      console.log(
+        "Type:", this.stocksForm.get('type')?.value.name,
+        " Akcija:", this.stocksForm.get('akcija')?.value,
+        " Kolicina:", this.stocksForm.get('kolicina')?.value,
+        " Buy Sell:", this.stocksForm.get('buysell')?.value,
+        " Limit:", this.stocksForm.get('limit')?.value,
+        " Stop:", this.stocksForm.get('stop')?.value,
+        " AON:", this.stocksForm.get('allornone')?.value,
+        " Margin:", this.stocksForm.get('margin')?.value,
+      )
+
+
+    }
+
+    else if(this.selectedType.name ==="FUTURES"){
+
+      console.log(
+        "Type:", this.futuresForm.get('type')?.value.name,
+        " Akcija:", this.futuresForm.get('akcija')?.value,
+        " Kolicina:", this.futuresForm.get('kolicina')?.value,
+        " Buy Sell:", this.futuresForm.get('buysell')?.value,
+        " Limit:", this.futuresForm.get('limit')?.value,
+        " Stop:", this.futuresForm.get('stop')?.value,
+        " AON:", this.futuresForm.get('allornone')?.value,
+        " Margin:", this.futuresForm.get('margin')?.value,
+      )
+
 
     }
 

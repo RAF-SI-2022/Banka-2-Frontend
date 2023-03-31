@@ -8,8 +8,8 @@
         <img class="logo" src="https://logo.clearbit.com/apple.com"/>
       </div>
       <div>
-        <h2 style="font-weight: bolder" class="mb-1">{{stock.ticker}}</h2>
-        <p class="mt-0" style="font-weight: 400; font-size: large">{{stock.name}}</p>
+        <h2 style="font-weight: bolder" class="mb-1">{{stockDetails.symbol}}</h2>
+        <p class="mt-0" style="font-weight: 400; font-size: large">{{stockDetails.companyName}}</p>
       </div>
       <div class="button-container">
 
@@ -21,11 +21,11 @@
   <div class="basic-info-container mb-4">
     <div style="flex-basis: 90%">
       <small>Price</small>
-      <h3 style="font-weight: 800">${{stock.price}}</h3>
+      <h3 style="font-weight: 800">${{stockDetails.priceValue}}</h3>
     </div>
     <div>
       <small>High</small>
-      <h3 style="font-weight: 800">$105</h3>
+      <h3 style="font-weight: 800">${{stockDetails.highValue}}</h3>
     </div>
     <div>
       <div class="divider-container">
@@ -34,7 +34,7 @@
     </div>
     <div>
       <small>Low</small>
-      <h3 style="font-weight: 800">$97</h3>
+      <h3 style="font-weight: 800">${{stockDetails.lowValue}}</h3>
     </div>
   </div>
   <div class="information-container">
@@ -50,43 +50,33 @@
   </div>
   <div class="details-container">
 
-
-    <!--    HARDKODOVANI PODACI, TREBA UBACITI PRAVE!-->
-
     <div class="row mb-3">
-      <div class="col-lg-3 col-sm-6 text-center">
+      <div class="col-lg-4 col-sm-6 text-center">
         <small>Change</small>
-        <p>${{stock.change}}</p>
+        <p>${{stockDetails.changeValue}}</p>
       </div>
-      <div class="col-lg-3 col-sm-6 text-center">
+      <div class="col-lg-4 col-sm-6 text-center">
+<!--        skloni ili izracunaj-->
         <small>Day Range</small>
         <p>$154.28 - $156.74</p>
       </div>
-      <div class="col-lg-3 col-sm-6 text-center">
+      <div class="col-lg-4 col-sm-6 text-center">
         <small>Open</small>
-        <p>$156.08</p>
-      </div>
-      <div class="col-lg-3 col-sm-6 text-center">
-        <small>Price Volume</small>
-        <p>15.3b</p>
+        <p>${{stockDetails.openValue}}</p>
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-3 col-sm-6 text-center">
+      <div class="col-lg-4 col-sm-6 text-center">
         <small>Volume</small>
-        <p>98.9m</p>
+        <p>{{formatNumber(stockDetails.volumeValue)}}</p>
       </div>
-      <div class="col-lg-3 col-sm-6 text-center">
+      <div class="col-lg-4 col-sm-6 text-center">
         <small>Outstanding Shares</small>
-        <p>15.8b</p>
+        <p>{{formatNumber(stockDetails.outstandingShares)}}</p>
       </div>
-      <div class="col-lg-3 col-sm-6 text-center">
+      <div class="col-lg-4 col-sm-6 text-center">
         <small>Previous Close</small>
-        <p>$155.85</p>
-      </div>
-      <div class="col-lg-3 col-sm-6 text-center">
-        <small>Market Cap</small>
-        <p>2.5t</p>
+        <p>${{stockDetails.previousClose}}</p>
       </div>
     </div>
 

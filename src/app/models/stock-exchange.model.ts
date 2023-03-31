@@ -6,13 +6,14 @@ export interface Currency {
 }
 
 export interface Exchange {
-  exchangeName: string, // New york stock
+  exchangeName: string,
   exchangeAcronym: string,
-  exchangeMICCode: string, // NYCT
+  exchangeMICCode: string,
   polity: string,
   currency: Currency,
-  timeZone: number
-  // radi: true/false
+  timeZone: number,
+  openTime: string,
+  closeTime: string,
 }
 
 export interface Listing {
@@ -37,11 +38,31 @@ export interface Forex extends Listing {
   quoteCurrency: Currency
 }
 
-export interface Futures {
+export interface Future {
+  futureName: string,
   contractSize: number,
   contractUnit: string,
-  openInterest: number,
+  maintenanceMargin: number,
+  contractType: string
   settlementDate: Date
+}
+
+export interface StockDetails {
+  id: number,
+  symbol: string,
+  companyName: string,
+  outstandingShares: number,
+  dividendYield: number,
+  priceValue: number,
+  openValue: number,
+  lowValue: number,
+  highValue: number,
+  changeValue: number,
+  previousClose: number,
+  volumeValue: number,
+  lastUpdated: string,
+  changePercent: string,
+  exchange_name: null
 }
 
 export interface Type {

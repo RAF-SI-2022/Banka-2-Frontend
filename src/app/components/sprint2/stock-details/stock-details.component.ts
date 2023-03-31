@@ -1,6 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
-import { Stock } from 'src/app/models/stock-exchange.model';
+import {Stock, StockDetails} from 'src/app/models/stock-exchange.model';
 import {UIChart} from "primeng/chart";
+import {UserService} from "../../../services/user-service.service";
+import {StockService} from "../../../services/stock.service";
 
 @Component({
   selector: 'app-stock-details',
@@ -11,6 +13,7 @@ export class StockDetailsComponent {
 
   displayDetails : boolean = false
   stock: Stock
+  stockDetails: StockDetails
   basicData: any;
   basicOptions: any;
   variable = true;
@@ -19,7 +22,7 @@ export class StockDetailsComponent {
 
   @ViewChild("chart") chart: UIChart;
 
-  constructor() {
+  constructor(private stockService: StockService) {
     this.basicData = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
@@ -50,6 +53,36 @@ export class StockDetailsComponent {
     ];
     this.selectedPeriodOption = this.periodOptions[0]
   }
+
+  getStockDetails(ticker: string) {
+    this.stockService.getStockDetails(ticker)
+      .subscribe({
+          next: value => {
+            this.stockDetails = value;
+          },
+          error: err => {
+            console.log(err)
+          }
+        }
+      )
+  }
+
+  parseFloat(num: number, fractionDigits: number) {
+    return parseFloat(num.toFixed(fractionDigits))
+  }
+
+  formatNumber(num: number): string {
+    if (num >= 1000000000) {
+      const billions = num / 1000000000;
+      return billions.toFixed(1) + 'b';
+    } else if (num >= 1000000) {
+      const millions = num / 1000000;
+      return millions.toFixed(1) + 'm';
+    } else {
+      return num.toString();
+    }
+  }
+
 
   applyTheme() {
     this.basicOptions = {

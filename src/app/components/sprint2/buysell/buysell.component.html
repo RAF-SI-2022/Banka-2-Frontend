@@ -1,0 +1,337 @@
+<div class="body-container">
+
+  <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
+
+  <div class="container">
+
+    <h2 class="title text-center">Trgovina</h2>
+
+    <div class="form">
+      <div *ngIf=" this.selectedType.name==='FOREX'">
+        <form [formGroup]="forexForm" (ngSubmit)="onSubmit()">
+
+
+          <div class="form-item row">
+            <h3 class="feild-name">Hartija</h3>
+          </div>
+
+
+          <div class="form-item row">
+            <p-dropdown [formControlName]="'type'" [options]="types" [(ngModel)]="selectedType"
+                        optionLabel="name"></p-dropdown>
+          </div>
+
+          <div class="form-item row">
+            <div class="col-2">
+              <p-dropdown [formControlName]="'valuta1'" [options]="iso" optionLabel="name"></p-dropdown>
+            </div>
+
+            <div class="col-2">
+              <p-dropdown [formControlName]="'valuta2'" [options]="iso" optionLabel="name"></p-dropdown>
+            </div>
+
+          </div>
+
+
+          <div class="form-item row">
+            <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'kolicina'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Količina</label>
+                            </span>
+            </div>
+          </div>
+
+
+          <div class="form-item row">
+            <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'limit'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Limit</label>
+                            </span>
+
+            </div>
+            <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'stop'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Stop</label>
+                            </span>
+            </div>
+          </div>
+
+
+          <div class="form-item row">
+
+            <div class="item col-2">
+              <p-checkbox class="radio" [formControlName]="'allornone'" [binary]="true"></p-checkbox>
+              <label>All or none</label>
+            </div>
+          </div>
+
+          <p-dialog class="form-item text-center" header="Potvrda" [(visible)]="display" [style]="{width: '50vw'}">
+        
+    
+            <h3 class="form-item"> Da li ste sigurni da želite da zamenite {{forexForm.get("valuta1")?.value.name}} za {{forexForm.get("valuta2")?.value.name}} ?</h3>
+
+            <p>Količina: {{forexForm.get("kolicina")?.value}}</p>
+            <p>Limit: {{forexForm.get("limit")?.value}}</p>
+            <p>Stop: {{forexForm.get("stop")?.value}}</p>
+
+            <div *ngIf=" this.forexForm.get('allornone')?.value === false">
+              <p>All or none: Ne</p>
+            </div>
+            <div *ngIf=" this.forexForm.get('allornone')?.value === true">
+              <p>All or none: Da</p>
+            </div>
+
+            
+            <button class="form-item" type="submit" pButton pRipple label="Naruci" class="w-50"></button>
+
+          </p-dialog>
+
+        </form>
+
+          <div class="form-item row text-center">
+            <div class="col">
+              <button (click)="showDialog()" pButton pRipple label="Naruci" [disabled]="!isForexValid" class="w-50"></button>
+    
+            </div>
+          </div>
+
+      </div>
+
+      <div *ngIf=" this.selectedType.name==='STOCKS'">
+
+        <form [formGroup]="stocksForm" (ngSubmit)="onSubmit()">
+
+
+          <div class="form-item row">
+            <h3 class="feild-name">Hartija</h3>
+          </div>
+
+
+          <div class="form-item row">
+            <p-dropdown [formControlName]="'type'" [options]="types" [(ngModel)]="selectedType"
+                        optionLabel="name"></p-dropdown>
+          </div>
+
+          <div class="form-item row ">
+            <div class="col-3">
+                            <span class="p-float-label">
+                                <input [formControlName]="'akcija'" id="float-input" type="text" pInputText>
+                                <label for="float-input">Akcija</label>
+                            </span>
+            </div>
+
+          </div>
+
+
+          <div class="form-item row">
+            <div class="col-3">
+
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'kolicina'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Količina</label>
+                            </span>
+            </div>
+
+            <div class="col-3">
+              <p-selectButton [formControlName]="'buysell'" [(ngModel)]="buysell" [options]="stateOptions"
+                              optionLabel="label" optionValue="value"></p-selectButton>
+            </div>
+
+          </div>
+
+          <div class="form-item row">
+            <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'limit'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Limit</label>
+                            </span>
+
+            </div>
+            <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'stop'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Stop</label>
+                            </span>
+            </div>
+          </div>
+
+
+          <div class="form-item row">
+
+            <div class="item col-2">
+              <p-checkbox class="radio" [formControlName]="'allornone'" [binary]="true"></p-checkbox>
+              <label>All or none</label>
+            </div>
+
+            <div class="item col-2">
+              <p-checkbox class="radio" [formControlName]="'margin'" [binary]="true"></p-checkbox>
+              <label>Margin</label>
+            </div>
+          </div>
+
+          <p-dialog class="form-item text-center" header="Potvrda" [(visible)]="display" [style]="{width: '50vw'}">
+
+            <div *ngIf=" this.buysell === 'buy'">
+              <h3 class="form-item"> Da li ste sigurni da želite da KUPITE {{stocksForm.get("akcija")?.value}}?</h3>
+              
+            </div>
+
+            <div *ngIf=" this.buysell === 'sell'">
+              <h3 class="form-item"> Da li ste sigurni da želite da PRODATE {{stocksForm.get("akcija")?.value}}?</h3>
+            </div>
+
+            <p>Količina: {{stocksForm.get("kolicina")?.value}}</p>
+            <p>Limit: {{stocksForm.get("limit")?.value}}</p>
+            <p>Stop: {{stocksForm.get("stop")?.value}}</p>
+
+            <div *ngIf=" this.stocksForm.get('allornone')?.value === false">
+              <p>All or none: Ne</p>
+            </div>
+            <div *ngIf=" this.stocksForm.get('allornone')?.value === true">
+              <p>All or none: Da</p>
+            </div>
+            <div *ngIf=" this.stocksForm.get('margin')?.value === false">
+              <p>Margin: Da</p>
+            </div>
+            <div *ngIf=" this.stocksForm.get('margin')?.value === true">
+              <p>Margin: Da</p>
+            </div>
+
+            <button class="form-item" type="submit" pButton pRipple label="Naruci" class="w-50"></button>
+            
+          </p-dialog>
+
+        </form> 
+
+        <div class="form-item row text-center">
+            <div class="col">
+              <button (click)="showDialog()" pButton pRipple label="Naruci" [disabled]="!isStocksValid" class="w-50"></button>
+    
+            </div>
+          </div>
+      </div>
+
+      <div *ngIf=" this.selectedType.name==='FUTURES'">
+
+        <form [formGroup]="futuresForm" (ngSubmit)="onSubmit()">
+
+
+          <div class="form-item row">
+            <h3 class="feild-name">Hartija</h3>
+          </div>
+
+
+          <div class="form-item row">
+            <p-dropdown [formControlName]="'type'" [options]="types" [(ngModel)]="selectedType"
+                        optionLabel="name"></p-dropdown>
+          </div>
+
+          <div class="form-item row ">
+            <div class="col-3">
+                            <span class="p-float-label">
+                                <input [formControlName]="'akcija'" id="float-input" type="text" pInputText>
+                                <label for="float-input">Akcija</label>
+                            </span>
+            </div>
+
+          </div>
+
+
+          <div class="form-item row">
+            <div class="col-3">
+
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'kolicina'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Količina</label>
+                            </span>
+            </div>
+
+            <div class="col-3">
+              <p-selectButton [formControlName]="'buysell'" [(ngModel)]="buysell" [options]="stateOptions"
+                              optionLabel="label" optionValue="value"></p-selectButton>
+            </div>
+
+          </div>
+
+          <div class="form-item row">
+            <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'limit'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Limit</label>
+                            </span>
+
+            </div>
+            <div class="col-3">
+                            <span class="p-float-label">
+                                <p-inputNumber [formControlName]="'stop'" inputId="integeronly"></p-inputNumber>
+                                <label for="float-input">Stop</label>
+                            </span>
+            </div>
+          </div>
+
+
+          <div class="form-item row">
+
+            <div class="item col-2">
+              <p-checkbox class="radio" [formControlName]="'allornone'" [binary]="true"></p-checkbox>
+              <label>All or none</label>
+            </div>
+
+            <div class="item col-2">
+              <p-checkbox class="radio" [formControlName]="'margin'" [binary]="true"></p-checkbox>
+              <label>Margin</label>
+            </div>
+          </div>
+
+
+   
+
+
+          <p-dialog class="form-item text-center" header="Potvrda" [(visible)]="display" [style]="{width: '50vw'}">
+            
+            <div *ngIf=" this.buysell === 'buy'">
+              <h3 class="form-item"> Da li ste sigurni da želite da KUPITE {{futuresForm.get("akcija")?.value}}?</h3>
+              
+            </div>
+
+            <div *ngIf=" this.buysell === 'sell'">
+              <h3 class="form-item"> Da li ste sigurni da želite da PRODATE {{futuresForm.get("akcija")?.value}}?</h3>
+            </div>
+
+            <p>Količina: {{futuresForm.get("kolicina")?.value}}</p>
+            <p>Limit: {{futuresForm.get("limit")?.value}}</p>
+            <p>Stop: {{futuresForm.get("stop")?.value}}</p>
+
+            <div *ngIf=" this.futuresForm.get('allornone')?.value === false">
+              <p>All or none: Ne</p>
+            </div>
+            <div *ngIf=" this.futuresForm.get('allornone')?.value === true">
+              <p>All or none: Da</p>
+            </div>
+            <div *ngIf=" this.futuresForm.get('margin')?.value === false">
+              <p>Margin: Da</p>
+            </div>
+            <div *ngIf=" this.futuresForm.get('margin')?.value === true">
+              <p>Margin: Da</p>
+            </div>
+
+            <button class="form-item" type="submit" pButton pRipple label="Naruci" class="w-50"></button>
+
+          </p-dialog>
+
+        </form>
+          <div class="form-item row text-center">
+            <div class="col">
+              <button (click)="showDialog()" pButton pRipple label="Naruci" [disabled]="!isFuturesValid" class="w-50"></button>
+    
+            </div>
+          </div>
+      </div>
+  
+    </div>
+
+
+  </div>

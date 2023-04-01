@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {SkeletonModule} from 'primeng/skeleton';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 
 
@@ -40,7 +41,20 @@ import { StocksComponent } from './components/sprint2/stocks/stocks.component';
 import { ChangePercPipe } from './pipes/change-perc.pipe';
 import { StockDetailsComponent } from './components/sprint2/stock-details/stock-details.component';
 import { ForexComponent } from './components/sprint2/forex/forex.component';
-
+import {ChartModule} from "primeng/chart";
+import {DividerModule} from "primeng/divider";
+import { BuysellComponent } from './components/sprint2/buysell/buysell.component';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {StyleClassModule} from "primeng/styleclass";
+import { PurchasesComponent } from './components/sprint2/purchases/purchases.component';
+import { StockOptionsComponent } from './components/sprint2/stock-options/stock-options.component';
+import {ColorPickerModule} from "primeng/colorpicker";
+import { FuturesComponent } from './components/sprint2/futures-component/futures.component';
+import { SingleFutureTableComponent } from './components/sprint2/single-future-table/single-future-table.component';
+import { BuyStockComponent } from './components/sprint2/buy-stock/buy-stock.component';
+import { SellStockComponent } from './components/sprint2/sell-stock/sell-stock.component';
+import {AccordionModule} from "primeng/accordion";
 
 
 
@@ -63,9 +77,18 @@ import { ForexComponent } from './components/sprint2/forex/forex.component';
     ChangePercPipe,
     StockDetailsComponent,
     ForexComponent,
+    BuysellComponent,
+    StockOptionsComponent,
+    PurchasesComponent,
+    BuyStockComponent,
+    SellStockComponent,
+    FuturesComponent,
+    SingleFutureTableComponent,
 
   ],
     imports: [
+        InputNumberModule,
+        SelectButtonModule,
         MultiSelectModule,
         BrowserModule,
         AppRoutingModule,
@@ -87,7 +110,13 @@ import { ForexComponent } from './components/sprint2/forex/forex.component';
         BreadcrumbModule,
         SkeletonModule,
         ToastrModule.forRoot(),
-        SidebarModule
+        SidebarModule,
+        ChartModule,
+        DividerModule,
+        InputSwitchModule,
+        StyleClassModule,
+        ColorPickerModule,
+        AccordionModule
     ],
   // exports: [
   //   ActivityPipe

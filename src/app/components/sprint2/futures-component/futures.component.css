@@ -1,0 +1,73 @@
+.future-card {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08);
+  width: 300px;
+  padding: 18px 10px;
+  display: flex;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  background-color: #F4F7F5;
+  gap: 32px;
+  color: #303433;
+}
+
+.info-container {
+  border-radius: 4px;
+  border: 1px solid #afafaf;
+}
+
+h4 {
+  font-weight: 800;
+}
+
+p {
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 1280px) {
+  .future-card {
+    width: 200px;
+    padding: 12px 6px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .future-card {
+    width: 140px;
+    padding: 10px 4px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .future-card {
+    width: 100px;
+    padding: 10px 4px;
+  }
+}
+
+
+.futures {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+::ng-deep .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+  background: #4c3385;
+  color: white;
+}
+
+::ng-deep .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link  {
+  background: #724bcb;
+  color: white;
+}
+
+::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
+  background: #724bcb;
+  color: white;
+}
+
+::ng-deep .p-accordion .p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link {
+  background: #2d204b;
+  color: white;
+}

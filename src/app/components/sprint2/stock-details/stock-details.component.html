@@ -1,7 +1,96 @@
-<p-dialog [(visible)]="displayDetails">
-    <div *ngIf="displayDetails">
-        <p>{{stock.price}}</p>
-        <p>{{stock.ticker}}</p>
+<p-dialog [style]="{width: '55vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
+          [(visible)]="displayDetails" *ngIf="displayDetails" [modal]="true">
+  <ng-template pTemplate="header">
+    <!--    TODO: dohvati website URL sa yahoo finance, i onda bind-ovati taj URL dole na sliku-->
+
+    <div class="title-container">
+      <div class="img-container">
+        <img class="logo" src="https://logo.clearbit.com/apple.com"/>
+      </div>
+      <div>
+        <h2 style="font-weight: bolder" class="mb-1">{{stockDetails.symbol}}</h2>
+        <p class="mt-0" style="font-weight: 400; font-size: large">{{stockDetails.companyName}}</p>
+      </div>
+      <div class="button-container">
+
+      </div>
     </div>
+
+  </ng-template>
+  <p-divider/>
+  <div class="basic-info-container mb-4">
+    <div style="flex-basis: 90%">
+      <small>Price</small>
+      <h3 style="font-weight: 800">${{stockDetails.priceValue}}</h3>
+    </div>
+    <div>
+      <small>High</small>
+      <h3 style="font-weight: 800">${{stockDetails.highValue}}</h3>
+    </div>
+    <div>
+      <div class="divider-container">
+        <!-- content here -->
+      </div>
+    </div>
+    <div>
+      <small>Low</small>
+      <h3 style="font-weight: 800">${{stockDetails.lowValue}}</h3>
+    </div>
+  </div>
+  <div class="information-container">
+    <div class="chart-container text-center">
+      <p-selectButton (onChange)="updateChart($event)" [options]="periodOptions" [(ngModel)]="selectedPeriodOption"
+                      optionLabel="period">
+        <ng-template class="mb-5" let-item>
+          <small>{{item.period}}</small>
+        </ng-template>
+      </p-selectButton>
+      <p-chart height="300px" #chart [responsive]="true" type="line" [data]="basicData"
+               [options]="basicOptions"></p-chart>
+    </div>
+  </div>
+  <div class="details-container">
+
+    <div class="row mb-3">
+      <div class="col-lg-4 col-sm-6 text-center">
+        <small>Change</small>
+        <p>${{stockDetails.changeValue}}</p>
+      </div>
+      <div class="col-lg-4 col-sm-6 text-center">
+        <!--        skloni ili izracunaj-->
+        <small>Day Range</small>
+        <p>$154.28 - $156.74</p>
+      </div>
+      <div class="col-lg-4 col-sm-6 text-center">
+        <small>Open</small>
+        <p>${{stockDetails.openValue}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-sm-6 text-center">
+        <small>Volume</small>
+        <p>{{formatNumber(stockDetails.volumeValue)}}</p>
+      </div>
+      <div class="col-lg-4 col-sm-6 text-center">
+        <small>Outstanding Shares</small>
+        <p>{{formatNumber(stockDetails.outstandingShares)}}</p>
+      </div>
+      <div class="col-lg-4 col-sm-6 text-center">
+        <small>Previous Close</small>
+        <p>${{stockDetails.previousClose}}</p>
+      </div>
+    </div>
+
+
+  </div>
+
+<!--  TODO: kada se zavrsi options vratiti dugme-->
+<!--  <ng-template pTemplate="footer">-->
+<!--    <p-divider/>-->
+<!--    <button style="background-color: #3d3d3d; border: none;" pButton pRipple label="Opcije" class="ms-5"-->
+<!--            [routerLink]="'/stock-options/'+stock.ticker"></button>-->
+<!--  </ng-template>-->
+
 </p-dialog>
 

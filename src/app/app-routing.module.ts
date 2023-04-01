@@ -13,6 +13,11 @@ import { NotAuthorisedGuard } from './guards/not.authorised.guard';
 import {ChangePasswordComponent} from "./components/sprint1/change-password/change-password.component";
 import {StocksComponent} from "./components/sprint2/stocks/stocks.component";
 import { ForexComponent } from './components/sprint2/forex/forex.component';
+import { BuysellComponent } from './components/sprint2/buysell/buysell.component';
+import {StockOptionsComponent} from "./components/sprint2/stock-options/stock-options.component";
+import { PurchasesComponent } from './components/sprint2/purchases/purchases.component';
+import {FuturesComponent} from "./components/sprint2/futures-component/futures.component";
+import {SingleFutureTableComponent} from "./components/sprint2/single-future-table/single-future-table.component";
 
 const routes: Routes = [
   {
@@ -62,6 +67,26 @@ const routes: Routes = [
   {
     path: 'forex',
     component: ForexComponent
+  },
+   {
+    path: "buysell",
+    component: BuysellComponent
+  },
+  {
+    path: "purchases",
+    component: PurchasesComponent
+  },
+  {
+    path: "stock-options/:name",
+    component: StockOptionsComponent
+  },
+  {
+    path: "futures",
+    component: FuturesComponent
+  },
+  {
+    path: "future/:name",
+    component: SingleFutureTableComponent
   },
   {
     path: '**', redirectTo: '404-not-found'

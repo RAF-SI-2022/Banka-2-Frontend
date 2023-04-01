@@ -11,7 +11,9 @@ export interface Exchange {
   exchangeMICCode: string,
   polity: string,
   currency: Currency,
-  timeZone: number
+  timeZone: number,
+  openTime: string,
+  closeTime: string,
 }
 
 export interface Listing {
@@ -27,6 +29,7 @@ export interface Listing {
 }
 
 export interface Stock extends Listing {
+  id: number,
   outstandingShares: number,
   dividendYield: number
 }
@@ -36,12 +39,64 @@ export interface Forex extends Listing {
   quoteCurrency: Currency
 }
 
-export interface Futures {
+export interface Future {
+  futureName: string,
   contractSize: number,
   contractUnit: string,
-  openInterest: number,
+  maintenanceMargin: number,
+  contractType: string
   settlementDate: Date
 }
+
+export interface StockDetails {
+  id: number,
+  symbol: string,
+  companyName: string,
+  outstandingShares: number,
+  dividendYield: number,
+  priceValue: number,
+  openValue: number,
+  lowValue: number,
+  highValue: number,
+  changeValue: number,
+  previousClose: number,
+  volumeValue: number,
+  lastUpdated: string,
+  changePercent: string,
+  exchange_name: null
+}
+
+export interface StockHistory {
+  id: number,
+  openValue: number,
+  highValue: number,
+  lowValue: number,
+  closeValue: number,
+  volumeValue: number,
+  onDate: string,
+  type: string
+}
+
+export interface Type {
+  name: string,
+}
+
+export interface ISO {
+  name: string,
+}
+
+export interface Transaction {
+  exchangeMICCode: string, // NYCT
+  transaction : string,
+  hartija: string,
+  volume: number,
+  price: number,
+  status: string,
+  zavrsena: string,
+  lastModifed: Date,
+}
+
+
 
 
 

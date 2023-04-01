@@ -45,4 +45,12 @@ export class StockService {
     return this.httpClient.get<any>(`http://localhost:8080/api/futures`,{ headers: this.headers })
   }
 
+  getCurrencies(curr0: string, curr1: string): Observable<any>{
+    return this.httpClient.get(`${environment.apiForexUrl}/${curr0}/${curr1}` ,{ headers: this.headers })
+  }
+
+  loadCSVData(){
+    return this.httpClient.get('assets/csv/filtered_forex_pairs.csv', { responseType: 'text' });
+  }
+
 }

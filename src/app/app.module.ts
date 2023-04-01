@@ -40,6 +40,7 @@ import { ChangePasswordComponent } from './components/sprint1/change-password/ch
 import { StocksComponent } from './components/sprint2/stocks/stocks.component';
 import { ChangePercPipe } from './pipes/change-perc.pipe';
 import { StockDetailsComponent } from './components/sprint2/stock-details/stock-details.component';
+import { ForexComponent } from './components/sprint2/forex/forex.component';
 import {ChartModule} from "primeng/chart";
 import {DividerModule} from "primeng/divider";
 import { BuysellComponent } from './components/sprint2/buysell/buysell.component';
@@ -75,6 +76,7 @@ import {AccordionModule} from "primeng/accordion";
     StocksComponent,
     ChangePercPipe,
     StockDetailsComponent,
+    ForexComponent,
     BuysellComponent,
     StockOptionsComponent,
     PurchasesComponent,

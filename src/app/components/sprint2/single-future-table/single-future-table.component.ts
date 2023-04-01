@@ -2,6 +2,11 @@ import {Component} from '@angular/core';
 import {Future} from "../../../models/stock-exchange.model";
 import {StockService} from "../../../services/stock.service";
 import {ActivatedRoute} from "@angular/router";
+import { error } from 'cypress/types/jquery';
+import { UserService } from 'src/app/services/user-service.service';
+import { User } from 'src/app/models/users.model';
+import { MenuItem } from 'primeng/api';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-single-future-table',
@@ -11,12 +16,20 @@ import {ActivatedRoute} from "@angular/router";
 export class SingleFutureTableComponent {
 
   loading: boolean = true; // on load setovati na false
-  allFutures: Future[] // prosledjuje mi parent
-  futures: Future[]
-  myFutures: Future[]
-  futureName: string = "";
 
-  constructor(private stockService: StockService, private route: ActivatedRoute) {
+  allFutures: Future[] // prosledjuje mi parent
+  futures: Future[] // za prikaz
+  myFutures: Future[] // moji
+  buyableFutures: Future[]// za kupovinu
+
+  futureName: string = "";
+  userId: number;
+  changeOption: boolean = false;
+
+  breadcrumbItems: MenuItem[]
+
+  constructor(private stockService: StockService, private userService: UserService 
+    ,private route: ActivatedRoute, private toastr: ToastrService) {
 
   }
 
@@ -28,62 +41,134 @@ export class SingleFutureTableComponent {
       console.log(this.futureName);
     });
 
-    //ono get od url-a
+    this.breadcrumbItems = [
+      {label: 'Početna', routerLink: ['/home']},
+      {label: 'Terminski ugovori', routerLink: ['/futures']},
+      {label: `${this.futureName}`, routerLink: [`/future/${this.futureName}`]}
+    ];
 
-    this.getAllFutures()
+    this.getUser()
+  }
 
+  getUser(){
+    this.userService.getUserData().subscribe({
+      next: val=>{
+
+        
+        this.userId = val.id;
+        console.log(this.userId)
+        this.getAllFutures()
+
+      },
+      error: err=>{
+        console.log(err);
+      }
+    })
   }
 
   getAllFutures() {
+      this.stockService.getAllFuturesByName(this.futureName).subscribe({
+        next: val=>{
+          console.log(val)
+          // console.log(val.user)
+          for(const a of val){
+            if(a.user !== null){
+              console.log(a.user.id)
+            }
+          }
+          // dohvatam sve ali treba da se filtrira
+          this.allFutures = val;
 
-    // TODO iz url-a
-    //   this.stockService.getFuturesByName(futureName).subscribe(
-    //     next: val =>{
-    //     allFutures = val
-    //
-    //     // filter na myFutures i futures
-    //     for(const singleFutur of allFutures){
-    //       if(allFutures.user === null)//ThisUserID koji nemamo
-    //       {
-    //         futures.push(singleFutur)
-    //       }
-    //       else{
-    //         myFutures.push(singleFutur)
-    //       }
-    //     }
-    //
-    //     loading = false;
-    //   },
-    //     error: err =>{
-    //     console.log(err)
-    //   }
-    // )
+          this.futures = []
+          this.myFutures = []
+          this.buyableFutures =[]
+          // todo mozda promeniti da je userId ne user_id
+          for(const f of this.allFutures){
+            if(f.user !== null){
+              if(f.user.id !== this.userId){
+                if(f.forSale){
+                  this.buyableFutures.push(f)
+                  this.futures.push(f)
+                }
+              }
+              else{
+                this.myFutures.push(f)
+              }
+            }
+            else{
+              this.buyableFutures.push(f)
+              this.futures.push(f)
+            }
+          }
 
-    // this.stockService.getAllFutures().subscribe({
-    //   next: val => {
-    //     //val filter po futureName
-    //     const filtered = val.filter(f => f.name === this.futureName)
-    //
-    //     this.allFutures.push(filtered)
-    //
-    //     // filter na myFutures i futures
-    //
-    //     loading = false;
-    //   },
-    //   error: err => {
-    //     console.log(err)
-    //   }
-    // }
-
-
+          this.loading = false;
+        },
+        error: err =>{
+          console.log(err);
+          this.allFutures = []
+          this.loading = false;
+        }
+      })
   }
 
-  buyFuture() {
-
+  changeFuturesForShow(){
+    if(this.changeOption){
+      this.futures = this.myFutures
+      
+    }
+    else{
+      this.futures = this.buyableFutures
+    }
+    // this.changeOption = !this.changeOption
   }
 
-  sellFuture() {
+  buyFuture(futureToBuy: Future) {
+      //todo dohvatiti id futura
+      // this.stockService.buyFuture()
+      // console.log(futureToBuy)
+      this.stockService.buyFuture(
+        futureToBuy.id,
+        futureToBuy.futureName,
+        "BUY",
+        futureToBuy.maintenanceMargin,
+        0,
+        0
+      ).subscribe({
+        next: val=>{
+          // alert(val)
+          this.getAllFutures()
+          this.toastr.info("Uspesno je kupljen")
+          
+        },
+        error: err=>{
+          // alert(err)
+          this.toastr.info("Greska pri kupovini")
+        }
+      })
+  }
 
+  sellFuture(futureToSell: Future) {
+      this.stockService.sellFuture(
+        futureToSell.id,
+        futureToSell.futureName,
+        "SELL",
+        futureToSell.maintenanceMargin,
+        0,
+        0
+      ).subscribe({
+        next: val=>{
+          // alert(val) 
+          this.changeOption= false;
+          this.getAllFutures()
+         
+          this.toastr.info("Uspesno je stavljen za prodaju")
+          
+        },
+        error: err=>{
+          // alert(err)
+          this.toastr.info("Greska pri prodaji")
+        }
+      })
   }
 
 }

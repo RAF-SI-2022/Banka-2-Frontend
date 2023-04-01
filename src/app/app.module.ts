@@ -53,6 +53,7 @@ import { FuturesComponent } from './components/sprint2/futures-component/futures
 import { SingleFutureTableComponent } from './components/sprint2/single-future-table/single-future-table.component';
 import { BuyStockComponent } from './components/sprint2/buy-stock/buy-stock.component';
 import { SellStockComponent } from './components/sprint2/sell-stock/sell-stock.component';
+import {AccordionModule} from "primeng/accordion";
 
 
 
@@ -83,37 +84,38 @@ import { SellStockComponent } from './components/sprint2/sell-stock/sell-stock.c
     SingleFutureTableComponent,
 
   ],
-  imports: [
-    InputNumberModule,
-    SelectButtonModule,
-    MultiSelectModule,
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    InputTextModule,
-    RippleModule,
-    CheckboxModule,
-    ReactiveFormsModule,
-    PasswordModule,
-    ButtonModule,
-    BrowserAnimationsModule,
-    CardModule,
-    HttpClientModule,
-    TableModule,
-    DialogModule,
-    DropdownModule,
-    TableModule,
-    FormsModule,
-    BreadcrumbModule,
-    SkeletonModule,
-    ToastrModule.forRoot(),
-    SidebarModule,
-    ChartModule,
-    DividerModule,
-    InputSwitchModule,
-    StyleClassModule,
-    ColorPickerModule
-  ],
+    imports: [
+        InputNumberModule,
+        SelectButtonModule,
+        MultiSelectModule,
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        InputTextModule,
+        RippleModule,
+        CheckboxModule,
+        ReactiveFormsModule,
+        PasswordModule,
+        ButtonModule,
+        BrowserAnimationsModule,
+        CardModule,
+        HttpClientModule,
+        TableModule,
+        DialogModule,
+        DropdownModule,
+        TableModule,
+        FormsModule,
+        BreadcrumbModule,
+        SkeletonModule,
+        ToastrModule.forRoot(),
+        SidebarModule,
+        ChartModule,
+        DividerModule,
+        InputSwitchModule,
+        StyleClassModule,
+        ColorPickerModule,
+        AccordionModule
+    ],
   // exports: [
   //   ActivityPipe
   // ],

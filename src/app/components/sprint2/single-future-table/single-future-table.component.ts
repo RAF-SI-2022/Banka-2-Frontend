@@ -38,7 +38,7 @@ export class SingleFutureTableComponent {
 
     this.route.paramMap.subscribe(params => {
       this.futureName = params.get('name')!;
-      console.log(this.futureName);
+      // console.log(this.futureName);
     });
 
     this.breadcrumbItems = [
@@ -48,6 +48,7 @@ export class SingleFutureTableComponent {
     ];
 
     this.getUser()
+    this.getAllWaitingFuturesForUser()
   }
 
   getUser(){
@@ -56,7 +57,7 @@ export class SingleFutureTableComponent {
 
         
         this.userId = val.id;
-        console.log(this.userId)
+        // console.log(this.userId)
         this.getAllFutures()
 
       },
@@ -69,11 +70,11 @@ export class SingleFutureTableComponent {
   getAllFutures() {
       this.stockService.getAllFuturesByName(this.futureName).subscribe({
         next: val=>{
-          console.log(val)
+          // console.log(val)
           // console.log(val.user)
           for(const a of val){
             if(a.user !== null){
-              console.log(a.user.id)
+              // console.log(a.user.id)
             }
           }
           // dohvatam sve ali treba da se filtrira
@@ -99,6 +100,13 @@ export class SingleFutureTableComponent {
               this.buyableFutures.push(f)
               this.futures.push(f)
             }
+          }
+          if(this.changeOption){
+            this.futures = this.myFutures
+            
+          }
+          else{
+            this.futures = this.buyableFutures
           }
 
           this.loading = false;
@@ -126,6 +134,7 @@ export class SingleFutureTableComponent {
       //todo dohvatiti id futura
       // this.stockService.buyFuture()
       // console.log(futureToBuy)
+      console.log(futureToBuy)
       this.stockService.buyFuture(
         futureToBuy.id,
         futureToBuy.futureName,
@@ -135,14 +144,14 @@ export class SingleFutureTableComponent {
         0
       ).subscribe({
         next: val=>{
-          // alert(val)
+          console.log(val)
           this.getAllFutures()
           this.toastr.info("Uspesno je kupljen")
           
         },
         error: err=>{
-          // alert(err)
-          this.toastr.info("Greska pri kupovini")
+          console.log(err)
+          this.toastr.error("Greska pri kupovini")
         }
       })
   }
@@ -152,13 +161,13 @@ export class SingleFutureTableComponent {
         futureToSell.id,
         futureToSell.futureName,
         "SELL",
-        futureToSell.maintenanceMargin,
+        futureToSell.maintenanceMargin,// todo ovde setuje korisnik cenu
         0,
         0
       ).subscribe({
         next: val=>{
           // alert(val) 
-          this.changeOption= false;
+          // this.changeOption= false;
           this.getAllFutures()
          
           this.toastr.info("Uspesno je stavljen za prodaju")
@@ -166,9 +175,71 @@ export class SingleFutureTableComponent {
         },
         error: err=>{
           // alert(err)
-          this.toastr.info("Greska pri prodaji")
+          this.toastr.error("Greska pri prodaji")
         }
       })
   }
+
+  sellWithLimit(futureToSell: Future) {
+    this.stockService.sellFuture(
+      futureToSell.id,
+      futureToSell.futureName,
+      "SELL",
+      futureToSell.maintenanceMargin,// todo ovde setuje korisnik cenu
+      2000,
+      1000
+    ).subscribe({
+      next: val=>{
+        // alert(val) 
+        // this.changeOption= false;
+        this.getAllFutures()
+        this.getAllWaitingFuturesForUser();
+       
+        this.toastr.info("Uspesno je stavljen za prodaju")
+        
+      },
+      error: err=>{
+        // alert(err)
+        this.toastr.error("Greska pri prodaji")
+      }
+    })
+}
+
+  removeFromMarket(futereId: string){
+    this.stockService.removeFutureFromMarket(
+      futereId
+    ).subscribe({
+      next: val=>{
+        // console.log(val);
+        this.getAllFutures()
+        this.toastr.info("Uspesno je skinut sa prodaje")
+      },
+      error: err=>{
+          console.log(err)
+          this.toastr.error("Greska pri skidanju sa prodaje")
+      }
+    })
+  }
+
+  buyWithLimit(){
+
+  }
+
+  getAllWaitingFuturesForUser(){
+    // console.log(this.futureName);
+    
+    this.stockService.getAllWaitingFuturesForUser(
+      "sell",
+      this.futureName
+    ).subscribe({
+      next: val=>{
+        console.log(val);
+      },
+      error: err=>{
+        console.log(err);
+      }
+    })
+  }
+
 
 }

@@ -35,6 +35,6 @@ export class SellStockComponent {
 
   setSellStockVisible(){
     this.sellStockVisible = true;
-  }
+  } 
 
 }

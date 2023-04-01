@@ -75,6 +75,16 @@ export class StockService {
     ,{ headers: this.headers })
   }
 
+  removeFutureFromMarket(futureId:string):Observable<any>{
+    return this.httpClient.post<any>(`http://localhost:8080/api/futures/remove/${futureId}`,
+    {}
+    ,{ headers: this.headers })
+  }
+  getAllWaitingFuturesForUser(type: string, futureName: string):Observable<any>{
+    return this.httpClient.get<any>(`http://localhost:8080/api/futures/waiting-futures/${type}/${futureName}`
+    ,{ headers: this.headers })
+  }
+
 
 
 }

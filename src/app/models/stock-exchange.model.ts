@@ -29,6 +29,7 @@ export interface Listing {
 }
 
 export interface Stock extends Listing {
+  id: number,
   outstandingShares: number,
   dividendYield: number
 }
@@ -63,6 +64,17 @@ export interface StockDetails {
   lastUpdated: string,
   changePercent: string,
   exchange_name: null
+}
+
+export interface StockHistory {
+  id: number,
+  openValue: number,
+  highValue: number,
+  lowValue: number,
+  closeValue: number,
+  volumeValue: number,
+  onDate: string,
+  type: string
 }
 
 export interface Type {

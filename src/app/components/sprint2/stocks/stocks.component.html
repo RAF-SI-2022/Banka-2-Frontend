@@ -191,14 +191,14 @@
             <span>{{stock.lastRefresh | date:'dd.MM.YYYY HH:mm' }} </span>
           </td>
           <td>
-            <button *ngIf="BuySellOption" type="button" (click)="kupiPopUp($event,stock)"
+            <button *ngIf="BuySellOption" type="button" (click)="toggleBuyStockDialog($event,stock)"
                       class="btn-i btn-circle" title="Kupi hartiju">
                 <span>
                   <i class="bi bi-cart" style="font-size: 20px;"></i>
                 </span>
                 <div class="wave"></div>
             </button>
-            <button *ngIf="!BuySellOption" type="button" (click)="prodajPopUp($event,stock)"
+            <button *ngIf="!BuySellOption" type="button" (click)="toggleSellStockDialog($event,stock)"
                       class="btn-i btn-circle" title="Prodaj hartiju">
                 <span>
                   <i class="bi bi-cart-x" style="font-size: 20px;"></i>

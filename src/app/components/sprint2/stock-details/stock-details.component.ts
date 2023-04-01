@@ -1,7 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
-import {Stock, StockDetails} from 'src/app/models/stock-exchange.model';
+import {Stock, StockDetails, StockHistory} from 'src/app/models/stock-exchange.model';
 import {UIChart} from "primeng/chart";
-import {UserService} from "../../../services/user-service.service";
 import {StockService} from "../../../services/stock.service";
 
 @Component({
@@ -11,7 +10,7 @@ import {StockService} from "../../../services/stock.service";
 })
 export class StockDetailsComponent {
 
-  displayDetails : boolean = false
+  displayDetails: boolean = false
   stock: Stock
   stockDetails: StockDetails
   basicData: any;
@@ -20,15 +19,15 @@ export class StockDetailsComponent {
   periodOptions: any[];
   selectedPeriodOption: any
 
-  @ViewChild("chart") chart: UIChart;
+  @ViewChild('chart') chart: UIChart;
 
   constructor(private stockService: StockService) {
     this.basicData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: [],
       datasets: [
         {
-          label: 'First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: 'High',
+          data: [],
           fill: {
             target: 'origin',
             above: 'rgba(135,236,122,0.29)',   // Area will be red above the origin
@@ -44,12 +43,12 @@ export class StockDetailsComponent {
     this.applyTheme();
 
     this.periodOptions = [
-      {period: '1d'},
-      {period: '5d'},
-      {period: '1m'},
-      {period: '6m'},
-      {period: '1y'},
-      {period: 'ytd'}
+      {period: '1d', value: "ONE_DAY"},
+      {period: '5d', value: "FIVE_DAYS"},
+      {period: '1m', value: "ONE_MONTH"},
+      {period: '6m', value: "SIX_MONTHS"},
+      {period: '1y', value: "ONE_YEAR"},
+      {period: 'ytd', value: "FIVE_DAYS"}
     ];
     this.selectedPeriodOption = this.periodOptions[0]
   }
@@ -67,8 +66,20 @@ export class StockDetailsComponent {
       )
   }
 
-  parseFloat(num: number, fractionDigits: number) {
-    return parseFloat(num.toFixed(fractionDigits))
+  getStockGraph(id: number, type: string) {
+    console.log("TYPE" + type)
+    this.stockService.getStockGraph(id, type)
+      .subscribe({
+          next: value => {
+            this.basicData.labels = value.map((obj: StockHistory) => new Date(obj.onDate).toLocaleDateString('en-GB'));
+            this.basicData.datasets[0].data = value.map((obj: StockHistory) => obj.highValue);
+            this.chart.refresh();
+          },
+          error: err => {
+            console.log(err)
+          }
+        }
+      )
   }
 
   formatNumber(num: number): string {
@@ -82,7 +93,6 @@ export class StockDetailsComponent {
       return num.toString();
     }
   }
-
 
   applyTheme() {
     this.basicOptions = {
@@ -104,6 +114,8 @@ export class StockDetailsComponent {
       scales: {
         x: {
           ticks: {
+            autoskip: true,
+            maxTicksLimit: 20,
             color: '#495057',
             font: {
               size: 14,
@@ -130,31 +142,14 @@ export class StockDetailsComponent {
         }
       },
       animation: {
-        duration: 1000,
+        duration: 1200,
         easing: 'easeInOutCubic'
       }
     };
   }
 
-  updateChart() {
-    console.log(this.selectedPeriodOption)
-    this.basicData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'First Dataset',
-          data: [22, 66, 44, 33, 88, 22, 66],
-          fill: {
-            target: 'origin',
-            above: 'rgba(135,236,122,0.29)',   // Area will be red above the origin
-          },
-          borderColor: '#7fc418',
-          tension: .3,
-          pointRadius: 1,
-          pointHoverRadius: 10,
-        }
-      ]
-    };
+  updateChart(obj: any) {
+    this.getStockGraph(this.stock.id, obj.value.value);
   }
 
   resetPeriodOption() {

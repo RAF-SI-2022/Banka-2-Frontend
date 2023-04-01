@@ -21,6 +21,12 @@
       <a *ngIf="getPermission()" [routerLink]="'/users'" id="usersBtn" class="nav-link" aria-current="page"
          (click)="hideSidebar()" [routerLinkActive]="['active']">Korisnici</a>
     </li>
+
+    <li class="nav-item mb-5 sidebar-nav-item">
+      <a *ngIf="getPermission()" [routerLink]="'/forex'" id="forexBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Forex</a>
+    </li>
+    
     <li class="nav-item sidebar-nav-item">
       <a class="nav-link logout-btn" (click)="logOut()">Logout</a>
     </li>
@@ -54,6 +60,10 @@
           <li class="nav-item">
             <a *ngIf="getPermission()" id="stockButton" [routerLink]="'/stocks'" class="nav-link" aria-current="page"
                [routerLinkActive]="['active']">Berza</a>
+          </li>
+          <li class="nav-item">
+            <a *ngIf="getPermission()" id="forexButton" [routerLink]="'/forex'" class="nav-link" aria-current="page"
+               [routerLinkActive]="['active']">Forex</a>
           </li>
           <li class="nav-item">
             <a *ngIf="getPermission()" id="futuresButton" [routerLink]="'/futures'" class="nav-link" aria-current="page"

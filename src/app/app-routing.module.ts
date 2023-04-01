@@ -12,6 +12,7 @@ import { PageForbidenComponent } from './components/sprint1/page-forbiden/page-f
 import { NotAuthorisedGuard } from './guards/not.authorised.guard';
 import {ChangePasswordComponent} from "./components/sprint1/change-password/change-password.component";
 import {StocksComponent} from "./components/sprint2/stocks/stocks.component";
+import { ForexComponent } from './components/sprint2/forex/forex.component';
 import { BuysellComponent } from './components/sprint2/buysell/buysell.component';
 import {StockOptionsComponent} from "./components/sprint2/stock-options/stock-options.component";
 import { PurchasesComponent } from './components/sprint2/purchases/purchases.component';
@@ -62,6 +63,10 @@ const routes: Routes = [
   {
     path: 'stocks',
     component: StocksComponent
+  },
+  {
+    path: 'forex',
+    component: ForexComponent
   },
    {
     path: "buysell",

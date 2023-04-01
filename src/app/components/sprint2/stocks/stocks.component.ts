@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { StockDetailsComponent } from '../stock-details/stock-details.component';
 import { SortEvent } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
+import {BuyStockComponent} from "../buy-stock/buy-stock.component";
 
 @Component({
   selector: 'app-stocks',
@@ -29,6 +30,7 @@ export class StocksComponent {
 
 
   @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
+  @ViewChild(BuyStockComponent, {static : true}) buyStockComponent : BuyStockComponent
 
   @ViewChild('dt') dt: Table | undefined;
   applyFilterGlobal($event: any, stringVal: any) {
@@ -68,16 +70,19 @@ export class StocksComponent {
 
   }
 
-  kupiPopUp(event: MouseEvent,stock: Stock){
+  toggleBuyStockDialog(event: MouseEvent, stock: Stock){
     event.stopPropagation()
+
+    this.buyStockComponent.buyStockVisible = true;
+    this.buyStockComponent.stock = stock;
 
     //TODO OTVORITI DIALOG ZA KUPOVINU SA VEC POSTAVLJENIM PODACIMA
 
-    this.toastr.info("kupi popup " + stock.ticker)
+    // this.toastr.info("kupi popup " + stock.ticker)
     this.refresh()
-    // alert("Kupi " + stock.ticker)
   }
-  prodajPopUp(event: MouseEvent,stock: Stock){
+
+  toggleSellStockDialog(event: MouseEvent, stock: Stock){
     event.stopPropagation()
 
     //TODO OTVORITI DIALOG ZA PRODAJU SA VEC POSTAVLJENIM PODACIMA
@@ -89,6 +94,7 @@ export class StocksComponent {
 
   changeUsers(){
     const obj2 = {
+      id: 1,
       outstandingShares: 1,
       dividendYield: 2,
       ticker: "IZMENA",
@@ -134,6 +140,7 @@ export class StocksComponent {
   insertUsers(){
 
     const obj = {
+      id: 1,
       outstandingShares: 2,
       dividendYield: 3,
       ticker: "AAPL",
@@ -161,6 +168,7 @@ export class StocksComponent {
       volume: 5
     }
     const obj1 = {
+      id: 1,
       outstandingShares: 1,
       dividendYield: 2,
       ticker: "tiker1",
@@ -188,6 +196,7 @@ export class StocksComponent {
       volume: 1
     }
     const obj2 = {
+      id: 1,
       outstandingShares: 1,
       dividendYield: 2,
       ticker: "tiker1",
@@ -258,6 +267,7 @@ export class StocksComponent {
 
     this.stockDetailsChild.stock = event
     this.stockDetailsChild.getStockDetails(event.ticker);
+    this.stockDetailsChild.getStockGraph(event.id, "ONE_DAY");
     this.stockDetailsChild.displayDetails = true;
     this.stockDetailsChild.resetPeriodOption()
     //OPENDIALOG() ili set bool na true

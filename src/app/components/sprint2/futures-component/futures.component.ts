@@ -54,6 +54,8 @@ export class FuturesComponent {
           }
         }
 
+        console.log(this.futuresSingleMap)
+
       },
       error: err => {
         console.log(err)
@@ -61,4 +63,12 @@ export class FuturesComponent {
     })
   }
 
+  toTitleCase(str: string) {
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
 }

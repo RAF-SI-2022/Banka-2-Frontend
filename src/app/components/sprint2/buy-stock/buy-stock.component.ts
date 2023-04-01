@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Stock} from "../../../models/stock-exchange.model";
 
 @Component({
   selector: 'app-buy-stock',
@@ -9,11 +10,12 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class BuyStockComponent {
 
   buyStockForm: FormGroup;
-  buyStockVisible: boolean = true;
+  buyStockVisible: boolean = false;
+  stock: Stock
+
 //TODO:pokupiti limit od usera i stock name iz stocka
   constructor(private formBuilder: FormBuilder) {
     this.buyStockForm = this.formBuilder.group({
-      stockName: ['', Validators.required],
       kolicina: [0, Validators.required],
       limit: [0, Validators.required],
       stop: [0, Validators.required],
@@ -33,7 +35,7 @@ export class BuyStockComponent {
     }
   }
 
-  setBuyStockVisible(){
+  setBuyStockVisible() {
     this.buyStockVisible = true;
   }
 

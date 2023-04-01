@@ -35,6 +35,12 @@ export class StockService {
       { headers: this.headers })
   }
 
+  getStockGraph(id: number, type: string): Observable<any>{
+    return this.httpClient.get<StockDetails>(
+      `${environment.apiStockGraph}${id}/history/${type}`,
+      { headers: this.headers })
+  }
+
   getAllFutures(): Observable<any>{
     return this.httpClient.get<any>(`http://localhost:8080/api/futures`,{ headers: this.headers })
   }

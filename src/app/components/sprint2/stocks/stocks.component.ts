@@ -7,6 +7,7 @@ import { StockDetailsComponent } from '../stock-details/stock-details.component'
 import { SortEvent } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import {BuyStockComponent} from "../buy-stock/buy-stock.component";
+import { SellStockComponent } from '../sell-stock/sell-stock.component';
 
 @Component({
   selector: 'app-stocks',
@@ -31,6 +32,8 @@ export class StocksComponent {
 
   @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
   @ViewChild(BuyStockComponent, {static : true}) buyStockComponent : BuyStockComponent
+  @ViewChild(SellStockComponent, {static : true}) sellStockComponent : SellStockComponent
+
 
   @ViewChild('dt') dt: Table | undefined;
   applyFilterGlobal($event: any, stringVal: any) {
@@ -79,7 +82,7 @@ export class StocksComponent {
     //TODO OTVORITI DIALOG ZA KUPOVINU SA VEC POSTAVLJENIM PODACIMA
 
     // this.toastr.info("kupi popup " + stock.ticker)
-    this.refresh()
+   // this.refresh()
   }
 
   toggleSellStockDialog(event: MouseEvent, stock: Stock){
@@ -87,8 +90,13 @@ export class StocksComponent {
 
     //TODO OTVORITI DIALOG ZA PRODAJU SA VEC POSTAVLJENIM PODACIMA
 
-    this.toastr.info("Prodaj popup " + stock.ticker)
-    this.refresh()
+    this.sellStockComponent.sellStockVisible = true;
+    this.sellStockComponent.stock = stock;
+
+
+
+    //this.toastr.info("Prodaj popup " + stock.ticker)
+    //this.refresh()
     // alert("Prodaj " + stock.ticker)
   }
 

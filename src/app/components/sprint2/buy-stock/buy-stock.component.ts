@@ -11,32 +11,37 @@ export class BuyStockComponent {
 
   buyStockForm: FormGroup;
   buyStockVisible: boolean = false;
-  stock: Stock
+  stock: Stock;
+  isFormValid = false;
+
+
 
 //TODO:pokupiti limit od usera i stock name iz stocka
   constructor(private formBuilder: FormBuilder) {
     this.buyStockForm = this.formBuilder.group({
-      kolicina: [0, Validators.required],
-      limit: [0, Validators.required],
-      stop: [0, Validators.required],
+      kolicina: [null , Validators.required],
+      limit: [null , Validators.required],
+      stop: [null , Validators.required],
       allOrNone: false,
       margin: false
-    })
+    });
+
+    this.buyStockForm.valueChanges.subscribe(() => {
+      this.isFormValid = this.buyStockForm.valid;
+    });
   }
 
   submitBuyStock() {
     if (this.buyStockForm.valid) {
       alert("buy");
-    } else {
-      this.buyStockForm.markAllAsTouched();
-      alert('Niste popunili sva polja!');
-      //Nakon prvog izbacenog alerta , nastavlja da baca gresku jer je stockName jos uvek null
+      this.buyStockForm.reset();
 
-    }
+    } 
   }
 
   setBuyStockVisible() {
     this.buyStockVisible = true;
   }
+
 
 }

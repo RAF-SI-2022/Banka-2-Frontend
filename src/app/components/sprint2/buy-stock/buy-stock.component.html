@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="col-lg-12">
-          <button pButton pRipple label="Kupi"></button>
+          <button pButton pRipple [disabled]="!isFormValid" label="Kupi"></button>
         </div>
       </form>
     </div>

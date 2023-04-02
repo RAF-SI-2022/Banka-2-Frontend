@@ -55,6 +55,7 @@ import { SingleFutureTableComponent } from './components/sprint2/single-future-t
 import { BuyStockComponent } from './components/sprint2/buy-stock/buy-stock.component';
 import { SellStockComponent } from './components/sprint2/sell-stock/sell-stock.component';
 import {AccordionModule} from "primeng/accordion";
+import { SellFutureComponent } from './sprint2/components/sell-future/sell-future.component';
 
 
 
@@ -84,6 +85,7 @@ import {AccordionModule} from "primeng/accordion";
     SellStockComponent,
     FuturesComponent,
     SingleFutureTableComponent,
+    SellFutureComponent,
 
   ],
     imports: [

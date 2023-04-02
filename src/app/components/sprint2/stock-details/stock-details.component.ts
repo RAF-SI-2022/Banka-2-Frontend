@@ -58,6 +58,7 @@ export class StockDetailsComponent {
       .subscribe({
           next: value => {
             this.stockDetails = value;
+            console.log(value)
           },
           error: err => {
             console.log(err)

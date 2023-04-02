@@ -32,7 +32,8 @@ export class StocksComponent {
 
   @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
   @ViewChild(BuyStockComponent, {static : true}) buyStockComponent : BuyStockComponent
-  @ViewChild(SellStockComponent, {static:true}) sellStockComponent: SellStockComponent
+  @ViewChild(SellStockComponent, {static : true}) sellStockComponent : SellStockComponent
+
 
   @ViewChild('dt') dt: Table | undefined;
   applyFilterGlobal($event: any, stringVal: any) {
@@ -81,7 +82,6 @@ export class StocksComponent {
     //TODO OTVORITI DIALOG ZA KUPOVINU SA VEC POSTAVLJENIM PODACIMA
 
     // this.toastr.info("kupi popup " + stock.ticker)
-    // this.refresh()
   }
 
   toggleSellStockDialog(event: MouseEvent, stock: Stock){
@@ -93,8 +93,13 @@ export class StocksComponent {
 
     //TODO OTVORITI DIALOG ZA PRODAJU SA VEC POSTAVLJENIM PODACIMA
 
-    // this.toastr.info("Prodaj popup " + stock.ticker)
-    // this.refresh()
+    this.sellStockComponent.sellStockVisible = true;
+    this.sellStockComponent.stock = stock;
+
+
+
+    //this.toastr.info("Prodaj popup " + stock.ticker)
+    //this.refresh()
     // alert("Prodaj " + stock.ticker)
   }
 

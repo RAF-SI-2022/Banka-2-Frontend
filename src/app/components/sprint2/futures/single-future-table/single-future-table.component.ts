@@ -11,6 +11,7 @@ import {StockDetailsComponent} from "../../stocks/stock-details/stock-details.co
 import {SellFutureComponent} from "../sell-future/sell-future.component";
 import {SellFutureWithLimitComponent} from "../sell-future-with-limit/sell-future-with-limit.component";
 import { interval } from 'rxjs';
+import {BuyFutureWithLimitComponent} from "../buy-future-with-limit/buy-future-with-limit.component";
 
 @Component({
   selector: 'app-single-future-table',
@@ -20,6 +21,7 @@ import { interval } from 'rxjs';
 export class SingleFutureTableComponent {
 
   @ViewChild(SellFutureComponent, {static : true}) sellFutureComponent : SellFutureComponent
+  @ViewChild(BuyFutureWithLimitComponent, {static : true}) buyFutureWithLimitComponent : BuyFutureWithLimitComponent
   @ViewChild(SellFutureWithLimitComponent, {static : true}) sellFutureWithLimitComponent : SellFutureWithLimitComponent
 
   loading: boolean = true; // on load setovati na false
@@ -135,10 +137,8 @@ export class SingleFutureTableComponent {
   }
 
   buyFuture(futureToBuy: Future) {
-    //todo dohvatiti id futura
-    // this.stockService.buyFuture()
-    // console.log(futureToBuy)
-    console.log(futureToBuy)
+    // todo dohvatiti id futura
+
     this.stockService.buyFuture(
       futureToBuy.id,
       futureToBuy.futureName,
@@ -150,23 +150,34 @@ export class SingleFutureTableComponent {
       next: val => {
         console.log(val)
         this.getAllFutures()
-        this.toastr.info("Uspesno je kupljen")
+        this.toastr.info("Terminski ugovor je uspešno kupljen.")
 
       },
       error: err => {
         console.log(err)
-        this.toastr.error("Greska pri kupovini")
+        this.toastr.error("Greška pri kupovini.")
       }
     })
   }
 
   sellFuture(id: number) {
     console.log("Stigla poruka iz SellFutureComponent sa id: " + id)
+    this.sellFutureComponent.sellFutureVisible = false;
+    this.sellFutureComponent.resetForm();
     this.getUser()
   }
 
   sellFutureWithLimit(id: number) {
     console.log("Stigla poruka iz SellFutureWithLimitComponent sa id: " + id)
+    this.sellFutureWithLimitComponent.sellFutureVisible = false;
+    this.sellFutureWithLimitComponent.resetForm();
+    this.getUser()
+  }
+
+  buyFutureWithLimit(id: number) {
+    console.log("Stigla poruka iz BuyFutureWithLimit sa id: " + id)
+    this.buyFutureWithLimitComponent.buyFutureVisible = false;
+    this.buyFutureWithLimitComponent.resetForm();
     this.getUser()
   }
 
@@ -194,7 +205,13 @@ export class SingleFutureTableComponent {
 
   openSellFutureWithLimitDialog(future: Future) {
     this.sellFutureWithLimitComponent.future = future
-    this.sellFutureWithLimitComponent.sellFutureVisible = true;
+    this.sellFutureWithLimitComponent.open()
+    //this.sellFutureWithLimitComponent.sellFutureVisible = true;
+  }
+
+  openBuyFutureDialog(futureName: string) {
+    this.buyFutureWithLimitComponent.futureName = futureName
+    this.buyFutureWithLimitComponent.buyFutureVisible = true;
   }
 
   buyWithLimit() {

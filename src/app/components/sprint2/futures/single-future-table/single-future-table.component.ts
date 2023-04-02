@@ -10,6 +10,7 @@ import {ToastrService} from 'ngx-toastr';
 import {StockDetailsComponent} from "../../stocks/stock-details/stock-details.component";
 import {SellFutureComponent} from "../sell-future/sell-future.component";
 import {SellFutureWithLimitComponent} from "../sell-future-with-limit/sell-future-with-limit.component";
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-single-future-table',
@@ -40,6 +41,8 @@ export class SingleFutureTableComponent {
 
   ngOnInit() {
 
+    const source = interval(10000); // 10000 ms = 10 seconds
+    source.subscribe(() => this.getUser());
 
     this.route.paramMap.subscribe(params => {
       this.futureName = params.get('name')!;
@@ -158,54 +161,13 @@ export class SingleFutureTableComponent {
   }
 
   sellFuture(id: number) {
-    // this.stockService.sellFuture(
-    //   futureToSell.id,
-    //   futureToSell.futureName,
-    //   "SELL",
-    //   futureToSell.maintenanceMargin,// todo ovde setuje korisnik cenu
-    //   0,
-    //   0
-    // ).subscribe({
-    //   next: val => {
-    //     // alert(val)
-    //     // this.changeOption= false;
-    //     this.getAllFutures()
-    //
-    //     this.toastr.info("Uspesno je stavljen za prodaju")
-    //
-    //   },
-    //   error: err => {
-    //     // alert(err)
-    //     this.toastr.error("Greska pri prodaji")
-    //   }
-    // })
     console.log("Stigla poruka iz SellFutureComponent sa id: " + id)
+    this.getUser()
   }
 
   sellFutureWithLimit(id: number) {
-    // this.stockService.sellFuture(
-    //   futureToSell.id,
-    //   futureToSell.futureName,
-    //   "SELL",
-    //   futureToSell.maintenanceMargin,// todo ovde setuje korisnik cenu
-    //   2000,
-    //   1000
-    // ).subscribe({
-    //   next: val => {
-    //     // alert(val)
-    //     // this.changeOption= false;
-    //     this.getAllFutures()
-    //     this.getAllWaitingFuturesForUser();
-    //
-    //     this.toastr.info("Uspesno je stavljen za prodaju")
-    //
-    //   },
-    //   error: err => {
-    //     // alert(err)
-    //     this.toastr.error("Greska pri prodaji")
-    //   }
-    // })
     console.log("Stigla poruka iz SellFutureWithLimitComponent sa id: " + id)
+    this.getUser()
   }
 
   removeFromMarket(futereId: string) {
@@ -226,7 +188,8 @@ export class SingleFutureTableComponent {
 
   openSellFutureDialog(future: Future) {
     this.sellFutureComponent.future = future
-    this.sellFutureComponent.sellFutureVisible = true;
+    this.sellFutureComponent.open()
+    // this.sellFutureComponent.sellFutureVisible = true;
   }
 
   openSellFutureWithLimitDialog(future: Future) {

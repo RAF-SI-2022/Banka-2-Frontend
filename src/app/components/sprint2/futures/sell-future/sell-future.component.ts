@@ -13,7 +13,7 @@ export class SellFutureComponent {
   @Output() futureSoldEmitter = new EventEmitter<any>();
 
   sellFutureForm: FormGroup;
-  sellFutureVisible: boolean = true;
+  sellFutureVisible: boolean = false;
   future: Future;
   isFormValid: boolean = true;
 
@@ -28,8 +28,28 @@ export class SellFutureComponent {
     });
   }
 
+  open(){
+    this.sellFutureVisible = true
+    this.sellFutureForm.patchValue({
+      price: this.future.maintenanceMargin
+    })
+  }
+
   submitSellFuture() {
+    
+    console.log(this.future);
+    
+    console.log(          
+      this.future.id,
+      this.future.futureName,
+      "SELL",
+      this.sellFutureForm.get('price')?.value,
+      0,
+      0);
+    
+
     if (this.sellFutureForm.valid) {
+
         this.stockService.sellFuture(
           this.future.id,
           this.future.futureName,
@@ -43,9 +63,11 @@ export class SellFutureComponent {
             this.sellFutureVisible = false;
           },
           error: err => {
-
+            console.log(err);
+            
           }
         })
+
       }
       this.sellFutureForm.reset();
   }

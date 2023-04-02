@@ -48,7 +48,7 @@ export class StocksComponent {
   ngOnInit() {
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
-      {label: 'Berza', routerLink: ['/stocks-table']}
+      {label: 'Akcije', routerLink: ['/stocks-table']}
     ];
 
 

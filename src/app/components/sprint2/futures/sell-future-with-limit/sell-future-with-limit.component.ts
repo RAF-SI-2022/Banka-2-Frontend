@@ -13,7 +13,7 @@ export class SellFutureWithLimitComponent {
   @Output() futureSoldEmitter = new EventEmitter<any>();
 
   sellFutureForm: FormGroup;
-  sellFutureVisible: boolean = true;
+  sellFutureVisible: boolean = false;
   future: Future;
   isFormValid: boolean = true;
 

@@ -71,3 +71,13 @@ p {
   background: #2d204b;
   color: white;
 }
+.futures-container{
+  margin: 70px;
+  padding: 30px;
+  background-color: #FFF;
+  border-radius: 20px;
+}
+.body-container {
+  background-color: #eff3f7;
+  min-height: 150vh;
+}

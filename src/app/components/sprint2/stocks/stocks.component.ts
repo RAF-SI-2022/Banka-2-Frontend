@@ -82,11 +82,14 @@ export class StocksComponent {
     //TODO OTVORITI DIALOG ZA KUPOVINU SA VEC POSTAVLJENIM PODACIMA
 
     // this.toastr.info("kupi popup " + stock.ticker)
-   // this.refresh()
   }
 
   toggleSellStockDialog(event: MouseEvent, stock: Stock){
     event.stopPropagation()
+
+    this.sellStockComponent.sellStockVisible = true;
+
+    // this.sellStockComponent.
 
     //TODO OTVORITI DIALOG ZA PRODAJU SA VEC POSTAVLJENIM PODACIMA
 

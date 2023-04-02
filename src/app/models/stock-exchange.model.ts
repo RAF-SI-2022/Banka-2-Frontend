@@ -1,3 +1,5 @@
+import { User } from "./users.model"
+
 export interface Currency {
   currencyName: string,
   currencyCode: string,
@@ -40,12 +42,15 @@ export interface Forex extends Listing {
 }
 
 export interface Future {
+  id: string,
   futureName: string,
   contractSize: number,
   contractUnit: string,
   maintenanceMargin: number,
-  contractType: string
-  settlementDate: Date
+  type: string,
+  settlementDate: String,
+  forSale: boolean,
+  user: User,// mozda camel case
 }
 
 export interface StockDetails {

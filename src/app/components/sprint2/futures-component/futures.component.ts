@@ -1,74 +1,77 @@
-import {Component} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Future} from "../../../models/stock-exchange.model";
-import {StockService} from "../../../services/stock.service";
-import {KeyValuePipe} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Future } from '../../../models/stock-exchange.model';
+import { StockService } from '../../../services/stock.service';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-futures-component',
   templateUrl: './futures.component.html',
   styleUrls: ['./futures.component.css']
 })
-export class FuturesComponent {
+export class FuturesComponent implements OnInit {
 
-  futuresMap: Map<string, Future[]> = new Map<string, Future[]>();
-  futuresSingleMap: Map<string, Future[]> = new Map<string, Future[]>();
-  agricultureFutures: Future[] = []
+  futuresMap = new Map<string, Future[]>();
+  futuresSingleMap = new Map<string, Future[]>();
+  agricultureFutures: Future[] = [];
 
+  breadcrumbItems: MenuItem[];
 
-  constructor(private httpClient: HttpClient, private stockService: StockService) {
-  }
+  constructor(private httpClient: HttpClient, private stockService: StockService) {}
 
-  ngOnInit() {
-    this.futuresMap.set("AGRICULTURE", []);
-    this.futuresMap.set("ENERGY", []);
-    this.futuresSingleMap.set("AGRICULTURE", []);
-    this.futuresSingleMap.set("ENERGY", []);
+  ngOnInit(): void {
 
+    this.breadcrumbItems = [
+      {label: 'Početna', routerLink: ['/home']},
+      {label: 'Terminski ugovori', routerLink: ['/futures']},
+    ];
+
+    this.initializeFuturesMaps();
     this.getFuturesFromBack();
-
   }
 
-  getFuturesFromBack() {
+  private initializeFuturesMaps(): void {
+    const futureTypes = ['AGRICULTURE', 'ENERGY', 'METALS', 'SOFTS', 'MEATS'];
+    futureTypes.forEach(type => {
+      this.futuresMap.set(type, []);
+      this.futuresSingleMap.set(type, []);
+    });
+  }
+
+  private getFuturesFromBack(): void {
     this.stockService.getAllFutures().subscribe({
-      next: value => {
-        value.forEach((futureItem: any) => {
-
-          this.futuresMap.get(futureItem.type)!.push(futureItem)
-
-
-        })
-
-        this.agricultureFutures = this.futuresMap.get("AGRICULTURE")!;
-        const energyFutures: Future[] = this.futuresMap.get("ENERGY")!;
-
-        for(const agricultureFuture of this.agricultureFutures) {
-          if(this.futuresSingleMap.get("AGRICULTURE")!.filter(future => future.futureName === agricultureFuture.futureName).length === 0) {
-            this.futuresSingleMap.get("AGRICULTURE")!.push(agricultureFuture);
-          }
-        }
-
-        for(const energyFuture of energyFutures) {
-          if(this.futuresSingleMap.get("ENERGY")!.filter(future => future.futureName === energyFuture.futureName).length === 0) {
-            this.futuresSingleMap.get("ENERGY")!.push(energyFuture);
-          }
-        }
-
-        console.log(this.futuresSingleMap)
-
+      next: (futures: Future[]) => {
+        futures.forEach(futureItem => {
+          this.futuresMap.get(futureItem.type)?.push(futureItem);
+        });
+        this.populateFuturesSingleMap();
       },
-      error: err => {
-        console.log(err)
+      error: (err: any) => {
+        console.log(err);
       }
-    })
+    });
   }
 
-  toTitleCase(str: string) {
-    return str.replace(
-      /\w\S*/g,
-      function(txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  private populateFuturesSingleMap(): void {
+    const futureTypes = ['AGRICULTURE', 'ENERGY', 'METALS', 'SOFTS', 'MEATS'];
+    futureTypes.forEach(type => {
+      const futures = this.futuresMap.get(type)!;
+      for (const future of futures) {
+        if (this.isUniqueFuture(future, type)) {
+          this.futuresSingleMap.get(type)?.push(future);
+        }
       }
-    );
+    });
+    // console.log(this.futuresSingleMap);
+  }
+
+  private isUniqueFuture(future: Future, type: string): boolean {
+    return this.futuresSingleMap.get(type)!.filter(f => f.futureName === future.futureName).length === 0;
+  }
+
+  toTitleCase(str: string): string {
+    return str.replace(/\w\S*/g, (txt: string) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
   }
 }

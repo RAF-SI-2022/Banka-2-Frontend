@@ -78,7 +78,7 @@ export class LoginComponent {
             .subscribe({
               next: val => {
 
-                console.log(val)
+                // console.log(val)
                 if (val.active) {
                   this.router.navigate(["home"]);
                 } else {

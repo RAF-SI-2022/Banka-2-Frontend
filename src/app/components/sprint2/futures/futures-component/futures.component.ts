@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Future } from '../../../models/stock-exchange.model';
-import { StockService } from '../../../services/stock.service';
+import { Future } from '../../../../models/stock-exchange.model';
+import { StockService } from '../../../../services/stock.service';
 import { MenuItem } from 'primeng/api';
 
 @Component({

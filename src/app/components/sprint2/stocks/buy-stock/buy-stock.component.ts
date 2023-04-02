@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Stock} from "../../../models/stock-exchange.model";
+import {Stock} from "../../../../models/stock-exchange.model";
 
 @Component({
   selector: 'app-buy-stock',
@@ -36,7 +36,7 @@ export class BuyStockComponent {
       alert("buy");
       this.buyStockForm.reset();
 
-    } 
+    }
   }
 
   setBuyStockVisible() {

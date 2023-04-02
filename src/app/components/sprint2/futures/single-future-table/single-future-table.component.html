@@ -3,7 +3,7 @@
   <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 
     <div class="table-container">
-      <p-table [value]="futures" class="p-datatable-header" 
+      <p-table [value]="futures" class="p-datatable-header"
               [rowHover]="true" [rows] ="6" [showCurrentPageReport]="true"
               [paginator]="true" [alwaysShowPaginator]="false"
               [loading]="loading" [loadingIcon]="''"
@@ -17,7 +17,7 @@
                 <h3 class="berza-mojeakcije-text">
                   Terminski ugovori
                 </h3>
-                
+
                <p-inputSwitch [(ngModel)]="changeOption"
                 (ngModelChange)="changeFuturesForShow()"  class="custom-input-switch"></p-inputSwitch>
 
@@ -104,7 +104,7 @@
             <td [attr.colspan]="7">
               <div class="text-center">
                 <span *ngIf="!changeOption" >Nema podataka za prikazivanje</span>
-                <!-- <span *ngIf="(BuySellOption && stocks)">Nema hartije koju trazite</span> -->
+                <!-- <span *ngIf="(BuySellOption && stocks-table)">Nema hartije koju trazite</span> -->
                 <span *ngIf="changeOption" >Nemate kupljenih terminskih ugovora za prikazivanje</span>
               </div>
             </td>
@@ -113,7 +113,7 @@
 
         <ng-template pTemplate="body" let-future>
           <tr *ngIf="!changeOption">
-            
+
             <td>{{future.futureName}}</td>
             <td *ngIf="future.user">{{future.user.firstName + ' ' + future.user.lastName }}</td>
             <td *ngIf="!future.user">Nema vlasnika</td>
@@ -126,7 +126,7 @@
             </td>
           </tr>
           <tr *ngIf="changeOption">
-            
+
             <td>{{future.futureName}}</td>
             <!-- <td *ngIf="future.user">{{future.user.id}}</td>
             <td *ngIf="!future.user">Nema vlasnika</td> -->
@@ -137,8 +137,8 @@
             <td>{{future.maintenanceMargin}}</td>
             <td>{{future.settlementDate}}</td>
             <td>
-              <button *ngIf="changeOption" (click)="sellFuture(future)" pButton label="Prodja"></button>
-              <button *ngIf="changeOption"  (click)="sellWithLimit(future)" pButton label="Prodaj sa limitom"></button>
+              <button *ngIf="changeOption" (click)="openSellFutureDialog(future)" pButton label="Prodja"></button>
+              <button *ngIf="changeOption"  (click)="openSellFutureWithLimitDialog(future)" pButton label="Prodaj sa limitom"></button>
               <button *ngIf="changeOption" (click)="removeFromMarket(future.id)" pButton label="Skini"></button>
             </td>
           </tr>
@@ -147,3 +147,6 @@
       </p-table>
     </div>
 </div>
+
+<app-sell-future (futureSoldEmitter)="sellFuture($event)"></app-sell-future>
+<app-sell-future-with-limit (futureSoldEmitter)="sellFutureWithLimit($event)"></app-sell-future-with-limit>

@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {Stock, StockDetails, StockHistory} from 'src/app/models/stock-exchange.model';
 import {UIChart} from "primeng/chart";
-import {StockService} from "../../../services/stock.service";
+import {StockService} from "../../../../services/stock.service";
 
 @Component({
   selector: 'app-stock-details',
@@ -58,6 +58,7 @@ export class StockDetailsComponent {
       .subscribe({
           next: value => {
             this.stockDetails = value;
+            console.log(value)
           },
           error: err => {
             console.log(err)

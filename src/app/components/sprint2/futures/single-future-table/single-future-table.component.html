@@ -138,7 +138,7 @@
             <td>{{future.settlementDate}}</td>
             <td>
               <button *ngIf="changeOption" (click)="openSellFutureDialog(future)" pButton label="Prodja"></button>
-              <button *ngIf="changeOption"  (click)="sellWithLimit(future)" pButton label="Prodaj sa limitom"></button>
+              <button *ngIf="changeOption"  (click)="openSellFutureWithLimitDialog(future)" pButton label="Prodaj sa limitom"></button>
               <button *ngIf="changeOption" (click)="removeFromMarket(future.id)" pButton label="Skini"></button>
             </td>
           </tr>
@@ -149,3 +149,4 @@
 </div>
 
 <app-sell-future (futureSoldEmitter)="sellFuture($event)"></app-sell-future>
+<app-sell-future-with-limit (futureSoldEmitter)="sellFutureWithLimit($event)"></app-sell-future-with-limit>

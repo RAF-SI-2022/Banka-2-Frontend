@@ -9,6 +9,7 @@ import {MenuItem} from 'primeng/api';
 import {ToastrService} from 'ngx-toastr';
 import {StockDetailsComponent} from "../../stocks/stock-details/stock-details.component";
 import {SellFutureComponent} from "../sell-future/sell-future.component";
+import {SellFutureWithLimitComponent} from "../sell-future-with-limit/sell-future-with-limit.component";
 
 @Component({
   selector: 'app-single-future-table',
@@ -18,6 +19,7 @@ import {SellFutureComponent} from "../sell-future/sell-future.component";
 export class SingleFutureTableComponent {
 
   @ViewChild(SellFutureComponent, {static : true}) sellFutureComponent : SellFutureComponent
+  @ViewChild(SellFutureWithLimitComponent, {static : true}) sellFutureWithLimitComponent : SellFutureWithLimitComponent
 
   loading: boolean = true; // on load setovati na false
 
@@ -177,32 +179,33 @@ export class SingleFutureTableComponent {
     //     this.toastr.error("Greska pri prodaji")
     //   }
     // })
-    alert("Stigla poruka iz SellFutureComponent sa id: " + id)
+    console.log("Stigla poruka iz SellFutureComponent sa id: " + id)
   }
 
-  sellWithLimit(futureToSell: Future) {
-    this.stockService.sellFuture(
-      futureToSell.id,
-      futureToSell.futureName,
-      "SELL",
-      futureToSell.maintenanceMargin,// todo ovde setuje korisnik cenu
-      2000,
-      1000
-    ).subscribe({
-      next: val => {
-        // alert(val)
-        // this.changeOption= false;
-        this.getAllFutures()
-        this.getAllWaitingFuturesForUser();
-
-        this.toastr.info("Uspesno je stavljen za prodaju")
-
-      },
-      error: err => {
-        // alert(err)
-        this.toastr.error("Greska pri prodaji")
-      }
-    })
+  sellFutureWithLimit(id: number) {
+    // this.stockService.sellFuture(
+    //   futureToSell.id,
+    //   futureToSell.futureName,
+    //   "SELL",
+    //   futureToSell.maintenanceMargin,// todo ovde setuje korisnik cenu
+    //   2000,
+    //   1000
+    // ).subscribe({
+    //   next: val => {
+    //     // alert(val)
+    //     // this.changeOption= false;
+    //     this.getAllFutures()
+    //     this.getAllWaitingFuturesForUser();
+    //
+    //     this.toastr.info("Uspesno je stavljen za prodaju")
+    //
+    //   },
+    //   error: err => {
+    //     // alert(err)
+    //     this.toastr.error("Greska pri prodaji")
+    //   }
+    // })
+    console.log("Stigla poruka iz SellFutureWithLimitComponent sa id: " + id)
   }
 
   removeFromMarket(futereId: string) {
@@ -224,6 +227,11 @@ export class SingleFutureTableComponent {
   openSellFutureDialog(future: Future) {
     this.sellFutureComponent.future = future
     this.sellFutureComponent.sellFutureVisible = true;
+  }
+
+  openSellFutureWithLimitDialog(future: Future) {
+    this.sellFutureWithLimitComponent.future = future
+    this.sellFutureWithLimitComponent.sellFutureVisible = true;
   }
 
   buyWithLimit() {

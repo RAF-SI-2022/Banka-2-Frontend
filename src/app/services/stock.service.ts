@@ -12,7 +12,7 @@ import {StockDetails} from "../models/stock-exchange.model";
 export class StockService {
 
   private headers
-  private readonly token: string
+  private token: string
 
   constructor(private httpClient: HttpClient) {
 
@@ -27,6 +27,19 @@ export class StockService {
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${this.token}`)
+  }
+
+  resetToken(){
+    this.token = ''
+  }
+
+  setToken(token: string){
+    this.token=token
+    this.headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Authorization', `Bearer ${token}`)
+
   }
 
   getStockDetails(ticker: string): Observable<any>{

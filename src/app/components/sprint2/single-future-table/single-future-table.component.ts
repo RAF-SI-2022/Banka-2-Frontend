@@ -7,6 +7,7 @@ import { UserService } from 'src/app/services/user-service.service';
 import { User } from 'src/app/models/users.model';
 import { MenuItem } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-single-future-table',
@@ -33,9 +34,18 @@ export class SingleFutureTableComponent {
 
   }
 
+
+
   ngOnInit() {
 
+    //interval
+    const source = interval(10000); // 10000 ms = 10 seconds
+    source.subscribe(() => {
+      // sve sta se poziva na 10 sekunde
+      this.getUser()
+    });
 
+ 
     this.route.paramMap.subscribe(params => {
       this.futureName = params.get('name')!;
       // console.log(this.futureName);
@@ -54,14 +64,15 @@ export class SingleFutureTableComponent {
   getUser(){
     this.userService.getUserData().subscribe({
       next: val=>{
-
-        
         this.userId = val.id;
-        // console.log(this.userId)
+        // console.log(val)
         this.getAllFutures()
-
       },
       error: err=>{
+        // greska da se ne prikaze nista
+        this.futures = []
+        this.myFutures = []
+        this.buyableFutures =[]
         console.log(err);
       }
     })
@@ -70,13 +81,7 @@ export class SingleFutureTableComponent {
   getAllFutures() {
       this.stockService.getAllFuturesByName(this.futureName).subscribe({
         next: val=>{
-          // console.log(val)
-          // console.log(val.user)
-          for(const a of val){
-            if(a.user !== null){
-              // console.log(a.user.id)
-            }
-          }
+
           // dohvatam sve ali treba da se filtrira
           this.allFutures = val;
 
@@ -130,10 +135,8 @@ export class SingleFutureTableComponent {
     // this.changeOption = !this.changeOption
   }
 
+  // OVO JA IMAM
   buyFuture(futureToBuy: Future) {
-      //todo dohvatiti id futura
-      // this.stockService.buyFuture()
-      // console.log(futureToBuy)
       console.log(futureToBuy)
       this.stockService.buyFuture(
         futureToBuy.id,
@@ -174,7 +177,8 @@ export class SingleFutureTableComponent {
           
         },
         error: err=>{
-          // alert(err)
+          console.log(err);
+          
           this.toastr.error("Greska pri prodaji")
         }
       })
@@ -194,6 +198,8 @@ export class SingleFutureTableComponent {
         // this.changeOption= false;
         this.getAllFutures()
         this.getAllWaitingFuturesForUser();
+        // close window
+        // emitujes parentu 
        
         this.toastr.info("Uspesno je stavljen za prodaju")
         
@@ -205,6 +211,7 @@ export class SingleFutureTableComponent {
     })
 }
 
+// OVO JA IMAM
   removeFromMarket(futereId: string){
     this.stockService.removeFutureFromMarket(
       futereId
@@ -224,9 +231,8 @@ export class SingleFutureTableComponent {
   buyWithLimit(){
 
   }
-
+  // OVO JA IMAM
   getAllWaitingFuturesForUser(){
-    // console.log(this.futureName);
     
     this.stockService.getAllWaitingFuturesForUser(
       "sell",

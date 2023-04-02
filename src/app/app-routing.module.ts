@@ -11,13 +11,13 @@ import { PageNotFoundComponent } from './components/sprint1/page-not-found/page-
 import { PageForbidenComponent } from './components/sprint1/page-forbiden/page-forbiden.component';
 import { NotAuthorisedGuard } from './guards/not.authorised.guard';
 import {ChangePasswordComponent} from "./components/sprint1/change-password/change-password.component";
-import {StocksComponent} from "./components/sprint2/stocks/stocks.component";
+import {StocksComponent} from "./components/sprint2/stocks/stocks-table/stocks.component";
 import { ForexComponent } from './components/sprint2/forex/forex.component';
 import { BuysellComponent } from './components/sprint2/buysell/buysell.component';
-import {StockOptionsComponent} from "./components/sprint2/stock-options/stock-options.component";
+import {StockOptionsComponent} from "./components/sprint2/stocks/stock-options/stock-options.component";
 import { PurchasesComponent } from './components/sprint2/purchases/purchases.component';
-import {FuturesComponent} from "./components/sprint2/futures-component/futures.component";
-import {SingleFutureTableComponent} from "./components/sprint2/single-future-table/single-future-table.component";
+import {FuturesComponent} from "./components/sprint2/futures/futures-component/futures.component";
+import {SingleFutureTableComponent} from "./components/sprint2/futures/single-future-table/single-future-table.component";
 
 const routes: Routes = [
   {

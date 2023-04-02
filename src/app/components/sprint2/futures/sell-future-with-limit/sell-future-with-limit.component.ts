@@ -30,27 +30,6 @@ export class SellFutureWithLimitComponent {
   }
 
   submitSellFuture() {
-    //   if (this.sellFutureForm.valid) {
-    //     this.stockService.sellFuture(
-    //       this.future.id,
-    //       this.future.futureName,
-    //       "SELL",
-    //       this.sellFutureForm.get('price')?.value,
-    //       0,
-    //       0
-    //     ).subscribe({
-    //       next: val => {
-    //         this.futureSoldEmitter.emit(this.future.id);
-    //         this.sellFutureVisible = false;
-    //       },
-    //       error: err => {
-    //
-    //       }
-    //     })
-    //   }
-    //   this.sellFutureForm.reset();
-    // }
-
     this.stockService.sellFuture(
       this.future.id,
       this.future.futureName,

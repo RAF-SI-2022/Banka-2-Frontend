@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {Future} from "../../../../models/stock-exchange.model";
+import {StockService} from "../../../../services/stock.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-buy-future-with-limit',
@@ -7,4 +11,46 @@ import { Component } from '@angular/core';
 })
 export class BuyFutureWithLimitComponent {
 
+  @Output() futureBuyEmitter = new EventEmitter<any>();
+
+  buyFutureForm: FormGroup;
+  buyFutureVisible: boolean = false;
+  futureName: string;
+  numOfZerosValid: boolean = false;
+
+  constructor(private formBuilder: FormBuilder, private stockService: StockService, private toastr: ToastrService) {
+    this.buyFutureForm = this.formBuilder.group({
+      limit: 0,
+      stop: 0
+    });
+
+    this.buyFutureForm.valueChanges.subscribe(() => {
+      const numOfZeros = Object.values(this.buyFutureForm.value)
+        .filter(val => val === 0)
+        .length;
+
+      this.numOfZerosValid = numOfZeros !== 2;
+    });
+
+  }
+
+  submitBuyFuture() {
+    this.stockService.buyFuture(
+      "0",
+      this.futureName,
+      "BUY",
+      0,
+      this.buyFutureForm.get('limit')?.value,
+      this.buyFutureForm.get('stop')?.value
+    ).subscribe({
+      next: val => {
+        this.toastr.info("Terminski ugovor je uspešno kupljen.")
+        this.futureBuyEmitter.emit(this.futureName);
+      },
+      error: err => {
+        console.log(err)
+        this.toastr.error("Greška pri kupovini.")
+      }
+    });
+  }
 }

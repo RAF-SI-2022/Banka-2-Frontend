@@ -23,7 +23,7 @@ export class PurchasesComponent {
   constructor(){
 
   }
- 
+
 
   ngOnInit() {
     this.breadcrumbItems = [
@@ -38,7 +38,7 @@ export class PurchasesComponent {
       {label: 'Odbijene', value: 'ODBIJENA'},
       {label: 'Na cekanju', value: 'NA CEKANJU'}
   ]
-    
+
     this.insertTrans();
 
   }
@@ -49,8 +49,8 @@ export class PurchasesComponent {
     //TODO ovde ide logika i poziv na servis koji ce pozvati refresh i resetovati tabelu na berza mode
     //I odmah za njim i filtriranje za userove hartije
     // this.loading = true;
-    // this.stocks = []
-    // setTimeout(()=>{ 
+    // this.stocks-table = []
+    // setTimeout(()=>{
     //   this.insertUsers()
     //   this.BuySellOption = true
     //   this.switch = false
@@ -91,11 +91,11 @@ export class PurchasesComponent {
     this.transactions.push(obj)
     this.transactions.push(obj2)
 
-    setTimeout(()=>{ 
+    setTimeout(()=>{
       this.loading = false;
       }, 2000);
-    
-   
+
+
 
   }
 

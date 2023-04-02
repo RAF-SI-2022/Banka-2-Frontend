@@ -137,43 +137,47 @@ export class SingleFutureTableComponent {
   }
 
   buyFuture(futureToBuy: Future) {
-    //todo dohvatiti id futura
-    // this.stockService.buyFuture()
-    // console.log(futureToBuy)
-    // console.log(futureToBuy)
-    // this.stockService.buyFuture(
-    //   futureToBuy.id,
-    //   futureToBuy.futureName,
-    //   "BUY",
-    //   futureToBuy.maintenanceMargin,
-    //   0,
-    //   0
-    // ).subscribe({
-    //   next: val => {
-    //     console.log(val)
-    //     this.getAllFutures()
-    //     this.toastr.info("Uspesno je kupljen")
-    //
-    //   },
-    //   error: err => {
-    //     console.log(err)
-    //     this.toastr.error("Greska pri kupovini")
-    //   }
-    // })
+    // todo dohvatiti id futura
+
+    this.stockService.buyFuture(
+      futureToBuy.id,
+      futureToBuy.futureName,
+      "BUY",
+      futureToBuy.maintenanceMargin,
+      0,
+      0
+    ).subscribe({
+      next: val => {
+        console.log(val)
+        this.getAllFutures()
+        this.toastr.info("Terminski ugovor je uspešno kupljen.")
+
+      },
+      error: err => {
+        console.log(err)
+        this.toastr.error("Greška pri kupovini.")
+      }
+    })
   }
 
   sellFuture(id: number) {
     console.log("Stigla poruka iz SellFutureComponent sa id: " + id)
+    this.sellFutureComponent.sellFutureVisible = false;
+    this.sellFutureComponent.resetForm();
     this.getUser()
   }
 
   sellFutureWithLimit(id: number) {
     console.log("Stigla poruka iz SellFutureWithLimitComponent sa id: " + id)
+    this.sellFutureWithLimitComponent.sellFutureVisible = false;
+    this.sellFutureWithLimitComponent.resetForm();
     this.getUser()
   }
 
   buyFutureWithLimit(id: number) {
     console.log("Stigla poruka iz BuyFutureWithLimit sa id: " + id)
+    this.buyFutureWithLimitComponent.buyFutureVisible = false;
+    this.buyFutureWithLimitComponent.resetForm();
     this.getUser()
   }
 
@@ -201,7 +205,8 @@ export class SingleFutureTableComponent {
 
   openSellFutureWithLimitDialog(future: Future) {
     this.sellFutureWithLimitComponent.future = future
-    this.sellFutureWithLimitComponent.sellFutureVisible = true;
+    this.sellFutureWithLimitComponent.open()
+    //this.sellFutureWithLimitComponent.sellFutureVisible = true;
   }
 
   openBuyFutureDialog(futureName: string) {

@@ -31,7 +31,13 @@ export class BuyFutureWithLimitComponent {
 
       this.numOfZerosValid = numOfZeros !== 2;
     });
+  }
 
+  resetForm() {
+    this.buyFutureForm.setValue({
+      limit: 0,
+      stop: 0
+    })
   }
 
   submitBuyFuture() {
@@ -44,12 +50,17 @@ export class BuyFutureWithLimitComponent {
       this.buyFutureForm.get('stop')?.value
     ).subscribe({
       next: val => {
-        this.toastr.info("Terminski ugovor je uspešno kupljen.")
+        this.toastr.info("Terminski ugovor je uspešno stavljen na čekanje.")
         this.futureBuyEmitter.emit(this.futureName);
       },
       error: err => {
-        console.log(err)
-        this.toastr.error("Greška pri kupovini.")
+        if(err.error.text === 'Future is set for custom sale and is waiting for trigger') {
+          this.toastr.info("Terminski ugovor je uspešno stavljen na čekanje.")
+          this.futureBuyEmitter.emit(this.futureName);
+        } else {
+          this.toastr.error("Greška pri kupovini.")
+        }
+
       }
     });
   }

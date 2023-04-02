@@ -29,6 +29,21 @@ export class SellFutureWithLimitComponent {
     });
   }
 
+  resetForm() {
+    this.sellFutureForm.setValue({
+      price: [null, Validators.required],
+      limit: [null, Validators.required],
+      stop: [null, Validators.required]
+    })
+  }
+
+  open(){
+    this.sellFutureVisible = true
+    this.sellFutureForm.patchValue({
+      price: this.future.maintenanceMargin
+    })
+  }
+
   submitSellFuture() {
     this.stockService.sellFuture(
       this.future.id,

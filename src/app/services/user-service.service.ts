@@ -61,16 +61,26 @@ export class UserService {
       { headers: this.headers })
   }
 
-  createNewUser(firstName: string, lastName: string, email: string, password: string, permissions: any, jobPosition: string, dailyLimit: number, active : string, jmbg: string, phone : string
+  createNewUser(firstName: string, lastName: string, email: string, password: string, permissions: any,dailyLimit: number, jobPosition: string,  active : string, jmbg: string, phone : string
     ): Observable<any>{
     return this.httpClient.post<UserCreateDTO>(
       `${environment.apiUserServerUrl}/register`,
       {firstName: firstName, lastName:lastName, email:email, password:password
-      ,permissions: permissions, jobPosition: jobPosition, dailyLimit: dailyLimit, active:active, jmbg: jmbg, phone:phone},
+      ,permissions: permissions, dailyLimit: dailyLimit, jobPosition: jobPosition, active:active, jmbg: jmbg, phone:phone},
       { headers: this.headers })
   }
 
-  updateUser(id: number, email: string, permissions:[], firstName: string, lastName: string, jobPosition: string, dailyLimit: number, phone: string, active: boolean): Observable<any>{
+  updateUser(
+      id: number, 
+      email: string, 
+      permissions:[], 
+      firstName: string, 
+      lastName: string, 
+      jobPosition: string, 
+      dailyLimit: number, 
+      phone: string, 
+      active: boolean
+    ): Observable<any>{
     return this.httpClient.put<any>(`${environment.apiUserServerUrl}/` + id,
       {
         email: email,

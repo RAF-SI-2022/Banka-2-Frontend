@@ -64,7 +64,7 @@ export class StockDetailsComponent {
             this.stockService.getExchangeStatus(value.exchange.micCode)
               .subscribe({
                 next: value1 => {
-                  console.log(`Berza aktivna? ${value1}`)
+                  this.exchangeActive = value1;
                 },
                 error: err => {
                   console.log(err)

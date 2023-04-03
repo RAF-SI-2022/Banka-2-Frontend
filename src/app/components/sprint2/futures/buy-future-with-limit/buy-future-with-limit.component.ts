@@ -17,6 +17,7 @@ export class BuyFutureWithLimitComponent {
   buyFutureVisible: boolean = false;
   futureName: string;
   numOfZerosValid: boolean = false;
+  userId: string
 
   constructor(private formBuilder: FormBuilder, private stockService: StockService, private toastr: ToastrService) {
     this.buyFutureForm = this.formBuilder.group({
@@ -42,7 +43,7 @@ export class BuyFutureWithLimitComponent {
 
   submitBuyFuture() {
     this.stockService.buyFuture(
-      "0",
+      this.userId,
       this.futureName,
       "BUY",
       0,

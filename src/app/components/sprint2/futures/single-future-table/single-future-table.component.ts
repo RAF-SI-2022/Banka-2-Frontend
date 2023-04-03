@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {Future} from "../../../../models/stock-exchange.model";
 import {StockService} from "../../../../services/stock.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {error} from 'cypress/types/jquery';
 import {UserService} from 'src/app/services/user-service.service';
 import {User} from 'src/app/models/users.model';
@@ -37,18 +37,21 @@ export class SingleFutureTableComponent {
   breadcrumbItems: MenuItem[]
 
   constructor(private stockService: StockService, private userService: UserService
-    , private route: ActivatedRoute, private toastr: ToastrService) {
+    , private route: ActivatedRoute, private toastr: ToastrService
+    ,private router: Router) {
 
   }
 
   ngOnInit() {
 
     const source = interval(10000); // 10000 ms = 10 seconds
-    source.subscribe(() => this.getUser());
+    source.subscribe(() => {
+      // this.getUser()
+      this.getAllFutures()
+    });
 
     this.route.paramMap.subscribe(params => {
       this.futureName = params.get('name')!;
-      // console.log(this.futureName);
     });
 
     this.breadcrumbItems = [
@@ -58,21 +61,18 @@ export class SingleFutureTableComponent {
     ];
 
     this.getUser()
-    this.getAllWaitingFuturesForUser()
   }
 
   getUser() {
     this.userService.getUserData().subscribe({
       next: val => {
-
-
         this.userId = val.id;
-        // console.log(this.userId)
         this.getAllFutures()
-
       },
       error: err => {
         console.log(err);
+        this.toastr.error("Greska probajte kasnije")
+        this.router.navigate(["home"]);
       }
     })
   }
@@ -80,20 +80,13 @@ export class SingleFutureTableComponent {
   getAllFutures() {
     this.stockService.getAllFuturesByName(this.futureName).subscribe({
       next: val => {
-        // console.log(val)
-        // console.log(val.user)
-        for (const a of val) {
-          if (a.user !== null) {
-            // console.log(a.user.id)
-          }
-        }
+
         // dohvatam sve ali treba da se filtrira
         this.allFutures = val;
 
         this.futures = []
         this.myFutures = []
         this.buyableFutures = []
-        // todo mozda promeniti da je userId ne user_id
         for (const f of this.allFutures) {
           if (f.user !== null) {
             if (f.user.id !== this.userId) {
@@ -116,6 +109,9 @@ export class SingleFutureTableComponent {
           this.futures = this.buyableFutures
         }
 
+        this.getAllWaitingForSellFuturesForUser()
+        this.getAllWaitingForBuyFuturesForUser()
+
         this.loading = false;
       },
       error: err => {
@@ -137,8 +133,6 @@ export class SingleFutureTableComponent {
   }
 
   buyFuture(futureToBuy: Future) {
-    // todo dohvatiti id futura
-
     this.stockService.buyFuture(
       futureToBuy.id,
       futureToBuy.futureName,
@@ -148,14 +142,15 @@ export class SingleFutureTableComponent {
       0
     ).subscribe({
       next: val => {
-        console.log(val)
+        // console.log(val)
         this.getAllFutures()
         this.toastr.info("Terminski ugovor je uspešno kupljen.")
 
       },
       error: err => {
         console.log(err)
-        this.toastr.error("Greška pri kupovini.")
+        this.getAllFutures()
+        this.toastr.error("Greska pri kupovini")
       }
     })
   }
@@ -164,21 +159,22 @@ export class SingleFutureTableComponent {
     console.log("Stigla poruka iz SellFutureComponent sa id: " + id)
     this.sellFutureComponent.sellFutureVisible = false;
     this.sellFutureComponent.resetForm();
-    this.getUser()
+    this.getAllFutures()
+    
   }
 
   sellFutureWithLimit(id: number) {
     console.log("Stigla poruka iz SellFutureWithLimitComponent sa id: " + id)
     this.sellFutureWithLimitComponent.sellFutureVisible = false;
     this.sellFutureWithLimitComponent.resetForm();
-    this.getUser()
+    this.getAllFutures()
   }
 
   buyFutureWithLimit(id: number) {
     console.log("Stigla poruka iz BuyFutureWithLimit sa id: " + id)
     this.buyFutureWithLimitComponent.buyFutureVisible = false;
     this.buyFutureWithLimitComponent.resetForm();
-    this.getUser()
+    this.getAllFutures()
   }
 
   removeFromMarket(futereId: string) {
@@ -186,12 +182,12 @@ export class SingleFutureTableComponent {
       futereId
     ).subscribe({
       next: val => {
-        // console.log(val);
         this.getAllFutures()
         this.toastr.info("Uspesno je skinut sa prodaje")
       },
       error: err => {
         console.log(err)
+        this.getAllFutures()
         this.toastr.error("Greska pri skidanju sa prodaje")
       }
     })
@@ -200,39 +196,126 @@ export class SingleFutureTableComponent {
   openSellFutureDialog(future: Future) {
     this.sellFutureComponent.future = future
     this.sellFutureComponent.open()
-    // this.sellFutureComponent.sellFutureVisible = true;
   }
 
   openSellFutureWithLimitDialog(future: Future) {
     this.sellFutureWithLimitComponent.future = future
     this.sellFutureWithLimitComponent.open()
+
     //this.sellFutureWithLimitComponent.sellFutureVisible = true;
   }
 
   openBuyFutureDialog(futureName: string) {
     this.buyFutureWithLimitComponent.futureName = futureName
     this.buyFutureWithLimitComponent.buyFutureVisible = true;
+    this.buyFutureWithLimitComponent.userId = this.userId.toString();
   }
 
   buyWithLimit() {
 
   }
 
-  getAllWaitingFuturesForUser() {
-    // console.log(this.futureName);
+
+  idsToBeSold: number[]
+  idsToBeBought: number[] = []
+
+  getAllWaitingForSellFuturesForUser() {
 
     this.stockService.getAllWaitingFuturesForUser(
       "sell",
       this.futureName
     ).subscribe({
       next: val => {
-        console.log(val);
+        // console.log("SELL");
+        // console.log(val);
+        this.idsToBeSold = val;
       },
       error: err => {
         console.log(err);
       }
     })
   }
+
+  getAllWaitingForBuyFuturesForUser() {
+
+    this.stockService.getAllWaitingFuturesForUser(
+      "buy",
+      this.futureName
+    ).subscribe({
+      next: val => {
+        console.log("BUY");
+        console.log(val);
+        // TODO ovde mora da se doda ili na beku da mi se proveri da li ima konkretni user to
+        this.idsToBeBought = val
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+  }
+
+  checkIfFutureIsWaitingSell(id: number): boolean{
+    for(const singleId of this.idsToBeSold){
+      if(singleId === id){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  checkIfFutureIsWaitingBuy(): boolean{
+    if(this.idsToBeBought.length === 0){
+      return true;
+    }
+    
+    for(const singleId of this.idsToBeBought){
+      if(singleId === this.userId){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  removeFutureFromWaitingToBeSold(id: number){
+    this.stockService.removeFromWaitingSellFuture(id)
+    .subscribe({
+      next: val=>{
+        // console.log(val.message);
+        this.toastr.info("Uspesno skinut sa cekanja")
+        this.getAllFutures()
+      },
+      error: err=>{
+        // console.log(err);
+        this.toastr.error("Greska pri skidanju")
+        this.getAllFutures()
+      }
+    })  
+
+    
+  }
+
+  removeFutureFromWaitingToBeBought(){
+    this.stockService.removeFromWaitingBuyFuture(
+      this.userId
+    )
+    .subscribe({
+      next: val=>{
+        // console.log(val.message);
+        this.toastr.info("Uspesno skinut sa cekanja")
+        this.getAllFutures()
+      },
+      error: err=>{
+        // console.log(err);
+        this.toastr.error("Greska pri skidanju")
+        this.getAllFutures()
+      }
+    })  
+    
+    
+    
+  }
+
+
 
 
 }

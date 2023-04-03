@@ -41,4 +41,12 @@ export class SellStockComponent {
     this.sellStockVisible = true;
   } 
 
+  resetForm() {
+    this.sellStockForm.get('kolicina')?.reset();
+    this.sellStockForm.get('stop')?.reset();
+    this.sellStockForm.get('limit')?.reset();
+    this.sellStockForm.get('allOrNone')?.reset();
+    this.sellStockForm.get('margin')?.reset();
+  }
+
 }

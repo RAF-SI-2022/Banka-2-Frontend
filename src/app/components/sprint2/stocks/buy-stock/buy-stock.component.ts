@@ -43,5 +43,13 @@ export class BuyStockComponent {
     this.buyStockVisible = true;
   }
 
+  resetForm() {
+    this.buyStockForm.get('kolicina')?.reset();
+    this.buyStockForm.get('stop')?.reset();
+    this.buyStockForm.get('limit')?.reset();
+    this.buyStockForm.get('allOrNone')?.reset();
+    this.buyStockForm.get('margin')?.reset();
+  }
+
 
 }

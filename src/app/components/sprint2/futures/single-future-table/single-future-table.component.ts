@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {Future} from "../../../../models/stock-exchange.model";
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Future, Transaction} from "../../../../models/stock-exchange.model";
 import {StockService} from "../../../../services/stock.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {error} from 'cypress/types/jquery';
@@ -12,6 +12,7 @@ import {SellFutureComponent} from "../sell-future/sell-future.component";
 import {SellFutureWithLimitComponent} from "../sell-future-with-limit/sell-future-with-limit.component";
 import { interval } from 'rxjs';
 import {BuyFutureWithLimitComponent} from "../buy-future-with-limit/buy-future-with-limit.component";
+import {TransactionsArrayService} from "../../../../services/transactions-array.service";
 
 @Component({
   selector: 'app-single-future-table',
@@ -36,7 +37,8 @@ export class SingleFutureTableComponent {
 
   breadcrumbItems: MenuItem[]
 
-  constructor(private stockService: StockService, private userService: UserService
+  constructor(private stockService: StockService, private userService: UserService,
+              private transactionService: TransactionsArrayService
     , private route: ActivatedRoute, private toastr: ToastrService
     ,private router: Router) {
 
@@ -143,6 +145,16 @@ export class SingleFutureTableComponent {
     ).subscribe({
       next: val => {
         // console.log(val)
+        let tempTransaction: Transaction = {
+          exchangeMICCode: futureToBuy.futureName, // futureName
+          transaction : "Kupovina", //KUPLJENO Provalimo iz poziva
+          hartija: "Terminski ugovor",  //FUTURE provalimo iz poziva
+          volume: futureToBuy.contractSize,  //contractSize
+          price: futureToBuy.maintenanceMargin, // maintenanceMargin
+          status: "IZVRSENA",  //NA CEKANJU
+          lastModifed: futureToBuy.settlementDate, //settlementDate
+        }
+        this.transactionService.addTransactions(tempTransaction)
         this.getAllFutures()
         this.toastr.info("Terminski ugovor je uspešno kupljen.")
 
@@ -153,6 +165,18 @@ export class SingleFutureTableComponent {
         this.toastr.error("Greska pri kupovini")
       }
     })
+
+    //new Transaction
+    // export interface Transaction {
+    //   exchangeMICCode: string, // futureName
+    //   transaction : string, //KUPLJENO Provalimo iz poziva
+    //   hartija: string,  //FUTURE provalimo iz poziva
+    //   volume: number,  //contractSize
+    //   price: number, // maintenanceMargin
+    //   status: string,  //NA CEKANJU
+    //   zavrsena: string,  //NE
+    //   lastModifed: Date, //settlementDate
+    // }
   }
 
   sellFuture(id: number) {
@@ -160,7 +184,7 @@ export class SingleFutureTableComponent {
     this.sellFutureComponent.sellFutureVisible = false;
     this.sellFutureComponent.resetForm();
     this.getAllFutures()
-    
+
   }
 
   sellFutureWithLimit(id: number) {
@@ -267,7 +291,7 @@ export class SingleFutureTableComponent {
     if(this.idsToBeBought.length === 0){
       return true;
     }
-    
+
     for(const singleId of this.idsToBeBought){
       if(singleId === this.userId){
         return false;
@@ -289,9 +313,9 @@ export class SingleFutureTableComponent {
         this.toastr.error("Greska pri skidanju")
         this.getAllFutures()
       }
-    })  
+    })
 
-    
+
   }
 
   removeFutureFromWaitingToBeBought(){
@@ -309,10 +333,10 @@ export class SingleFutureTableComponent {
         this.toastr.error("Greska pri skidanju")
         this.getAllFutures()
       }
-    })  
-    
-    
-    
+    })
+
+
+
   }
 
 

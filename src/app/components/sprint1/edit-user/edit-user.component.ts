@@ -56,8 +56,8 @@ export class EditUserComponent {
         lastName: this.editUserForm.get('lastName')?.value,
         email: this.editUserForm.get('email')?.value,
         permissions: this.selectedJob.permissions,
-        jobPosition: this.selectedJob.name,
         dailyLimit: this.editUserForm.get('limit')?.value,
+        jobPosition: this.selectedJob.name,
         active: this.editUserForm.get('active')?.value,
         phone: this.editUserForm.get('phone')?.value,
         jmbg: this.userJmbg
@@ -95,6 +95,7 @@ export class EditUserComponent {
       email: user.email,
       permissions: user.permissions,
       // jobPosition: user.jobPosition,
+      limit: user.dailyLimit,
       jobPosition: this.selectedJob,
       active: user.active,
       phone: user.phone

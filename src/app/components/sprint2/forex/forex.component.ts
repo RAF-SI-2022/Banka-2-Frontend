@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {StockService} from 'src/app/services/stock.service';
 import {UserService} from 'src/app/services/user-service.service';
-
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-forex',
@@ -32,7 +32,7 @@ export class ForexComponent {
 
   convertedAmmount: number;
 
-  constructor(private stockService: StockService, private userService: UserService) {
+  constructor(private stockService: StockService, private userService: UserService, private toaster: ToastrService) {
 
   }
 
@@ -176,9 +176,13 @@ export class ForexComponent {
 
 
   buy(){
-    this.stockService.buyForex(this.currencyFrom.name, this.currencyTo.name, this.convertedAmmount).subscribe({
+   if(this.ammount<1){
+    this.toaster.error("Uneta vrednost mora biti veća od 1")
+    return
+   }
+    this.stockService.buyForex(this.currencyFrom.name, this.currencyTo.name, this.ammount?? 1).subscribe({
       next: val => {
-        alert("Ok")
+        this.toaster.success("Uspešna kupovina")
       }
     })
   }

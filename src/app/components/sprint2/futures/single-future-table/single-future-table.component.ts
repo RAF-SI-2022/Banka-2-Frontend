@@ -11,6 +11,7 @@ import {StockDetailsComponent} from "../../stocks/stock-details/stock-details.co
 import {SellFutureComponent} from "../sell-future/sell-future.component";
 import {SellFutureWithLimitComponent} from "../sell-future-with-limit/sell-future-with-limit.component";
 import { interval } from 'rxjs';
+import {BuyFutureWithLimitComponent} from "../buy-future-with-limit/buy-future-with-limit.component";
 
 @Component({
   selector: 'app-single-future-table',
@@ -20,6 +21,7 @@ import { interval } from 'rxjs';
 export class SingleFutureTableComponent {
 
   @ViewChild(SellFutureComponent, {static : true}) sellFutureComponent : SellFutureComponent
+  @ViewChild(BuyFutureWithLimitComponent, {static : true}) buyFutureWithLimitComponent : BuyFutureWithLimitComponent
   @ViewChild(SellFutureWithLimitComponent, {static : true}) sellFutureWithLimitComponent : SellFutureWithLimitComponent
 
   loading: boolean = true; // on load setovati na false
@@ -142,7 +144,7 @@ export class SingleFutureTableComponent {
       next: val => {
         // console.log(val)
         this.getAllFutures()
-        this.toastr.info("Uspesno je kupljen")
+        this.toastr.info("Terminski ugovor je uspešno kupljen.")
 
       },
       error: err => {
@@ -155,12 +157,23 @@ export class SingleFutureTableComponent {
 
   sellFuture(id: number) {
     console.log("Stigla poruka iz SellFutureComponent sa id: " + id)
+    this.sellFutureComponent.sellFutureVisible = false;
+    this.sellFutureComponent.resetForm();
     this.getAllFutures()
     
   }
 
   sellFutureWithLimit(id: number) {
     console.log("Stigla poruka iz SellFutureWithLimitComponent sa id: " + id)
+    this.sellFutureWithLimitComponent.sellFutureVisible = false;
+    this.sellFutureWithLimitComponent.resetForm();
+    this.getAllFutures()
+  }
+
+  buyFutureWithLimit(id: number) {
+    console.log("Stigla poruka iz BuyFutureWithLimit sa id: " + id)
+    this.buyFutureWithLimitComponent.buyFutureVisible = false;
+    this.buyFutureWithLimitComponent.resetForm();
     this.getAllFutures()
   }
 
@@ -187,7 +200,15 @@ export class SingleFutureTableComponent {
 
   openSellFutureWithLimitDialog(future: Future) {
     this.sellFutureWithLimitComponent.future = future
-    this.sellFutureWithLimitComponent.sellFutureVisible = true;
+    this.sellFutureWithLimitComponent.open()
+
+    //this.sellFutureWithLimitComponent.sellFutureVisible = true;
+  }
+
+  openBuyFutureDialog(futureName: string) {
+    this.buyFutureWithLimitComponent.futureName = futureName
+    this.buyFutureWithLimitComponent.buyFutureVisible = true;
+    this.buyFutureWithLimitComponent.userId = this.userId.toString();
   }
 
   buyWithLimit() {
@@ -196,7 +217,7 @@ export class SingleFutureTableComponent {
 
 
   idsToBeSold: number[]
-  idsToBeBought: number[]
+  idsToBeBought: number[] = []
 
   getAllWaitingForSellFuturesForUser() {
 
@@ -205,8 +226,8 @@ export class SingleFutureTableComponent {
       this.futureName
     ).subscribe({
       next: val => {
-        console.log("SELL");
-        console.log(val);
+        // console.log("SELL");
+        // console.log(val);
         this.idsToBeSold = val;
       },
       error: err => {
@@ -233,9 +254,22 @@ export class SingleFutureTableComponent {
     })
   }
 
-  checkIfFutureIsWaiting(id: number): boolean{
+  checkIfFutureIsWaitingSell(id: number): boolean{
     for(const singleId of this.idsToBeSold){
       if(singleId === id){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  checkIfFutureIsWaitingBuy(): boolean{
+    if(this.idsToBeBought.length === 0){
+      return true;
+    }
+    
+    for(const singleId of this.idsToBeBought){
+      if(singleId === this.userId){
         return false;
       }
     }
@@ -261,7 +295,21 @@ export class SingleFutureTableComponent {
   }
 
   removeFutureFromWaitingToBeBought(){
-    console.log("Luka impl");
+    this.stockService.removeFromWaitingBuyFuture(
+      this.userId
+    )
+    .subscribe({
+      next: val=>{
+        // console.log(val.message);
+        this.toastr.info("Uspesno skinut sa cekanja")
+        this.getAllFutures()
+      },
+      error: err=>{
+        // console.log(err);
+        this.toastr.error("Greska pri skidanju")
+        this.getAllFutures()
+      }
+    })  
     
     
     

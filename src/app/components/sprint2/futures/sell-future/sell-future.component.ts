@@ -28,6 +28,12 @@ export class SellFutureComponent {
     });
   }
 
+  resetForm() {
+    this.sellFutureForm.setValue({
+      price: [null , Validators.required]
+    })
+  }
+
   open(){
     this.sellFutureVisible = true
     this.sellFutureForm.patchValue({
@@ -36,17 +42,17 @@ export class SellFutureComponent {
   }
 
   submitSellFuture() {
-    
+
     console.log(this.future);
-    
-    console.log(          
+
+    console.log(
       this.future.id,
       this.future.futureName,
       "SELL",
       this.sellFutureForm.get('price')?.value,
       0,
       0);
-    
+
 
     if (this.sellFutureForm.valid) {
 
@@ -64,7 +70,7 @@ export class SellFutureComponent {
           },
           error: err => {
             console.log(err);
-            
+
           }
         })
 

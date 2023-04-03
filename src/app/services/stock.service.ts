@@ -112,5 +112,12 @@ export class StockService {
        ,{ headers: this.headers })
   }
 
+  removeFromWaitingBuyFuture(id: number): Observable<any>{
+    return this.httpClient.post<any>(`http://localhost:8080/api/futures/remove-waiting-buy/${id}`
+    ,{}
+       ,{ headers: this.headers })
+  }
+
+  
 
 }

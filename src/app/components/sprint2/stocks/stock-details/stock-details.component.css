@@ -71,8 +71,8 @@ td {
   margin-bottom: 16px;
 }
 
-::ng-deep .reduce-padding {
-  padding-bottom: 0!important;
+::ng-deep .p-dialog .p-dialog-header {
+  padding-bottom: 0;
 }
 
 .divider-container::after {

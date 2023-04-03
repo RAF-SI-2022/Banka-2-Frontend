@@ -31,6 +31,7 @@ export class EditUserComponent {
       email: ['', [Validators.required, Validators.email]],
       permissions: new FormArray([]),
       jobPosition: '',
+      limit: [null, [Validators.min(1), Validators.required, Validators.pattern(/^\d+$/)]],
       active: false,
       phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       selectedJob: ['', Validators.required]
@@ -56,6 +57,7 @@ export class EditUserComponent {
         email: this.editUserForm.get('email')?.value,
         permissions: this.selectedJob.permissions,
         jobPosition: this.selectedJob.name,
+        dailyLimit: this.editUserForm.get('limit')?.value,
         active: this.editUserForm.get('active')?.value,
         phone: this.editUserForm.get('phone')?.value,
         jmbg: this.userJmbg

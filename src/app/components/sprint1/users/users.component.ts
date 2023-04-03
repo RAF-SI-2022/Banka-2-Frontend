@@ -200,6 +200,7 @@ export class UsersComponent {
       editedUser.permissions,
       editedUser.firstName,
       editedUser.lastName,
+      editedUser.dailyLimit,
       editedUser.jobPosition,
       editedUser.phone,
       editedUser.active

@@ -70,7 +70,7 @@ export class UserService {
       { headers: this.headers })
   }
 
-  updateUser(id: number, email: string, permissions:[], firstName: string, lastName: string, jobPosition: string, phone: string, active: boolean): Observable<any>{
+  updateUser(id: number, email: string, permissions:[], firstName: string, lastName: string, jobPosition: string, dailyLimit: number, phone: string, active: boolean): Observable<any>{
     return this.httpClient.put<any>(`${environment.apiUserServerUrl}/` + id,
       {
         email: email,
@@ -78,6 +78,7 @@ export class UserService {
         lastName: lastName,
         permissions: permissions,
         jobPosition: jobPosition,
+        dailyLimit: dailyLimit,
         active: active,
         phone: phone
       },

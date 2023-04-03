@@ -71,13 +71,7 @@ td {
   margin-bottom: 16px;
 }
 
-::ng-deep .p-dialog-header {
-  padding-bottom: 1px!important;
-}
 
-::ng-deep .p-dialog-content {
-  margin-top: -12px;
-}
 
 .dialog-header {
   padding-bottom: 0!important;

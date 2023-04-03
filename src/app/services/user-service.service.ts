@@ -41,7 +41,7 @@ export class UserService {
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${token}`)
 
-    
+
   }
 
   getToken(){
@@ -61,12 +61,12 @@ export class UserService {
       { headers: this.headers })
   }
 
-  createNewUser(firstName: string, lastName: string, email: string, password: string, permissions: any, jobPosition: string,active : string, jmbg: string, phone : string
+  createNewUser(firstName: string, lastName: string, email: string, password: string, permissions: any, jobPosition: string, dailyLimit: number, active : string, jmbg: string, phone : string
     ): Observable<any>{
     return this.httpClient.post<UserCreateDTO>(
       `${environment.apiUserServerUrl}/register`,
       {firstName: firstName, lastName:lastName, email:email, password:password
-      ,permissions: permissions, jobPosition: jobPosition, active:active, jmbg: jmbg, phone:phone},
+      ,permissions: permissions, jobPosition: jobPosition, dailyLimit: dailyLimit, active:active, jmbg: jmbg, phone:phone},
       { headers: this.headers })
   }
 

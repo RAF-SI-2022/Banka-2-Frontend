@@ -225,6 +225,7 @@ export class UsersComponent {
       $event.password,
       $event.permissions,
       $event.jobPosition,
+      $event.dailyLimit,
       $event.active,
       $event.jmbg,
       $event.phone

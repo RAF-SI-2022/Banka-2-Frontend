@@ -28,15 +28,15 @@ export class PurchasesComponent {
   ngOnInit() {
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
-      {label: 'Prudzbine', routerLink: ['/purchases']}
+      {label: 'Porudžbine', routerLink: ['/purchases']}
     ];
 
     this.status = [
       {label: 'Sve', value: ''},
-      {label: 'Zavrsene', value: 'ZAVRSENA'},
+      {label: 'Završene', value: 'ZAVRSENA'},
       {label: 'Odobrene', value: 'ODOBRENA'},
       {label: 'Odbijene', value: 'ODBIJENA'},
-      {label: 'Na cekanju', value: 'NA CEKANJU'}
+      {label: 'Na čekanju', value: 'NA CEKANJU'}
   ]
 
     this.insertTrans();

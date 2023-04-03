@@ -71,11 +71,8 @@ td {
   margin-bottom: 16px;
 }
 
-
-
-.dialog-header {
+::ng-deep .reduce-padding {
   padding-bottom: 0!important;
-  margin-bottom: 1px;
 }
 
 .divider-container::after {

@@ -134,8 +134,14 @@
             <td>{{future.maintenanceMargin}}</td>
             <td>{{future.settlementDate}}</td>
             <td>
-              <button *ngIf="!changeOption" (click)="buyFuture(future)" pButton label="Kupi"></button>
+              <button *ngIf="!changeOption" (click)="buyFuture(future)" class="btn-i btn-circle" title="Kupi">
+                <span>
+                  <i class="bi bi-cart" style="font-size: 20px;"></i>
+                </span>
+                <div class="wave"></div>
+              </button>
 <!--              <button *ngIf="changeOption"  (click)="openBuyFutureDialog(future)" pButton label="Kupi sa limitom"></button>-->
+
             </td>
           </tr>
           <tr *ngIf="changeOption">
@@ -151,8 +157,18 @@
             <td>{{future.settlementDate}}</td>
             <td>
               <div *ngIf="checkIfFutureIsWaitingSell(future.id)">
-                <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureDialog(future)" pButton label="Prodja"></button>
-                <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureWithLimitDialog(future)" pButton label="Prodaj sa limitom"></button>
+                <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureDialog(future)"  class="btn-i btn-circle me-1" title="Prodaj">
+                  <span>
+                    <i class="bi bi-cart" style="font-size: 20px;"></i>
+                  </span>
+                  <div class="wave"></div>
+                </button>
+                <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureWithLimitDialog(future)"  class="btn-i btn-circle" title="Prodaj sa limitom">
+                  <span>
+                    <i class="bi bi-graph-up" style="font-size: 20px;"></i>
+                  </span>
+                  <div class="wave"></div>
+                </button>
                 <button *ngIf="changeOption && future.forSale" (click)="removeFromMarket(future.id)" pButton label="Skini"></button>
               </div>
               <div *ngIf="!checkIfFutureIsWaitingSell(future.id)">

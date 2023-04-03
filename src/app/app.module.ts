@@ -60,6 +60,8 @@ import { SellFutureWithLimitComponent } from './components/sprint2/futures/sell-
 import { BuyFutureWithLimitComponent } from './components/sprint2/futures/buy-future-with-limit/buy-future-with-limit.component';
 
 
+import { AllowNumbersOnlyDirective } from 'src/app/directives/allow-numbers-only.directive';
+
 
 
 @NgModule({
@@ -90,6 +92,7 @@ import { BuyFutureWithLimitComponent } from './components/sprint2/futures/buy-fu
     SellFutureComponent,
     SellFutureWithLimitComponent,
     BuyFutureWithLimitComponent,
+    AllowNumbersOnlyDirective,
 
   ],
     imports: [

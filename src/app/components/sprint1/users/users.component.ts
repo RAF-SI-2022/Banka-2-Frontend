@@ -200,6 +200,7 @@ export class UsersComponent {
       editedUser.permissions,
       editedUser.firstName,
       editedUser.lastName,
+      editedUser.dailyLimit,
       editedUser.jobPosition,
       editedUser.phone,
       editedUser.active
@@ -224,8 +225,8 @@ export class UsersComponent {
       $event.email,
       $event.password,
       $event.permissions,
-      $event.jobPosition,
       $event.dailyLimit,
+      $event.jobPosition,
       $event.active,
       $event.jmbg,
       $event.phone

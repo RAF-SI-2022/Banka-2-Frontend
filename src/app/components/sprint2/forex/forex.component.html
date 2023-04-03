@@ -93,7 +93,7 @@
 
       <ng-template pTemplate="body" let-curr>
         <tr style="font-size: 12px;">
-          <td>{{curr.fromCurrencyCode + curr.toCurrencyCode}}</td>
+          <td>{{curr.fromCurrencyCode + " - " + curr.toCurrencyCode}}</td>
           <td>{{toFixed(curr.exchangeRate)}}</td>
           <td>{{curr.lastRefreshed}}</td>
 

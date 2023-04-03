@@ -257,7 +257,7 @@ export class StocksComponent {
     // Slanje podataka na details dialog
 
     this.stockDetailsChild.stock = event
-    this.stockDetailsChild.getStockDetails(event.ticker);
+    this.stockDetailsChild.getStockDetails(event.id);
     this.stockDetailsChild.getStockGraph(event.id, "ONE_DAY");
     this.stockDetailsChild.displayDetails = true;
     this.stockDetailsChild.resetPeriodOption()

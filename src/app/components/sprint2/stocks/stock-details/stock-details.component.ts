@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {Stock, StockDetails, StockHistory} from 'src/app/models/stock-exchange.model';
 import {UIChart} from "primeng/chart";
 import {StockService} from "../../../../services/stock.service";
+import {error} from "cypress/types/jquery";
 
 @Component({
   selector: 'app-stock-details',
@@ -18,6 +19,7 @@ export class StockDetailsComponent {
   variable = true;
   periodOptions: any[];
   selectedPeriodOption: any
+  exchangeActive: boolean = false;
 
   @ViewChild('chart') chart: UIChart;
 
@@ -48,17 +50,26 @@ export class StockDetailsComponent {
       {period: '1m', value: "ONE_MONTH"},
       {period: '6m', value: "SIX_MONTHS"},
       {period: '1y', value: "ONE_YEAR"},
-      {period: 'ytd', value: "FIVE_DAYS"}
+      {period: 'ytd', value: "YTD"}
     ];
     this.selectedPeriodOption = this.periodOptions[0]
   }
 
-  getStockDetails(ticker: string) {
-    this.stockService.getStockDetails(ticker)
+  getStockDetails(id: number) {
+    this.stockService.getStockDetails(id)
       .subscribe({
           next: value => {
             this.stockDetails = value;
-            console.log(value)
+
+            this.stockService.getExchangeStatus(value.exchange.micCode)
+              .subscribe({
+                next: value1 => {
+                  console.log(`Berza aktivna? ${value1}`)
+                },
+                error: err => {
+                  console.log(err)
+                }
+              });
           },
           error: err => {
             console.log(err)

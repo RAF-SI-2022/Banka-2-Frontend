@@ -13,7 +13,7 @@
 
           <div class="table-header row">
 
-            <div class="col-lg-6 text-start table-name">
+            <div class="col-lg-6 col-md-6 text-start table-name">
               <div style="display:flex; align-items: center; gap: 8px;">
                 <h3 class="berza-mojeakcije-text">
                   Terminski ugovori
@@ -27,17 +27,25 @@
                 </h3>
               </div>
             </div>
-            <div class="col-lg-6 text-end">
+            <div class="col-lg-6 col-md-6 text-end">
               <button *ngIf="!changeOption && checkIfFutureIsWaitingBuy()" (click)="openBuyFutureDialog(futureName)"
                       pButton pRipple styleClass="p-button-sm"
                       class="p-button-raised p-button-primary add-employee-btn-lg"
                       label="Kupi sa limitom" style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
               </button>
+              <button *ngIf="!changeOption && checkIfFutureIsWaitingBuy()" pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
+                      class="p-button-raised p-button-secondary add-employee-btn-sm"
+                      icon="pi pi-plus" (click)="openBuyFutureDialog(futureName)"></button>
+
               <button *ngIf="!changeOption && !checkIfFutureIsWaitingBuy()" (click)="removeFutureFromWaitingToBeBought()"
               pButton pRipple styleClass="p-button-sm"
               class="p-button-raised p-button-primary add-employee-btn-lg"
               label="Skini kupovinu sa cekanja" style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
-      </button>
+              </button>
+
+              <button *ngIf="!changeOption && !checkIfFutureIsWaitingBuy()" (click)="removeFutureFromWaitingToBeBought()" pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
+              class="p-button-raised p-button-secondary add-employee-btn-sm"
+              icon="pi pi-minus" (click)="openBuyFutureDialog(futureName)"></button>
             </div>
 
           </div>
@@ -159,20 +167,30 @@
               <div *ngIf="checkIfFutureIsWaitingSell(future.id)">
                 <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureDialog(future)"  class="btn-i btn-circle me-1" title="Prodaj">
                   <span>
-                    <i class="bi bi-cart" style="font-size: 20px;"></i>
+                    <i class="bi bi-tag" style="font-size: 20px;"></i>
                   </span>
                   <div class="wave"></div>
                 </button>
                 <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureWithLimitDialog(future)"  class="btn-i btn-circle" title="Prodaj sa limitom">
                   <span>
-                    <i class="bi bi-graph-up" style="font-size: 20px;"></i>
+                    <i class="bi bi-tags-fill" style="font-size: 20px;"></i>
                   </span>
                   <div class="wave"></div>
                 </button>
-                <button *ngIf="changeOption && future.forSale" (click)="removeFromMarket(future.id)" pButton label="Skini"></button>
+                <button *ngIf="changeOption && future.forSale" (click)="removeFromMarket(future.id)" class="btn-i btn-circle" title="Skini">
+                  <span>
+                    <i class="bi bi-x-lg" style="font-size: 20px;"></i>
+                  </span>
+                  <div class="wave"></div>
+                </button>
               </div>
               <div *ngIf="!checkIfFutureIsWaitingSell(future.id)">
-                <button (click)="removeFutureFromWaitingToBeSold(future.id)" pButton label="Skini sa cekanja"></button>
+                <button (click)="removeFutureFromWaitingToBeSold(future.id)" class="btn-i btn-circle" title="Skini sa čekanja">
+                  <span>
+                    <i class="bi bi-hourglass-split" style="font-size: 20px;"></i>
+                  </span>
+                  <div class="wave"></div>
+                </button>
               </div>
             </td>
           </tr>

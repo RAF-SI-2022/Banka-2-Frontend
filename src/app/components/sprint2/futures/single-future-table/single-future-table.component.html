@@ -137,9 +137,14 @@
             <td>{{future.maintenanceMargin}}</td>
             <td>{{future.settlementDate}}</td>
             <td>
-              <button *ngIf="changeOption" (click)="openSellFutureDialog(future)" pButton label="Prodja"></button>
-              <button *ngIf="changeOption"  (click)="openSellFutureWithLimitDialog(future)" pButton label="Prodaj sa limitom"></button>
-              <button *ngIf="changeOption" (click)="removeFromMarket(future.id)" pButton label="Skini"></button>
+              <div *ngIf="checkIfFutureIsWaiting(future.id)">
+                <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureDialog(future)" pButton label="Prodja"></button>
+                <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureWithLimitDialog(future)" pButton label="Prodaj sa limitom"></button>
+                <button *ngIf="changeOption && future.forSale" (click)="removeFromMarket(future.id)" pButton label="Skini"></button>
+              </div>
+              <div *ngIf="!checkIfFutureIsWaiting(future.id)">
+                <button (click)="removeFutureFromWaitingToBeSold(future.id)" pButton label="Skini sa cekanja"></button>
+              </div>
             </td>
           </tr>
         </ng-template>

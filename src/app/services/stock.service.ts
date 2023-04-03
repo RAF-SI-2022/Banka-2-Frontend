@@ -42,6 +42,12 @@ export class StockService {
 
   }
 
+  getAllStocks(): Observable<any>{
+    return this.httpClient.get<any>(`http://localhost:8080/api/stock`
+    ,{ headers: this.headers })
+  }
+
+
   getStockDetails(id: number): Observable<any>{
     return this.httpClient.get<StockDetails>(
       `${environment.apiStockDetails}`+id,
@@ -134,5 +140,7 @@ export class StockService {
       },
       { headers: this.headers })
   }
+
+
 
 }

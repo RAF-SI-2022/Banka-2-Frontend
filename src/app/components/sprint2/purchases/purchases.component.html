@@ -2,7 +2,7 @@
 
 
 
-<p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb> 
+<p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 
 <div class="table-container">
 
@@ -108,14 +108,6 @@
                 </div>
                 </div>
             </th>
-            <th pSortableColumn="zavrsena" style="font-size: 12px; ">
-                <div class="flex justify-content-between align-items-center">
-                <div class="icon-container">
-                    <p style="margin-bottom: 0; margin-top: 2px;">Završena</p>
-                    <p-sortIcon field="zavrsena"></p-sortIcon>
-                </div>
-                </div>
-            </th>
 
             <th pSortableColumn="lastModifed" style="font-size: 12px; ">
                 <div class="flex justify-content-between align-items-center">
@@ -137,15 +129,14 @@
              <td>{{transaction.volume}}</td>
              <td>{{transaction.price}}</td>
              <td>{{transaction.status}}</td>
-             <td>{{transaction.zavrsena}}</td>
              <td>{{transaction.lastModifed}}</td>
             </tr>
-           
+
         </ng-template>
 
 
     </p-table>
-   
+
 
 
 

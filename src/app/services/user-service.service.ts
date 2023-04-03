@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {environment} from "../../environments/environment";
 import {UserCreateDTO, User} from "../models/users.model";
+import { StockService } from './stock.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserService {
   private headers
   private token: string
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private stockService: StockService) {
 
     if(localStorage.getItem("token") !== null){
       this.token = localStorage.getItem("token")!
@@ -29,15 +30,18 @@ export class UserService {
 
   resetToken(){
     this.token = ''
+    this.stockService.resetToken();
   }
 
   setToken(token: string){
     this.token=token
+    this.stockService.setToken(this.token);
     this.headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${token}`)
 
+    
   }
 
   getToken(){

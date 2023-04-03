@@ -37,9 +37,9 @@ import { PageNotFoundComponent } from './components/sprint1/page-not-found/page-
 import {SidebarModule} from "primeng/sidebar";
 import { PageForbidenComponent } from './components/sprint1/page-forbiden/page-forbiden.component';
 import { ChangePasswordComponent } from './components/sprint1/change-password/change-password.component';
-import { StocksComponent } from './components/sprint2/stocks/stocks.component';
+import { StocksComponent } from './components/sprint2/stocks/stocks-table/stocks.component';
 import { ChangePercPipe } from './pipes/change-perc.pipe';
-import { StockDetailsComponent } from './components/sprint2/stock-details/stock-details.component';
+import { StockDetailsComponent } from './components/sprint2/stocks/stock-details/stock-details.component';
 import { ForexComponent } from './components/sprint2/forex/forex.component';
 import {ChartModule} from "primeng/chart";
 import {DividerModule} from "primeng/divider";
@@ -48,13 +48,16 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {StyleClassModule} from "primeng/styleclass";
 import { PurchasesComponent } from './components/sprint2/purchases/purchases.component';
-import { StockOptionsComponent } from './components/sprint2/stock-options/stock-options.component';
+import { StockOptionsComponent } from './components/sprint2/stocks/stock-options/stock-options.component';
 import {ColorPickerModule} from "primeng/colorpicker";
-import { FuturesComponent } from './components/sprint2/futures-component/futures.component';
-import { SingleFutureTableComponent } from './components/sprint2/single-future-table/single-future-table.component';
-import { BuyStockComponent } from './components/sprint2/buy-stock/buy-stock.component';
-import { SellStockComponent } from './components/sprint2/sell-stock/sell-stock.component';
+import { FuturesComponent } from './components/sprint2/futures/futures-component/futures.component';
+import { SingleFutureTableComponent } from './components/sprint2/futures/single-future-table/single-future-table.component';
+import { BuyStockComponent } from './components/sprint2/stocks/buy-stock/buy-stock.component';
+import { SellStockComponent } from './components/sprint2/stocks/sell-stock/sell-stock.component';
 import {AccordionModule} from "primeng/accordion";
+import { SellFutureComponent } from './components/sprint2/futures/sell-future/sell-future.component';
+import { SellFutureWithLimitComponent } from './components/sprint2/futures/sell-future-with-limit/sell-future-with-limit.component';
+import { BuyFutureWithLimitComponent } from './components/sprint2/futures/buy-future-with-limit/buy-future-with-limit.component';
 
 
 
@@ -84,6 +87,9 @@ import {AccordionModule} from "primeng/accordion";
     SellStockComponent,
     FuturesComponent,
     SingleFutureTableComponent,
+    SellFutureComponent,
+    SellFutureWithLimitComponent,
+    BuyFutureWithLimitComponent,
 
   ],
     imports: [

@@ -85,7 +85,7 @@ export class StockOptionsComponent {
     )
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
-      {label: 'Berza', routerLink: ['/stocks']},
+      {label: 'Berza', routerLink: ['/stocks-table']},
       {label: 'Opcije', routerLink: [`/stock-options/${this.stockTicker}`]}
     ];
   }

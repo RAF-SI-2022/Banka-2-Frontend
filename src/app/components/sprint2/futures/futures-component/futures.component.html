@@ -1,0 +1,72 @@
+<div class="body-container">
+
+  <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
+
+  <div class="futures-container mt-5">
+    <div class="futures">
+      <p-accordion [activeIndex]="0">
+        <p-accordionTab *ngFor="let futureMapItem of futuresSingleMap | keyvalue; index as i"
+                        header="{{futureMapItem.key}}">
+          <div *ngFor="let future of futureMapItem.value; index as j">
+            <div *ngIf="j % 3 === 0" class="row mb-5 gap-3">
+              <div [routerLink]="'/future/' + futureMapItem.value[j].futureName"
+                  class="future-card col-lg-4 col-md-12 col-sm-12 col-12">
+                <h4>{{toTitleCase(futureMapItem.value[j].futureName)}}</h4>
+                <div class="row text-center">
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <small>Contract Unit</small>
+                    <p>{{toTitleCase(futureMapItem.value[j].contractUnit)}}</p>
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <small>Contract Size</small>
+                    <p>{{futureMapItem.value[j].contractSize}}</p>
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <small>Maintenance Margin</small>
+                    <p>{{futureMapItem.value[j].maintenanceMargin}}</p>
+                  </div>
+                </div>
+              </div>
+              <div [routerLink]="'/future/' + futureMapItem.value[j+1].futureName"
+                  *ngIf="j+1 < futureMapItem.value.length" class="future-card col-lg-4 col-md-12 col-sm-12 col-12">
+                <h4>{{toTitleCase(futureMapItem.value[j + 1].futureName)}}</h4>
+                <div class="row text-center">
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <small>Contract Unit</small>
+                    <p>{{toTitleCase(futureMapItem.value[j + 1].contractUnit)}}</p>
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <small>Contract Size</small>
+                    <p>{{futureMapItem.value[j + 1].contractSize}}</p>
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <small>Maintenance Margin</small>
+                    <p>{{futureMapItem.value[j + 1].maintenanceMargin}}</p>
+                  </div>
+                </div>
+              </div>
+              <div [routerLink]="'/future/' + futureMapItem.value[j+2].futureName"
+                  *ngIf="j+2 < futureMapItem.value.length" class="future-card col-lg-4 col-md-12 col-sm-12 col-12">
+                <h4>{{toTitleCase(futureMapItem.value[j + 2].futureName)}}</h4>
+                <div class="row text-center">
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <small>Contract Unit</small>
+                    <p>{{toTitleCase(futureMapItem.value[j + 2].contractUnit)}}</p>
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <small>Contract Size</small>
+                    <p>{{futureMapItem.value[j + 2].contractSize}}</p>
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <small>Maintenance Margin</small>
+                    <p>{{futureMapItem.value[j + 2].maintenanceMargin}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+  </div>
+</div>

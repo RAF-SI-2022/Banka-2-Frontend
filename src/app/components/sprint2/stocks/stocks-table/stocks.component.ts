@@ -1,15 +1,16 @@
 import {Component, ViewChild} from '@angular/core';
 import {Table} from "primeng/table";
 import {MenuItem} from "primeng/api";
-import {Stock} from "../../../models/stock-exchange.model";
+import {Stock} from "../../../../models/stock-exchange.model";
 import { ToastrService } from 'ngx-toastr';
 import { StockDetailsComponent } from '../stock-details/stock-details.component';
 import { SortEvent } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import {BuyStockComponent} from "../buy-stock/buy-stock.component";
+import { SellStockComponent } from '../sell-stock/sell-stock.component';
 
 @Component({
-  selector: 'app-stocks',
+  selector: 'app-stocks-table',
   templateUrl: './stocks.component.html',
   styleUrls: ['./stocks.component.css']
 })
@@ -31,6 +32,8 @@ export class StocksComponent {
 
   @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
   @ViewChild(BuyStockComponent, {static : true}) buyStockComponent : BuyStockComponent
+  @ViewChild(SellStockComponent, {static : true}) sellStockComponent : SellStockComponent
+
 
   @ViewChild('dt') dt: Table | undefined;
   applyFilterGlobal($event: any, stringVal: any) {
@@ -45,7 +48,7 @@ export class StocksComponent {
   ngOnInit() {
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
-      {label: 'Berza', routerLink: ['/stocks']}
+      {label: 'Akcije', routerLink: ['/stocks-table']}
     ];
 
 
@@ -79,16 +82,24 @@ export class StocksComponent {
     //TODO OTVORITI DIALOG ZA KUPOVINU SA VEC POSTAVLJENIM PODACIMA
 
     // this.toastr.info("kupi popup " + stock.ticker)
-    this.refresh()
   }
 
   toggleSellStockDialog(event: MouseEvent, stock: Stock){
     event.stopPropagation()
 
+    this.sellStockComponent.sellStockVisible = true;
+
+    // this.sellStockComponent.
+
     //TODO OTVORITI DIALOG ZA PRODAJU SA VEC POSTAVLJENIM PODACIMA
 
-    this.toastr.info("Prodaj popup " + stock.ticker)
-    this.refresh()
+    this.sellStockComponent.sellStockVisible = true;
+    this.sellStockComponent.stock = stock;
+
+
+
+    //this.toastr.info("Prodaj popup " + stock.ticker)
+    //this.refresh()
     // alert("Prodaj " + stock.ticker)
   }
 
@@ -133,7 +144,7 @@ export class StocksComponent {
     // TODO ovo moze da se setuje kada je error u responsu baze
     // Ili cak taj msg koji ce se prikazivati kada je prazna lista da bude bindovan na error msg
 
-    // this.stocks = []
+    // this.stocks-table = []
 
   }
 
@@ -236,31 +247,11 @@ export class StocksComponent {
     this.stocks = this.allStocks
 
     // za testiranje prazne tabele
-    // this.stocks = []
+    // this.stocks-table = []
 
 
     this.loading = false
   }
-
-
-  customSort(event: any) {
-    console.log(event)
-    event.data.sort((obj1: any, obj2: any) => {
-      let value1, value2;
-
-        value1 = obj1.change;
-        value2 = obj2.change;
-
-      if (value1 < value2) {
-        return event.order * -1;
-      } else if (value1 > value2) {
-        return event.order * 1;
-      } else {
-        return 0;
-      }
-    });
-  }
-
 
   openMoreInfoDialog(event: Stock){
     // Slanje podataka na details dialog

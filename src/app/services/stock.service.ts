@@ -12,7 +12,7 @@ import {StockDetails} from "../models/stock-exchange.model";
 export class StockService {
 
   private headers
-  private readonly token: string
+  private token: string
 
   constructor(private httpClient: HttpClient) {
 
@@ -27,6 +27,19 @@ export class StockService {
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${this.token}`)
+  }
+
+  resetToken(){
+    this.token = ''
+  }
+
+  setToken(token: string){
+    this.token=token
+    this.headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Authorization', `Bearer ${token}`)
+
   }
 
   getStockDetails(ticker: string): Observable<any>{
@@ -52,6 +65,48 @@ export class StockService {
   loadCSVData(){
     return this.httpClient.get('assets/csv/filtered_forex_pairs.csv', { responseType: 'text' });
   }
+
+  getAllFuturesByName(futureName: string): Observable<any>{
+    return this.httpClient.get<any>(`http://localhost:8080/api/futures/name/${futureName}`,{ headers: this.headers })
+  }
+
+  buyFuture(id: string,futureName: string,action: string, price:number,limit:number,stop: number): Observable<any>{
+    return this.httpClient.post<any>(`http://localhost:8080/api/futures/buy`
+    ,{ 
+      id:  id,
+      futureName: futureName,
+      action: action,
+      price: price,
+      limit: limit,
+      stop: stop,
+    }
+    ,{ headers: this.headers })
+  }
+  sellFuture(id: string,futureName: string,action: string, price:number,limit:number,stop: number): Observable<any>{
+    return this.httpClient.post<any>(`http://localhost:8080/api/futures/sell`
+    ,{ 
+      id:  id,
+      userId: null,
+      futureName: futureName,
+      action: action,
+      price: price,
+      limit: limit,
+      stop: stop,
+    }
+    ,{ headers: this.headers })
+  }
+
+  removeFutureFromMarket(futureId:string):Observable<any>{
+    return this.httpClient.post<any>(`http://localhost:8080/api/futures/remove/${futureId}`,
+    {}
+    ,{ headers: this.headers })
+  }
+  getAllWaitingFuturesForUser(type: string, futureName: string):Observable<any>{
+    return this.httpClient.get<any>(`http://localhost:8080/api/futures/waiting-futures/${type}/${futureName}`
+    ,{ headers: this.headers })
+  }
+
+
 
   buyForex(fromCurrency: string, toCurrency: string, ammount: number): Observable<any>{
     return this.httpClient.post(`${environment.apiForexUrl}/buy-sell`,

@@ -1,0 +1,22 @@
+<p-dialog [style]="{width: '35vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
+          [(visible)]="sellFutureVisible" *ngIf="true" [modal]="true">
+
+  <ng-template pTemplate="header">
+    <h2 style="font-weight: bolder" class="mb-3">Prodaja terminskog ugovora {{future.futureName}}</h2>
+  </ng-template>
+  <p-divider/>
+  <div class="container text-center">
+    <div class="row">
+      <form (submit)="submitSellFuture()" [formGroup]="sellFutureForm">
+        <div class="col-lg-12 text-center mb-3">
+          <h4 class="mb-1">Cena</h4>
+          <p-inputNumber placeholder="Unesite cenu"  [formControlName]="'price'" inputId="integeronly"></p-inputNumber>
+        </div>
+        <div class="col-lg-12">
+          <button pButton [disabled]="!isFormValid" pRipple label="Prodaj"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</p-dialog>

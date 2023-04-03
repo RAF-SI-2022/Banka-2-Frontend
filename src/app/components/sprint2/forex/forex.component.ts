@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { StockService } from 'src/app/services/stock.service';
-import { UserService } from 'src/app/services/user-service.service';
-
+import {Component} from '@angular/core';
+import {StockService} from 'src/app/services/stock.service';
+import {UserService} from 'src/app/services/user-service.service';
 
 
 @Component({
@@ -38,21 +37,21 @@ export class ForexComponent {
   }
 
 
-  ngOnInit(){
+  ngOnInit() {
     this.getCurrencies()
     this.fillTable()
   }
-  
+
   // swap(){
   //   const toChange = this.currencyTo;
   //   this.currencyTo = this.currencyFrom;
   //   this.currencyFrom = toChange;
-   
+
   //   this.onCurrencyFromChanged()
   // }
 
-  
-  getCurrencies(){
+
+  getCurrencies() {
     this.stockService.loadCSVData().subscribe(data => {
       this.parseCSVData(data);
     })
@@ -62,7 +61,7 @@ export class ForexComponent {
   parseCSVData(data: string): void {
 
     const lines = data.split('\n');
-    
+
 
     for (let i = 1; i < lines.length; i++) {
       const line = lines[i].trim();
@@ -76,21 +75,21 @@ export class ForexComponent {
     }
 
     const currencySet = new Set<string>();
-    
-    
+
+
     for (const currencyPair of this.currencies) {
       currencySet.add(currencyPair[0])
     }
 
-    for(const currency of currencySet){
+    for (const currency of currencySet) {
       const obj = {name: currency}
       this.uniqueLeftCurrencies.push(obj)
     }
-    
-    
+
+
   }
 
-  onCurrencyFromChanged(){
+  onCurrencyFromChanged() {
 
     this.dynamicRightCurrencies = []
     
@@ -99,33 +98,33 @@ export class ForexComponent {
 
     const matchCurrencies = new Set<string>();
 
-    if(this.currencyFrom == null){
+    if (this.currencyFrom == null) {
       return
     }
 
-    for(const currencyPair of this.currencies){
-      if(currencyPair[0]==this.currencyFrom.name){
+    for (const currencyPair of this.currencies) {
+      if (currencyPair[0] == this.currencyFrom.name) {
         matchCurrencies.add(currencyPair[1])
       }
     }
 
 
-    for(const currencyPair of matchCurrencies){
+    for (const currencyPair of matchCurrencies) {
       const obj = {name: currencyPair}
       this.dynamicRightCurrencies.push(obj)
     }
 
   }
 
-  convert(){
+  convert() {
 
-    if(this.currencyFrom==null || this.currencyTo==null){
+    if (this.currencyFrom == null || this.currencyTo == null) {
       return
     }
 
-    for(let i=0;i<this.currencies.length;i++){ 
-      if(this.currencyFrom.name == this.currencies[i][0] && this.currencyTo.name == this.currencies[i][1]){
-        this.stockService.getCurrencies(this.currencies[i][0],this.currencies[i][1]).subscribe({
+    for (let i = 0; i < this.currencies.length; i++) {
+      if (this.currencyFrom.name == this.currencies[i][0] && this.currencyTo.name == this.currencies[i][1]) {
+        this.stockService.getCurrencies(this.currencies[i][0], this.currencies[i][1]).subscribe({
           next: val => {
             this.result = val;
           }
@@ -134,20 +133,20 @@ export class ForexComponent {
     }
   }
 
-  fillTable(){
+  fillTable() {
     this.staticCurrenciesResponse = []
-    for(let curr of this.staticCurrencies){
-      this.stockService.getCurrencies(curr[0],curr[1]).subscribe({
+    for (let curr of this.staticCurrencies) {
+      this.stockService.getCurrencies(curr[0], curr[1]).subscribe({
         next: val => {
           this.staticCurrenciesResponse.push(val)
         }
       })
-      
+
     }
 
-    
-    
+
   }
+
 
 
   calculate(object: string){
@@ -157,7 +156,7 @@ export class ForexComponent {
   }
 
 
-  toFixed(object: string){
+  toFixed(object: string) {
     return Number(object).toFixed(2)
   }
 
@@ -179,7 +178,7 @@ export class ForexComponent {
   buy(){
     this.stockService.buyForex(this.currencyFrom.name, this.currencyTo.name, this.convertedAmmount).subscribe({
       next: val => {
-        console.log(val)
+        alert("Ok")
       }
     })
   }

@@ -68,7 +68,8 @@ export interface StockDetails {
   volumeValue: number,
   lastUpdated: string,
   changePercent: string,
-  exchange_name: null
+  exchange: Exchange
+  websiteUrl: string
 }
 
 export interface StockHistory {

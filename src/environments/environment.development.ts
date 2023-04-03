@@ -4,7 +4,8 @@ export const environment = {
   apiForgotPassUrl: 'http://localhost:8080/auth/reset-password',
   apiPasswordRestoreUrl: 'http://localhost:8080/auth/change-user-password',
   apiYahooFinanceUrl: 'https://query1.finance.yahoo.com/v11/finance/quoteSummary/',
-  apiStockDetails: 'http://localhost:8080/api/stock/symbol/',
+  apiStockDetails: 'http://localhost:8080/api/stock/',
   apiStockGraph: `http://localhost:8080/api/stock/`,
-  apiForexUrl: 'http://localhost:8080/api/forex'
+  apiForexUrl: 'http://localhost:8080/api/forex',
+  apiExchangeUrl: 'http://localhost:8080/api/exchange'
 };

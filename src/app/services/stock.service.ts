@@ -42,9 +42,9 @@ export class StockService {
 
   }
 
-  getStockDetails(ticker: string): Observable<any>{
+  getStockDetails(id: number): Observable<any>{
     return this.httpClient.get<StockDetails>(
-      `${environment.apiStockDetails}`+ticker,
+      `${environment.apiStockDetails}`+id,
       { headers: this.headers })
   }
 
@@ -72,7 +72,7 @@ export class StockService {
 
   buyFuture(id: string,futureName: string,action: string, price:number,limit:number,stop: number): Observable<any>{
     return this.httpClient.post<any>(`http://localhost:8080/api/futures/buy`
-    ,{ 
+    ,{
       id:  id,
       futureName: futureName,
       action: action,
@@ -84,7 +84,7 @@ export class StockService {
   }
   sellFuture(id: string,futureName: string,action: string, price:number,limit:number,stop: number): Observable<any>{
     return this.httpClient.post<any>(`http://localhost:8080/api/futures/sell`
-    ,{ 
+    ,{
       id:  id,
       userId: null,
       futureName: futureName,
@@ -104,6 +104,11 @@ export class StockService {
   getAllWaitingFuturesForUser(type: string, futureName: string):Observable<any>{
     return this.httpClient.get<any>(`http://localhost:8080/api/futures/waiting-futures/${type}/${futureName}`
     ,{ headers: this.headers })
+  }
+
+  getExchangeStatus(micCode: string):Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiExchangeUrl}/status/${micCode}`,
+      {headers: this.headers})
   }
 
 

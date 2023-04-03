@@ -6,19 +6,29 @@
 
     <div class="title-container">
       <div class="img-container">
-        <img class="logo" src="https://logo.clearbit.com/apple.com"/>
+        <img class="logo" src="https://logo.clearbit.com/{{stockDetails.websiteUrl}}"/>
       </div>
       <div>
         <h2 style="font-weight: bolder" class="mb-1">{{stockDetails.symbol}}</h2>
         <p class="mt-0" style="font-weight: 400; font-size: large">{{stockDetails.companyName}}</p>
       </div>
-      <div class="button-container">
-
-      </div>
     </div>
 
   </ng-template>
   <p-divider/>
+  <div class="activity-indicator-container"  >
+    <div class="activity-indicator" [ngClass]="exchangeActive ? 'green-indicator' : 'red-indicator'">
+
+    </div>
+    <div class="activity-text-container">
+          <span *ngIf="exchangeActive">
+            Berza aktivna
+          </span>
+      <span *ngIf="!exchangeActive">
+            Berza nije aktivna
+          </span>
+    </div>
+  </div>
   <div class="basic-info-container mb-4">
     <div style="flex-basis: 90%">
       <small>Price</small>
@@ -60,7 +70,7 @@
       <div class="col-lg-4 col-sm-6 text-center">
         <!--        skloni ili izracunaj-->
         <small>Day Range</small>
-        <p>$154.28 - $156.74</p>
+        <p>${{stockDetails.lowValue}} - ${{stockDetails.highValue}}</p>
       </div>
       <div class="col-lg-4 col-sm-6 text-center">
         <small>Open</small>
@@ -85,12 +95,12 @@
 
   </div>
 
-<!--  TODO: kada se zavrsi options vratiti dugme-->
-<!--  <ng-template pTemplate="footer">-->
-<!--    <p-divider/>-->
-<!--    <button style="background-color: #3d3d3d; border: none;" pButton pRipple label="Opcije" class="ms-5"-->
-<!--            [routerLink]="'/stock-options/'+stock.ticker"></button>-->
-<!--  </ng-template>-->
+  <!--  TODO: kada se zavrsi options vratiti dugme-->
+  <!--  <ng-template pTemplate="footer">-->
+  <!--    <p-divider/>-->
+  <!--    <button style="background-color: #3d3d3d; border: none;" pButton pRipple label="Opcije" class="ms-5"-->
+  <!--            [routerLink]="'/stock-options/'+stock.ticker"></button>-->
+  <!--  </ng-template>-->
 
 </p-dialog>
 

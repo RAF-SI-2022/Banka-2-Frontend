@@ -30,6 +30,8 @@ export class ForexComponent {
   currencyTo: any;
   result: any;
 
+  convertedAmmount: number;
+
   constructor(private stockService: StockService, private userService: UserService) {
 
   }
@@ -90,8 +92,9 @@ export class ForexComponent {
   onCurrencyFromChanged() {
 
     this.dynamicRightCurrencies = []
-    console.log("sd")
+    
     this.result = null;
+    this.currencyTo = null;
 
     const matchCurrencies = new Set<string>();
 
@@ -145,9 +148,41 @@ export class ForexComponent {
   }
 
 
+
+  calculate(object: string){
+    let multiplier = this.ammount !== undefined && this.ammount != 0 ? this.ammount : 1;
+    this.convertedAmmount = Number((Number(object) * multiplier).toFixed(2))
+    return this.convertedAmmount
+  }
+
+
   toFixed(object: string) {
     return Number(object).toFixed(2)
   }
+
+  onCurrencyToChanged(){
+    if(this.currencyFrom && this.currencyTo){
+      for(let i=0;i<this.currencies.length;i++){ 
+        if(this.currencyFrom.name == this.currencies[i][0] && this.currencyTo.name == this.currencies[i][1]){
+          this.stockService.getCurrencies(this.currencies[i][0],this.currencies[i][1]).subscribe({
+            next: val => {
+              this.result = val;
+            }
+          })
+        }
+      }
+    }
+  }
+
+
+  buy(){
+    this.stockService.buyForex(this.currencyFrom.name, this.currencyTo.name, this.convertedAmmount).subscribe({
+      next: val => {
+        alert("Ok")
+      }
+    })
+  }
+
 
 
 }

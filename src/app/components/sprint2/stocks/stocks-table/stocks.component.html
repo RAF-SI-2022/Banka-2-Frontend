@@ -31,12 +31,22 @@
           </div>
 
 
-          <div class="col-6 col-lg-6 col-md-6 text-end search-container">
-            <form action="" class="search-bar" title="Pretraži">
-              <input pInputText name="search" (input)="applyFilterGlobal($event, 'contains')" required/>
-              <button class="search-btn" type="submit" title="Pretraži">
-                <span>Search</span>
-              </button>
+<!--          <div class="col-6 col-lg-6 col-md-6 text-end search-container">-->
+<!--            <form action="" class="search-bar" title="Pretraži">-->
+<!--              <input pInputText name="search" (input)="applyFilterGlobal($event, 'contains')" required/>-->
+<!--              <button class="search-btn" type="submit" title="Pretraži">-->
+<!--                <span>Search</span>-->
+<!--              </button>-->
+<!--            </form>-->
+<!--          </div>-->
+          <div class="col-lg-6 col-md-6 col-6 text-end">
+            <form action="" title="Dodaj akciju">
+              <div class="add-stock-container">
+                <input pInputText class="me-1" name="add" placeholder="Unesite simbol akcije" [(ngModel)]="symbolInput"
+                       required/>
+                <button pButton pRipple style="background-color: #3d3d3d; cursor: pointer;" icon="pi pi-plus"
+                        (click)="getStockBySymbol(symbolInput)"></button>
+              </div>
             </form>
           </div>
 
@@ -112,8 +122,8 @@
           <th style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
-                <p *ngIf="BuySellOption" style="margin-bottom: 0; margin-top: 2px;">Kupi</p>
-                <p *ngIf="!BuySellOption" style="margin-bottom: 0; margin-top: 2px;">Prodaj</p>
+                <p *ngIf="!switch" style="margin-bottom: 0; margin-top: 2px;">Kupi</p>
+                <p *ngIf="switch" style="margin-bottom: 0; margin-top: 2px;">Prodaj</p>
               </div>
             </div>
           </th>
@@ -153,9 +163,9 @@
           <!-- TODO centrirati ovo u tabelu -->
           <td [attr.colspan]="7">
             <div class="text-center">
-              <span *ngIf="BuySellOption">Nema podataka za prikazivanje</span>
+              <span *ngIf="!switch">Nema podataka za prikazivanje</span>
               <!-- <span *ngIf="(BuySellOption && stocks-table)">Nema hartije koju trazite</span> -->
-              <span *ngIf="!BuySellOption">Nemate kupljenih hartija za prikazivanje</span>
+              <span *ngIf="!switch">Nemate kupljenih hartija za prikazivanje</span>
             </div>
           </td>
         </tr>
@@ -199,14 +209,14 @@
             <span>{{stock.lastUpdated | date:'dd.MM.YYYY HH:mm' }} </span>
           </td>
           <td>
-            <button *ngIf="BuySellOption" type="button" (click)="toggleBuyStockDialog($event,stock)"
+            <button *ngIf="!switch" type="button" (click)="toggleBuyStockDialog($event,stock)"
                       class="btn-i btn-circle" title="Kupi hartiju">
                 <span>
                   <i class="bi bi-cart" style="font-size: 20px;"></i>
                 </span>
                 <div class="wave"></div>
             </button>
-            <button *ngIf="!BuySellOption" type="button" (click)="toggleSellStockDialog($event,stock)"
+            <button *ngIf="switch" type="button" (click)="toggleSellStockDialog($event,stock)"
                       class="btn-i btn-circle" title="Prodaj hartiju">
                 <span>
                   <i class="bi bi-cart-x" style="font-size: 20px;"></i>

@@ -463,6 +463,13 @@ th {
   border-radius: 10%;
 }
 
+.add-stock-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+}
+
 .btn-i span {
   display: flex;
   justify-content: center;

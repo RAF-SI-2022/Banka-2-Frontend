@@ -111,6 +111,28 @@ export class StockService {
       {headers: this.headers})
   }
 
+  removeFromWaitingSellFuture(id: number): Observable<any>{
+    return this.httpClient.post<any>(`http://localhost:8080/api/futures/remove-waiting-sell/${id}`
+    ,{}
+       ,{ headers: this.headers })
+  }
 
+  removeFromWaitingBuyFuture(id: number): Observable<any>{
+    return this.httpClient.post<any>(`http://localhost:8080/api/futures/remove-waiting-buy/${id}`
+    ,{}
+       ,{ headers: this.headers })
+  }
+
+
+
+  buyForex(fromCurrency: string, toCurrency: string, ammount: number): Observable<any>{
+    return this.httpClient.post(`${environment.apiForexUrl}/buy-sell`,
+      {
+        fromCurrencyCode: fromCurrency,
+        toCurrencyCode: toCurrency,
+        amountOfMoney: ammount,
+      },
+      { headers: this.headers })
+  }
 
 }

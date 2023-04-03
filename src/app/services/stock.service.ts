@@ -53,4 +53,14 @@ export class StockService {
     return this.httpClient.get('assets/csv/filtered_forex_pairs.csv', { responseType: 'text' });
   }
 
+  buyForex(fromCurrency: string, toCurrency: string, ammount: number): Observable<any>{
+    return this.httpClient.post(`${environment.apiForexUrl}/buy-sell`,
+      {
+        fromCurrencyCode: fromCurrency,
+        toCurrencyCode: toCurrency,
+        amountOfMoney: ammount,
+      },
+      { headers: this.headers })
+  }
+
 }

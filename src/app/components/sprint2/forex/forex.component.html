@@ -4,12 +4,12 @@
             <div class="field-container">
                     <div class="input-container">
                         
-                        <!-- <div class="inputs col-3">
+                        <div class="inputs col-3">
                             <div class="p-inputgroup">
                                 <span id="ammount" class="p-inputgroup-addon">$</span>
-                                <input type="text" pInputText placeholder="Ammount">   
+                                <input type="text" [(ngModel)]="ammount" pInputText placeholder="Ammount">   
                             </div>
-                        </div> -->
+                        </div>
                         
                       
                         <div class="inputs col-6">
@@ -26,31 +26,35 @@
                             </span>
                             <div class="wave"></div>
                          </button> -->
+
+                         <i class="pi pi-angle-right" style="font-size: 1rem"></i>
     
     
                          <div class="inputs col-6">
-                            <p-dropdown [options]="dynamicRightCurrencies" [(ngModel)]="currencyTo" optionLabel="name" [filter]="true" [showClear]="true" placeholder="To Currency">
+                            <p-dropdown [options]="dynamicRightCurrencies" [(ngModel)]="currencyTo" (ngModelChange)="onCurrencyToChanged()" optionLabel="name" [filter]="true" [showClear]="true" placeholder="To Currency">
                                     
                             </p-dropdown>
                         </div>
 
-                        <div class="inputs col-6">
+                        <!-- <div class="inputs col-6">
                             <p-button id="convertBtn" (click)="convert()" label="Convert"></p-button>
-                        </div>
+                        </div> -->
 
                        
                     </div>
                 
-            
+                   
 
-                <div class="result-container">
-                    <p id="result" *ngIf="currencyFrom && currencyTo && result"><strong>1</strong> {{result.fromCurrencyName}} = <strong>{{toFixed(result.exchangeRate)}}</strong> {{result.toCurrencyName}} </p>
+                <div *ngIf="currencyFrom && currencyTo && result" class="result-container" style="margin-bottom: 10px;">
+                    <p id="result" ><strong>{{ammount? ammount : 1}}</strong> {{result.fromCurrencyName}} = <strong>{{calculate(result.exchangeRate)}}</strong> {{result.toCurrencyName}} </p>
+                    <p-button label="Kupi" (click)="buy()" styleClass="p-button-rounded p-button-success"></p-button>
+                
                 </div>
             
             </div>
 
             
-        
+ 
     </div>
 
     <div class="table-container">

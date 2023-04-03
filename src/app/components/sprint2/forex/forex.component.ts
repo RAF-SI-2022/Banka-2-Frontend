@@ -176,7 +176,8 @@ export class ForexComponent {
 
 
   buy(){
-    this.stockService.buyForex(this.currencyFrom.name, this.currencyTo.name, this.convertedAmmount).subscribe({
+   
+    this.stockService.buyForex(this.currencyFrom.name, this.currencyTo.name, this.ammount?? 1).subscribe({
       next: val => {
         alert("Ok")
       }

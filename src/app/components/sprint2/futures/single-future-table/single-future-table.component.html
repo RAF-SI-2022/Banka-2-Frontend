@@ -28,11 +28,16 @@
               </div>
             </div>
             <div class="col-lg-6 text-end">
-              <button (click)="openBuyFutureDialog(futureName)"
+              <button *ngIf="!changeOption && checkIfFutureIsWaitingBuy()" (click)="openBuyFutureDialog(futureName)"
                       pButton pRipple styleClass="p-button-sm"
                       class="p-button-raised p-button-primary add-employee-btn-lg"
                       label="Kupi sa limitom" style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
               </button>
+              <button *ngIf="!changeOption && !checkIfFutureIsWaitingBuy()" (click)="removeFutureFromWaitingToBeBought()"
+              pButton pRipple styleClass="p-button-sm"
+              class="p-button-raised p-button-primary add-employee-btn-lg"
+              label="Skini kupovinu sa cekanja" style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
+      </button>
             </div>
 
           </div>
@@ -145,9 +150,14 @@
             <td>{{future.maintenanceMargin}}</td>
             <td>{{future.settlementDate}}</td>
             <td>
-              <button *ngIf="changeOption" (click)="openSellFutureDialog(future)" pButton label="Prodja"></button>
-              <button *ngIf="changeOption"  (click)="openSellFutureWithLimitDialog(future)" pButton label="Prodaj sa limitom"></button>
-              <button *ngIf="changeOption" (click)="removeFromMarket(future.id)" pButton label="Skini"></button>
+              <div *ngIf="checkIfFutureIsWaitingSell(future.id)">
+                <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureDialog(future)" pButton label="Prodja"></button>
+                <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureWithLimitDialog(future)" pButton label="Prodaj sa limitom"></button>
+                <button *ngIf="changeOption && future.forSale" (click)="removeFromMarket(future.id)" pButton label="Skini"></button>
+              </div>
+              <div *ngIf="!checkIfFutureIsWaitingSell(future.id)">
+                <button (click)="removeFutureFromWaitingToBeSold(future.id)" pButton label="Skini sa cekanja"></button>
+              </div>
             </td>
           </tr>
         </ng-template>

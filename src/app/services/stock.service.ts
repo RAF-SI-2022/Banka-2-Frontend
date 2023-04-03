@@ -126,6 +126,11 @@ export class StockService {
 
 
   buyForex(fromCurrency: string, toCurrency: string, ammount: number): Observable<any>{
+
+    if(ammount == 0){
+      ammount = 1
+    }
+
     return this.httpClient.post(`${environment.apiForexUrl}/buy-sell`,
       {
         fromCurrencyCode: fromCurrency,

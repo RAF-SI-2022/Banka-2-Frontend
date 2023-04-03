@@ -143,10 +143,7 @@ export class ForexComponent {
       })
 
     }
-
-
   }
-
 
 
   calculate(object: string){

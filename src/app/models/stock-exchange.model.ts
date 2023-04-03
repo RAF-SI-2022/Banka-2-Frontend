@@ -111,8 +111,7 @@ export interface Transaction {
   volume: number,
   price: number,
   status: string,
-  zavrsena: string,
-  lastModifed: Date,
+  lastModifed: String,
 }
 
 

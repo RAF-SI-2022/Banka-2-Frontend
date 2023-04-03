@@ -305,6 +305,33 @@ export class StocksComponent {
     })
   }
 
+  getStockBySymbol(){
+    this.stockService.getStockBySymbol("BA")
+    .subscribe({
+      next: val=>{
+          console.log(val);
+          
+      },
+      error: err=>{
+        console.log(err);
+        
+      }
+    })
+  }
+
+  getMyStocks(){
+    this.stockService.getMyStocks().subscribe({
+      next: val=>{
+        console.log(val);
+        
+    },
+    error: err=>{
+      console.log(err);
+      
+    }
+    })
+  }
+
   formatNumber(num: number): string {
     if (num >= 1000000000) {
       const billions = num / 1000000000;

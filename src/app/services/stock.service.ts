@@ -47,6 +47,16 @@ export class StockService {
     ,{ headers: this.headers })
   }
 
+  getStockBySymbol(symbol: string): Observable<any>{
+    return this.httpClient.get<any>(`http://localhost:8080/api/stock/symbol/${symbol}`
+    ,{ headers: this.headers })
+  }
+
+  getMyStocks(): Observable<any>{
+    return this.httpClient.get<any>(`http://localhost:8080/api/stock/user-stocks`
+    ,{ headers: this.headers })
+  }
+
 
   getStockDetails(id: number): Observable<any>{
     return this.httpClient.get<StockDetails>(

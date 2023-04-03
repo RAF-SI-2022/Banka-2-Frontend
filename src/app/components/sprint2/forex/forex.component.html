@@ -7,13 +7,13 @@
                         <div class="inputs col-3">
                             <div class="p-inputgroup">
                                 <span id="ammount" class="p-inputgroup-addon">$</span>
-                                <input type="text" [(ngModel)]="ammount" pInputText placeholder="Ammount">   
+                                <input type="text" [(ngModel)]="ammount" pInputText placeholder="Iznos">   
                             </div>
                         </div>
                         
                       
                         <div class="inputs col-6">
-                            <p-dropdown [options]="uniqueLeftCurrencies" [(ngModel)]="currencyFrom" (ngModelChange)="onCurrencyFromChanged()" optionLabel="name" [filter]="true" [showClear]="true" placeholder="From Currency">
+                            <p-dropdown [options]="uniqueLeftCurrencies" [(ngModel)]="currencyFrom" (ngModelChange)="onCurrencyFromChanged()" optionLabel="name" [filter]="true" [showClear]="true" placeholder="Iz valute">
                             
                             </p-dropdown>
                         </div>
@@ -31,7 +31,7 @@
     
     
                          <div class="inputs col-6">
-                            <p-dropdown [options]="dynamicRightCurrencies" [(ngModel)]="currencyTo" (ngModelChange)="onCurrencyToChanged()" optionLabel="name" [filter]="true" [showClear]="true" placeholder="To Currency">
+                            <p-dropdown [options]="dynamicRightCurrencies" [(ngModel)]="currencyTo" (ngModelChange)="onCurrencyToChanged()" optionLabel="name" [filter]="true" [showClear]="true" placeholder="U valutu">
                                     
                             </p-dropdown>
                         </div>
@@ -47,7 +47,7 @@
 
                 <div *ngIf="currencyFrom && currencyTo && result" class="result-container" style="margin-bottom: 10px;">
                     <p id="result" ><strong>{{ammount? ammount : 1}}</strong> {{result.fromCurrencyName}} = <strong>{{calculate(result.exchangeRate)}}</strong> {{result.toCurrencyName}} </p>
-                    <p-button label="Kupi" (click)="buy()" styleClass="p-button-rounded p-button-success"></p-button>
+                    <p-button label="Kupi" (click)="buy()" styleClass="p-button p-button-rounded p-button-raised"></p-button>
                 
                 </div>
             
@@ -68,7 +68,7 @@
           <th pSortableColumn="pair" style="min-width: 5rem; font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
-                <p style="margin-bottom: 0; margin-top: 2px;">Pair</p>
+                <p style="margin-bottom: 0; margin-top: 2px;">Par</p>
               </div>
             </div>
           </th>
@@ -84,7 +84,7 @@
           <th pSortableColumn="lastModified" style="min-width: 5rem; font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
-                <p style="margin-bottom: 0; margin-top: 2px;">LastModified</p>
+                <p style="margin-bottom: 0; margin-top: 2px;">Poslednja izmena</p>
               </div>
             </div>
           </th>
@@ -93,7 +93,7 @@
 
       <ng-template pTemplate="body" let-curr>
         <tr style="font-size: 12px;">
-          <td>{{curr.fromCurrencyCode + " - " + curr.toCurrencyCode}}</td>
+          <td>{{curr.fromCurrencyCode}} - {{curr.toCurrencyCode}}</td>
           <td>{{toFixed(curr.exchangeRate)}}</td>
           <td>{{curr.lastRefreshed}}</td>
 

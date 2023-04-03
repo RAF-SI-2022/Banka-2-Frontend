@@ -201,9 +201,11 @@ export class UsersComponent {
       editedUser.firstName,
       editedUser.lastName,
       editedUser.jobPosition,
+      editedUser.dailyLimit,
       editedUser.phone,
       editedUser.active
     )
+    
       .subscribe({
         next: val =>{
           this.editUserChild.close()
@@ -224,8 +226,8 @@ export class UsersComponent {
       $event.email,
       $event.password,
       $event.permissions,
-      $event.jobPosition,
       $event.dailyLimit,
+      $event.jobPosition,
       $event.active,
       $event.jmbg,
       $event.phone

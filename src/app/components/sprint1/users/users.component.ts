@@ -200,11 +200,12 @@ export class UsersComponent {
       editedUser.permissions,
       editedUser.firstName,
       editedUser.lastName,
-      editedUser.dailyLimit,
       editedUser.jobPosition,
+      editedUser.dailyLimit,
       editedUser.phone,
       editedUser.active
     )
+    
       .subscribe({
         next: val =>{
           this.editUserChild.close()

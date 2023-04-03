@@ -1,7 +1,7 @@
 <div class="body-container">
-  <button (click)="getStockBySymbol()"> AAAAAAAAAAAAA</button>
+  <!-- <button (click)="getStockBySymbol('AXP')"> singl</button> -->
 
-  <button (click)="getMyStocks()"> BBBBBBB</button>
+  <!-- <button (click)="getMyStocks()"> BBBBBBB</button> -->
 
   <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 
@@ -63,6 +63,10 @@
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Oznaka</p>
                 <p-sortIcon field="symbol"></p-sortIcon>
+                <p-columnFilter id="symbolFilter" type="text" field="symbol" display="menu" class="ml-auto"
+                                matchMode="contains"
+                                [showMatchModes]="false" placeholder="Unesite oznaku" [showOperator]="false"
+                                [showAddButton]="false"></p-columnFilter>
               </div>
             </div>
           </th>

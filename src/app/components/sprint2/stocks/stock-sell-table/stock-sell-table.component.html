@@ -1,0 +1,152 @@
+<div class="body-container">
+
+    <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
+  
+    <div class="table-container">
+        <p-table #dt  [value]="userStocks" class="p-datatable-header"
+             [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
+             [paginator]="true" [alwaysShowPaginator]="false"
+             [loading]="loading" [loadingIcon]="''"
+             currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} hartija">
+
+            <ng-template pTemplate="caption">
+
+                <div class="table-header row">
+                    <div class="col-12 col-lg-12 col-md-12 text-start table-name">
+                        <div style="display:flex; align-items: center; gap: 8px;">
+                            <h3 class="berza-mojeakcije-text">
+                            Moje akcije
+                            </h3>
+                            <button class="ms-3 mb-1" pButton pRipple style="background-color: #3d3d3d; cursor: pointer;"
+                            [routerLink]="'/stocks'" label="Akcije"></button>
+                        </div>
+                    </div>  
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="symbol" style="font-size: 12px;">
+                        <div class="flex justify-content-between align-items-center">
+                            <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Oznaka</p>
+                            <p-sortIcon field="symbol"></p-sortIcon>
+                            <p-columnFilter id="symbolFilter" type="text" field="symbol" display="menu" class="ml-auto"
+                                            matchMode="contains"
+                                            [showMatchModes]="false" placeholder="Unesite oznaku" [showOperator]="false"
+                                            [showAddButton]="false"></p-columnFilter>
+                            </div>
+                        </div>
+                    </th>
+                    <th pSortableColumn="priceValue" style="font-size: 12px;">
+                        <div class="flex justify-content-between align-items-center">
+                            <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Cena</p>
+                            <p-sortIcon field="priceValue"></p-sortIcon>
+                            </div>
+                        </div>
+                    </th>
+                    <th pSortableColumn="amount" style="font-size: 12px; ">
+                        <div class="flex justify-content-between align-items-center">
+                            <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Amount</p>
+                            <p-sortIcon field="amount"></p-sortIcon>
+                            </div>
+                        </div>
+                    </th>
+                    <th pSortableColumn="amountForSale" style="font-size: 12px; ">
+                        <div class="flex justify-content-between align-items-center">
+                            <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Amoumt for sale</p>
+                            <p-sortIcon field="amountForSale"></p-sortIcon>
+                            </div>
+                        </div>
+                    </th>
+                    <th style="font-size: 12px; ">
+                        <div class="flex justify-content-between align-items-center">
+                            <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Opcije</p>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td><p-skeleton width="3rem"></p-skeleton></td>
+                    <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
+                    <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
+                    <td><p-skeleton width="4rem" styleClass="mb-2"></p-skeleton></td>
+                    <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
+                </tr>
+                <tr>
+                    <td><p-skeleton width="3rem"></p-skeleton></td>
+                    <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
+                    <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
+                    <td><p-skeleton width="4rem" styleClass="mb-2"></p-skeleton></td>
+                    <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
+                </tr>
+                <tr>
+                    <td><p-skeleton width="3rem"></p-skeleton></td>
+                    <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
+                    <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
+                    <td><p-skeleton width="4rem" styleClass="mb-2"></p-skeleton></td>
+                    <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [attr.colspan]="5">
+                    <div class="text-center">
+                        <span>Nema podataka za prikazivanje</span>
+                    </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-userStock>
+                <tr 
+                class="rowHover" style="font-size: 12px;">
+                    <td>{{userStock.stock.symbol}}</td>
+                    <td>{{userStock.stock.priceValue}}</td>
+                    <td>{{userStock.amount}}</td>
+                    <td>{{userStock.amountForSale}}</td>
+                    <td>
+                        <button *ngIf="userStock.amount" type="button"
+                            (click)="toggleSellStockDialog(userStock.stock)"
+                            class="btn-i btn-circle" title="Prodaj hartiju">
+                            <span>
+                                <i class="bi bi-cart-x" style="font-size: 20px;"></i>
+                            </span>
+                            <div class="wave"></div>
+                        </button>
+                        <button *ngIf="userStock.amountForSale" type="button"
+                            (click)="removeFromSale(userStock.stock.symbol)"
+                            class="btn-i btn-circle" title="Skini">
+                            <span>
+                                <i class="bi bi-x-lg" style="font-size: 20px;"></i>
+                            </span>
+                            <div class="wave"></div>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<!-- <button *ngIf="userStock.amountForSale" type="button"
+    (click)="toggleSellStockDialog($event, stock)"
+    class="btn-i btn-circle" title="Prodaj hartiju">
+    <span>
+        <i class="bi bi-cart-x" style="font-size: 20px;"></i>
+    </span>
+    <div class="wave"></div>
+</button>
+<button *ngIf="userStock.amountForSale" type="button"
+    (click)="toggleSellStockDialog($event, stock)"
+    class="btn-i btn-circle" title="Skini">
+    <span>
+        <i class="bi bi-x-lg" style="font-size: 20px;"></i>
+    </span>
+    <div class="wave"></div>
+</button> -->
+<app-sell-stock (stockSellEmitter)="refreshSell($event)"></app-sell-stock>

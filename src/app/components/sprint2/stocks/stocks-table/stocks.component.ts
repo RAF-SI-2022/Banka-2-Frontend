@@ -57,9 +57,9 @@ export class StocksComponent {
     const source = interval(10000); // 10000 ms = 10 seconds
     source.subscribe(() => {
       // this.getUser()
-
-      this.getAllStocks()
-      this.getMyStocks()
+      
+      this.getAllStocks();
+      this.getMyStocks();
     });
 
 
@@ -238,5 +238,34 @@ export class StocksComponent {
     }
   }
 
+  removeFromSellStock(symbol:string){
+    this.stockService.removeStockFromSale(symbol).subscribe({
+      next:val=>{
+        this.toastr.info("Uspesno skinut!");
+        this.getAllStocks();
+        this.getMyStocks();
+      },
+      error: err => {
+        this.toastr.error("Greska!");
+        this.getAllStocks();
+        this.getMyStocks();
+
+      }
+    })
+  }
+  
+  refreshBuy(symbol:string){
+    this.getAllStocks();
+    this.getMyStocks();
+    this.buyStockComponent.buyStockVisible = false;
+    this.toastr.info("Akcija " + symbol + " je uspesno kupljena!")
+  }
+
+  refreshSell(symbol:string){
+    this.getAllStocks();
+    this.getMyStocks();
+    this.sellStockComponent.sellStockVisible = false;
+    this.toastr.info("Akcija " + symbol + " je uspesno prodata!")
+  }
 
 }

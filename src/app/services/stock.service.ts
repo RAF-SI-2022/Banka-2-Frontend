@@ -112,6 +112,39 @@ export class StockService {
     ,{ headers: this.headers })
   }
 
+
+  buyStock(symbol:string, amount:number ,limit:number ,stop:number ,allOrNone:boolean ,margin:boolean ): Observable<any>{
+    return this.httpClient.post<any>(`http://localhost:8080/api/stock/buy`
+    ,{
+      stockSymbol:symbol,
+      amount:amount,
+      limit: limit,
+      stop: stop,
+      allOrNone:allOrNone,
+      margin:margin,
+    }
+    ,{ headers: this.headers })
+  }
+
+  sellStock(symbol:string, amount:number ,limit:number ,stop:number ,allOrNone:boolean ,margin:boolean ): Observable<any>{
+    return this.httpClient.post<any>(`http://localhost:8080/api/stock/sell`
+    ,{
+      stockSymbol:symbol,
+      amount:amount,
+      limit: limit,
+      stop: stop,
+      allOrNone:allOrNone,
+      margin:margin,
+    }
+    ,{ headers: this.headers })
+  }
+
+  removeStockFromSale(symbol: string){
+    return this.httpClient.post<any>(`http://localhost:8080/api/stock/remove/${symbol}`,
+    {}
+    ,{ headers: this.headers })
+  }
+
   removeFutureFromMarket(futureId:string):Observable<any>{
     return this.httpClient.post<any>(`http://localhost:8080/api/futures/remove/${futureId}`,
     {}

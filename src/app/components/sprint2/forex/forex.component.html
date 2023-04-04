@@ -3,22 +3,22 @@
     <div class="hero-section">
             <div class="field-container">
                     <div class="input-container">
-                        
+
                         <div class="inputs col-3">
                             <div class="p-inputgroup">
                                 <span id="ammount" class="p-inputgroup-addon">$</span>
                                 <input type="number" [(ngModel)]="ammount" appAllowNumbersOnly pInputText placeholder="Iznos" min="1">
                             </div>
                         </div>
-                        
-                      
+
+
                         <div class="inputs col-6">
                             <p-dropdown [options]="uniqueLeftCurrencies" [(ngModel)]="currencyFrom" (ngModelChange)="onCurrencyFromChanged()" optionLabel="name" [filter]="true" [showClear]="true" placeholder="Iz valute">
-                            
+
                             </p-dropdown>
                         </div>
-    
-                    
+
+
                         <!-- <button id="swapBtn" type="button" (click)="swap()"
                                 class="btn-i btn-circle" title="Swap">
                             <span>
@@ -28,11 +28,11 @@
                          </button> -->
 
                          <i class="pi pi-angle-right" style="font-size: 1rem"></i>
-    
-    
+
+
                          <div class="inputs col-6">
                             <p-dropdown [options]="dynamicRightCurrencies" [(ngModel)]="currencyTo" (ngModelChange)="onCurrencyToChanged()" optionLabel="name" [filter]="true" [showClear]="true" placeholder="U valutu">
-                                    
+
                             </p-dropdown>
                         </div>
 
@@ -40,21 +40,21 @@
                             <p-button id="convertBtn" (click)="convert()" label="Convert"></p-button>
                         </div> -->
 
-                       
+
                     </div>
-                
-                   
+
+
 
                 <div *ngIf="currencyFrom && currencyTo && result" class="result-container" style="margin-bottom: 10px;">
                     <p id="result" ><strong>{{ammount? ammount : 1}}</strong> {{result.fromCurrencyName}} = <strong>{{calculate(result.exchangeRate)}}</strong> {{result.toCurrencyName}} </p>
                     <p-button label="Kupi" (click)="buy()" styleClass="p-button p-button-rounded p-button-raised"></p-button>
-                
+
                 </div>
-            
+
             </div>
 
-            
- 
+
+
     </div>
 
   <div class="table-container">
@@ -65,7 +65,7 @@
 
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="pair" style="min-width: 5rem; font-size: 12px; ">
+          <th pSortableColumn="pair" style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Par</p>
@@ -73,7 +73,7 @@
             </div>
           </th>
 
-          <th pSortableColumn="kurs" style="min-width: 5rem; font-size: 12px; ">
+          <th pSortableColumn="kurs" style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Kurs</p>
@@ -81,7 +81,7 @@
             </div>
           </th>
 
-          <th pSortableColumn="lastModified" style="min-width: 5rem; font-size: 12px; ">
+          <th pSortableColumn="lastModified" style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Poslednja izmena</p>

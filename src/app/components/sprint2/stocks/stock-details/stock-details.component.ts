@@ -3,6 +3,7 @@ import {Stock, StockDetails, StockHistory} from 'src/app/models/stock-exchange.m
 import {UIChart} from "primeng/chart";
 import {StockService} from "../../../../services/stock.service";
 import {error} from "cypress/types/jquery";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-stock-details',
@@ -23,7 +24,7 @@ export class StockDetailsComponent {
 
   @ViewChild('chart') chart: UIChart;
 
-  constructor(private stockService: StockService) {
+  constructor(private stockService: StockService, private toaster: ToastrService) {
     this.basicData = {
       labels: [],
       datasets: [
@@ -88,7 +89,9 @@ export class StockDetailsComponent {
             this.chart.refresh();
           },
           error: err => {
-            console.log(err)
+            if(err.error.status === 429) {
+              this.toaster.warning("Sačekajte par sekundi pre sledeće promene perioda.")
+            }
           }
         }
       )

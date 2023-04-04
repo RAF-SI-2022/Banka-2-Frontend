@@ -34,6 +34,8 @@ export class StocksComponent {
 
   userId: number;
 
+  symbolInput: string;
+
 
   @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
   @ViewChild(BuyStockComponent, {static : true}) buyStockComponent : BuyStockComponent
@@ -59,7 +61,7 @@ export class StocksComponent {
       this.getAllStocks();
       this.getMyStocks();
     });
-    
+
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
@@ -92,7 +94,7 @@ export class StocksComponent {
       },
       error: err=>{
         console.log(err);
-        
+
       }
     })
   }
@@ -141,10 +143,10 @@ export class StocksComponent {
       next: val=>{
         let tempStocks: Stock[] = []
         for(const single of val){
-          
+
           if(single.user.id === this.userId){
             console.log(single);
-            
+
             if(single.amount > 0){
               tempStocks.push(single.stock)
             }
@@ -166,7 +168,7 @@ export class StocksComponent {
     error: err=>{
       console.log(err);
       this.toastr.error("Greska pri dohvatanju podataka")
-      
+
     }
     })
   }

@@ -119,6 +119,16 @@
                 </div>
               </div>
             </th>
+            <th pSortableColumn="dailyLimit" style="min-width: 10rem; font-size: 12px; ">
+              <div class="flex justify-content-between align-items-center">
+                <div class="icon-container">
+                  <p style="margin-bottom: 0; margin-top: 2px;">Limit</p>
+<!--                   Limit-->
+                  <p-sortIcon field="dailyLimit"></p-sortIcon>
+                  <!-- <p-columnFilter type="text" field="position" display="menu" class="ml-auto"  matchMode="contains" [showMatchModes]="false" [showOperator]="false"[showAddButton]="false"></p-columnFilter> -->
+                </div>
+              </div>
+            </th>
             <th style="max-width: 10rem; font-size: 12px;">
               <div class="flex justify-content-between align-items-center">
                 <p style="margin-bottom: 0; margin-top: 2px;">Broj telefona</p>
@@ -166,6 +176,7 @@
               <span class="p-column-title">jobPosition</span>
               <span>{{user.jobPosition}}</span>
             </td>
+            <td>{{user.dailyLimit}}</td>
             <td>{{user.phone}}</td>
             <!-- <td>{{user.aktivan}}</td> -->
             <td>

@@ -8,6 +8,7 @@ export interface User{
     phone: string
     jobPosition: string
     active: boolean
+    dailyLimit: number
     permissions: Permission[]
 }
 export interface Permission{

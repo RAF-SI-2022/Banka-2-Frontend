@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Stock} from "../../../../models/stock-exchange.model";
+import { StockService } from 'src/app/services/stock.service';
 
 @Component({
   selector: 'app-buy-stock',
@@ -8,6 +9,8 @@ import {Stock} from "../../../../models/stock-exchange.model";
   styleUrls: ['./buy-stock.component.css']
 })
 export class BuyStockComponent {
+  @Output() stockBuyEmitter = new EventEmitter<any>();
+
 
   buyStockForm: FormGroup;
   buyStockVisible: boolean = false;
@@ -17,7 +20,7 @@ export class BuyStockComponent {
 
 
 //TODO:pokupiti limit od usera i stock name iz stocka
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private stockService: StockService) {
     this.buyStockForm = this.formBuilder.group({
       kolicina: [null , Validators.required],
       limit: [null , Validators.required],
@@ -33,9 +36,24 @@ export class BuyStockComponent {
 
   submitBuyStock() {
     if (this.buyStockForm.valid) {
-      alert("buy");
-      this.buyStockForm.reset();
+      this.stockService.buyStock(
+        this.stock.symbol,
+        this.buyStockForm.get('kolicina')?.value,
+        this.buyStockForm.get('limit')?.value,
+        this.buyStockForm.get('stop')?.value,
+        this.buyStockForm.get('allOrNone')?.value,
+        this.buyStockForm.get('margin')?.value
+        ).subscribe({
+          next: val => {
+            this.stockBuyEmitter.emit(this.stock.symbol);
 
+          },
+          error: err => {
+
+          }
+        });
+        this.resetForm()
+        
     }
   }
 

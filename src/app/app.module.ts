@@ -61,6 +61,7 @@ import { BuyFutureWithLimitComponent } from './components/sprint2/futures/buy-fu
 
 
 import { AllowNumbersOnlyDirective } from 'src/app/directives/allow-numbers-only.directive';
+import { StockSellTableComponent } from './components/sprint2/stocks/stock-sell-table/stock-sell-table.component';
 
 
 
@@ -93,6 +94,7 @@ import { AllowNumbersOnlyDirective } from 'src/app/directives/allow-numbers-only
     SellFutureWithLimitComponent,
     BuyFutureWithLimitComponent,
     AllowNumbersOnlyDirective,
+    StockSellTableComponent,
 
   ],
     imports: [

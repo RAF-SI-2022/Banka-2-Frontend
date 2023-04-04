@@ -1,7 +1,4 @@
 <div class="body-container">
-  <!-- <button (click)="getStockBySymbol('AXP')"> singl</button> -->
-
-  <!-- <button (click)="getMyStocks()"> BBBBBBB</button> -->
 
   <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 
@@ -21,24 +18,11 @@
               <h3 class="berza-mojeakcije-text">
                 Akcije
               </h3>
-              <!-- style="display: inline;" -->
-                <p-inputSwitch [(ngModel)]="switch"
-                (ngModelChange)="promeniOpciju()"  class="custom-input-switch"></p-inputSwitch>
-              <h3 class="berza-mojeakcije-text">
-                Moje akcije
-              </h3>
+              <button class="ms-3 mb-1" pButton pRipple style="background-color: #3d3d3d; cursor: pointer;"
+                [routerLink]="'/stocks-table/sell'" label="Moje akcije"></button>
             </div>
           </div>
 
-
-<!--          <div class="col-6 col-lg-6 col-md-6 text-end search-container">-->
-<!--            <form action="" class="search-bar" title="Pretraži">-->
-<!--              <input pInputText name="search" (input)="applyFilterGlobal($event, 'contains')" required/>-->
-<!--              <button class="search-btn" type="submit" title="Pretraži">-->
-<!--                <span>Search</span>-->
-<!--              </button>-->
-<!--            </form>-->
-<!--          </div>-->
           <div class="col-lg-6 col-md-6 col-6 text-end">
             <form action="" title="Dodaj akciju">
               <div class="add-stock-container">
@@ -49,19 +33,6 @@
               </div>
             </form>
           </div>
-
-          <!-- <div class="col-4 col-md-4 text-end">
-            <button (click)="refresh()"
-              pButton pRipple styleClass="p-button-sm"
-              class="p-button-raised p-button-secondary add-employee-btn-lg"
-              label="Refresh" icon="bi bi-arrow-repeat"
-              style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
-
-            </button>
-            <button pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
-                    class="p-button-raised p-button-secondary add-employee-btn-sm"
-                    icon="bi bi-arrow-repeat" (click)="refresh()"></button>
-          </div> -->
 
         </div>
       </ng-template>
@@ -122,10 +93,7 @@
           <th style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
-                <p *ngIf="!switch" style="margin-bottom: 0; margin-top: 2px;">Kupi</p>
-                <p *ngIf="switch" style="margin-bottom: 0; margin-top: 2px;">Prodaj</p>
-                <p *ngIf="!switch" style="margin-bottom: 0; margin-top: 2px;">Kupi</p>
-                <p *ngIf="switch" style="margin-bottom: 0; margin-top: 2px;">Prodaj</p>
+                <p style="margin-bottom: 0; margin-top: 2px;">Kupi</p>
               </div>
             </div>
           </th>
@@ -165,10 +133,7 @@
           <!-- TODO centrirati ovo u tabelu -->
           <td [attr.colspan]="7">
             <div class="text-center">
-              <span *ngIf="!switch">Nema podataka za prikazivanje</span>
-              <span *ngIf="!switch">Nema podataka za prikazivanje</span>
-              <!-- <span *ngIf="(BuySellOption && stocks-table)">Nema hartije koju trazite</span> -->
-              <span *ngIf="switch">Nemate kupljenih hartija za prikazivanje</span>
+              <span>Nema podataka za prikazivanje</span>
             </div>
           </td>
         </tr>
@@ -212,24 +177,10 @@
             <span>{{stock.lastUpdated | date:'dd.MM.YYYY HH:mm' }} </span>
           </td>
           <td>
-            <button *ngIf="!switch" type="button" (click)="toggleBuyStockDialog($event,stock)"
+            <button type="button" (click)="toggleBuyStockDialog($event,stock)"
                       class="btn-i btn-circle" title="Kupi hartiju">
                 <span>
                   <i class="bi bi-cart" style="font-size: 20px;"></i>
-                </span>
-                <div class="wave"></div>
-            </button>
-            <button *ngIf="switch && !stock.amountForSale" type="button" (click)="toggleSellStockDialog($event,stock)"
-                      class="btn-i btn-circle" title="Prodaj hartiju">
-                <span>
-                  <i class="bi bi-cart-x" style="font-size: 20px;"></i>
-                </span>
-                <div class="wave"></div>
-            </button>
-             <button *ngIf="switch && !stock.amountForSale" type="button" (click)="toggleSellStockDialog($event,stock)"
-                      class="btn-i btn-circle" title="Skini">
-                <span>
-                  <i class="bi bi-x-lg" style="font-size: 20px;"></i>
                 </span>
                 <div class="wave"></div>
             </button>
@@ -241,5 +192,5 @@
 </div>
 <app-stock-details></app-stock-details>
 <app-buy-stock (stockBuyEmitter)="refreshBuy($event)"></app-buy-stock>
-<app-sell-stock (stockSellEmitter)="refreshSell($event)"></app-sell-stock>
+
 

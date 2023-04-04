@@ -39,7 +39,7 @@ export class StocksComponent {
 
   @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
   @ViewChild(BuyStockComponent, {static : true}) buyStockComponent : BuyStockComponent
-  @ViewChild(SellStockComponent, {static : true}) sellStockComponent : SellStockComponent
+
 
 
   @ViewChild('dt') dt: Table | undefined;
@@ -65,7 +65,7 @@ export class StocksComponent {
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
-      {label: 'Akcije', routerLink: ['/stocks-table']}
+      {label: 'Akcije', routerLink: ['/stocks']}
     ];
 
 
@@ -195,24 +195,7 @@ export class StocksComponent {
     // this.toastr.info("kupi popup " + stock.ticker)
   }
 
-  toggleSellStockDialog(event: MouseEvent, stock: Stock){
-    event.stopPropagation()
 
-    this.sellStockComponent.sellStockVisible = true;
-
-    // this.sellStockComponent.
-
-    //TODO OTVORITI DIALOG ZA PRODAJU SA VEC POSTAVLJENIM PODACIMA
-
-    this.sellStockComponent.sellStockVisible = true;
-    this.sellStockComponent.stock = stock;
-
-
-
-    //this.toastr.info("Prodaj popup " + stock.ticker)
-    //this.refresh()
-    // alert("Prodaj " + stock.ticker)
-  }
 
   openMoreInfoDialog(event: Stock){
     // Slanje podataka na details dialog
@@ -261,11 +244,6 @@ export class StocksComponent {
     this.toastr.info("Akcija " + symbol + " je uspesno kupljena!")
   }
 
-  refreshSell(symbol:string){
-    this.getAllStocks();
-    this.getMyStocks();
-    this.sellStockComponent.sellStockVisible = false;
-    this.toastr.info("Akcija " + symbol + " je uspesno prodata!")
-  }
+
 
 }

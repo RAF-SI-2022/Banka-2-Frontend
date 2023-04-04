@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { ToastrService } from 'ngx-toastr';
 import { Stock } from 'src/app/models/stock-exchange.model';
 import { StockService } from 'src/app/services/stock.service';
 
@@ -18,7 +19,7 @@ export class SellStockComponent {
   isFormValid = false;
 
 
-  constructor(private formBuilder: FormBuilder, private stockService: StockService) {
+  constructor(private toastr: ToastrService,private formBuilder: FormBuilder, private stockService: StockService) {
     this.sellStockForm = this.formBuilder.group({
       kolicina: [null , Validators.required],
       limit: [null , Validators.required],
@@ -34,7 +35,7 @@ export class SellStockComponent {
 
   submitSellStock() {
     if (this.sellStockForm.valid) {
-      this.stockService.buyStock(
+      this.stockService.sellStock(
         this.stock.symbol,
         this.sellStockForm.get('kolicina')?.value,
         this.sellStockForm.get('limit')?.value,
@@ -44,10 +45,11 @@ export class SellStockComponent {
         ).subscribe({
           next: val => {
             this.stockSellEmitter.emit(this.stock.symbol);
-
+            
           },
           error: err => {
-
+            this.toastr.error("Greska pri prodaji")
+            this.sellStockVisible = false;
           }
         });
         this.resetForm()

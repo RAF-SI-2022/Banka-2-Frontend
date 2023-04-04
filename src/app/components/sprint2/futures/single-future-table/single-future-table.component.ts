@@ -38,10 +38,9 @@ export class SingleFutureTableComponent {
   breadcrumbItems: MenuItem[]
 
   constructor(private stockService: StockService, private userService: UserService,
-              private transactionService: TransactionsArrayService
-    , private route: ActivatedRoute, private toastr: ToastrService
-    ,private router: Router) {
-
+              private transactionService: TransactionsArrayService,
+              private route: ActivatedRoute, private toastr: ToastrService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -165,18 +164,6 @@ export class SingleFutureTableComponent {
         this.toastr.error("Greska pri kupovini")
       }
     })
-
-    //new Transaction
-    // export interface Transaction {
-    //   exchangeMICCode: string, // futureName
-    //   transaction : string, //KUPLJENO Provalimo iz poziva
-    //   hartija: string,  //FUTURE provalimo iz poziva
-    //   volume: number,  //contractSize
-    //   price: number, // maintenanceMargin
-    //   status: string,  //NA CEKANJU
-    //   zavrsena: string,  //NE
-    //   lastModifed: Date, //settlementDate
-    // }
   }
 
   sellFuture(id: number) {

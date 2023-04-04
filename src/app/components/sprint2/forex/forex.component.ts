@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {StockService} from 'src/app/services/stock.service';
 import {UserService} from 'src/app/services/user-service.service';
 import {ToastrService} from "ngx-toastr";
+import {Transaction} from "../../../models/stock-exchange.model";
+import {TransactionsArrayService} from "../../../services/transactions-array.service";
 
 @Component({
   selector: 'app-forex',
@@ -32,7 +34,8 @@ export class ForexComponent {
 
   convertedAmmount: number;
 
-  constructor(private stockService: StockService, private userService: UserService, private toaster: ToastrService) {
+  constructor(private stockService: StockService, private transactionService: TransactionsArrayService,
+              private userService: UserService, private toaster: ToastrService) {
 
   }
 
@@ -92,7 +95,7 @@ export class ForexComponent {
   onCurrencyFromChanged() {
 
     this.dynamicRightCurrencies = []
-    
+
     this.result = null;
     this.currencyTo = null;
 
@@ -159,7 +162,7 @@ export class ForexComponent {
 
   onCurrencyToChanged(){
     if(this.currencyFrom && this.currencyTo){
-      for(let i=0;i<this.currencies.length;i++){ 
+      for(let i=0;i<this.currencies.length;i++){
         if(this.currencyFrom.name == this.currencies[i][0] && this.currencyTo.name == this.currencies[i][1]){
           this.stockService.getCurrencies(this.currencies[i][0],this.currencies[i][1]).subscribe({
             next: val => {
@@ -179,11 +182,21 @@ export class ForexComponent {
    }
     this.stockService.buyForex(this.currencyFrom.name, this.currencyTo.name, this.ammount?? 1).subscribe({
       next: val => {
+        const momentOfExchange = new Date();
+        let tempTransaction: Transaction = {
+          exchangeMICCode: this.currencyFrom.name + ' ' + this.currencyTo.name, // forexPairName
+          transaction : "Kupovina", //KUPLJENO Provalimo iz poziva
+          hartija: "Forex",  //FOREX provalimo iz poziva
+          volume: this.ammount?? 1,  //Kolicina prvobitne valute
+          price: this.convertedAmmount, // konvertovana/razmenjena valuta
+          status: "IZVRSENA",  //NA CEKANJU
+          lastModifed: momentOfExchange.toLocaleString(), //nemamo jos izvlacenje sa beka pa uzima trenutak razmene novca
+        }
+        this.transactionService.addTransactions(tempTransaction)
         this.toaster.success("Uspešna kupovina")
       }
     })
   }
-
 
 
 }

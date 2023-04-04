@@ -112,8 +112,8 @@
           <th style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
-                <p *ngIf="BuySellOption" style="margin-bottom: 0; margin-top: 2px;">Kupi</p>
-                <p *ngIf="!BuySellOption" style="margin-bottom: 0; margin-top: 2px;">Prodaj</p>
+                <p *ngIf="!switch" style="margin-bottom: 0; margin-top: 2px;">Kupi</p>
+                <p *ngIf="switch" style="margin-bottom: 0; margin-top: 2px;">Prodaj</p>
               </div>
             </div>
           </th>
@@ -153,9 +153,9 @@
           <!-- TODO centrirati ovo u tabelu -->
           <td [attr.colspan]="7">
             <div class="text-center">
-              <span *ngIf="BuySellOption">Nema podataka za prikazivanje</span>
+              <span *ngIf="!switch">Nema podataka za prikazivanje</span>
               <!-- <span *ngIf="(BuySellOption && stocks-table)">Nema hartije koju trazite</span> -->
-              <span *ngIf="!BuySellOption">Nemate kupljenih hartija za prikazivanje</span>
+              <span *ngIf="switch">Nemate kupljenih hartija za prikazivanje</span>
             </div>
           </td>
         </tr>
@@ -199,17 +199,24 @@
             <span>{{stock.lastUpdated | date:'dd.MM.YYYY HH:mm' }} </span>
           </td>
           <td>
-            <button *ngIf="BuySellOption" type="button" (click)="toggleBuyStockDialog($event,stock)"
+            <button *ngIf="!switch" type="button" (click)="toggleBuyStockDialog($event,stock)"
                       class="btn-i btn-circle" title="Kupi hartiju">
                 <span>
                   <i class="bi bi-cart" style="font-size: 20px;"></i>
                 </span>
                 <div class="wave"></div>
             </button>
-            <button *ngIf="!BuySellOption" type="button" (click)="toggleSellStockDialog($event,stock)"
+            <button *ngIf="switch && !stock.amountForSale" type="button" (click)="toggleSellStockDialog($event,stock)"
                       class="btn-i btn-circle" title="Prodaj hartiju">
                 <span>
                   <i class="bi bi-cart-x" style="font-size: 20px;"></i>
+                </span>
+                <div class="wave"></div>
+            </button>
+             <button *ngIf="switch && !stock.amountForSale" type="button" (click)="toggleSellStockDialog($event,stock)"
+                      class="btn-i btn-circle" title="Skini">
+                <span>
+                  <i class="bi bi-x-lg" style="font-size: 20px;"></i>
                 </span>
                 <div class="wave"></div>
             </button>
@@ -220,5 +227,6 @@
   </div>
 </div>
 <app-stock-details></app-stock-details>
-<app-buy-stock></app-buy-stock>
-<app-sell-stock></app-sell-stock>
+<app-buy-stock (stockBuyEmitter)="refreshBuy($event)"></app-buy-stock>
+<app-sell-stock (stockSellEmitter)="refreshSell($event)"></app-sell-stock>
+

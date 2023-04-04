@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { Stock } from 'src/app/models/stock-exchange.model';
+import { StockService } from 'src/app/services/stock.service';
 
 @Component({
   selector: 'app-sell-stock',
@@ -8,6 +9,8 @@ import { Stock } from 'src/app/models/stock-exchange.model';
   styleUrls: ['./sell-stock.component.css']
 })
 export class SellStockComponent {
+  @Output() stockSellEmitter = new EventEmitter<any>();
+
 
   sellStockForm: FormGroup;
   sellStockVisible: boolean = false;
@@ -15,7 +18,7 @@ export class SellStockComponent {
   isFormValid = false;
 
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private stockService: StockService) {
     this.sellStockForm = this.formBuilder.group({
       kolicina: [null , Validators.required],
       limit: [null , Validators.required],
@@ -31,10 +34,24 @@ export class SellStockComponent {
 
   submitSellStock() {
     if (this.sellStockForm.valid) {
-      alert("buy");
-      this.sellStockForm.reset();
+      this.stockService.buyStock(
+        this.stock.symbol,
+        this.sellStockForm.get('kolicina')?.value,
+        this.sellStockForm.get('limit')?.value,
+        this.sellStockForm.get('stop')?.value,
+        this.sellStockForm.get('allOrNone')?.value,
+        this.sellStockForm.get('margin')?.value
+        ).subscribe({
+          next: val => {
+            this.stockSellEmitter.emit(this.stock.symbol);
 
-    } 
+          },
+          error: err => {
+
+          }
+        });
+        this.resetForm()
+    }
   }
 
   setSellStockVisible(){

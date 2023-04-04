@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Future, Stock} from "../../../../models/stock-exchange.model";
+import {Future, Stock, Transaction} from "../../../../models/stock-exchange.model";
 import {StockService} from "../../../../services/stock.service";
+import {TransactionsArrayService} from "../../../../services/transactions-array.service";
 
 @Component({
   selector: 'app-sell-future',
@@ -18,7 +19,7 @@ export class SellFutureComponent {
   isFormValid: boolean = true;
 
 
-  constructor(private formBuilder: FormBuilder, private stockService: StockService) {
+  constructor(private formBuilder: FormBuilder, private stockService: StockService, private transactionService: TransactionsArrayService) {
     this.sellFutureForm = this.formBuilder.group({
       price: [null , Validators.required],
     });
@@ -65,6 +66,17 @@ export class SellFutureComponent {
           0
         ).subscribe({
           next: val => {
+            let tempTransaction: Transaction = {
+              exchangeMICCode: this.future.futureName, // futureName
+              transaction : "Prodaja", //KUPLJENO Provalimo iz poziva
+              hartija: "Terminski ugovor",  //FUTURE provalimo iz poziva
+              volume: this.future.contractSize,  //contractSize
+              price: this.future.maintenanceMargin, // maintenanceMargin
+              status: "NA CEKANJU",  //NA CEKANJU
+              lastModifed: this.future.settlementDate, //settlementDate
+            }
+            console.log(tempTransaction)
+            this.transactionService.addTransactions(tempTransaction)
             this.futureSoldEmitter.emit(this.future.id);
             this.sellFutureVisible = false;
           },

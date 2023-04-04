@@ -56,6 +56,7 @@ export class StockService {
     return this.httpClient.get<any>(`http://localhost:8080/api/stock/user-stocks`
     ,{ headers: this.headers })
   }
+  
 
 
   getStockDetails(id: number): Observable<any>{

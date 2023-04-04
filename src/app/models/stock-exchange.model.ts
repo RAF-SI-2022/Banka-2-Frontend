@@ -115,7 +115,13 @@ export interface Transaction {
 }
 
 
-
+export interface UserStock {
+  id: number,
+  user: User,
+  stock: Stock,
+  amount: number,
+  amountForSale: number
+}
 
 
 

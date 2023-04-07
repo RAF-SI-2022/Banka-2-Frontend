@@ -11,7 +11,7 @@
       <form (submit)="submitSellFuture()" [formGroup]="sellFutureForm">
         <div class="col-lg-12 text-center mb-3">
           <h4 class="mb-1">Cena</h4>
-          <p-inputNumber placeholder="Unesite cenu"  [formControlName]="'price'" inputId="integeronly"></p-inputNumber>
+          <p-inputNumber placeholder="Unesite cenu" [formControlName]="'price'" inputId="integeronly"></p-inputNumber>
         </div>
         <div class="col-lg-12">
           <button pButton [disabled]="!isFormValid" pRipple label="Prodaj"></button>

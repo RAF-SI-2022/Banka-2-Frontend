@@ -1,4 +1,4 @@
-import { User } from "./users.model"
+import {User} from "./users.model"
 
 export interface Currency {
   currencyName: string,
@@ -106,7 +106,7 @@ export interface ISO {
 
 export interface Transaction {
   exchangeMICCode: string, // NYCT
-  transaction : string,
+  transaction: string,
   hartija: string,
   volume: number,
   price: number,

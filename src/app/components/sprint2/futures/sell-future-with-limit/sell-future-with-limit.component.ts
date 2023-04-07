@@ -34,7 +34,7 @@ export class SellFutureWithLimitComponent {
     this.sellFutureForm.get('stop')?.reset();
   }
 
-  open(){
+  open() {
     this.sellFutureVisible = true
     this.sellFutureForm.patchValue({
       price: this.future.maintenanceMargin

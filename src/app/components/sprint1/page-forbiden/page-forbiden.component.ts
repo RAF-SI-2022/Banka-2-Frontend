@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-page-forbiden',
@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
 })
 export class PageForbidenComponent {
 
-  constructor(private router: Router){
+  constructor(private router: Router) {
 
   }
 
-  returnHome(){
+  returnHome() {
     this.router.navigate(['home'])
   }
 }

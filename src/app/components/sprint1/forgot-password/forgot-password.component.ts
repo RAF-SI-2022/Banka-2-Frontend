@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../services/auth.service";
 
@@ -14,7 +14,7 @@ export class ForgotPasswordComponent {
   resetPasswordForm: FormGroup;
   isFormValid: boolean;
 
-  constructor(private router: Router, private toastr: ToastrService, private formBuilder: FormBuilder, private authService: AuthService){
+  constructor(private router: Router, private toastr: ToastrService, private formBuilder: FormBuilder, private authService: AuthService) {
     this.resetPasswordForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
     });
@@ -25,7 +25,7 @@ export class ForgotPasswordComponent {
   }
 
 
-  submit(){
+  submit() {
     this.toastr.info("Proverite svoj email kako biste resetovali password.")
 
     //TODO dodati poziv na bek koji ce slati email

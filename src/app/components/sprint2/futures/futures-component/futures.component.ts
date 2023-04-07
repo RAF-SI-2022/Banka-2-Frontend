@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Future } from '../../../../models/stock-exchange.model';
-import { StockService } from '../../../../services/stock.service';
-import { MenuItem } from 'primeng/api';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Future} from '../../../../models/stock-exchange.model';
+import {StockService} from '../../../../services/stock.service';
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-futures-component',
@@ -17,7 +17,8 @@ export class FuturesComponent implements OnInit {
 
   breadcrumbItems: MenuItem[];
 
-  constructor(private httpClient: HttpClient, private stockService: StockService) {}
+  constructor(private httpClient: HttpClient, private stockService: StockService) {
+  }
 
   ngOnInit(): void {
 

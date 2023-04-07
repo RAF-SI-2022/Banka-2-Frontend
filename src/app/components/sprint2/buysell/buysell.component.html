@@ -69,9 +69,10 @@
           </div>
 
           <p-dialog class="form-item text-center" header="Potvrda" [(visible)]="display" [style]="{width: '50vw'}">
-        
-    
-            <h3 class="form-item"> Da li ste sigurni da želite da zamenite {{forexForm.get("valuta1")?.value.name}} za {{forexForm.get("valuta2")?.value.name}} ?</h3>
+
+
+            <h3 class="form-item"> Da li ste sigurni da želite da zamenite {{forexForm.get("valuta1")?.value.name}}
+              za {{forexForm.get("valuta2")?.value.name}} ?</h3>
 
             <p>Količina: {{forexForm.get("kolicina")?.value}}</p>
             <p>Limit: {{forexForm.get("limit")?.value}}</p>
@@ -84,19 +85,20 @@
               <p>All or none: Da</p>
             </div>
 
-            
+
             <button class="form-item" type="submit" pButton pRipple label="Naruci" class="w-50"></button>
 
           </p-dialog>
 
         </form>
 
-          <div class="form-item row text-center">
-            <div class="col">
-              <button (click)="showDialog()" pButton pRipple label="Naruci" [disabled]="!isForexValid" class="w-50"></button>
-    
-            </div>
+        <div class="form-item row text-center">
+          <div class="col">
+            <button (click)="showDialog()" pButton pRipple label="Naruci" [disabled]="!isForexValid"
+                    class="w-50"></button>
+
           </div>
+        </div>
 
       </div>
 
@@ -176,7 +178,7 @@
 
             <div *ngIf=" this.buysell === 'buy'">
               <h3 class="form-item"> Da li ste sigurni da želite da KUPITE {{stocksForm.get("akcija")?.value}}?</h3>
-              
+
             </div>
 
             <div *ngIf=" this.buysell === 'sell'">
@@ -201,17 +203,18 @@
             </div>
 
             <button class="form-item" type="submit" pButton pRipple label="Naruci" class="w-50"></button>
-            
+
           </p-dialog>
 
-        </form> 
+        </form>
 
         <div class="form-item row text-center">
-            <div class="col">
-              <button (click)="showDialog()" pButton pRipple label="Naruci" [disabled]="!isStocksValid" class="w-50"></button>
-    
-            </div>
+          <div class="col">
+            <button (click)="showDialog()" pButton pRipple label="Naruci" [disabled]="!isStocksValid"
+                    class="w-50"></button>
+
           </div>
+        </div>
       </div>
 
       <div *ngIf=" this.selectedType.name==='FUTURES'">
@@ -287,14 +290,11 @@
           </div>
 
 
-   
-
-
           <p-dialog class="form-item text-center" header="Potvrda" [(visible)]="display" [style]="{width: '50vw'}">
-            
+
             <div *ngIf=" this.buysell === 'buy'">
               <h3 class="form-item"> Da li ste sigurni da želite da KUPITE {{futuresForm.get("akcija")?.value}}?</h3>
-              
+
             </div>
 
             <div *ngIf=" this.buysell === 'sell'">
@@ -323,14 +323,15 @@
           </p-dialog>
 
         </form>
-          <div class="form-item row text-center">
-            <div class="col">
-              <button (click)="showDialog()" pButton pRipple label="Naruci" [disabled]="!isFuturesValid" class="w-50"></button>
-    
-            </div>
+        <div class="form-item row text-center">
+          <div class="col">
+            <button (click)="showDialog()" pButton pRipple label="Naruci" [disabled]="!isFuturesValid"
+                    class="w-50"></button>
+
           </div>
+        </div>
       </div>
-  
+
     </div>
 
 

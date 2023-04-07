@@ -2,202 +2,218 @@
 
   <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 
-    <div class="table-container">
-      <p-table [value]="futures" class="p-datatable-header"
-              [rowHover]="true" [rows] ="6" [showCurrentPageReport]="true"
-              [paginator]="true" [alwaysShowPaginator]="false"
-              [loading]="loading" [loadingIcon]="''"
-              currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} terminskih ugovora" >
+  <div class="table-container">
+    <p-table [value]="futures" class="p-datatable-header"
+             [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
+             [paginator]="true" [alwaysShowPaginator]="false"
+             [loading]="loading" [loadingIcon]="''"
+             currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} terminskih ugovora">
 
-        <ng-template pTemplate="caption">
+      <ng-template pTemplate="caption">
 
-          <div class="table-header row">
+        <div class="table-header row">
 
-            <div class="col-lg-6 col-md-6 text-start table-name">
-              <div style="display:flex; align-items: center; gap: 8px;">
-                <h3 class="berza-mojeakcije-text">
-                  Terminski ugovori
-                </h3>
+          <div class="col-lg-6 col-md-6 text-start table-name">
+            <div style="display:flex; align-items: center; gap: 8px;">
+              <h3 class="berza-mojeakcije-text">
+                Terminski ugovori
+              </h3>
 
-               <p-inputSwitch [(ngModel)]="changeOption"
-                (ngModelChange)="changeFuturesForShow()"  class="custom-input-switch"></p-inputSwitch>
+              <p-inputSwitch [(ngModel)]="changeOption"
+                             (ngModelChange)="changeFuturesForShow()" class="custom-input-switch"></p-inputSwitch>
 
-                <h3 class="berza-mojeakcije-text">
-                  Moji terminski ugovori
-                </h3>
-              </div>
+              <h3 class="berza-mojeakcije-text">
+                Moji terminski ugovori
+              </h3>
             </div>
-            <div class="col-lg-6 col-md-6 text-end">
-              <button *ngIf="!changeOption && checkIfFutureIsWaitingBuy()" (click)="openBuyFutureDialog(futureName)"
-                      pButton pRipple styleClass="p-button-sm"
-                      class="p-button-raised p-button-primary add-employee-btn-lg"
-                      label="Kupi sa limitom" icon="pi pi-plus" style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
-              </button>
-              <button *ngIf="!changeOption && checkIfFutureIsWaitingBuy()" pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
-                      class="p-button-raised p-button-secondary add-employee-btn-sm"
-                      icon="pi pi-plus" (click)="openBuyFutureDialog(futureName)"></button>
-
-              <button *ngIf="!changeOption && !checkIfFutureIsWaitingBuy()" (click)="removeFutureFromWaitingToBeBought()"
-              pButton pRipple styleClass="p-button-sm"
-              class="p-button-raised p-button-primary add-employee-btn-lg"
-              label="Skini kupovinu sa cekanja" style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
-              </button>
-
-              <button *ngIf="!changeOption && !checkIfFutureIsWaitingBuy()" (click)="removeFutureFromWaitingToBeBought()" pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
-              class="p-button-raised p-button-secondary add-employee-btn-sm"
-              icon="pi pi-minus" (click)="openBuyFutureDialog(futureName)"></button>
-            </div>
-
           </div>
-        </ng-template>
+          <div class="col-lg-6 col-md-6 text-end">
+            <button *ngIf="!changeOption && checkIfFutureIsWaitingBuy()" (click)="openBuyFutureDialog(futureName)"
+                    pButton pRipple styleClass="p-button-sm"
+                    class="p-button-raised p-button-primary add-employee-btn-lg"
+                    label="Kupi sa limitom" icon="pi pi-plus"
+                    style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
+            </button>
+            <button *ngIf="!changeOption && checkIfFutureIsWaitingBuy()" pButton pRipple styleClass="p-button-sm"
+                    style="background-color: #3d3d3d;"
+                    class="p-button-raised p-button-secondary add-employee-btn-sm"
+                    icon="pi pi-plus" (click)="openBuyFutureDialog(futureName)"></button>
 
-        <ng-template pTemplate="header">
-          <tr *ngIf="!changeOption">
-            <th>
-              <p style="margin-bottom: 0; margin-top: 2px;">Naziv</p>
-            </th>
-            <th>
-              <p style="margin-bottom: 0; margin-top: 2px;">Vlasnik</p>
-            </th>
-            <th pSortableColumn="maintenanceMargin" style="font-size: 12px; ">
-              <div class="flex justify-content-between align-items-center">
-                <div class="icon-container">
-                  <p style="margin-bottom: 0; margin-top: 2px;">Cena</p>
-                  <p-sortIcon field="maintenanceMargin"></p-sortIcon>
-                </div>
-              </div>
-            </th>
-            <th pSortableColumn="settlementDate" style="font-size: 12px; ">
-              <div class="flex justify-content-between align-items-center">
-                <div class="icon-container">
-                  <p style="margin-bottom: 0; margin-top: 2px;">Datum</p>
-                  <p-sortIcon field="settlementDate"></p-sortIcon>
-                </div>
-              </div>
-            </th>
-            <th>
-              <p style="margin-bottom: 0; margin-top: 2px;">Opcije</p>
-            </th>
-          </tr>
-          <tr *ngIf="changeOption">
-            <th>
-              <p style="margin-bottom: 0; margin-top: 2px;">Naziv</p>
-            </th>
-            <!-- <th>
-              <p style="margin-bottom: 0; margin-top: 2px;">Vlasnik</p>
-            </th> -->
-            <th>
-              <p style="margin-bottom: 0; margin-top: 2px;">Na prodaji</p>
-            </th>
-            <th pSortableColumn="maintenanceMargin" style="font-size: 12px; ">
-              <div class="flex justify-content-between align-items-center">
-                <div class="icon-container">
-                  <p style="margin-bottom: 0; margin-top: 2px;">Cena</p>
-                  <p-sortIcon field="maintenanceMargin"></p-sortIcon>
-                </div>
-              </div>
-            </th>
-            <th pSortableColumn="settlementDate" style="font-size: 12px; ">
-              <div class="flex justify-content-between align-items-center">
-                <div class="icon-container">
-                  <p style="margin-bottom: 0; margin-top: 2px;">Datum</p>
-                  <p-sortIcon field="settlementDate"></p-sortIcon>
-                </div>
-              </div>
-            </th>
-            <th>
-              <p style="margin-bottom: 0; margin-top: 2px;">Opcije</p>
-            </th>
-          </tr>
-        </ng-template>
+            <button *ngIf="!changeOption && !checkIfFutureIsWaitingBuy()" (click)="removeFutureFromWaitingToBeBought()"
+                    pButton pRipple styleClass="p-button-sm"
+                    class="p-button-raised p-button-primary add-employee-btn-lg"
+                    label="Skini kupovinu sa cekanja"
+                    style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
+            </button>
 
-        <ng-template pTemplate="loadingbody">
-          <tr>
-            <td><p-skeleton width="3rem"></p-skeleton></td>
-            <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
-            <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
-            <td><p-skeleton width="3rem" styleClass="mb-2"></p-skeleton></td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <!-- TODO centrirati ovo u tabelu -->
-            <td [attr.colspan]="7">
-              <div class="text-center">
-                <span *ngIf="!changeOption" >Nema podataka za prikazivanje</span>
-                <!-- <span *ngIf="(BuySellOption && stocks-table)">Nema hartije koju trazite</span> -->
-                <span *ngIf="changeOption" >Nemate kupljenih terminskih ugovora za prikazivanje</span>
+            <button *ngIf="!changeOption && !checkIfFutureIsWaitingBuy()" (click)="removeFutureFromWaitingToBeBought()"
+                    pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
+                    class="p-button-raised p-button-secondary add-employee-btn-sm"
+                    icon="pi pi-minus" (click)="openBuyFutureDialog(futureName)"></button>
+          </div>
+
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr *ngIf="!changeOption">
+          <th>
+            <p style="margin-bottom: 0; margin-top: 2px;">Naziv</p>
+          </th>
+          <th>
+            <p style="margin-bottom: 0; margin-top: 2px;">Vlasnik</p>
+          </th>
+          <th pSortableColumn="maintenanceMargin" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Cena</p>
+                <p-sortIcon field="maintenanceMargin"></p-sortIcon>
               </div>
-            </td>
-          </tr>
-        </ng-template>
+            </div>
+          </th>
+          <th pSortableColumn="settlementDate" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Datum</p>
+                <p-sortIcon field="settlementDate"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th>
+            <p style="margin-bottom: 0; margin-top: 2px;">Opcije</p>
+          </th>
+        </tr>
+        <tr *ngIf="changeOption">
+          <th>
+            <p style="margin-bottom: 0; margin-top: 2px;">Naziv</p>
+          </th>
+          <!-- <th>
+            <p style="margin-bottom: 0; margin-top: 2px;">Vlasnik</p>
+          </th> -->
+          <th>
+            <p style="margin-bottom: 0; margin-top: 2px;">Na prodaji</p>
+          </th>
+          <th pSortableColumn="maintenanceMargin" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Cena</p>
+                <p-sortIcon field="maintenanceMargin"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="settlementDate" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Datum</p>
+                <p-sortIcon field="settlementDate"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th>
+            <p style="margin-bottom: 0; margin-top: 2px;">Opcije</p>
+          </th>
+        </tr>
+      </ng-template>
 
-        <ng-template pTemplate="body" let-future>
-          <tr *ngIf="!changeOption">
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- TODO centrirati ovo u tabelu -->
+          <td [attr.colspan]="7">
+            <div class="text-center">
+              <span *ngIf="!changeOption">Nema podataka za prikazivanje</span>
+              <!-- <span *ngIf="(BuySellOption && stocks-table)">Nema hartije koju trazite</span> -->
+              <span *ngIf="changeOption">Nemate kupljenih terminskih ugovora za prikazivanje</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
 
-            <td>{{future.futureName}}</td>
-            <td *ngIf="future.user">{{future.user.firstName + ' ' + future.user.lastName }}</td>
-            <td *ngIf="!future.user">Nema vlasnika</td>
+      <ng-template pTemplate="body" let-future>
+        <tr *ngIf="!changeOption">
 
-            <td>{{future.maintenanceMargin}}</td>
-            <td>{{future.settlementDate}}</td>
-            <td>
-              <button *ngIf="!changeOption" (click)="buyFuture(future)" class="btn-i btn-circle" title="Kupi">
+          <td>{{future.futureName}}</td>
+          <td *ngIf="future.user">{{future.user.firstName + ' ' + future.user.lastName }}</td>
+          <td *ngIf="!future.user">Nema vlasnika</td>
+
+          <td>{{future.maintenanceMargin}}</td>
+          <td>{{future.settlementDate}}</td>
+          <td>
+            <button *ngIf="!changeOption" (click)="buyFuture(future)" class="btn-i btn-circle" title="Kupi">
                 <span>
                   <i class="bi bi-cart" style="font-size: 20px;"></i>
                 </span>
-                <div class="wave"></div>
-              </button>
-<!--              <button *ngIf="changeOption"  (click)="openBuyFutureDialog(future)" pButton label="Kupi sa limitom"></button>-->
+              <div class="wave"></div>
+            </button>
+            <!--              <button *ngIf="changeOption"  (click)="openBuyFutureDialog(future)" pButton label="Kupi sa limitom"></button>-->
 
-            </td>
-          </tr>
-          <tr *ngIf="changeOption">
+          </td>
+        </tr>
+        <tr *ngIf="changeOption">
 
-            <td>{{future.futureName}}</td>
-            <!-- <td *ngIf="future.user">{{future.user.id}}</td>
-            <td *ngIf="!future.user">Nema vlasnika</td> -->
+          <td>{{future.futureName}}</td>
+          <!-- <td *ngIf="future.user">{{future.user.id}}</td>
+          <td *ngIf="!future.user">Nema vlasnika</td> -->
 
-            <td *ngIf="future.forSale">Na prodaju</td>
-            <td *ngIf="!future.forSale">Nije na prodaju</td>
+          <td *ngIf="future.forSale">Na prodaju</td>
+          <td *ngIf="!future.forSale">Nije na prodaju</td>
 
-            <td>{{future.maintenanceMargin}}</td>
-            <td>{{future.settlementDate}}</td>
-            <td>
-              <div *ngIf="checkIfFutureIsWaitingSell(future.id)">
-                <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureDialog(future)"  class="btn-i btn-circle me-1" title="Prodaj">
+          <td>{{future.maintenanceMargin}}</td>
+          <td>{{future.settlementDate}}</td>
+          <td>
+            <div *ngIf="checkIfFutureIsWaitingSell(future.id)">
+              <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureDialog(future)"
+                      class="btn-i btn-circle me-1" title="Prodaj">
                   <span>
                     <i class="bi bi-tag" style="font-size: 20px;"></i>
                   </span>
-                  <div class="wave"></div>
-                </button>
-                <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureWithLimitDialog(future)"  class="btn-i btn-circle" title="Prodaj sa limitom">
+                <div class="wave"></div>
+              </button>
+              <button *ngIf="changeOption && !future.forSale" (click)="openSellFutureWithLimitDialog(future)"
+                      class="btn-i btn-circle" title="Prodaj sa limitom">
                   <span>
                     <i class="bi bi-tags-fill" style="font-size: 20px;"></i>
                   </span>
-                  <div class="wave"></div>
-                </button>
-                <button *ngIf="changeOption && future.forSale" (click)="removeFromMarket(future.id)" class="btn-i btn-circle" title="Skini">
+                <div class="wave"></div>
+              </button>
+              <button *ngIf="changeOption && future.forSale" (click)="removeFromMarket(future.id)"
+                      class="btn-i btn-circle" title="Skini">
                   <span>
                     <i class="bi bi-x-lg" style="font-size: 20px;"></i>
                   </span>
-                  <div class="wave"></div>
-                </button>
-              </div>
-              <div *ngIf="!checkIfFutureIsWaitingSell(future.id)">
-                <button (click)="removeFutureFromWaitingToBeSold(future.id)" class="btn-i btn-circle" title="Skini sa čekanja">
+                <div class="wave"></div>
+              </button>
+            </div>
+            <div *ngIf="!checkIfFutureIsWaitingSell(future.id)">
+              <button (click)="removeFutureFromWaitingToBeSold(future.id)" class="btn-i btn-circle"
+                      title="Skini sa čekanja">
                   <span>
                     <i class="bi bi-hourglass-split" style="font-size: 20px;"></i>
                   </span>
-                  <div class="wave"></div>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
+                <div class="wave"></div>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
 
-      </p-table>
-    </div>
+    </p-table>
+  </div>
 </div>
 
 <app-sell-future (futureSoldEmitter)="sellFuture($event)"></app-sell-future>

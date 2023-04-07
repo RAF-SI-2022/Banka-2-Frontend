@@ -30,11 +30,8 @@ export class SellFutureWithLimitComponent {
   }
 
   resetForm() {
-    this.sellFutureForm.setValue({
-      price: [null, Validators.required],
-      limit: [null, Validators.required],
-      stop: [null, Validators.required]
-    })
+    this.sellFutureForm.get('limit')?.reset();
+    this.sellFutureForm.get('stop')?.reset();
   }
 
   open() {

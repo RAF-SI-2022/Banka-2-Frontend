@@ -30,10 +30,23 @@ export interface Listing {
   volume: number
 }
 
-export interface Stock extends Listing {
+export interface Stock {
+  changePercent: string,
+  changeValue: number,
+  companyName: string,
+  dividendYield: number,
+  exchange: Exchange,
+  highValue: number,
   id: number,
+  lastUpdated: string,
+  lowValue: number,
+  openValue: number,
   outstandingShares: number,
-  dividendYield: number
+  previousClose: number,
+  priceValue: number,
+  symbol: string,
+  volumeValue: number,
+  websiteUrl: string
 }
 
 export interface Forex extends Listing {
@@ -98,12 +111,17 @@ export interface Transaction {
   volume: number,
   price: number,
   status: string,
-  zavrsena: string,
-  lastModifed: Date,
+  lastModifed: String,
 }
 
 
-
+export interface UserStock {
+  id: number,
+  user: User,
+  stock: Stock,
+  amount: number,
+  amountForSale: number
+}
 
 
 

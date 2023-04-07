@@ -2,12 +2,15 @@ import {Component, ViewChild} from '@angular/core';
 import {Table} from "primeng/table";
 import {MenuItem} from "primeng/api";
 import {Stock} from "../../../../models/stock-exchange.model";
-import {ToastrService} from 'ngx-toastr';
-import {StockDetailsComponent} from '../stock-details/stock-details.component';
-import {SortEvent} from 'primeng/api';
-import {AuthService} from 'src/app/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { StockDetailsComponent } from '../stock-details/stock-details.component';
+import { SortEvent } from 'primeng/api';
+import { AuthService } from 'src/app/services/auth.service';
 import {BuyStockComponent} from "../buy-stock/buy-stock.component";
-import {SellStockComponent} from '../sell-stock/sell-stock.component';
+import { SellStockComponent } from '../sell-stock/sell-stock.component';
+import { StockService } from 'src/app/services/stock.service';
+import { UserService } from 'src/app/services/user-service.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-stocks-table',
@@ -20,7 +23,7 @@ export class StocksComponent {
   stocks: Stock[]
 
   allStocks: Stock[]
-  myStocks: Stock[]
+  myStocks: Stock[] = []
 
   displayDetails: boolean = false
 
@@ -29,28 +32,47 @@ export class StocksComponent {
   BuySellOption: boolean = true;
   switch: boolean = false;
 
+  userId: number;
 
-  @ViewChild(StockDetailsComponent, {static: true}) stockDetailsChild: StockDetailsComponent
-  @ViewChild(BuyStockComponent, {static: true}) buyStockComponent: BuyStockComponent
-  @ViewChild(SellStockComponent, {static: true}) sellStockComponent: SellStockComponent
+  symbolInput: string;
+
+
+  @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
+  @ViewChild(BuyStockComponent, {static : true}) buyStockComponent : BuyStockComponent
+
 
 
   @ViewChild('dt') dt: Table | undefined;
-
   applyFilterGlobal($event: any, stringVal: any) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
-  constructor(private toastr: ToastrService) {
+  constructor(private toastr: ToastrService, private userService: UserService, private stockService: StockService) {
   }
 
 
+
   ngOnInit() {
+
+    const source = interval(10000); // 10000 ms = 10 seconds
+    source.subscribe(() => {
+      // this.getUser()
+      
+      this.getAllStocks();
+      this.getMyStocks();
+    });
+
+
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
-      {label: 'Akcije', routerLink: ['/stocks-table']}
+      {label: 'Akcije', routerLink: ['/stocks']}
     ];
 
+
+    this.getAllStocks()
+
+
+    this.getUserData()
 
     // TODO timeout za testiranje
 
@@ -59,20 +81,110 @@ export class StocksComponent {
     //   this.refresh();
     // }, 2000);
 
-    this.insertUsers();
+    // this.insertUsers();
   }
 
-  promeniOpciju() {
-    if (this.BuySellOption) {
-      this.changeUsers()
-    } else {
-      this.insertUsers()
+  getUserData(){
+    this.userService.getUserData().subscribe({
+      next: val=>{
+
+        this.userId = val.id
+        this.getMyStocks()
+        // this.stocks = this.allStocks
+      },
+      error: err=>{
+        console.log(err);
+
+      }
+    })
+  }
+
+  getAllStocks(){
+    this.stockService.getAllStocks().subscribe({
+      next: val=>{
+        this.allStocks = val;
+
+        // TODO dodati onaj temp kao u getMyStocks
+
+        if(!this.switch){
+          this.stocks = this.allStocks
+        }
+
+        this.loading = false
+      },
+      error: err=>{
+        console.log(err);
+        this.toastr.error("Greska pri dohvatanju podataka")
+        this.allStocks = []
+      }
+    })
+  }
+
+  getStockBySymbol(symbol: string){
+    this.stockService.getStockBySymbol(symbol)
+    .subscribe({
+      next: val=>{
+          console.log(val);
+          //todo dodati u red
+          this.allStocks.push(val)
+          if(!this.switch){
+            this.stocks = this.allStocks
+          }
+      },
+      error: err=>{
+        console.log(err);
+        this.toastr.error("Greska pri trazenju akcije")
+      }
+    })
+  }
+
+  getMyStocks(){
+    this.stockService.getMyStocks().subscribe({
+      next: val=>{
+        let tempStocks: Stock[] = []
+        for(const single of val){
+
+          if(single.user.id === this.userId){
+            console.log(single);
+
+            if(single.amount > 0){
+              tempStocks.push(single.stock)
+            }
+            else if(single.amountForSale > 0){
+              tempStocks.push(single.stock)
+            }
+          }
+        }
+        if(tempStocks.length <1){
+          this.myStocks = []
+        }
+        else{
+          this.myStocks = tempStocks
+        }
+        if(this.switch){
+          this.stocks = this.myStocks
+        }
+    },
+    error: err=>{
+      console.log(err);
+      this.toastr.error("Greska pri dohvatanju podataka")
+
     }
-    this.BuySellOption = !this.BuySellOption
-
+    })
   }
 
-  toggleBuyStockDialog(event: MouseEvent, stock: Stock) {
+
+
+  promeniOpciju(){
+    if(this.switch){
+      this.stocks = this.myStocks
+    }
+    else{
+      this.stocks = this.allStocks
+    }
+  }
+
+  toggleBuyStockDialog(event: MouseEvent, stock: Stock){
     event.stopPropagation()
 
     this.buyStockComponent.buyStockVisible = true;
@@ -83,175 +195,9 @@ export class StocksComponent {
     // this.toastr.info("kupi popup " + stock.ticker)
   }
 
-  toggleSellStockDialog(event: MouseEvent, stock: Stock) {
-    event.stopPropagation()
-
-    this.sellStockComponent.sellStockVisible = true;
-
-    // this.sellStockComponent.
-
-    //TODO OTVORITI DIALOG ZA PRODAJU SA VEC POSTAVLJENIM PODACIMA
-
-    this.sellStockComponent.sellStockVisible = true;
-    this.sellStockComponent.stock = stock;
 
 
-    //this.toastr.info("Prodaj popup " + stock.ticker)
-    //this.refresh()
-    // alert("Prodaj " + stock.ticker)
-  }
-
-  changeUsers() {
-    const obj2 = {
-      id: 1,
-      outstandingShares: 1,
-      dividendYield: 2,
-      ticker: "IZMENA",
-      name: "string",
-      exchange: {
-        exchangeName: "string",
-        exchangeAcronym: "string",
-        exchangeMICCode: "string",
-        polity: "string",
-        currency: {
-          currencyName: "string",
-          currencyCode: "string",
-          currencySymbol: "string",
-          polity: "string"
-        },
-        timeZone: 3,
-        openTime: "1",
-        closeTime: "1"
-      },
-      lastRefresh: new Date("2012-01-16"),
-      price: 4,
-      ask: 52,
-      bid: 6,
-      change: 5,
-      volume: 1
-    }
-
-    // TODO Ovde treba da se odradi filtriranje samo nasih stockova
-    this.myStocks = []
-    this.myStocks.push(obj2)
-
-    // Ovde se ubacuju nasi stockovi u listu za prikazivanje
-    this.stocks = this.myStocks
-
-    // za testiranje prazne tabele
-    // TODO ovo moze da se setuje kada je error u responsu baze
-    // Ili cak taj msg koji ce se prikazivati kada je prazna lista da bude bindovan na error msg
-
-    // this.stocks-table = []
-
-  }
-
-  insertUsers() {
-
-    const obj = {
-      id: 1,
-      outstandingShares: 2,
-      dividendYield: 3,
-      ticker: "AAPL",
-      name: "Apple Inc",
-      exchange: {
-        exchangeName: "string",
-        exchangeAcronym: "string",
-        exchangeMICCode: "string",
-        polity: "string",
-        currency: {
-          currencyName: "string",
-          currencyCode: "string",
-          currencySymbol: "string",
-          polity: "string"
-        },
-        timeZone: 1,
-        openTime: "1",
-        closeTime: "1"
-      },
-      lastRefresh: new Date("2019-01-16"),
-      price: 100,
-      ask: 200,
-      bid: 300,
-      change: 4,
-      volume: 5
-    }
-    const obj1 = {
-      id: 1,
-      outstandingShares: 1,
-      dividendYield: 2,
-      ticker: "tiker1",
-      name: "string",
-      exchange: {
-        exchangeName: "string",
-        exchangeAcronym: "string",
-        exchangeMICCode: "string",
-        polity: "string",
-        currency: {
-          currencyName: "string",
-          currencyCode: "string",
-          currencySymbol: "string",
-          polity: "string"
-        },
-        timeZone: 3,
-        openTime: "1",
-        closeTime: "1"
-      },
-      lastRefresh: new Date("2012-01-16"),
-      price: 4,
-      ask: 52,
-      bid: 6,
-      change: 0,
-      volume: 1
-    }
-    const obj2 = {
-      id: 1,
-      outstandingShares: 1,
-      dividendYield: 2,
-      ticker: "tiker1",
-      name: "string",
-      exchange: {
-        exchangeName: "string",
-        exchangeAcronym: "string",
-        exchangeMICCode: "string",
-        polity: "string",
-        currency: {
-          currencyName: "string",
-          currencyCode: "string",
-          currencySymbol: "string",
-          polity: "string"
-        },
-        timeZone: 3,
-        openTime: "1",
-        closeTime: "1"
-      },
-      lastRefresh: new Date("2012-01-16"),
-      price: 4,
-      ask: 52,
-      bid: 6,
-      change: 5,
-      volume: 1
-    }
-
-
-    // TODO u allStocks cemo stavljati sve stokove iz baze
-
-    this.allStocks = []
-    this.allStocks.push(obj)
-    this.allStocks.push(obj1)
-
-    // Ovde te stokove stavljamo u listu za prikazivanje na tabeli
-
-    this.stocks = this.allStocks
-
-    // za testiranje prazne tabele
-    // this.stocks-table = []
-
-
-    this.loading = false
-  }
-
-  openMoreInfoDialog(event: Stock) {
+  openMoreInfoDialog(event: Stock){
     // Slanje podataka na details dialog
 
     this.stockDetailsChild.stock = event
@@ -262,26 +208,42 @@ export class StocksComponent {
     //OPENDIALOG() ili set bool na true
   }
 
-  refresh() {
 
-    //TODO ovde ide logika i poziv na servis koji ce pozvati refresh i resetovati tabelu na berza mode
-    //I odmah za njim i filtriranje za userove hartije
-    this.loading = true;
-    this.stocks = []
-    setTimeout(() => {
-      this.insertUsers()
-      this.BuySellOption = true
-      this.switch = false
-      this.loading = false
-    }, 2000);
-
-
-    // {
-    //   this.insertUsers()
-    //   this.BuySellOption = true
-    //   this.switch = false
-    // }
-    // alert("refresh")
+  formatNumber(num: number): string {
+    if (num >= 1000000000) {
+      const billions = num / 1000000000;
+      return billions.toFixed(1) + 'b';
+    } else if (num >= 1000000) {
+      const millions = num / 1000000;
+      return millions.toFixed(1) + 'm';
+    } else {
+      return num.toString();
+    }
   }
+
+  removeFromSellStock(symbol:string){
+    this.stockService.removeStockFromSale(symbol).subscribe({
+      next:val=>{
+        this.toastr.info("Uspesno skinut!");
+        this.getAllStocks();
+        this.getMyStocks();
+      },
+      error: err => {
+        this.toastr.error("Greska!");
+        this.getAllStocks();
+        this.getMyStocks();
+
+      }
+    })
+  }
+  
+  refreshBuy(symbol:string){
+    this.getAllStocks();
+    this.getMyStocks();
+    this.buyStockComponent.buyStockVisible = false;
+    this.toastr.info("Akcija " + symbol + " je uspesno kupljena!")
+  }
+
+
 
 }

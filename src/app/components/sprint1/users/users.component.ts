@@ -205,7 +205,7 @@ export class UsersComponent {
       editedUser.phone,
       editedUser.active
     )
-    
+
       .subscribe({
         next: val => {
           this.editUserChild.close()

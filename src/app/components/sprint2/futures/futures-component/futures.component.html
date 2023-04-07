@@ -10,7 +10,7 @@
           <div *ngFor="let future of futureMapItem.value; index as j">
             <div *ngIf="j % 3 === 0" class="row mb-5 gap-3">
               <div [routerLink]="'/future/' + futureMapItem.value[j].futureName"
-                  class="future-card col-lg-4 col-md-12 col-sm-12 col-12">
+                   class="future-card col-lg-4 col-md-12 col-sm-12 col-12">
                 <h4>{{toTitleCase(futureMapItem.value[j].futureName)}}</h4>
                 <div class="row text-center">
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -28,7 +28,7 @@
                 </div>
               </div>
               <div [routerLink]="'/future/' + futureMapItem.value[j+1].futureName"
-                  *ngIf="j+1 < futureMapItem.value.length" class="future-card col-lg-4 col-md-12 col-sm-12 col-12">
+                   *ngIf="j+1 < futureMapItem.value.length" class="future-card col-lg-4 col-md-12 col-sm-12 col-12">
                 <h4>{{toTitleCase(futureMapItem.value[j + 1].futureName)}}</h4>
                 <div class="row text-center">
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -46,7 +46,7 @@
                 </div>
               </div>
               <div [routerLink]="'/future/' + futureMapItem.value[j+2].futureName"
-                  *ngIf="j+2 < futureMapItem.value.length" class="future-card col-lg-4 col-md-12 col-sm-12 col-12">
+                   *ngIf="j+2 < futureMapItem.value.length" class="future-card col-lg-4 col-md-12 col-sm-12 col-12">
                 <h4>{{toTitleCase(futureMapItem.value[j + 2].futureName)}}</h4>
                 <div class="row text-center">
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">

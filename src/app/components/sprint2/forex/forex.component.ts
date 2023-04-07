@@ -92,7 +92,7 @@ export class ForexComponent {
   onCurrencyFromChanged() {
 
     this.dynamicRightCurrencies = []
-    
+
     this.result = null;
     this.currencyTo = null;
 
@@ -148,8 +148,7 @@ export class ForexComponent {
   }
 
 
-
-  calculate(object: string){
+  calculate(object: string) {
     let multiplier = this.ammount !== undefined && this.ammount != 0 ? this.ammount : 1;
     this.convertedAmmount = Number((Number(object) * multiplier).toFixed(2))
     return this.convertedAmmount
@@ -160,11 +159,11 @@ export class ForexComponent {
     return Number(object).toFixed(2)
   }
 
-  onCurrencyToChanged(){
-    if(this.currencyFrom && this.currencyTo){
-      for(let i=0;i<this.currencies.length;i++){ 
-        if(this.currencyFrom.name == this.currencies[i][0] && this.currencyTo.name == this.currencies[i][1]){
-          this.stockService.getCurrencies(this.currencies[i][0],this.currencies[i][1]).subscribe({
+  onCurrencyToChanged() {
+    if (this.currencyFrom && this.currencyTo) {
+      for (let i = 0; i < this.currencies.length; i++) {
+        if (this.currencyFrom.name == this.currencies[i][0] && this.currencyTo.name == this.currencies[i][1]) {
+          this.stockService.getCurrencies(this.currencies[i][0], this.currencies[i][1]).subscribe({
             next: val => {
               this.result = val;
             }
@@ -175,18 +174,17 @@ export class ForexComponent {
   }
 
 
-  buy(){
-   if(this.ammount<1){
-    this.toaster.error("Uneta vrednost mora biti veća od 1")
-    return
-   }
-    this.stockService.buyForex(this.currencyFrom.name, this.currencyTo.name, this.ammount?? 1).subscribe({
+  buy() {
+    if (this.ammount < 1) {
+      this.toaster.error("Uneta vrednost mora biti veća od 1")
+      return
+    }
+    this.stockService.buyForex(this.currencyFrom.name, this.currencyTo.name, this.ammount ?? 1).subscribe({
       next: val => {
         this.toaster.success("Uspešna kupovina")
       }
     })
   }
-
 
 
 }

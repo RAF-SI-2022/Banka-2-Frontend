@@ -2,12 +2,12 @@ import {Component, ViewChild} from '@angular/core';
 import {Table} from "primeng/table";
 import {MenuItem} from "primeng/api";
 import {Stock} from "../../../../models/stock-exchange.model";
-import { ToastrService } from 'ngx-toastr';
-import { StockDetailsComponent } from '../stock-details/stock-details.component';
-import { SortEvent } from 'primeng/api';
-import { AuthService } from 'src/app/services/auth.service';
+import {ToastrService} from 'ngx-toastr';
+import {StockDetailsComponent} from '../stock-details/stock-details.component';
+import {SortEvent} from 'primeng/api';
+import {AuthService} from 'src/app/services/auth.service';
 import {BuyStockComponent} from "../buy-stock/buy-stock.component";
-import { SellStockComponent } from '../sell-stock/sell-stock.component';
+import {SellStockComponent} from '../sell-stock/sell-stock.component';
 
 @Component({
   selector: 'app-stocks-table',
@@ -30,19 +30,19 @@ export class StocksComponent {
   switch: boolean = false;
 
 
-  @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
-  @ViewChild(BuyStockComponent, {static : true}) buyStockComponent : BuyStockComponent
-  @ViewChild(SellStockComponent, {static : true}) sellStockComponent : SellStockComponent
+  @ViewChild(StockDetailsComponent, {static: true}) stockDetailsChild: StockDetailsComponent
+  @ViewChild(BuyStockComponent, {static: true}) buyStockComponent: BuyStockComponent
+  @ViewChild(SellStockComponent, {static: true}) sellStockComponent: SellStockComponent
 
 
   @ViewChild('dt') dt: Table | undefined;
+
   applyFilterGlobal($event: any, stringVal: any) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
   constructor(private toastr: ToastrService) {
   }
-
 
 
   ngOnInit() {
@@ -62,18 +62,17 @@ export class StocksComponent {
     this.insertUsers();
   }
 
-  promeniOpciju(){
-    if(this.BuySellOption){
+  promeniOpciju() {
+    if (this.BuySellOption) {
       this.changeUsers()
-    }
-    else{
+    } else {
       this.insertUsers()
     }
     this.BuySellOption = !this.BuySellOption
 
   }
 
-  toggleBuyStockDialog(event: MouseEvent, stock: Stock){
+  toggleBuyStockDialog(event: MouseEvent, stock: Stock) {
     event.stopPropagation()
 
     this.buyStockComponent.buyStockVisible = true;
@@ -84,7 +83,7 @@ export class StocksComponent {
     // this.toastr.info("kupi popup " + stock.ticker)
   }
 
-  toggleSellStockDialog(event: MouseEvent, stock: Stock){
+  toggleSellStockDialog(event: MouseEvent, stock: Stock) {
     event.stopPropagation()
 
     this.sellStockComponent.sellStockVisible = true;
@@ -97,13 +96,12 @@ export class StocksComponent {
     this.sellStockComponent.stock = stock;
 
 
-
     //this.toastr.info("Prodaj popup " + stock.ticker)
     //this.refresh()
     // alert("Prodaj " + stock.ticker)
   }
 
-  changeUsers(){
+  changeUsers() {
     const obj2 = {
       id: 1,
       outstandingShares: 1,
@@ -148,7 +146,7 @@ export class StocksComponent {
 
   }
 
-  insertUsers(){
+  insertUsers() {
 
     const obj = {
       id: 1,
@@ -253,7 +251,7 @@ export class StocksComponent {
     this.loading = false
   }
 
-  openMoreInfoDialog(event: Stock){
+  openMoreInfoDialog(event: Stock) {
     // Slanje podataka na details dialog
 
     this.stockDetailsChild.stock = event
@@ -263,13 +261,14 @@ export class StocksComponent {
     this.stockDetailsChild.resetPeriodOption()
     //OPENDIALOG() ili set bool na true
   }
-  refresh(){
+
+  refresh() {
 
     //TODO ovde ide logika i poziv na servis koji ce pozvati refresh i resetovati tabelu na berza mode
     //I odmah za njim i filtriranje za userove hartije
     this.loading = true;
     this.stocks = []
-    setTimeout(()=>{
+    setTimeout(() => {
       this.insertUsers()
       this.BuySellOption = true
       this.switch = false

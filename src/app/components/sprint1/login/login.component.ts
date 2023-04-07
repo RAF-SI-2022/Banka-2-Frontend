@@ -56,7 +56,7 @@ export class LoginComponent {
                   this.userNotActive = true;
                   this.userService.resetToken()
                 }
-                
+
               },
               error: err => {
 

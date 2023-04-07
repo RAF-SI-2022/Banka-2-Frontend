@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
   name: 'activityPipe'
@@ -9,7 +9,7 @@ export class ActivityPipe implements PipeTransform {
 
   transform(value: unknown, ...args: unknown[]): any {
 
-    if(value === true){
+    if (value === true) {
       return "Aktivan"
     }
     return "Neaktivan";

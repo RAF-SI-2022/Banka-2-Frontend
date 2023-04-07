@@ -15,13 +15,12 @@ export class BuyStockComponent {
   isFormValid = false;
 
 
-
 //TODO:pokupiti limit od usera i stock name iz stocka
   constructor(private formBuilder: FormBuilder) {
     this.buyStockForm = this.formBuilder.group({
-      kolicina: [null , Validators.required],
-      limit: [null , Validators.required],
-      stop: [null , Validators.required],
+      kolicina: [null, Validators.required],
+      limit: [null, Validators.required],
+      stop: [null, Validators.required],
       allOrNone: false,
       margin: false
     });

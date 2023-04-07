@@ -20,7 +20,7 @@ export class SellFutureComponent {
 
   constructor(private formBuilder: FormBuilder, private stockService: StockService) {
     this.sellFutureForm = this.formBuilder.group({
-      price: [null , Validators.required],
+      price: [null, Validators.required],
     });
 
     this.sellFutureForm.valueChanges.subscribe(() => {
@@ -30,11 +30,11 @@ export class SellFutureComponent {
 
   resetForm() {
     this.sellFutureForm.setValue({
-      price: [null , Validators.required]
+      price: [null, Validators.required]
     })
   }
 
-  open(){
+  open() {
     this.sellFutureVisible = true
     this.sellFutureForm.patchValue({
       price: this.future.maintenanceMargin
@@ -56,25 +56,25 @@ export class SellFutureComponent {
 
     if (this.sellFutureForm.valid) {
 
-        this.stockService.sellFuture(
-          this.future.id,
-          this.future.futureName,
-          "SELL",
-          this.sellFutureForm.get('price')?.value,
-          0,
-          0
-        ).subscribe({
-          next: val => {
-            this.futureSoldEmitter.emit(this.future.id);
-            this.sellFutureVisible = false;
-          },
-          error: err => {
-            console.log(err);
+      this.stockService.sellFuture(
+        this.future.id,
+        this.future.futureName,
+        "SELL",
+        this.sellFutureForm.get('price')?.value,
+        0,
+        0
+      ).subscribe({
+        next: val => {
+          this.futureSoldEmitter.emit(this.future.id);
+          this.sellFutureVisible = false;
+        },
+        error: err => {
+          console.log(err);
 
-          }
-        })
+        }
+      })
 
-      }
-      this.sellFutureForm.reset();
+    }
+    this.sellFutureForm.reset();
   }
 }

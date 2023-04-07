@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 import {MenuItem} from "primeng/api";
-import { Transaction, Type } from 'src/app/models/stock-exchange.model';
-
+import {Transaction, Type} from 'src/app/models/stock-exchange.model';
 
 
 @Component({
@@ -20,7 +19,7 @@ export class PurchasesComponent {
 
   status!: any[];
 
-  constructor(){
+  constructor() {
 
   }
 
@@ -37,14 +36,14 @@ export class PurchasesComponent {
       {label: 'Odobrene', value: 'ODOBRENA'},
       {label: 'Odbijene', value: 'ODBIJENA'},
       {label: 'Na čekanju', value: 'NA CEKANJU'}
-  ]
+    ]
 
     this.insertTrans();
 
   }
 
 
-  refresh(){
+  refresh() {
 
     //TODO ovde ide logika i poziv na servis koji ce pozvati refresh i resetovati tabelu na berza mode
     //I odmah za njim i filtriranje za userove hartije
@@ -60,11 +59,11 @@ export class PurchasesComponent {
 
   }
 
-  insertTrans(){
+  insertTrans() {
 
     const obj = {
       exchangeMICCode: "NYCT", // NYCT
-      transaction : "Kupovina",
+      transaction: "Kupovina",
       hartija: "AKCIJA",
       volume: 5,
       price: 20,
@@ -76,7 +75,7 @@ export class PurchasesComponent {
 
     const obj2 = {
       exchangeMICCode: "APP", // NYCT
-      transaction : "Kupovina",
+      transaction: "Kupovina",
       hartija: "AKCIJA",
       volume: 6,
       price: 20,
@@ -91,14 +90,12 @@ export class PurchasesComponent {
     this.transactions.push(obj)
     this.transactions.push(obj2)
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.loading = false;
-      }, 2000);
-
+    }, 2000);
 
 
   }
-
 
 
 }

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { Stock } from 'src/app/models/stock-exchange.model';
+import {Stock} from 'src/app/models/stock-exchange.model';
 
 @Component({
   selector: 'app-sell-stock',
@@ -17,9 +17,9 @@ export class SellStockComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.sellStockForm = this.formBuilder.group({
-      kolicina: [null , Validators.required],
-      limit: [null , Validators.required],
-      stop: [null , Validators.required],
+      kolicina: [null, Validators.required],
+      limit: [null, Validators.required],
+      stop: [null, Validators.required],
       allOrNone: false,
       margin: false
     });
@@ -34,11 +34,11 @@ export class SellStockComponent {
       alert("buy");
       this.sellStockForm.reset();
 
-    } 
+    }
   }
 
-  setSellStockVisible(){
+  setSellStockVisible() {
     this.sellStockVisible = true;
-  } 
+  }
 
 }

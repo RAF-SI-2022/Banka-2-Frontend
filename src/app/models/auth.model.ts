@@ -1,4 +1,4 @@
-import { Permission } from "./users.model"
+import {Permission} from "./users.model"
 
 export interface LoginResponse {
   token: string

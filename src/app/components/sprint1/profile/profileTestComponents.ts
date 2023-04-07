@@ -1,8 +1,8 @@
 import {waitForAngularReady} from "@angular/cdk/testing/selenium-webdriver";
 
-export class ProfileTestComponents{
+export class ProfileTestComponents {
 
-  testEditProfile(){
+  testEditProfile() {
     cy.log("EDIT PROFILE TEST------------------------------")
 
     cy.get('#navbarDarkDropdownMenuLink').click()//open profile
@@ -24,7 +24,7 @@ export class ProfileTestComponents{
   }
 
 
-  testChangePassword(){
+  testChangePassword() {
     cy.log("CHANGE PASSWORD TEST------------------------------")
 
     cy.get('#navbarDarkDropdownMenuLink').click()//open profile
@@ -37,7 +37,7 @@ export class ProfileTestComponents{
   }
 
 
-  addUser(email: string){
+  addUser(email: string) {
     cy.log("ADD USER TEST------------------------------")
 
     cy.get('#addUserBtn').click()

@@ -57,7 +57,7 @@ p {
   color: white;
 }
 
-::ng-deep .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link  {
+::ng-deep .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
   background: #724bcb;
   color: white;
 }
@@ -71,12 +71,14 @@ p {
   background: #2d204b;
   color: white;
 }
-.futures-container{
+
+.futures-container {
   margin: 70px;
   padding: 30px;
   background-color: #FFF;
   border-radius: 20px;
 }
+
 .body-container {
   background-color: #eff3f7;
   min-height: 150vh;

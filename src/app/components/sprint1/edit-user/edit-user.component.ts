@@ -38,9 +38,9 @@ export class EditUserComponent {
     });
 
     this.jobs = [
-      {name:"ADMINISTRATOR" , permissions: ["ADMIN_USER"]},
-      {name:"SUPERVISOR" , permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
-      {name:"AGENT" , permissions: ["READ_USERS"]}
+      {name: "ADMINISTRATOR", permissions: ["ADMIN_USER"]},
+      {name: "SUPERVISOR", permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
+      {name: "AGENT", permissions: ["READ_USERS"]}
     ]
 
     this.editUserForm.valueChanges.subscribe(() => {
@@ -64,8 +64,7 @@ export class EditUserComponent {
       };
       // Saljemo parent komponenti (UsersComponent) objekat editovanog User-a
       this.editUserEvent.emit(user)
-    }
-    else this.toastr.error("Morate izabrati poziciju")
+    } else this.toastr.error("Morate izabrati poziciju")
 
 
   }
@@ -81,8 +80,8 @@ export class EditUserComponent {
     this.userId = user.id
     this.userJmbg = user.jmbg
 
-    for(const job of this.jobs){
-      if(user.jobPosition.toUpperCase() === job.name.toUpperCase()){
+    for (const job of this.jobs) {
+      if (user.jobPosition.toUpperCase() === job.name.toUpperCase()) {
         this.selectedJob = job
       }
     }

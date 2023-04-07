@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
-import { Table } from 'primeng/table';
-import { UserService } from '../../../services/user-service.service';
+import {Component, ViewChild} from '@angular/core';
+import {Table} from 'primeng/table';
+import {UserService} from '../../../services/user-service.service';
 import {MenuItem} from "primeng/api";
 import {Permission, User} from "../../../models/users.model";
 import {ToastrService} from "ngx-toastr";
@@ -15,10 +15,11 @@ import {EditUserComponent} from "../edit-user/edit-user.component";
 })
 export class UsersComponent {
 
-  @ViewChild(AddUserComponent, {static : true}) addUserChild : AddUserComponent
-  @ViewChild(EditUserComponent, {static : true}) editUserChild : EditUserComponent
+  @ViewChild(AddUserComponent, {static: true}) addUserChild: AddUserComponent
+  @ViewChild(EditUserComponent, {static: true}) editUserChild: EditUserComponent
   // Globalni search
   @ViewChild('dt') dt: Table | undefined;
+
   applyFilterGlobal($event: any, stringVal: any) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
@@ -38,11 +39,10 @@ export class UsersComponent {
   selectedUserId: number = -1
 
 
-
   currentUserRoles: string
 
 
-  constructor(private userService: UserService, private toastr: ToastrService, private formBuilder: FormBuilder){
+  constructor(private userService: UserService, private toastr: ToastrService, private formBuilder: FormBuilder) {
     this.addUserForm = this.formBuilder.group({
       firstName: '',
       lastName: '',
@@ -61,7 +61,7 @@ export class UsersComponent {
     this.displayAddUserDialog = !this.displayAddUserDialog;
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
@@ -72,64 +72,64 @@ export class UsersComponent {
       {label: 'Administrator', value: 'ADMINISTRATOR'},
       {label: 'Supervisor', value: 'SUPERVISOR'},
       {label: 'Agent', value: 'AGENT'}
-  ]
+    ]
     this.getUsers()
   }
 
-  showToastDelete(){
+  showToastDelete() {
     this.toastr.error("Korisnik obrisan")
   }
 
-  showToastAdd(){
+  showToastAdd() {
     this.toastr.success("Korisnik dodat")
   }
 
   // Dovlacenje svih usera
-  getUsers(){
+  getUsers() {
     this.userService.getAllUsers()
-    .subscribe({
-      next: val =>{
-        this.users = val;
+      .subscribe({
+        next: val => {
+          this.users = val;
 
-        this.userService.getUserData()
-        .subscribe({
-          next: res=>{
-            // console.log(res)
+          this.userService.getUserData()
+            .subscribe({
+              next: res => {
+                // console.log(res)
 
-            const currentUser = res
-            this.loading = true
-            this.users = this.users.filter(user => user.email !== currentUser.email)
-          },
-          error: err=>{
+                const currentUser = res
+                this.loading = true
+                this.users = this.users.filter(user => user.email !== currentUser.email)
+              },
+              error: err => {
 
-          }
-        })
-        //strpati sve podatke u listu usera
-      },
-      error: err =>{
-        //alertovati error
-      }
-    })
+              }
+            })
+          //strpati sve podatke u listu usera
+        },
+        error: err => {
+          //alertovati error
+        }
+      })
   }
 
-  openDeleteConfirmationDialog(id: number){
+  openDeleteConfirmationDialog(id: number) {
     this.displayConfirmationDialog = true;
     this.selectedUserId = id
   }
 
-  closeDeleteConfirmationDialog(){
+  closeDeleteConfirmationDialog() {
     this.selectedUserId = -1
     this.displayConfirmationDialog = false;
   }
 
   deleteUser() {
-    if(this.selectedUserId === -1){
+    if (this.selectedUserId === -1) {
       alert("greska")
       return;
     }
     this.userService.deleteUser(this.selectedUserId)
       .subscribe({
-        next: val =>{
+        next: val => {
           console.log(val)
           // this.getUsers()
           this.users = this.users.filter(user => user.id != this.selectedUserId);
@@ -137,7 +137,7 @@ export class UsersComponent {
           this.closeDeleteConfirmationDialog()
           //strpati sve podatke u listu usera
         },
-        error: err =>{
+        error: err => {
           console.log(err)
           this.selectedUserId = -1
           this.displayConfirmationDialog = !this.displayConfirmationDialog
@@ -145,39 +145,39 @@ export class UsersComponent {
       })
   }
 
-  activateUser(id:number){
+  activateUser(id: number) {
     this.userService.activateUser(id)
-    .subscribe({
-      next: val=>{
-        for(const item of this.users){
-          if(item.id == id){
-            item.active = true;
-            // this.userService.activateUser(id)
+      .subscribe({
+        next: val => {
+          for (const item of this.users) {
+            if (item.id == id) {
+              item.active = true;
+              // this.userService.activateUser(id)
+            }
           }
+        },
+        error: err => {
+          alert(err)
         }
-      },
-      error: err=>{
-        alert(err)
-      }
-    })
+      })
   }
 
-  deactivateUser(id:number){
+  deactivateUser(id: number) {
     this.userService.deactivateUser(id)
-    .subscribe({
-      next: val=>{
-        console.log(val)
-        for(const item of this.users){
-          if(item.id == id){
-            item.active = false;
-            //this.userService.deactivateUser(id)
+      .subscribe({
+        next: val => {
+          console.log(val)
+          for (const item of this.users) {
+            if (item.id == id) {
+              item.active = false;
+              //this.userService.deactivateUser(id)
+            }
           }
+        },
+        error: err => {
+          alert(err.toString())
         }
-      },
-      error: err=>{
-        alert(err.toString())
-      }
-    })
+      })
   }
 
   // Otvaramo AddUserComponent komponentu (child)
@@ -186,7 +186,7 @@ export class UsersComponent {
   }
 
   // Prosledjivanje id-a user-a child-u (komponenti EditUser)
-  callEditUserChild(id: number){
+  callEditUserChild(id: number) {
     const user = this.users.find(user => user.id === id) // iz liste svih user-a uzimamo onog sa prosledjenim id
     this.editUserChild.open(user); // editUserChild je referenca na child komponentu (EditUserComponent)
   }
@@ -205,13 +205,13 @@ export class UsersComponent {
       editedUser.phone,
       editedUser.active
     )
-    
+
       .subscribe({
-        next: val =>{
+        next: val => {
           this.editUserChild.close()
           this.getUsers()
         },
-        error: err =>{
+        error: err => {
           this.toastr.error("Pogresno uneti podaci!")
         }
       })
@@ -232,13 +232,13 @@ export class UsersComponent {
       $event.jmbg,
       $event.phone
     ).subscribe({
-      next: val =>{
+      next: val => {
         this.getUsers()
         this.showToastAdd()
         this.addUserChild.close()
         //strpati sve podatke u listu usera
       },
-      error: err =>{
+      error: err => {
         this.toastr.error("Pogresno uneti podaci!")
       }
     })

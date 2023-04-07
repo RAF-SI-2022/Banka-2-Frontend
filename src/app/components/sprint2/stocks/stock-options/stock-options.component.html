@@ -6,7 +6,7 @@
   </div>
 
   <p-table [value]="stockOptions" [tableStyle]="{ 'min-width': '50rem' }">
-    <ng-template  pTemplate="header">
+    <ng-template pTemplate="header">
       <tr>
         <th colspan="6" class="text-center">Calls</th>
         <th></th>
@@ -37,19 +37,31 @@
     </ng-template>
     <ng-template pTemplate="body" let-stockOption>
       <tr>
-        <td [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.last }}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.theta }}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.bid }}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.ask }}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.volatile }}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.oi }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.last }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.theta }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.bid }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.ask }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.volatile }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.oi }}</td>
         <td>${{ stockOption.strike}}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.last}}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.theta}}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.bid}}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.ask}}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.volatile}}</td>
-        <td [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.oi}}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.last}}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.theta}}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.bid}}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.ask}}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.volatile}}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.oi}}</td>
       </tr>
     </ng-template>
   </p-table>

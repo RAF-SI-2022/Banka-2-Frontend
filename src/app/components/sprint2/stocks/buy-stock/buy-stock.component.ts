@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Stock} from "../../../../models/stock-exchange.model";
-import { StockService } from 'src/app/services/stock.service';
-import { ToastrService } from 'ngx-toastr';
+import {StockService} from 'src/app/services/stock.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-buy-stock',
@@ -19,13 +19,12 @@ export class BuyStockComponent {
   isFormValid = false;
 
 
-
 //TODO:pokupiti limit od usera i stock name iz stocka
-  constructor(private toastr: ToastrService,private formBuilder: FormBuilder, private stockService: StockService) {
+  constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private stockService: StockService) {
     this.buyStockForm = this.formBuilder.group({
-      kolicina: [null , Validators.required],
-      limit: [null , Validators.required],
-      stop: [null , Validators.required],
+      kolicina: [null, Validators.required],
+      limit: [null, Validators.required],
+      stop: [null, Validators.required],
       allOrNone: false,
       margin: false
     });
@@ -44,18 +43,18 @@ export class BuyStockComponent {
         this.buyStockForm.get('stop')?.value,
         this.buyStockForm.get('allOrNone')?.value,
         this.buyStockForm.get('margin')?.value
-        ).subscribe({
-          next: val => {
-            this.stockBuyEmitter.emit(this.stock.symbol);
+      ).subscribe({
+        next: val => {
+          this.stockBuyEmitter.emit(this.stock.symbol);
 
-          },
-          error: err => {
-            this.toastr.error("Greska pri prodaji")
-            this.buyStockVisible =false
-          }
-        });
-        this.resetForm()
-        
+        },
+        error: err => {
+          this.toastr.error("Greska pri prodaji")
+          this.buyStockVisible = false
+        }
+      });
+      this.resetForm()
+
     }
   }
 

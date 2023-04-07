@@ -101,7 +101,6 @@ td {
 }
 
 
-
 @media only screen and (max-width: 600px) {
 
   ::ng-deep .p-buttonset > .p-button.p-highlight {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -7,7 +7,7 @@ import {
   RouterStateSnapshot,
   UrlTree
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import {ToastrService} from "ngx-toastr";
 import {Location} from "@angular/common";
 
@@ -24,7 +24,7 @@ export class LoginGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
 
-    if((localStorage.getItem('token') || sessionStorage.getItem('token') ) !== null){
+    if ((localStorage.getItem('token') || sessionStorage.getItem('token')) !== null) {
       this.toastr.info("Vec ste ulogovani")
       return this.router.navigate(['home']);
     }

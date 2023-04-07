@@ -2,15 +2,15 @@ import {Component, ViewChild} from '@angular/core';
 import {Table} from "primeng/table";
 import {MenuItem} from "primeng/api";
 import {Stock} from "../../../../models/stock-exchange.model";
-import { ToastrService } from 'ngx-toastr';
-import { StockDetailsComponent } from '../stock-details/stock-details.component';
-import { SortEvent } from 'primeng/api';
-import { AuthService } from 'src/app/services/auth.service';
+import {ToastrService} from 'ngx-toastr';
+import {StockDetailsComponent} from '../stock-details/stock-details.component';
+import {SortEvent} from 'primeng/api';
+import {AuthService} from 'src/app/services/auth.service';
 import {BuyStockComponent} from "../buy-stock/buy-stock.component";
-import { SellStockComponent } from '../sell-stock/sell-stock.component';
-import { StockService } from 'src/app/services/stock.service';
-import { UserService } from 'src/app/services/user-service.service';
-import { interval } from 'rxjs';
+import {SellStockComponent} from '../sell-stock/sell-stock.component';
+import {StockService} from 'src/app/services/stock.service';
+import {UserService} from 'src/app/services/user-service.service';
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-stocks-table',
@@ -37,12 +37,12 @@ export class StocksComponent {
   symbolInput: string;
 
 
-  @ViewChild(StockDetailsComponent, {static : true}) stockDetailsChild : StockDetailsComponent
-  @ViewChild(BuyStockComponent, {static : true}) buyStockComponent : BuyStockComponent
-
+  @ViewChild(StockDetailsComponent, {static: true}) stockDetailsChild: StockDetailsComponent
+  @ViewChild(BuyStockComponent, {static: true}) buyStockComponent: BuyStockComponent
 
 
   @ViewChild('dt') dt: Table | undefined;
+
   applyFilterGlobal($event: any, stringVal: any) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
@@ -51,13 +51,12 @@ export class StocksComponent {
   }
 
 
-
   ngOnInit() {
 
     const source = interval(10000); // 10000 ms = 10 seconds
     source.subscribe(() => {
       // this.getUser()
-      
+
       this.getAllStocks();
       this.getMyStocks();
     });
@@ -84,35 +83,35 @@ export class StocksComponent {
     // this.insertUsers();
   }
 
-  getUserData(){
+  getUserData() {
     this.userService.getUserData().subscribe({
-      next: val=>{
+      next: val => {
 
         this.userId = val.id
         this.getMyStocks()
         // this.stocks = this.allStocks
       },
-      error: err=>{
+      error: err => {
         console.log(err);
 
       }
     })
   }
 
-  getAllStocks(){
+  getAllStocks() {
     this.stockService.getAllStocks().subscribe({
-      next: val=>{
+      next: val => {
         this.allStocks = val;
 
         // TODO dodati onaj temp kao u getMyStocks
 
-        if(!this.switch){
+        if (!this.switch) {
           this.stocks = this.allStocks
         }
 
         this.loading = false
       },
-      error: err=>{
+      error: err => {
         console.log(err);
         this.toastr.error("Greska pri dohvatanju podataka")
         this.allStocks = []
@@ -120,71 +119,67 @@ export class StocksComponent {
     })
   }
 
-  getStockBySymbol(symbol: string){
+  getStockBySymbol(symbol: string) {
     this.stockService.getStockBySymbol(symbol)
-    .subscribe({
-      next: val=>{
+      .subscribe({
+        next: val => {
           console.log(val);
           //todo dodati u red
           this.allStocks.push(val)
-          if(!this.switch){
+          if (!this.switch) {
             this.stocks = this.allStocks
           }
+        },
+        error: err => {
+          console.log(err);
+          this.toastr.error("Greska pri trazenju akcije")
+        }
+      })
+  }
+
+  getMyStocks() {
+    this.stockService.getMyStocks().subscribe({
+      next: val => {
+        let tempStocks: Stock[] = []
+        for (const single of val) {
+
+          if (single.user.id === this.userId) {
+            console.log(single);
+
+            if (single.amount > 0) {
+              tempStocks.push(single.stock)
+            } else if (single.amountForSale > 0) {
+              tempStocks.push(single.stock)
+            }
+          }
+        }
+        if (tempStocks.length < 1) {
+          this.myStocks = []
+        } else {
+          this.myStocks = tempStocks
+        }
+        if (this.switch) {
+          this.stocks = this.myStocks
+        }
       },
-      error: err=>{
+      error: err => {
         console.log(err);
-        this.toastr.error("Greska pri trazenju akcije")
+        this.toastr.error("Greska pri dohvatanju podataka")
+
       }
     })
   }
 
-  getMyStocks(){
-    this.stockService.getMyStocks().subscribe({
-      next: val=>{
-        let tempStocks: Stock[] = []
-        for(const single of val){
 
-          if(single.user.id === this.userId){
-            console.log(single);
-
-            if(single.amount > 0){
-              tempStocks.push(single.stock)
-            }
-            else if(single.amountForSale > 0){
-              tempStocks.push(single.stock)
-            }
-          }
-        }
-        if(tempStocks.length <1){
-          this.myStocks = []
-        }
-        else{
-          this.myStocks = tempStocks
-        }
-        if(this.switch){
-          this.stocks = this.myStocks
-        }
-    },
-    error: err=>{
-      console.log(err);
-      this.toastr.error("Greska pri dohvatanju podataka")
-
-    }
-    })
-  }
-
-
-
-  promeniOpciju(){
-    if(this.switch){
+  promeniOpciju() {
+    if (this.switch) {
       this.stocks = this.myStocks
-    }
-    else{
+    } else {
       this.stocks = this.allStocks
     }
   }
 
-  toggleBuyStockDialog(event: MouseEvent, stock: Stock){
+  toggleBuyStockDialog(event: MouseEvent, stock: Stock) {
     event.stopPropagation()
 
     this.buyStockComponent.buyStockVisible = true;
@@ -196,8 +191,7 @@ export class StocksComponent {
   }
 
 
-
-  openMoreInfoDialog(event: Stock){
+  openMoreInfoDialog(event: Stock) {
     // Slanje podataka na details dialog
 
     this.stockDetailsChild.stock = event
@@ -221,9 +215,9 @@ export class StocksComponent {
     }
   }
 
-  removeFromSellStock(symbol:string){
+  removeFromSellStock(symbol: string) {
     this.stockService.removeStockFromSale(symbol).subscribe({
-      next:val=>{
+      next: val => {
         this.toastr.info("Uspesno skinut!");
         this.getAllStocks();
         this.getMyStocks();
@@ -236,14 +230,13 @@ export class StocksComponent {
       }
     })
   }
-  
-  refreshBuy(symbol:string){
+
+  refreshBuy(symbol: string) {
     this.getAllStocks();
     this.getMyStocks();
     this.buyStockComponent.buyStockVisible = false;
     this.toastr.info("Akcija " + symbol + " je uspesno kupljena!")
   }
-
 
 
 }

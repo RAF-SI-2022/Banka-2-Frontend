@@ -98,7 +98,7 @@ input ~ i {
   left: 32px;
   top: 50%;
   transform: translateY(-50%);
-  transition: color   0.4s;
+  transition: color 0.4s;
 }
 
 input:focus ~ i {
@@ -125,13 +125,13 @@ button.submit:hover {
 @media only screen and (max-width: 768px) {
 
   body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .side {
-      display: none!important;
+    display: none !important;
   }
 
   .background {
@@ -147,6 +147,6 @@ button.submit:hover {
   height: auto;
 }
 
-.pointer{
+.pointer {
   cursor: pointer
 }

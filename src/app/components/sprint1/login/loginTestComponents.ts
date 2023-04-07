@@ -22,7 +22,7 @@ export class LoginTestComponents {
 
   id: number
 
-  testSessionLogin(user: { mail: string; password: string }){
+  testSessionLogin(user: { mail: string; password: string }) {
     cy.visit('http://localhost:4200/')
     cy.get('#email').type(user.mail)
     cy.get('#password').type(user.password)
@@ -33,7 +33,7 @@ export class LoginTestComponents {
       .should('not.be.empty')
   }
 
-  testRememberLogin(user: { mail: string; password: string }){
+  testRememberLogin(user: { mail: string; password: string }) {
     cy.visit('http://localhost:4200/')
     cy.get('#email').type(user.mail)
     cy.get('#password').type(user.password)
@@ -45,7 +45,7 @@ export class LoginTestComponents {
       .should('not.be.empty')
   }
 
-  testBadCredentials(){
+  testBadCredentials() {
     cy.visit('http://localhost:4200/')
     cy.get('#email').type("badCredentials@mail.com")
     cy.get('#password').type("badCredentials")
@@ -62,7 +62,7 @@ export class LoginTestComponents {
     cy.get(':nth-child(2) > .dropdown-item').click()
   }
 
-  login(user: { mail: string; password: string }){
+  login(user: { mail: string; password: string }) {
     cy.visit('http://localhost:4200/')
     cy.get('#email').type(user.mail)
     cy.get('#password').type(user.password)

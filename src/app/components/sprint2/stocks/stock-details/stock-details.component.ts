@@ -89,7 +89,7 @@ export class StockDetailsComponent {
             this.chart.refresh();
           },
           error: err => {
-            if(err.error.status === 429) {
+            if (err.error.status === 429) {
               this.toaster.warning("Sačekajte par sekundi pre sledeće promene perioda.")
             }
           }

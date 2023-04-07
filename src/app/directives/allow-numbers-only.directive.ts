@@ -1,11 +1,12 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import {Directive, ElementRef, HostListener} from '@angular/core';
 
 @Directive({
   selector: '[appAllowNumbersOnly]'
 })
 export class AllowNumbersOnlyDirective {
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef) {
+  }
 
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {

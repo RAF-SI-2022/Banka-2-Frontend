@@ -3,6 +3,7 @@
   <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 
   <div class="table-container">
+    <p-tabMenu [model]="tabMenuItems" [activeItem]="activeTabMenuItem"></p-tabMenu>
     <p-table #dt [value]="stocks" class="p-datatable-header"
              [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
              [paginator]="true" [alwaysShowPaginator]="false"
@@ -12,14 +13,15 @@
     >
       <ng-template pTemplate="caption">
 
+
         <div class="table-header row">
           <div class="col-6 col-lg-6 col-md-6 text-start table-name">
             <div style="display:flex; align-items: center; gap: 8px;">
               <h3 class="berza-mojeakcije-text">
                 Akcije
               </h3>
-              <button class="ms-3 mb-1" pButton pRipple style="background-color: #3d3d3d; cursor: pointer;"
-                      [routerLink]="'/stocks-table/sell'" label="Moje akcije"></button>
+<!--              <button class="ms-3 mb-1" pButton pRipple style="background-color: #3d3d3d; cursor: pointer;"-->
+<!--                      [routerLink]="'/stocks-table/sell'" label="Moje akcije"></button>-->
             </div>
           </div>
 
@@ -209,7 +211,7 @@
               </div>
               <div>
                 <strong>
-                  {{stock.changePercent }}
+                  {{ stock.changePercent }}
                 </strong>
               </div>
             </div>

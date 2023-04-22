@@ -218,6 +218,14 @@
                 <div class="wave"></div>
               </button>
 
+              <button [id]="'resetLimitBtn' + user.id" type="button" (click)="resetUserLimit(user.id)"
+                      class="btn-i btn-circle" title="Resetuj limit">
+                <span>
+                  <i class="pi pi-replay"></i>
+                </span>
+                <div class="wave"></div>
+              </button>
+
 
               <!--
                             <button [id]="'editBtn' + user.id" pButton (click)="callEditUserChild(user.id)" label="Izmeni" type="button" class="p-button-raised p-button-rounded p-button-sm" style="max-height:2rem; max-width: 4.4rem; font-size:10px; margin-left: 3px; margin-top: 3px;"></button>

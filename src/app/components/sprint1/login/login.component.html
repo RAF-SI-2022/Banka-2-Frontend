@@ -1,43 +1,47 @@
 <div class="background">
-    <section class="side">
-      <img class="login-image" src="../../../assets/icons/blogo.png" alt="">
-    </section>
-    <section class="main">
-      <div class="login-container">
-          <p class="title">Dobrodošli u Banku 2!</p>
-          <div class="separator"></div>
-          <p class="welcome-message">Unesite svoj email i lozinku kako biste pristupili svim našim servisima:</p>
-          <form [formGroup]="loginForm" (submit)="login()">
-            <div class="form-control">
-              <input class="w-100" [formControlName]="'email'" id="email" type="email" pInputText required placeholder="Email">
-                <i class="pi pi-user"></i>
-            </div>
-            <div class="form-control">
-            <input class="w-100" [formControlName]="'password'" id="password" type="password" pInputText required placeholder="Password">
-                <i class="pi pi-key"></i>
-            </div>
-            <button pButton pRipple label="LOGIN" class="submit" loadingIcon="pi pi-spinner " [disabled]="!isFormValid" [loading]="isLoading"></button>
+  <section class="side">
+    <img class="login-image" src="../../../assets/icons/blogo.png" alt="">
+  </section>
+  <section class="main">
+    <div class="login-container">
+      <p class="title">Dobrodošli u Banku 2!</p>
+      <div class="separator"></div>
+      <p class="welcome-message">Unesite svoj email i lozinku kako biste pristupili svim našim servisima:</p>
+      <form [formGroup]="loginForm" (submit)="login()">
+        <div class="form-control">
+          <input class="w-100" [formControlName]="'email'" id="email" type="email" pInputText required
+                 placeholder="Email">
+          <i class="pi pi-user"></i>
+        </div>
+        <div class="form-control">
+          <input class="w-100" [formControlName]="'password'" id="password" type="password" pInputText required
+                 placeholder="Password">
+          <i class="pi pi-key"></i>
+        </div>
+        <button pButton pRipple label="LOGIN" class="submit" loadingIcon="pi pi-spinner " [disabled]="!isFormValid"
+                [loading]="isLoading"></button>
 
-            <div class="row mt-2 w-100" style="max-width: 320px;">
-              <div class="col-6">
-                <div class="d-flex align-items-center remember-me">
-                  <p-checkbox [formControlName]="'remember'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
-                  <small>Zapamti me</small>
-                </div>
-              </div>
-
-              <div class="col-6 text-end text-nowrap">
-                <small class="pointer" [routerLink]="'/forgot-password'">Zaboravili ste lozinku?</small>
-              </div>
+        <div class="row mt-2 w-100" style="max-width: 320px;">
+          <div class="col-6">
+            <div class="d-flex align-items-center remember-me">
+              <p-checkbox [formControlName]="'remember'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
+              <small>Zapamti me</small>
             </div>
-          </form>
-      </div>
-    </section>
+          </div>
+
+          <div class="col-6 text-end text-nowrap">
+            <small class="pointer" [routerLink]="'/forgot-password'">Zaboravili ste lozinku?</small>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
 </div>
 
 
 <p-dialog class="conformation-dialog" [style]="{width: '20vw'}" [breakpoints]="{'1280px': '50vw'}"
-          header="Nalog nije aktivan" class="text-center" (onHide)="closeUserNotActive()" [(visible)]="userNotActive" [modal]="true" >
+          header="Nalog nije aktivan" class="text-center" (onHide)="closeUserNotActive()" [(visible)]="userNotActive"
+          [modal]="true">
 
   <div class="row">
     <!-- <h5 class="text-center mb-4">Nalog nije aktivan</h5> -->

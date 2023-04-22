@@ -1,9 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Stock, UserStock } from 'src/app/models/stock-exchange.model';
-import { SellStockComponent } from '../sell-stock/sell-stock.component';
-import { ToastrService } from 'ngx-toastr';
-import { StockService } from 'src/app/services/stock.service';
+import {Component, ViewChild} from '@angular/core';
+import {MenuItem} from 'primeng/api';
+import {Stock, UserStock} from 'src/app/models/stock-exchange.model';
+import {SellStockComponent} from '../sell-stock/sell-stock.component';
+import {ToastrService} from 'ngx-toastr';
+import {StockService} from 'src/app/services/stock.service';
 
 @Component({
   selector: 'app-stock-sell-table',
@@ -19,12 +19,13 @@ export class StockSellTableComponent {
   loading: boolean = true;
 
 
-  @ViewChild(SellStockComponent, {static : true}) sellStockComponent : SellStockComponent
-  constructor(private toastr: ToastrService,private stockService: StockService){
+  @ViewChild(SellStockComponent, {static: true}) sellStockComponent: SellStockComponent
+
+  constructor(private toastr: ToastrService, private stockService: StockService) {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
@@ -35,39 +36,39 @@ export class StockSellTableComponent {
     this.getMyStocks()
   }
 
-  getMyStocks(){
+  getMyStocks() {
     this.stockService.getMyStocks().subscribe({
-      next: val=>{
+      next: val => {
         this.userStocks = val;
         this.loading = false;
       }
-      ,error: err=>{
+      , error: err => {
         this.toastr.error("Greska pri dovlacenju podataka")
-        this.loading= false
+        this.loading = false
       }
     })
   }
 
 
-  toggleSellStockDialog(stock: Stock){
+  toggleSellStockDialog(stock: Stock) {
     this.sellStockComponent.sellStockVisible = true;
     this.sellStockComponent.stock = stock;
   }
-  
-  refreshSell(symbol:string){
+
+  refreshSell(symbol: string) {
     this.sellStockComponent.sellStockVisible = false;
     this.toastr.info("Akcija " + symbol + " je uspesno postavljena na prodaju!")
     this.getMyStocks()
   }
 
-  removeFromSale(symbol: string){
+  removeFromSale(symbol: string) {
     this.stockService.removeStockFromSale(symbol).subscribe({
-      next: val=>{
+      next: val => {
         // console.log(val);
         this.getMyStocks()
         this.toastr.info("Uspesno skinuto")
       },
-      error: err=>{
+      error: err => {
         // console.log(err);
         this.toastr.error("Greska pri skidanju")
       }

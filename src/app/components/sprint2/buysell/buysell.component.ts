@@ -41,8 +41,6 @@ export class BuysellComponent {
 
   display: boolean = false;
 
-  
-
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.types = [
@@ -62,7 +60,7 @@ export class BuysellComponent {
     this.stocksForm = this.formBuilder.group({
       type: [''],
       akcija: ['', Validators.required],
-      kolicina: [null,Validators.required],
+      kolicina: [null, Validators.required],
       buysell: [''],
       limit: [null, Validators.required],
       stop: [null, Validators.required],
@@ -75,7 +73,7 @@ export class BuysellComponent {
     this.futuresForm = this.formBuilder.group({
       type: [''],
       akcija: ['', Validators.required],
-      kolicina: [null,Validators.required],
+      kolicina: [null, Validators.required],
       buysell: [''],
       limit: [null, Validators.required],
       stop: [null, Validators.required],
@@ -87,8 +85,8 @@ export class BuysellComponent {
 
     this.forexForm = this.formBuilder.group({
       type: [''],
-      valuta1: [ {name: 'AED'}, Validators.required],
-      valuta2: [  {name: 'AED'}, Validators.required],
+      valuta1: [{name: 'AED'}, Validators.required],
+      valuta2: [{name: 'AED'}, Validators.required],
       kolicina: [null, Validators.required],
       buysell: [''],
       limit: [null, Validators.required],
@@ -134,7 +132,7 @@ export class BuysellComponent {
 
     this.display = false
 
-    if(this.selectedType.name ==="FOREX"){
+    if (this.selectedType.name === "FOREX") {
 
       console.log(
         "Type:", this.forexForm.get('type')?.value.name,
@@ -145,9 +143,7 @@ export class BuysellComponent {
         " Stop:", this.forexForm.get('stop')?.value,
         " AON:", this.forexForm.get('allornone')?.value,
       )
-    }
-
-    else if(this.selectedType.name ==="STOCKS"){
+    } else if (this.selectedType.name === "STOCKS") {
 
       console.log(
         "Type:", this.stocksForm.get('type')?.value.name,
@@ -161,9 +157,7 @@ export class BuysellComponent {
       )
 
 
-    }
-
-    else if(this.selectedType.name ==="FUTURES"){
+    } else if (this.selectedType.name === "FUTURES") {
 
       console.log(
         "Type:", this.futuresForm.get('type')?.value.name,

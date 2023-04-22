@@ -10,7 +10,7 @@ import {ToastrService} from 'ngx-toastr';
 import {StockDetailsComponent} from "../../stocks/stock-details/stock-details.component";
 import {SellFutureComponent} from "../sell-future/sell-future.component";
 import {SellFutureWithLimitComponent} from "../sell-future-with-limit/sell-future-with-limit.component";
-import { interval } from 'rxjs';
+import {interval} from 'rxjs';
 import {BuyFutureWithLimitComponent} from "../buy-future-with-limit/buy-future-with-limit.component";
 import {TransactionsArrayService} from "../../../../services/transactions-array.service";
 
@@ -21,9 +21,9 @@ import {TransactionsArrayService} from "../../../../services/transactions-array.
 })
 export class SingleFutureTableComponent {
 
-  @ViewChild(SellFutureComponent, {static : true}) sellFutureComponent : SellFutureComponent
-  @ViewChild(BuyFutureWithLimitComponent, {static : true}) buyFutureWithLimitComponent : BuyFutureWithLimitComponent
-  @ViewChild(SellFutureWithLimitComponent, {static : true}) sellFutureWithLimitComponent : SellFutureWithLimitComponent
+  @ViewChild(SellFutureComponent, {static: true}) sellFutureComponent: SellFutureComponent
+  @ViewChild(BuyFutureWithLimitComponent, {static: true}) buyFutureWithLimitComponent: BuyFutureWithLimitComponent
+  @ViewChild(SellFutureWithLimitComponent, {static: true}) sellFutureWithLimitComponent: SellFutureWithLimitComponent
 
   loading: boolean = true; // on load setovati na false
 
@@ -146,7 +146,7 @@ export class SingleFutureTableComponent {
         // console.log(val)
         let tempTransaction: Transaction = {
           exchangeMICCode: futureToBuy.futureName, // futureName
-          transaction : "Kupovina", //KUPLJENO Provalimo iz poziva
+          transaction: "Kupovina", //KUPLJENO Provalimo iz poziva
           hartija: "Terminski ugovor",  //FUTURE provalimo iz poziva
           volume: futureToBuy.contractSize,  //contractSize
           price: futureToBuy.maintenanceMargin, // maintenanceMargin
@@ -265,68 +265,65 @@ export class SingleFutureTableComponent {
     })
   }
 
-  checkIfFutureIsWaitingSell(id: number): boolean{
-    for(const singleId of this.idsToBeSold){
-      if(singleId === id){
+  checkIfFutureIsWaitingSell(id: number): boolean {
+    for (const singleId of this.idsToBeSold) {
+      if (singleId === id) {
         return false;
       }
     }
     return true;
   }
 
-  checkIfFutureIsWaitingBuy(): boolean{
-    if(this.idsToBeBought.length === 0){
+  checkIfFutureIsWaitingBuy(): boolean {
+    if (this.idsToBeBought.length === 0) {
       return true;
     }
 
-    for(const singleId of this.idsToBeBought){
-      if(singleId === this.userId){
+    for (const singleId of this.idsToBeBought) {
+      if (singleId === this.userId) {
         return false;
       }
     }
     return true;
   }
 
-  removeFutureFromWaitingToBeSold(id: number){
+  removeFutureFromWaitingToBeSold(id: number) {
     this.stockService.removeFromWaitingSellFuture(id)
-    .subscribe({
-      next: val=>{
-        // console.log(val.message);
-        this.toastr.info("Uspesno skinut sa cekanja")
-        this.getAllFutures()
-      },
-      error: err=>{
-        // console.log(err);
-        this.toastr.error("Greska pri skidanju")
-        this.getAllFutures()
-      }
-    })
+      .subscribe({
+        next: val => {
+          // console.log(val.message);
+          this.toastr.info("Uspesno skinut sa cekanja")
+          this.getAllFutures()
+        },
+        error: err => {
+          // console.log(err);
+          this.toastr.error("Greska pri skidanju")
+          this.getAllFutures()
+        }
+      })
 
 
   }
 
-  removeFutureFromWaitingToBeBought(){
+  removeFutureFromWaitingToBeBought() {
     this.stockService.removeFromWaitingBuyFuture(
       this.userId
     )
-    .subscribe({
-      next: val=>{
-        // console.log(val.message);
-        this.toastr.info("Uspesno skinut sa cekanja")
-        this.getAllFutures()
-      },
-      error: err=>{
-        // console.log(err);
-        this.toastr.error("Greska pri skidanju")
-        this.getAllFutures()
-      }
-    })
-
+      .subscribe({
+        next: val => {
+          // console.log(val.message);
+          this.toastr.info("Uspesno skinut sa cekanja")
+          this.getAllFutures()
+        },
+        error: err => {
+          // console.log(err);
+          this.toastr.error("Greska pri skidanju")
+          this.getAllFutures()
+        }
+      })
 
 
   }
-
-
 
 
 }

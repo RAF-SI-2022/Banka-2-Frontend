@@ -1,8 +1,8 @@
 import clean = Mocha.utils.clean;
 
-export class UsersTestComponents{
+export class UsersTestComponents {
 
-  testListFilter(){
+  testListFilter() {
     cy.log("TABLE TEST------------------------------")
 
     //test pretrage
@@ -25,7 +25,7 @@ export class UsersTestComponents{
     cy.get('[psortablecolumn="id"]').click().click()
   }
 
-  testEditUser(id: number){
+  testEditUser(id: number) {
     cy.log("EDIT USER TEST------------------------------")
 
     cy.get("#buttons" + id).then($body => {    //od usera dobijamo dugmice
@@ -71,14 +71,14 @@ export class UsersTestComponents{
     });
   }
 
-  testDelete(id: number){
+  testDelete(id: number) {
     cy.log("DELETE TEST------------------------------")
 
     cy.get("#deleteBtn" + id).click()
     cy.get('.text-start > .p-ripple').click()
   }
 
-  testAddUser(email: string){
+  testAddUser(email: string) {
     cy.log("ADD USER TEST------------------------------")
 
     cy.get('#addUserBtn').click()

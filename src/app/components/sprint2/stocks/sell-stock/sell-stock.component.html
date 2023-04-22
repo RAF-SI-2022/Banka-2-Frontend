@@ -1,4 +1,5 @@
-<p-dialog [style]="{width: '35vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}" [draggable]="false"
+<p-dialog [style]="{width: '35vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
           [(visible)]="sellStockVisible" *ngIf="true" [modal]="true" (onHide)="resetForm()">
 
   <ng-template pTemplate="header">
@@ -22,7 +23,7 @@
           <p-inputNumber placeholder="Stop" [formControlName]="'stop'" inputId="integeronly"></p-inputNumber>
         </div>
         <div class="col-lg-12 text-center mb-3">
-          <small style="font-weight: 300" >* Ako su oba 0 onda se radi Market Order <br>
+          <small style="font-weight: 300">* Ako su oba 0 onda se radi Market Order <br>
             * Ako je jedan stavljen, a drugi 0, radi se šta ste odabrail (Limit ili Stop Order) <br>
             * Ako su oba stavljena, radi se Stop-Limit order</small>
         </div>

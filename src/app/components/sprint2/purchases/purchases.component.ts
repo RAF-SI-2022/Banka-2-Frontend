@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 import {MenuItem} from "primeng/api";
-import { Transaction, Type } from 'src/app/models/stock-exchange.model';
+import {Transaction, Type} from 'src/app/models/stock-exchange.model';
 import {TransactionsArrayService} from "../../../services/transactions-array.service";
-
 
 
 @Component({
@@ -21,7 +20,7 @@ export class PurchasesComponent {
 
   status!: any[];
 
-  constructor(private transactionService: TransactionsArrayService){
+  constructor(private transactionService: TransactionsArrayService) {
 
   }
 
@@ -38,14 +37,14 @@ export class PurchasesComponent {
       {label: 'Odobrene', value: 'ODOBRENA'},
       {label: 'Odbijene', value: 'ODBIJENA'},
       {label: 'Na čekanju', value: 'NA CEKANJU'}
-  ]
+    ]
 
-    this.transactions=this.transactionService.getTransactions()
+    this.transactions = this.transactionService.getTransactions()
 
   }
 
 
-  refresh(){
+  refresh() {
 
     //TODO ovde ide logika i poziv na servis koji ce pozvati refresh i resetovati tabelu na berza mode
     //I odmah za njim i filtriranje za userove hartije

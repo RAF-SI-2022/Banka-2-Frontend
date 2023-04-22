@@ -61,6 +61,7 @@ import {BuyFutureWithLimitComponent} from './components/sprint2/futures/buy-futu
 
 import {AllowNumbersOnlyDirective} from 'src/app/directives/allow-numbers-only.directive';
 import {StockSellTableComponent} from './components/sprint2/stocks/stock-sell-table/stock-sell-table.component';
+import {TabMenuModule} from "primeng/tabmenu";
 
 
 @NgModule({
@@ -95,38 +96,39 @@ import {StockSellTableComponent} from './components/sprint2/stocks/stock-sell-ta
     StockSellTableComponent,
 
   ],
-  imports: [
-    InputNumberModule,
-    SelectButtonModule,
-    MultiSelectModule,
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    InputTextModule,
-    RippleModule,
-    CheckboxModule,
-    ReactiveFormsModule,
-    PasswordModule,
-    ButtonModule,
-    BrowserAnimationsModule,
-    CardModule,
-    HttpClientModule,
-    TableModule,
-    DialogModule,
-    DropdownModule,
-    TableModule,
-    FormsModule,
-    BreadcrumbModule,
-    SkeletonModule,
-    ToastrModule.forRoot(),
-    SidebarModule,
-    ChartModule,
-    DividerModule,
-    InputSwitchModule,
-    StyleClassModule,
-    ColorPickerModule,
-    AccordionModule
-  ],
+    imports: [
+        InputNumberModule,
+        SelectButtonModule,
+        MultiSelectModule,
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        InputTextModule,
+        RippleModule,
+        CheckboxModule,
+        ReactiveFormsModule,
+        PasswordModule,
+        ButtonModule,
+        BrowserAnimationsModule,
+        CardModule,
+        HttpClientModule,
+        TableModule,
+        DialogModule,
+        DropdownModule,
+        TableModule,
+        FormsModule,
+        BreadcrumbModule,
+        SkeletonModule,
+        ToastrModule.forRoot(),
+        SidebarModule,
+        ChartModule,
+        DividerModule,
+        InputSwitchModule,
+        StyleClassModule,
+        ColorPickerModule,
+        AccordionModule,
+        TabMenuModule
+    ],
   // exports: [
   //   ActivityPipe
   // ],

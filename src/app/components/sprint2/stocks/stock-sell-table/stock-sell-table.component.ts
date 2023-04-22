@@ -4,6 +4,7 @@ import {Stock, UserStock} from 'src/app/models/stock-exchange.model';
 import {SellStockComponent} from '../sell-stock/sell-stock.component';
 import {ToastrService} from 'ngx-toastr';
 import {StockService} from 'src/app/services/stock.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-stock-sell-table',
@@ -13,6 +14,9 @@ import {StockService} from 'src/app/services/stock.service';
 export class StockSellTableComponent {
 
   breadcrumbItems: MenuItem[]
+  tabMenuItems: MenuItem[];
+
+  activeTabMenuItem: MenuItem
 
   userStocks: UserStock[]
 
@@ -21,7 +25,7 @@ export class StockSellTableComponent {
 
   @ViewChild(SellStockComponent, {static: true}) sellStockComponent: SellStockComponent
 
-  constructor(private toastr: ToastrService, private stockService: StockService) {
+  constructor(private toastr: ToastrService, private stockService: StockService, private router: Router) {
 
   }
 
@@ -32,6 +36,24 @@ export class StockSellTableComponent {
       {label: 'Akcije', routerLink: ['/stocks']},
       {label: 'Moje akcije', routerLink: ['/stocks-table/sell']},
     ];
+
+    this.tabMenuItems = [
+      {
+        label: 'Akcije',
+        icon: 'pi pi-fw pi-chart-line',
+        command: () => {
+          this.router.navigate(['/stocks'])
+        }
+      },
+      { label: 'Moje akcije',
+        icon: 'pi pi-fw pi-user',
+        command: () => {
+          this.router.navigate(['/stocks-table/sell'])
+        }
+      },
+    ];
+
+    this.activeTabMenuItem = this.tabMenuItems[1];
 
     this.getMyStocks()
   }

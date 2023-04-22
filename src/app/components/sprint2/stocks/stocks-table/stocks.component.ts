@@ -11,6 +11,7 @@ import {SellStockComponent} from '../sell-stock/sell-stock.component';
 import {StockService} from 'src/app/services/stock.service';
 import {UserService} from 'src/app/services/user-service.service';
 import {interval} from 'rxjs';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-stocks-table',
@@ -20,7 +21,10 @@ import {interval} from 'rxjs';
 export class StocksComponent {
 
   breadcrumbItems: MenuItem[];
+  tabMenuItems: MenuItem[];
   stocks: Stock[]
+
+  activeTabMenuItem: MenuItem
 
   allStocks: Stock[]
   myStocks: Stock[] = []
@@ -47,7 +51,8 @@ export class StocksComponent {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
-  constructor(private toastr: ToastrService, private userService: UserService, private stockService: StockService) {
+  constructor(private toastr: ToastrService, private userService: UserService,
+              private stockService: StockService, private router: Router) {
   }
 
 
@@ -66,6 +71,24 @@ export class StocksComponent {
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Akcije', routerLink: ['/stocks']}
     ];
+
+    this.tabMenuItems = [
+      {
+        label: 'Akcije',
+        icon: 'pi pi-fw pi-chart-line',
+        command: event => {
+          this.router.navigate(['/stocks'])
+        }
+      },
+      { label: 'Moje akcije',
+        icon: 'pi pi-fw pi-user',
+        command: event => {
+          this.router.navigate(['/stocks-table/sell'])
+        }
+      },
+    ];
+
+    this.activeTabMenuItem = this.tabMenuItems[0];
 
 
     this.getAllStocks()
@@ -237,6 +260,4 @@ export class StocksComponent {
     this.buyStockComponent.buyStockVisible = false;
     this.toastr.info("Akcija " + symbol + " je uspesno kupljena!")
   }
-
-
 }

@@ -243,4 +243,15 @@ export class UsersComponent {
       }
     })
   }
+
+  resetUserLimit(id: number) {
+    this.userService.resetUserLimit(id).subscribe({
+      next: value => {
+        this.getUsers();
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+  }
 }

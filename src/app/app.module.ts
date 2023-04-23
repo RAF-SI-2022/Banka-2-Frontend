@@ -57,11 +57,12 @@ import {AccordionModule} from "primeng/accordion";
 import {SellFutureComponent} from './components/sprint2/futures/sell-future/sell-future.component';
 import {SellFutureWithLimitComponent} from './components/sprint2/futures/sell-future-with-limit/sell-future-with-limit.component';
 import {BuyFutureWithLimitComponent} from './components/sprint2/futures/buy-future-with-limit/buy-future-with-limit.component';
-
+import { TabViewModule } from 'primeng/tabview';
 
 import {AllowNumbersOnlyDirective} from 'src/app/directives/allow-numbers-only.directive';
 import {StockSellTableComponent} from './components/sprint2/stocks/stock-sell-table/stock-sell-table.component';
 import {TabMenuModule} from "primeng/tabmenu";
+import { CapitalComponent } from './components/sprint3/capital/capital.component';
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import {TabMenuModule} from "primeng/tabmenu";
     BuyFutureWithLimitComponent,
     AllowNumbersOnlyDirective,
     StockSellTableComponent,
+    CapitalComponent,
 
   ],
     imports: [
@@ -127,7 +129,8 @@ import {TabMenuModule} from "primeng/tabmenu";
         StyleClassModule,
         ColorPickerModule,
         AccordionModule,
-        TabMenuModule
+        TabMenuModule,
+        TabViewModule
     ],
   // exports: [
   //   ActivityPipe

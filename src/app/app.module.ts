@@ -62,6 +62,7 @@ import {BuyFutureWithLimitComponent} from './components/sprint2/futures/buy-futu
 import {AllowNumbersOnlyDirective} from 'src/app/directives/allow-numbers-only.directive';
 import {StockSellTableComponent} from './components/sprint2/stocks/stock-sell-table/stock-sell-table.component';
 import {TabMenuModule} from "primeng/tabmenu";
+import { CapitalComponent } from './components/sprint3/capital/capital.component';
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import {TabMenuModule} from "primeng/tabmenu";
     BuyFutureWithLimitComponent,
     AllowNumbersOnlyDirective,
     StockSellTableComponent,
+    CapitalComponent,
 
   ],
     imports: [

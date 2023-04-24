@@ -9,12 +9,11 @@
         <p-tabView>
             <p-tabPanel header="Tekuci racun">
 
-                <p-table #dt [value]="dataset" class="p-datatable-header" [rowHover]="true" [rows]="6"
+                <p-table *ngIf="getPermission()" #dt [value]="dataset" class="p-datatable-header" [rowHover]="true" [rows]="6"
                 [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
+
                 currentPageReportTemplate="Prikazani su {first}-{last} tekuci racuni"
                 [globalFilterFields]="['status']">
-
-                
 
 
                 <ng-template pTemplate="caption">
@@ -88,9 +87,27 @@
 
 
             </p-table>
+
+            <p-card *ngIf="!getPermission()" header="Tekući račun">
+                <div class="row text-center">
+                <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
+                    <p style="font-size: 30px; font-weight: bold;">Limit</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">15000</p>
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
+                    <p style="font-size: 30px; font-weight: bold;">Iskoriscenost limita</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">0</p>
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
+                    <p style="font-size: 30px; font-weight: bold;">Raspolozivo</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">15000</p>
+                  </div>
+                  </div>
+            </p-card>
+
             </p-tabPanel>
             <p-tabPanel header="Marzni racun">
-                <p-table #dt [value]="dataset" class="p-datatable-header" [rowHover]="true" [rows]="6"
+                <p-table *ngIf="getPermission()" #dt [value]="dataset" class="p-datatable-header" [rowHover]="true" [rows]="6"
                 [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
                 currentPageReportTemplate="Prikazani su {first}-{last} marzni racuni"
                 [globalFilterFields]="['status']">
@@ -149,7 +166,7 @@
                 </ng-template>
 
                 <ng-template pTemplate="body" let-d>
-                    <tr class="rowHover" (click)="toggleTransactionListDialog()" style="font-size: 12px;">
+                    <tr class="rowHover" (click)="toggleMarginTransactionListDialog()" style="font-size: 12px;">
                         <td>{{d.valuta}}</td>
                         <td>{{d.ukupno}}</td>
                         <td>{{d.rezervisano}}</td>
@@ -157,6 +174,7 @@
                     </tr>
 
                 </ng-template>
+
 
 
             </p-table>
@@ -167,7 +185,7 @@
 
 
 
-        <p-tabView>
+    <p-tabView>
         <p-table [value]="capitalOverview" class="p-datatable-header" [rowHover]="true" [rows]="2">
             <ng-template pTemplate="caption">
                 <div class="table-header row">
@@ -193,7 +211,7 @@
                 </tr>
             </ng-template>
         </p-table>
-</p-tabView>
+    </p-tabView>
 
         
 
@@ -202,3 +220,4 @@
 </div>
 <app-deposit-withdraw-capital></app-deposit-withdraw-capital>
 <app-transaction-list></app-transaction-list>
+<app-margin-transaction-list></app-margin-transaction-list>

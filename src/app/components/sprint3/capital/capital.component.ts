@@ -4,6 +4,7 @@ import { Transaction } from 'src/app/models/stock-exchange.model';
 import { DepositWithdrawCapitalComponent } from '../deposit-withdraw-capital/deposit-withdraw-capital.component';
 import { TransactionListComponent } from '../transaction-list/transaction-list.component';
 import { Router } from '@angular/router';
+import { MarginTransactionListComponent } from '../margin-transaction-list/margin-transaction-list.component';
 /* Model za privremene podatke */
 export interface TableData {
   valuta: string;
@@ -45,6 +46,8 @@ export class CapitalComponent  {
   
   @ViewChild(DepositWithdrawCapitalComponent, {static: true}) depositWithdrawCapitalComponent: DepositWithdrawCapitalComponent
   @ViewChild(TransactionListComponent, {static: true}) transactionListComponent: TransactionListComponent
+  @ViewChild(MarginTransactionListComponent, {static: true}) marginTransactionListComponent: MarginTransactionListComponent
+
 
 
 
@@ -83,11 +86,15 @@ export class CapitalComponent  {
   }
 
   toggleDepositWithdrawCapitalkDialog() {
-    this.depositWithdrawCapitalComponent.open();
+    this.depositWithdrawCapitalComponent.visible=true;
   }
 
   toggleTransactionListDialog() {
     this.transactionListComponent.visible=true;
+  }
+
+  toggleMarginTransactionListDialog() {
+    this.marginTransactionListComponent.visible=true;
   }
 
   refresh() {
@@ -105,6 +112,16 @@ export class CapitalComponent  {
 
   }
 
+  getPermission(): boolean {
+    if (localStorage.getItem("remember") !== null) {
+        if ((localStorage.getItem("permissions")?.includes("CREATE_USERS") && localStorage.getItem("permissions")?.includes("READ_USERS") && localStorage.getItem("permissions")?.includes("DELETE_USERS") && localStorage.getItem("permissions")?.includes("UPDATE_USERS") ) || (localStorage.getItem("permissions")?.includes("ADMIN_USER")))
+          return true
+      } else {
+        if ((sessionStorage.getItem("permissions")?.includes("CREATE_USERS") && sessionStorage.getItem("permissions")?.includes("READ_USERS") && sessionStorage.getItem("permissions")?.includes("DELETE_USERS") && sessionStorage.getItem("permissions")?.includes("UPDATE_USERS") ) || (sessionStorage.getItem("permissions")?.includes("ADMIN_USER")))
+          return true
+    }
+    return false
+  }
 
 }
 

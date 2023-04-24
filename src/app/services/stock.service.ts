@@ -215,5 +215,10 @@ export class StockService {
       {headers: this.headers})
   }
 
+  getAllOrders(): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:8080/api/orders`, {headers: this.headers})
+  }
+
+
 
 }

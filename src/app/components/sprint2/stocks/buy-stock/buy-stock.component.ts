@@ -42,7 +42,7 @@ export class BuyStockComponent {
         this.buyStockForm.get('limit')?.value,
         this.buyStockForm.get('stop')?.value,
         this.buyStockForm.get('allOrNone')?.value,
-        this.buyStockForm.get('margin')?.value
+        this.buyStockForm.get('margin')?.value,
       ).subscribe({
         next: val => {
           this.stockBuyEmitter.emit(this.stock.symbol);

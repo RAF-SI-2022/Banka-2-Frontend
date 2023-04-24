@@ -9,6 +9,10 @@ export class FutureContractComponent {
 
   futureContracts : any[];
 
+  values: any[] = [];
+
+  visible: boolean;
+
   constructor() {
 
   }
@@ -33,6 +37,37 @@ export class FutureContractComponent {
         vrednostRSD: 100000
       }
     ];
+
+    this.fillValues();
+
   }
+
+  onItemClicked(future: any){
+    this.showDialog(future)
+  }
+
+  showDialog(future: any) {
+    this.visible = true;
+  }
+
+  fillValues(){
+    this.values = [
+      {
+        id: 3,
+        refNumber: 'EF789',
+        status: 'Aktivan',
+        created: '2023-01-10',
+        modified: '2023-01-12',
+      },
+      {
+        id: 4,
+        refNumber: 'GH012',
+        status: 'U izradi',
+        created: '2023-01-15',
+        modified: '2023-01-17',
+      }
+    ]
+  }
+
 
 }

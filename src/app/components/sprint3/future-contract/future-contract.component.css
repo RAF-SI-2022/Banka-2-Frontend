@@ -1,0 +1,72 @@
+/* Uvezite Google Font Roboto */
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+
+.body-container {
+  height: 100%;
+  width: 100%;
+  background-color: #eff3f7;
+  position: absolute;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+
+.btn-i {
+  margin-left: 3px;
+  position: relative;
+  overflow: hidden;
+  background-color: #7768ae;
+  color: #44396a;
+  border: none;
+  width: 38px;
+  height: 38px;
+  padding: 12px;
+  -moz-transition: color 0.3s ease-in-out;
+  -o-transition: color 0.3s ease-in-out;
+  -webkit-transition: color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out;
+}
+
+.btn-i.btn-circle {
+  border-radius: 100%;
+}
+
+.btn-i.btn-square {
+  border-radius: 10%;
+}
+
+.btn-i span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+
+.icon-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+
+.table-container {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  background-color: #fff;
+  margin: 100px;
+  margin-top: 3vh !important;
+  border-radius: 20px;
+}
+
+
+#result {
+  color: #515151;
+}

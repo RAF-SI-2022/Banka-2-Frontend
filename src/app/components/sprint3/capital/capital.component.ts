@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Transaction } from 'src/app/models/stock-exchange.model';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-capital',
@@ -15,9 +17,13 @@ export class CapitalComponent  {
 
   loading: boolean = true;
 
+  capitalOverview: any;
+
+  capitalTableValues: string[];
+
   status!: any[];
 
-  constructor( ) {
+  constructor(private router: Router) {
 
   }
 
@@ -36,8 +42,21 @@ export class CapitalComponent  {
       {label: 'Na čekanju', value: 'NA CEKANJU'}
     ]
 
-    
+    this.capitalOverview = [
+      { type: 'AKCIJA', total: '$0' },
+      { type: 'FUTURE_UGOVOR', total: '$0' }
+    ];
 
+  }
+
+  
+  
+  onCapitalRowClick(type: string) {
+    if (type === 'AKCIJA') {
+      this.router.navigate(['/stocks-table/sell']);
+    } else if (type === 'FUTURE_UGOVOR') {
+      this.router.navigate(['/future-contract']);
+    }
   }
 
 

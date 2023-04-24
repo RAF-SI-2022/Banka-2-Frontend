@@ -66,6 +66,7 @@ import { CapitalComponent } from './components/sprint3/capital/capital.component
 import { DepositWithdrawCapitalComponent } from './components/sprint3/deposit-withdraw-capital/deposit-withdraw-capital.component';
 import { TransactionListComponent } from './components/sprint3/transaction-list/transaction-list.component';
 import { FutureContractComponent } from './components/sprint3/future-contract/future-contract.component';
+import { MarginTransactionListComponent } from './components/sprint3/margin-transaction-list/margin-transaction-list.component';
 
 
 
@@ -103,6 +104,7 @@ import { FutureContractComponent } from './components/sprint3/future-contract/fu
     DepositWithdrawCapitalComponent,
     TransactionListComponent,
     FutureContractComponent,
+    MarginTransactionListComponent,
     // FutureContractComponent,
 
   ],

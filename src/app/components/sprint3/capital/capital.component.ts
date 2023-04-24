@@ -33,8 +33,6 @@ export class CapitalComponent  {
 
   transactions: Transaction[]
 
-  loading: boolean = true;
-
   capitalOverview: any;
 
   capitalTableValues: string[];
@@ -76,12 +74,6 @@ export class CapitalComponent  {
   
   }
 
-
-
-
-
-  
-  
   onCapitalRowClick(type: string) {
     if (type === 'AKCIJA') {
       this.router.navigate(['/stocks-table/sell']);

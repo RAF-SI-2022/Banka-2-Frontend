@@ -9,7 +9,6 @@
     <p-table #dt [value]="transactions" class="p-datatable-header"
              [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
              [paginator]="true" [alwaysShowPaginator]="false"
-             [loading]="loading" [loadingIcon]="''"
              currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} hartija"
              [globalFilterFields]="['status']">
 
@@ -19,7 +18,7 @@
         <div class="table-header row">
           <div class="col-6 text-start table-name">
             <div style="display:flex; align-items: center; gap: 8px;">
-              <h3 style="font-size: medium;">
+              <h3 style="font-weight: bolder" class="mb-1">
                 Porudžbine
               </h3>
             </div>

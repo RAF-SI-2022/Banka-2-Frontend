@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { Transaction } from 'src/app/models/stock-exchange.model';
 import { DepositWithdrawCapitalComponent } from '../deposit-withdraw-capital/deposit-withdraw-capital.component';
 import { TransactionListComponent } from '../transaction-list/transaction-list.component';
+import { Router } from '@angular/router';
 /* Model za privremene podatke */
 export interface TableData {
   valuta: string;
@@ -10,6 +11,7 @@ export interface TableData {
   rezervisano: number;
   raspolozivo: number;
 }
+
 
 @Component({
   selector: 'app-capital',
@@ -33,9 +35,13 @@ export class CapitalComponent  {
 
   loading: boolean = true;
 
+  capitalOverview: any;
+
+  capitalTableValues: string[];
+
   status!: any[];
 
-  constructor( ) {
+  constructor(private router: Router) {
 
   }
   
@@ -58,8 +64,30 @@ export class CapitalComponent  {
       {label: 'Na čekanju', value: 'NA CEKANJU'}
     ]
 
-    
+    this.capitalOverview = [
+      { type: 'AKCIJA', total: '$0' },
+      { type: 'FUTURE_UGOVOR', total: '$0' }
+    ];
 
+      this.capitalOverview = [
+      { type: 'AKCIJA', total: '$0' },
+      { type: 'FUTURE_UGOVOR', total: '$0' }
+    ];
+  
+  }
+
+
+
+
+
+  
+  
+  onCapitalRowClick(type: string) {
+    if (type === 'AKCIJA') {
+      this.router.navigate(['/stocks-table/sell']);
+    } else if (type === 'FUTURE_UGOVOR') {
+      this.router.navigate(['/future-contract']);
+    }
   }
 
   toggleDepositWithdrawCapitalkDialog() {

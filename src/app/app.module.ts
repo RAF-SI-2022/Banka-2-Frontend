@@ -65,6 +65,8 @@ import {TabMenuModule} from "primeng/tabmenu";
 import { CapitalComponent } from './components/sprint3/capital/capital.component';
 import { DepositWithdrawCapitalComponent } from './components/sprint3/deposit-withdraw-capital/deposit-withdraw-capital.component';
 import { TransactionListComponent } from './components/sprint3/transaction-list/transaction-list.component';
+import { FutureContractComponent } from './components/sprint3/future-contract/future-contract.component';
+
 
 
 @NgModule({
@@ -100,6 +102,8 @@ import { TransactionListComponent } from './components/sprint3/transaction-list/
     CapitalComponent,
     DepositWithdrawCapitalComponent,
     TransactionListComponent,
+    FutureContractComponent,
+    // FutureContractComponent,
 
   ],
     imports: [

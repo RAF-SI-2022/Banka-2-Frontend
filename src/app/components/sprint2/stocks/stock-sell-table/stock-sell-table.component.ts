@@ -22,6 +22,11 @@ export class StockSellTableComponent {
 
   loading: boolean = true;
 
+  visible: boolean;
+
+  values: any[] = [];
+
+  selectedStock: any;
 
   @ViewChild(SellStockComponent, {static: true}) sellStockComponent: SellStockComponent
 
@@ -56,6 +61,8 @@ export class StockSellTableComponent {
     this.activeTabMenuItem = this.tabMenuItems[1];
 
     this.getMyStocks()
+
+    this.populateValues();
   }
 
   getMyStocks() {
@@ -95,6 +102,34 @@ export class StockSellTableComponent {
         this.toastr.error("Greska pri skidanju")
       }
     })
+  }
+
+  onItemClicked(userStock: any){
+    this.selectedStock = userStock;
+    this.showDialog(userStock)
+    console.log(this.selectedStock.stock.symbol)
+  }
+
+  showDialog(userStock: any) {
+    this.visible = true;
+  }
+
+  populateValues(){
+    this.values = [
+      {
+        orderType: "Kupovina",
+        amount: "2.0",
+        total: "1000",
+        date: "22-20-2020"
+      },
+      {
+        orderType: "Prodaja",
+        amount: "3.0",
+        total: "200",
+        date: "23-20-2020"
+      },
+      
+    ];
   }
 
 }

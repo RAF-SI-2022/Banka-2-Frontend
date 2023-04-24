@@ -35,7 +35,10 @@ export class SingleFutureTableComponent {
   userId: number;
   changeOption: boolean = false;
 
-  breadcrumbItems: MenuItem[]
+  breadcrumbItems: MenuItem[];
+
+  tabMenuItems: MenuItem[];
+  activeTabMenuItem: MenuItem
 
   constructor(private stockService: StockService, private userService: UserService,
               private transactionService: TransactionsArrayService,
@@ -60,6 +63,25 @@ export class SingleFutureTableComponent {
       {label: 'Terminski ugovori', routerLink: ['/futures']},
       {label: `${this.futureName}`, routerLink: [`/future/${this.futureName}`]}
     ];
+
+    this.tabMenuItems = [
+      {
+        label: 'Terminski ugovori',
+        icon: 'pi pi-fw pi-file',
+        command: event => {
+          this.futures = this.buyableFutures;
+        }
+      },
+      {
+        label: 'Moji terminski ugovori',
+        icon: 'pi pi-fw pi-user',
+        command: event => {
+          this.futures = this.myFutures;
+        }
+      },
+    ];
+
+    this.activeTabMenuItem = this.tabMenuItems[0];
 
     this.getUser()
   }

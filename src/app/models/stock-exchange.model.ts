@@ -133,6 +133,18 @@ export interface Transaction {
   lastModifed: String,
 }
 
+export interface Order {
+  orderType: string, //Stock
+  tradeType: string, // BUY
+  symbol: string, //AAPL
+  amount: number, //12
+  price: number, //23
+  status: string, //Complete
+  lastModified: string // datum
+
+}
+
+
 
 export interface UserStock {
   id: number,

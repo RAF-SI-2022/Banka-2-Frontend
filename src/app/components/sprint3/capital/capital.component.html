@@ -140,6 +140,35 @@
 
 
 
+        <p-tabView>
+        <p-table [value]="capitalOverview" class="p-datatable-header" [rowHover]="true" [rows]="2">
+            <ng-template pTemplate="caption">
+                <div class="table-header row">
+                    <div class="col-12 text-start table-name">
+                        <div style="display:flex; align-items: center; gap: 8px;">
+                            <h3 style="font-size: medium;">
+                                Pregled kapitala
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="font-size: 12px;">Tip kapitala</th>
+                    <th style="font-size: 12px;">Ukupno</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-capital>
+                <tr style="font-size: 12px;" (click)="onCapitalRowClick(capital.type)">
+                    <td>{{capital.type}}</td>
+                    <td>{{capital.total}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+</p-tabView>
+
+        
 
     </div>
 

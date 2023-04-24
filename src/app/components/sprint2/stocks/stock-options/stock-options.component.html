@@ -1,26 +1,25 @@
 <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 <div class="container mt-5">
-  <div class="mb-3 legend-container">
-    <div class="me-1 in-the-money-color"></div>
-    In The Money
+  <p style="font-weight: 700; font-size: 1.2rem;">{{stockDetails.companyName }} ({{stockDetails.symbol}})</p>
+  <p style="font-weight: 800; font-size: 2rem;">${{stockDetails.priceValue}}</p>
+
+
+  <div class="mb-2" style="display: flex; gap: 20px;">
+      <p-dropdown (onChange)="getStockOptionsBySymbolByDate()" [options]="dates" [(ngModel)]="selectedDate"></p-dropdown>
+    <div class="legend-container">
+      In The Money
+    </div>
   </div>
 
-  <p-dropdown [options]="dates" [(ngModel)]="selectedDate" optionLabel="name"></p-dropdown>
 
-  <p-table [value]="stockOptions" [tableStyle]="{ 'min-width': '50rem' }">
+
+  <p-table styleClass="p-datatable-sm" [value]="stockOptionsCalls" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>
-        <th colspan="6" class="text-center">Calls</th>
-        <th></th>
-        <th colspan="6" class="text-center">Puts</th>
+        <th colspan="12" class="text-center">Calls</th>
       </tr>
       <tr>
-        <th>Last</th>
-        <th>Theta</th>
-        <th>Bid</th>
-        <th>Ask</th>
-        <th>Volatile</th>
-        <th>OI</th>
+        <th>Stock Ticker</th>
         <th pSortableColumn="strike">
           <div class="icon-container">
             <p style="margin-bottom: 0; margin-top: 2px;">
@@ -29,42 +28,92 @@
             <p-sortIcon field="strike"></p-sortIcon>
           </div>
         </th>
-        <th>Last</th>
-        <th>Theta</th>
+        <th>Last Price</th>
         <th>Bid</th>
         <th>Ask</th>
-        <th>Volatile</th>
-        <th>OI</th>
+        <th>Change</th>
+        <th>Change %</th>
+        <th>Contract Size</th>
+        <th>Open Interest</th>
+        <th>Implied Volatility</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-stockOption>
       <tr>
+        <td (click)="toggleBuyOptionDialog($event, stockOption)" class="stock-symbol"
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.stockSymbol }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.last }}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.strike }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.theta }}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.price }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.bid }}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.bid }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.ask }}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.ask }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.volatile }}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.changePrice }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike < 170 ? '#cdf5cd': 'white'}">{{ stockOption.puts.oi }}</td>
-        <td>${{ stockOption.strike}}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.percentChange }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.last}}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.maintenanceMargin }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.theta}}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.openInterest}}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.bid}}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.impliedVolatility}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <br>
+  <p-table styleClass="p-datatable-sm" [value]="stockOptionsPuts" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th colspan="12" class="text-center">Puts</th>
+      </tr>
+      <tr>
+        <th>Stock Ticker</th>
+        <th pSortableColumn="strike">
+          <div class="icon-container">
+            <p style="margin-bottom: 0; margin-top: 2px;">
+              Strike
+            </p>
+            <p-sortIcon field="strike"></p-sortIcon>
+          </div>
+        </th>
+        <th>Last Price</th>
+        <th>Bid</th>
+        <th>Ask</th>
+        <th>Change</th>
+        <th>Change %</th>
+        <th>Contract Size</th>
+        <th>Open Interest</th>
+        <th>Implied Volatility</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-stockOption>
+      <tr>
+        <td (click)="toggleBuyOptionDialog($event, stockOption)" class="stock-symbol"
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.stockSymbol }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.ask}}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.strike }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.volatile}}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.price }}</td>
         <td
-          [ngStyle]="{'background-color': stockOption.strike > 170 ? '#cdf5cd': 'white'}">{{ stockOption.calls.oi}}</td>
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.bid }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.ask }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.changePrice }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.percentChange }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.maintenanceMargin }}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.openInterest}}</td>
+        <td
+          [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.impliedVolatility}}</td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<app-buy-stock-option (buyOptionEvent)="buyOption($event)"></app-buy-stock-option>

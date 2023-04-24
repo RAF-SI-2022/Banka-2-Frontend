@@ -82,26 +82,6 @@ export class AddUserComponent {
 
     });
   }
-
-  checkValidator(){
-    if(
-      this.addUserForm.get('firstName')?.valid &&
-      this.addUserForm.get('lastName')?.valid &&
-      this.addUserForm.get('email')?.valid &&
-      this.addUserForm.get('password')?.valid &&
-      // this.addUserForm.get('limit')?.valid &&
-      this.addUserForm.get('jmbg')?.valid &&
-      this.addUserForm.get('phone')?.valid &&
-      this.addUserForm.get('selectedJob')?.valid
-      ){
-        return true;
-      }
-
-
-    return false;
-  }
-
-
   // private getLimitValidators() {
   //   return (control: AbstractControl): ValidationErrors | null => {
   //     if (this.addUserForm && this.addUserForm.get('selectedJob')?.value?.name === 'agent') {

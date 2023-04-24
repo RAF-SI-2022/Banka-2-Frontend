@@ -26,8 +26,16 @@ export class StockOptionsComponent {
   stockOptionsPuts: Option[]
   stockDetails: StockDetails
 
+  tabMenuItems: MenuItem[];
+  activeTabMenuItem: MenuItem
 
-  constructor(private route: ActivatedRoute, private stockService: StockService, private toastr: ToastrService) {
+  loading: boolean = false;
+
+  constructor(private route: ActivatedRoute, 
+    private stockService: StockService, 
+    private toastr: ToastrService,
+    private router: Router
+    ) {
   }
 
   ngOnInit() {
@@ -36,15 +44,40 @@ export class StockOptionsComponent {
       this.stockSymbol = params.get('name')!;
     });
 
+    this.tabMenuItems = [
+      {
+        label: this.stockSymbol + ' opcije',
+        icon: 'pi pi-fw pi-chart-line',
+        command: event => {
+          this.router.navigate([`/stock-options/`+ this.stockSymbol])
+        }
+      },
+      { label: 'Moje ' + this.stockSymbol + ' opcije',
+        icon: 'pi pi-fw pi-user',
+        command: event => {
+          this.router.navigate(['/my-stock-options/' + this.stockSymbol])
+        }
+      },
+    ];
+
+
+    this.activeTabMenuItem = this.tabMenuItems[0];
+
+
+
+
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Akcije', routerLink: ['/stocks']},
-      {label: 'Opcije', routerLink: [`/stock-options/${this.stockTicker}`]}
+      {label: this.stockSymbol + ' opcije', routerLink: ['/stock-options/' + this.stockSymbol]}
     ];
 
     this.getStockDetails(this.stockSymbol);
     this.getOptionDates();
     this.getStockOptionsBySymbol();
+
+
+
   }
 
   // TODO: dohvatiti informacije o akciji po ticker-u
@@ -96,8 +129,9 @@ export class StockOptionsComponent {
     this.stockService.getStockBySymbol(symbol)
       .subscribe({
           next: value => {
-            console.log(value)
+            // console.log(value)
             this.stockDetails = value;
+            this.loading = true
           },
           error: err => {
             console.log(err)

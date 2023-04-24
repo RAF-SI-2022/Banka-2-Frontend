@@ -115,6 +115,19 @@ export interface Option {
   inTheMoney: boolean
 }
 
+export interface MyOption{
+  id:number,
+  userId:number,
+  optionId:number,
+  premium: number,
+  amount: number,
+  type: string,
+  expirationDate: string,
+  strike: number,
+  stockSymbol: string
+}
+
+
 export interface Type {
   name: string,
 }

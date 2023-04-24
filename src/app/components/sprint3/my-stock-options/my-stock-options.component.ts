@@ -1,20 +1,16 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {MenuItem} from "primeng/api";
-import {StockService} from "../../../../services/stock.service";
-import {Option, Stock, StockDetails} from "../../../../models/stock-exchange.model";
-import {BuyStockComponent} from "../buy-stock/buy-stock.component";
-import {BuyStockOptionComponent} from "../../../sprint3/buy-stock-option/buy-stock-option.component";
-import {ToastrService} from "ngx-toastr";
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { MenuItem } from 'primeng/api';
+import { MyOption, Option, StockDetails } from 'src/app/models/stock-exchange.model';
+import { StockService } from 'src/app/services/stock.service';
 
 @Component({
-  selector: 'app-stock-options',
-  templateUrl: './stock-options.component.html',
-  styleUrls: ['./stock-options.component.css']
+  selector: 'app-my-stock-options',
+  templateUrl: './my-stock-options.component.html',
+  styleUrls: ['./my-stock-options.component.css']
 })
-export class StockOptionsComponent {
-
-  @ViewChild(BuyStockOptionComponent, {static: true}) buyStockOptionComponent: BuyStockOptionComponent
+export class MyStockOptionsComponent {
 
   private stockTicker: string;
   inTheMoneyColor = "#cdf5cd"
@@ -26,8 +22,20 @@ export class StockOptionsComponent {
   stockOptionsPuts: Option[]
   stockDetails: StockDetails
 
+  myOptionsCalls: MyOption[]
+  myOptionsPuts: MyOption[]
 
-  constructor(private route: ActivatedRoute, private stockService: StockService, private toastr: ToastrService) {
+  tabMenuItems: MenuItem[];
+  activeTabMenuItem: MenuItem
+
+  loading: boolean = false;
+
+
+  constructor(private route: ActivatedRoute, 
+    private stockService: StockService, 
+    private toastr: ToastrService,
+    private router: Router
+    ) {
   }
 
   ngOnInit() {
@@ -36,23 +44,57 @@ export class StockOptionsComponent {
       this.stockSymbol = params.get('name')!;
     });
 
+    this.tabMenuItems = [
+      {
+        label: this.stockSymbol + ' opcije',
+        icon: 'pi pi-fw pi-chart-line',
+        command: event => {
+          this.router.navigate([`/stock-options/`+ this.stockSymbol])
+        }
+      },
+      { label: 'Moje ' + this.stockSymbol + ' opcije',
+        icon: 'pi pi-fw pi-user',
+        command: event => {
+          this.router.navigate(['/my-stock-options/' + this.stockSymbol])
+        }
+      },
+    ];
+
+
+    this.activeTabMenuItem = this.tabMenuItems[1];
+
+
+
+
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Akcije', routerLink: ['/stocks']},
-      {label: 'Opcije', routerLink: [`/stock-options/${this.stockTicker}`]}
+      {label: this.stockSymbol + ' opcije', routerLink: ['/stock-options/' + this.stockSymbol]}
     ];
 
     this.getStockDetails(this.stockSymbol);
     this.getOptionDates();
     this.getStockOptionsBySymbol();
+
+
+
   }
 
   // TODO: dohvatiti informacije o akciji po ticker-u
   getStockOptionsBySymbol() {
-    this.stockService.getStockOptionsBySymbol(this.stockSymbol).subscribe({
+    this.stockService.getMyStockOptions(this.stockSymbol).subscribe({
       next: value => {
-        this.stockOptionsCalls = value.filter((val: Option) => val.optionType === 'CALL');
-        this.stockOptionsPuts = value.filter((val: Option) => val.optionType === 'PUT');
+        // console.log(value);
+        
+        this.myOptionsCalls = value.filter((val: MyOption) => val.type === 'CALL');
+        this.myOptionsPuts = value.filter((val: MyOption) => val.type === 'PUT');
+
+        // if(this.myOptionsCalls.length === 0 ){
+        //   this.myOptionsCalls = []
+        // } 
+        // if(this.myOptionsPuts.length === 0 ){
+        //   this.myOptionsPuts = []
+        // }
       },
       error: err => {
         console.log(err);
@@ -96,8 +138,8 @@ export class StockOptionsComponent {
     this.stockService.getStockBySymbol(symbol)
       .subscribe({
           next: value => {
-            console.log(value)
             this.stockDetails = value;
+            this.loading = true;
           },
           error: err => {
             console.log(err)
@@ -105,28 +147,4 @@ export class StockOptionsComponent {
         }
       )
   }
-
-  toggleBuyOptionDialog(event: MouseEvent, stockOption: Option) {
-    event.stopPropagation()
-
-    this.buyStockOptionComponent.buyOptionVisible = true;
-    this.buyStockOptionComponent.stockOption = stockOption;
-  }
-
-  buyOption($event: any) {
-    this.stockService.buyOption(
-      $event.optionId,
-      $event.amount,
-      $event.premium
-    ).subscribe({
-      next: value => {
-        this.toastr.success(`Uspešno ste kupili opciju ${this.stockDetails.symbol}`)
-        this.buyStockOptionComponent.buyOptionVisible = false;
-      },
-      error: err => {
-        console.error(err)
-      }
-    })
-  }
-
 }

@@ -57,11 +57,17 @@ import {AccordionModule} from "primeng/accordion";
 import {SellFutureComponent} from './components/sprint2/futures/sell-future/sell-future.component';
 import {SellFutureWithLimitComponent} from './components/sprint2/futures/sell-future-with-limit/sell-future-with-limit.component';
 import {BuyFutureWithLimitComponent} from './components/sprint2/futures/buy-future-with-limit/buy-future-with-limit.component';
-
+import { TabViewModule } from 'primeng/tabview';
 
 import {AllowNumbersOnlyDirective} from 'src/app/directives/allow-numbers-only.directive';
 import {StockSellTableComponent} from './components/sprint2/stocks/stock-sell-table/stock-sell-table.component';
 import {TabMenuModule} from "primeng/tabmenu";
+import { CapitalComponent } from './components/sprint3/capital/capital.component';
+import { DepositWithdrawCapitalComponent } from './components/sprint3/deposit-withdraw-capital/deposit-withdraw-capital.component';
+import { TransactionListComponent } from './components/sprint3/transaction-list/transaction-list.component';
+import { FutureContractComponent } from './components/sprint3/future-contract/future-contract.component';
+import { BuyStockOptionComponent } from './components/sprint3/buy-stock-option/buy-stock-option.component';
+
 
 
 @NgModule({
@@ -94,6 +100,12 @@ import {TabMenuModule} from "primeng/tabmenu";
     BuyFutureWithLimitComponent,
     AllowNumbersOnlyDirective,
     StockSellTableComponent,
+    CapitalComponent,
+    DepositWithdrawCapitalComponent,
+    TransactionListComponent,
+    FutureContractComponent,
+    BuyStockOptionComponent,
+    // FutureContractComponent,
 
   ],
     imports: [
@@ -127,7 +139,8 @@ import {TabMenuModule} from "primeng/tabmenu";
         StyleClassModule,
         ColorPickerModule,
         AccordionModule,
-        TabMenuModule
+        TabMenuModule,
+        TabViewModule
     ],
   // exports: [
   //   ActivityPipe

@@ -19,6 +19,8 @@ import {PurchasesComponent} from './components/sprint2/purchases/purchases.compo
 import {FuturesComponent} from "./components/sprint2/futures/futures-component/futures.component";
 import {SingleFutureTableComponent} from "./components/sprint2/futures/single-future-table/single-future-table.component";
 import {StockSellTableComponent} from './components/sprint2/stocks/stock-sell-table/stock-sell-table.component';
+import { CapitalComponent } from './components/sprint3/capital/capital.component';
+import { FutureContractComponent } from './components/sprint3/future-contract/future-contract.component';
 
 const routes: Routes = [
   {
@@ -92,6 +94,14 @@ const routes: Routes = [
   {
     path: "future/:name",
     component: SingleFutureTableComponent
+  },
+  {
+    path: "capital",
+    component: CapitalComponent
+  },
+  {
+    path: "future-contract",
+    component: FutureContractComponent
   },
   {
     path: '**', redirectTo: '404-not-found'

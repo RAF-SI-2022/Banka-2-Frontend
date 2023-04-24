@@ -73,13 +73,13 @@ export class AddUserComponent {
       // this.isFormValid = this.addUserForm.valid;
       // const isFormValid = this.addUserForm.valid;  // check if the form is valid
       // const limitControl = this.addUserForm.get('limit');  // get the 'limit' control
-      
+
       // const isLimitValid = limitControl ? limitControl.valid : true;  // check if the 'limit' control is valid, or set to true if it doesn't exist yet
       // const isExcludedLimitValid = limitControl ? limitControl.errors === null : true;  // check if the 'limit' control is excluded from validation, or set to true if it doesn't exist yet
-      
+
       //  this.isFormValid = isFormValid && (isLimitValid || isExcludedLimitValid);  // check if the form is valid
 
-      
+
     });
   }
 
@@ -111,6 +111,24 @@ export class AddUserComponent {
   //     }
   //   };
   // }
+
+  checkValidator(){
+    if(
+      this.addUserForm.get('firstName')?.valid &&
+      this.addUserForm.get('lastName')?.valid &&
+      this.addUserForm.get('email')?.valid &&
+      this.addUserForm.get('password')?.valid &&
+      // this.addUserForm.get('limit')?.valid &&
+      this.addUserForm.get('jmbg')?.valid &&
+      this.addUserForm.get('phone')?.valid &&
+      this.addUserForm.get('selectedJob')?.valid
+    ){
+      return true;
+    }
+
+
+    return false;
+  }
 
   addUser() {
     const user = {

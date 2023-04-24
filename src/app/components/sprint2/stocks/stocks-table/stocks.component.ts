@@ -167,7 +167,6 @@ export class StocksComponent {
         for (const single of val) {
 
           if (single.user.id === this.userId) {
-            console.log(single);
 
             if (single.amount > 0) {
               tempStocks.push(single.stock)

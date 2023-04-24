@@ -5,6 +5,8 @@
     In The Money
   </div>
 
+  <p-dropdown [options]="dates" [(ngModel)]="selectedDate" optionLabel="name"></p-dropdown>
+
   <p-table [value]="stockOptions" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>

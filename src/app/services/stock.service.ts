@@ -139,6 +139,10 @@ export class StockService {
       , {headers: this.headers})
   }
 
+  getOptionsDates() {
+    return this.httpClient.get<any>(`http://localhost:8080/api/options/dates`, {headers: this.headers})
+  }
+
   removeStockFromSale(symbol: string) {
     return this.httpClient.post<any>(`http://localhost:8080/api/stock/remove/${symbol}`,
       {}

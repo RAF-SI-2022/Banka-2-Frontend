@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MenuItem} from "primeng/api";
+import {StockService} from "../../../../services/stock.service";
 
 @Component({
   selector: 'app-stock-options',
@@ -12,8 +13,10 @@ export class StockOptionsComponent {
   private stockTicker: string;
   inTheMoneyColor = "#cdf5cd"
   breadcrumbItems: MenuItem[];
+  dates: [];
+  selectedDate: Date
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private stockService: StockService) {
 
   }
 
@@ -88,6 +91,16 @@ export class StockOptionsComponent {
       {label: 'Berza', routerLink: ['/stocks-table']},
       {label: 'Opcije', routerLink: [`/stock-options/${this.stockTicker}`]}
     ];
+
+    this.stockService.getOptionsDates().subscribe({
+      next: value => {
+        this.dates = value;
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
+
   }
 
   // TODO: dohvatiti informacije o akciji po ticker-u

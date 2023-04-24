@@ -3,6 +3,7 @@
   <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 
   <div class="table-container">
+    <p-tabMenu [model]="tabMenuItems" [activeItem]="activeTabMenuItem"></p-tabMenu>
     <p-table [value]="futures" class="p-datatable-header"
              [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
              [paginator]="true" [alwaysShowPaginator]="false"
@@ -13,21 +14,7 @@
 
         <div class="table-header row">
 
-          <div class="col-lg-6 col-md-6 text-start table-name">
-            <div style="display:flex; align-items: center; gap: 8px;">
-              <h3 class="berza-mojeakcije-text">
-                Terminski ugovori
-              </h3>
-
-              <p-inputSwitch [(ngModel)]="changeOption"
-                             (ngModelChange)="changeFuturesForShow()" class="custom-input-switch"></p-inputSwitch>
-
-              <h3 class="berza-mojeakcije-text">
-                Moji terminski ugovori
-              </h3>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6 text-end">
+          <div class="col-lg-12 col-md-12 text-end">
             <button *ngIf="!changeOption && checkIfFutureIsWaitingBuy()" (click)="openBuyFutureDialog(futureName)"
                     pButton pRipple styleClass="p-button-sm"
                     class="p-button-raised p-button-primary add-employee-btn-lg"

@@ -1,7 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Transaction } from 'src/app/models/stock-exchange.model';
+import { DepositWithdrawCapitalComponent } from '../deposit-withdraw-capital/deposit-withdraw-capital.component';
+import { TransactionListComponent } from '../transaction-list/transaction-list.component';
 import { Router } from '@angular/router';
+/* Model za privremene podatke */
+export interface TableData {
+  valuta: string;
+  ukupno: number;
+  rezervisano: number;
+  raspolozivo: number;
+}
 
 
 @Component({
@@ -10,6 +19,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./capital.component.css']
 })
 export class CapitalComponent  {
+
+
+  dataset: TableData[] = [
+    {valuta: "RSD", ukupno: 25, rezervisano: 10, raspolozivo: 15},
+    {valuta: "USD", ukupno: 125, rezervisano: 100, raspolozivo: 25},
+    {valuta: "EUR", ukupno: 251, rezervisano: 0, raspolozivo: 251},
+    {valuta: "CHF", ukupno: 123, rezervisano: 123, raspolozivo: 0},
+  ];
+
 
   breadcrumbItems: MenuItem[];
 
@@ -26,6 +44,10 @@ export class CapitalComponent  {
   constructor(private router: Router) {
 
   }
+  
+  @ViewChild(DepositWithdrawCapitalComponent, {static: true}) depositWithdrawCapitalComponent: DepositWithdrawCapitalComponent
+  @ViewChild(TransactionListComponent, {static: true}) transactionListComponent: TransactionListComponent
+
 
 
   ngOnInit() {
@@ -47,7 +69,16 @@ export class CapitalComponent  {
       { type: 'FUTURE_UGOVOR', total: '$0' }
     ];
 
+      this.capitalOverview = [
+      { type: 'AKCIJA', total: '$0' },
+      { type: 'FUTURE_UGOVOR', total: '$0' }
+    ];
+  
   }
+
+
+
+
 
   
   
@@ -59,9 +90,16 @@ export class CapitalComponent  {
     }
   }
 
+  toggleDepositWithdrawCapitalkDialog() {
+    this.depositWithdrawCapitalComponent.open();
+  }
+
+  toggleTransactionListDialog() {
+    this.transactionListComponent.visible=true;
+  }
 
   refresh() {
-
+    console.log("123")
     //TODO ovde ide logika i poziv na servis koji ce pozvati refresh i resetovati tabelu na berza mode
     //I odmah za njim i filtriranje za userove hartije
     // this.loading = true;

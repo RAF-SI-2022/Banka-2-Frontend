@@ -27,7 +27,7 @@
         <input [formControlName]="'jmbg'" id="jmbg-input" class="w-100" type="text" pInputText>
         <label for="jmbg-input">JMBG</label>
       </span>
-      <span class="p-float-label">
+      <span class="p-float-label"  *ngIf="selectedJob && selectedJob.name === 'AGENT'">
         <input [formControlName]="'limit'" id="limit-input" class="w-100" type="text" pInputText>
         <label for="limit-input">Limit</label>
       </span>

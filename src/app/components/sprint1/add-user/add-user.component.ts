@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {Job} from "../../../models/users.model";
 import {ToastrService} from "ngx-toastr";
 
@@ -18,6 +18,8 @@ export class AddUserComponent {
   jobs: Job []
   selectedJob: Job
   isFormValid = false;
+  myValidator: boolean = false;
+  myAgentValidator: boolean = false;
 
 
   constructor(private formBuilder: FormBuilder, private toastr: ToastrService) {
@@ -42,9 +44,46 @@ export class AddUserComponent {
     ]
 
     this.addUserForm.valueChanges.subscribe(() => {
+
+      // this.isFormValid = this.addUserForm.valid;
+
+      // if(this.addUserForm.get('selectedJob')?.value?.name === "AGENT"){
+      //   // this.addUserForm.patchValue({
+      //     // limit: ['', [Validators.min(1), Validators.required, Validators.pattern(/^\d+$/)]],
+      //   // })
+      //   this.addUserForm.get('limit')?.setValidators([Validators.min(10), Validators.required, Validators.pattern(/^\d+$/)]);
+      //   // console.log("asdasdas" + this.addUserForm.get('limit')?.valid);
+      //   this.addUserForm.get('limit')?.updateValueAndValidity();
+      // }
+      // else{
+      //   this.addUserForm.get('limit')?.clearValidators();
+      //   this.addUserForm.get('limit')?.updateValueAndValidity();
+      //   // this.addUserForm.get('limit')?.setErrors(null)
+      // }
+
+
       this.isFormValid = this.addUserForm.valid;
+      // const isFormValid = this.addUserForm.valid;  // check if the form is valid
+      // const limitControl = this.addUserForm.get('limit');  // get the 'limit' control
+      
+      // const isLimitValid = limitControl ? limitControl.valid : true;  // check if the 'limit' control is valid, or set to true if it doesn't exist yet
+      // const isExcludedLimitValid = limitControl ? limitControl.errors === null : true;  // check if the 'limit' control is excluded from validation, or set to true if it doesn't exist yet
+      
+      //  this.isFormValid = isFormValid && (isLimitValid || isExcludedLimitValid);  // check if the form is valid
+
+      
     });
   }
+
+  // private getLimitValidators() {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     if (this.addUserForm && this.addUserForm.get('selectedJob')?.value?.name === 'agent') {
+  //       return Validators.compose([Validators.min(1), Validators.required, Validators.pattern(/^\d+$/)])(control);
+  //     } else {
+  //       return null;
+  //     }
+  //   };
+  // }
 
   addUser() {
     const user = {

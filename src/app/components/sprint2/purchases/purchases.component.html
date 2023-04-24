@@ -17,30 +17,24 @@
       <ng-template pTemplate="caption">
 
         <div class="table-header row">
-          <div class="col-12 text-start table-name">
+          <div class="col-6 text-start table-name">
             <div style="display:flex; align-items: center; gap: 8px;">
               <h3 style="font-size: medium;">
                 Porudžbine
               </h3>
-
             </div>
           </div>
-
-
-          <!--          <div class="col-6 text-end">-->
-          <!--            <button (click)="refresh()"-->
-          <!--              pButton pRipple styleClass="p-button-sm"-->
-          <!--              class="p-button-raised p-button-secondary add-employee-btn-lg"-->
-          <!--              label="Refresh" icon="bi bi-arrow-repeat"-->
-          <!--              style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">-->
-
-          <!--            </button>-->
-          <!--            <button pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"-->
-          <!--                    class="p-button-raised p-button-secondary add-employee-btn-sm"-->
-          <!--                    icon="bi bi-arrow-repeat" (click)="refresh()"></button>-->
-          <!--          </div>-->
-
-
+          <div class="col-6 text-end">
+            <button (click)="refresh()"
+              pButton pRipple styleClass="p-button-sm"
+              class="p-button-raised p-button-secondary add-employee-btn-lg"
+              label="Refresh" icon="bi bi-arrow-repeat"
+              style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
+            </button>
+            <button pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
+                    class="p-button-raised p-button-secondary add-employee-btn-sm"
+                    icon="bi bi-arrow-repeat" (click)="refresh()"></button>
+          </div>
         </div>
       </ng-template>
 

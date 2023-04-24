@@ -5,6 +5,10 @@ import {SellStockComponent} from '../sell-stock/sell-stock.component';
 import {ToastrService} from 'ngx-toastr';
 import {StockService} from 'src/app/services/stock.service';
 import {Router} from "@angular/router";
+import {UserService} from 'src/app/services/user-service.service';
+import {User} from 'src/app/models/users.model';
+import { error } from 'cypress/types/jquery';
+
 
 @Component({
   selector: 'app-stock-sell-table',
@@ -18,6 +22,8 @@ export class StockSellTableComponent {
 
   activeTabMenuItem: MenuItem
 
+  tempList: any[]
+
   userStocks: UserStock[]
 
   loading: boolean = true;
@@ -28,18 +34,22 @@ export class StockSellTableComponent {
 
   selectedStock: any;
 
+  user: User
+
   @ViewChild(SellStockComponent, {static: true}) sellStockComponent: SellStockComponent
 
-  constructor(private toastr: ToastrService, private stockService: StockService, private router: Router) {
+  constructor(private userService: UserService, private toastr: ToastrService, private stockService: StockService, private router: Router) {
 
   }
 
   ngOnInit() {
 
+    this.getUser();
+
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Akcije', routerLink: ['/stocks']},
-      // {label: 'Moje akcije', routerLink: ['/stocks-table/sell']},
+      {label: 'Moje akcije', routerLink: ['/stocks-table/sell']},
     ];
 
     this.tabMenuItems = [
@@ -62,7 +72,6 @@ export class StockSellTableComponent {
 
     this.getMyStocks()
 
-    this.populateValues();
   }
 
   getMyStocks() {
@@ -107,7 +116,7 @@ export class StockSellTableComponent {
   onItemClicked(userStock: any){
     this.selectedStock = userStock;
     this.showDialog(userStock)
-    console.log(this.selectedStock.stock.symbol)
+    this.populateValues();
   }
 
   showDialog(userStock: any) {
@@ -115,21 +124,39 @@ export class StockSellTableComponent {
   }
 
   populateValues(){
-    this.values = [
-      {
-        orderType: "Kupovina",
-        amount: "2.0",
-        total: "1000",
-        date: "22-20-2020"
-      },
-      {
-        orderType: "Prodaja",
-        amount: "3.0",
-        total: "200",
-        date: "23-20-2020"
-      },
-      
-    ];
+
+    this.tempList = []
+
+    this.stockService.getAllOrdersByUserId(this.user?.id)
+      .subscribe({
+        next: val => {
+          this.values = val
+
+          for(let obj in this.values){
+            if(this.values[obj].orderType === "STOCK"){
+              this.tempList.push(this.values[obj])
+            }
+          }
+
+          this.values = this.tempList;
+          
+        },
+        error: err => {
+          console.log(err)
+        }
+      })
+  }
+
+  getUser(){
+    this.userService.getUserData()
+      .subscribe({
+        next: val => {
+          this.user = val
+        },
+        error: err => {
+          console.log(err)
+        }
+      })
   }
 
 }

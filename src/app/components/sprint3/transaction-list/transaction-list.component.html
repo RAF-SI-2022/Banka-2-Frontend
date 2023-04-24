@@ -1,0 +1,107 @@
+<p-dialog [style]="{width: '70vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
+          [(visible)]="visible" *ngIf="true" [modal]="true" >
+
+  <ng-template pTemplate="header">
+    <!--  TODO:dodati ime valute umesto neke valute-->
+    <h2 style="font-weight: bolder" class="mb-3">Transakcije neke valute</h2>
+  </ng-template>
+  <p-divider/>
+  <div class="container text-center">
+    <div class="row">
+        <p-table #dt [value]="dataset" class="p-datatable-header" [rowHover]="true" [rows]="6"
+        [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false" [loading]="loading"
+        [loadingIcon]="''"
+        currentPageReportTemplate="Prikazani su {first}-{last} tekuci racuni"
+        [globalFilterFields]="['status']">
+
+
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="datum" style="font-size: 12px;">
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Datum</p>
+                            <p-sortIcon field="datum"></p-sortIcon>
+                        </div>
+                    </div>
+                </th>
+                <th pSortableColumn="korisnik" style="font-size: 12px;">
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Korisnik</p>
+                            <p-sortIcon field="korisnik"></p-sortIcon>
+                        </div>
+                    </div>
+                </th>
+                <th pSortableColumn="opis" style="font-size: 12px; ">
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Opis</p>
+                            <p-sortIcon field="opis"></p-sortIcon>
+                        </div>
+                    </div>
+                </th>
+                <th pSortableColumn="valuta" style="font-size: 12px; ">
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Valuta</p>
+                            <p-sortIcon field="valuta"></p-sortIcon>
+                        </div>
+                    </div>
+                </th>
+                <th pSortableColumn="uplata" style="font-size: 12px; ">
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Uplata</p>
+                            <p-sortIcon field="uplata"></p-sortIcon>
+                        </div>
+                    </div>
+                </th>
+                <th pSortableColumn="isplata" style="font-size: 12px; ">
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Isplata</p>
+                            <p-sortIcon field="isplata"></p-sortIcon>
+                        </div>
+                    </div>
+                </th>
+                <th pSortableColumn="rezervisano" style="font-size: 12px; ">
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Rezervisano</p>
+                            <p-sortIcon field="rezervisano"></p-sortIcon>
+                        </div>
+                    </div>
+                </th>
+                <th pSortableColumn="koristi" style="font-size: 12px; ">
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Koristi</p>
+                            <p-sortIcon field="koristi"></p-sortIcon>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-d>
+            <tr class="rowHover" style="font-size: 12px;">
+                <td>{{d.datum}}</td>
+                <td>{{d.korisnik}}</td>
+                <td>{{d.opis}}</td>
+                <td>{{d.valuta}}</td>
+                <td>{{d.uplata}}</td>
+                <td>{{d.isplata}}</td>
+                <td>{{d.rezervisano}}</td>
+                <td>{{d.koristi}}</td>
+            </tr>
+
+        </ng-template>
+
+
+    </p-table>
+    </div>
+  </div>
+</p-dialog>

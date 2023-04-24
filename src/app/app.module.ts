@@ -63,6 +63,8 @@ import {AllowNumbersOnlyDirective} from 'src/app/directives/allow-numbers-only.d
 import {StockSellTableComponent} from './components/sprint2/stocks/stock-sell-table/stock-sell-table.component';
 import {TabMenuModule} from "primeng/tabmenu";
 import { CapitalComponent } from './components/sprint3/capital/capital.component';
+import { DepositWithdrawCapitalComponent } from './components/sprint3/deposit-withdraw-capital/deposit-withdraw-capital.component';
+import { TransactionListComponent } from './components/sprint3/transaction-list/transaction-list.component';
 
 
 @NgModule({
@@ -96,6 +98,8 @@ import { CapitalComponent } from './components/sprint3/capital/capital.component
     AllowNumbersOnlyDirective,
     StockSellTableComponent,
     CapitalComponent,
+    DepositWithdrawCapitalComponent,
+    TransactionListComponent,
 
   ],
     imports: [

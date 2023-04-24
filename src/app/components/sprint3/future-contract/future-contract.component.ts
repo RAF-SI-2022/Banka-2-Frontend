@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {UserService} from 'src/app/services/user-service.service';
+import {User} from 'src/app/models/users.model';
 
 @Component({
   selector: 'app-future-contract',
@@ -11,13 +13,17 @@ export class FutureContractComponent {
 
   values: any[] = [];
 
+  user: User
+
   visible: boolean;
 
-  constructor() {
+  constructor(private userService: UserService) {
 
   }
 
   ngOnInit() {
+
+    this.getUser();
     // Test podaci 
     this.futureContracts = [
       {
@@ -69,5 +75,17 @@ export class FutureContractComponent {
     ]
   }
 
+
+  getUser(){
+    this.userService.getUserData()
+      .subscribe({
+        next: val => {
+          this.user = val
+        },
+        error: err => {
+          console.log(err)
+        }
+      })
+  }
 
 }

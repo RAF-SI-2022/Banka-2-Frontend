@@ -152,6 +152,11 @@ export class StockService {
     return this.httpClient.get<any>(`http://localhost:8080/api/options/${symbol}/${date}`, {headers: this.headers})
   }
 
+  getMyStockOptions(symbol: string){
+    return this.httpClient.get<any>(`http://localhost:8080/api/options/user-options/${symbol}`
+    , {headers: this.headers})
+  }
+
   removeStockFromSale(symbol: string) {
     return this.httpClient.post<any>(`http://localhost:8080/api/stock/remove/${symbol}`,
       {}

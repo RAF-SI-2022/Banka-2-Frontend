@@ -39,7 +39,7 @@ export class StockSellTableComponent {
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Akcije', routerLink: ['/stocks']},
-      {label: 'Moje akcije', routerLink: ['/stocks-table/sell']},
+      // {label: 'Moje akcije', routerLink: ['/stocks-table/sell']},
     ];
 
     this.tabMenuItems = [

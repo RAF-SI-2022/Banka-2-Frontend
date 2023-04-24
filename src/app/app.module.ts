@@ -68,6 +68,7 @@ import { TransactionListComponent } from './components/sprint3/transaction-list/
 import { FutureContractComponent } from './components/sprint3/future-contract/future-contract.component';
 import { MarginTransactionListComponent } from './components/sprint3/margin-transaction-list/margin-transaction-list.component';
 import { BuyStockOptionComponent } from './components/sprint3/buy-stock-option/buy-stock-option.component';
+import { MyStockOptionsComponent } from './components/sprint3/my-stock-options/my-stock-options.component';
 
 
 
@@ -107,6 +108,7 @@ import { BuyStockOptionComponent } from './components/sprint3/buy-stock-option/b
     FutureContractComponent,
     MarginTransactionListComponent,
     BuyStockOptionComponent,
+    MyStockOptionsComponent,
     // FutureContractComponent,
 
   ],

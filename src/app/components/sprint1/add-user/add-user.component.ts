@@ -18,6 +18,7 @@ export class AddUserComponent {
   jobs: Job []
   selectedJob: Job
   isFormValid = false;
+
   myValidator: boolean = false;
   myAgentValidator: boolean = false;
 
@@ -81,7 +82,6 @@ export class AddUserComponent {
 
     });
   }
-
   // private getLimitValidators() {
   //   return (control: AbstractControl): ValidationErrors | null => {
   //     if (this.addUserForm && this.addUserForm.get('selectedJob')?.value?.name === 'agent') {

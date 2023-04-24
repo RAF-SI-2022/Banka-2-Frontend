@@ -1,0 +1,28 @@
+::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+    background: #ffffff;
+    color: #724bcb;
+    border-color: #8876b9;
+  }
+  
+  .table-container {
+    margin: 70px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 20px;
+  }
+  
+  .body-container {
+    background-color: #eff3f7;
+    min-height: 100vh;
+  }
+
+  .legend-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    border-left-color: #e1f6e1;
+    border-left-width: 8px;
+  }

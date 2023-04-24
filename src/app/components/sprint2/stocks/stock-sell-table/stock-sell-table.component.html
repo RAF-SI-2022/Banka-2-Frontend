@@ -134,8 +134,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-userStock>
-        <tr
-          class="rowHover" style="font-size: 12px;">
+        <tr (click)="onItemClicked(userStock)" class="rowHover" style="font-size: 12px;">
           <td>{{userStock.stock.symbol}}</td>
           <td>{{userStock.stock.priceValue}}</td>
           <td>{{userStock.amount}}</td>
@@ -164,6 +163,42 @@
   </div>
 </div>
 
+<p-dialog [(visible)]="visible" header="Akcija {{selectedStock?.stock?.symbol}}" [style]="{ width: '50vw' }">
+  <div class="flex py-2 justify-content-center">
+
+    <p-table [value]="values" class="p-datatable-header" [rowHover]="true" [rows]="2">
+      <ng-template pTemplate="caption">
+          <div class="table-header row">
+              <div class="col-12 text-start table-name">
+                  <div style="display:flex; align-items: center; gap: 8px;">
+                      <h3 style="font-size: medium;">
+                          Pregled kapitala
+                      </h3>
+                  </div>
+              </div>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+            <th style="font-size: 12px;">Tip Ordera</th>
+            <th style="font-size: 12px;">Kolicina</th>
+            <th style="font-size: 12px;">Ukupno</th>
+            <th style="font-size: 12px;">Datum</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-value>
+          <tr style="font-size: 12px;">
+              <td>{{value.orderType}}</td>
+              <td>{{value.amount}}</td>
+              <td>{{value.total}}</td>
+              <td>{{value.date}}</td>
+          </tr>
+      </ng-template>
+  </p-table>
+
+  </div>
+</p-dialog>
+
 <!-- <button *ngIf="userStock.amountForSale" type="button"
     (click)="toggleSellStockDialog($event, stock)"
     class="btn-i btn-circle" title="Prodaj hartiju">
@@ -181,3 +216,42 @@
     <div class="wave"></div>
 </button> -->
 <app-sell-stock (stockSellEmitter)="refreshSell($event)"></app-sell-stock>
+
+
+<!-- <p-dialog [(visible)]="visible" header="Akcija {{selectedStock?.stock?.symbol}}" [style]="{ width: '50vw' }">
+  <div class="flex py-2 justify-content-center">
+
+    <p-table [value]="values" class="p-datatable-header" [rowHover]="true" [rows]="2">
+      <ng-template pTemplate="caption">
+          <div class="table-header row">
+              <div class="col-12 text-start table-name">
+                  <div style="display:flex; align-items: center; gap: 8px;">
+                      <h3 style="font-size: medium;">
+                          Pregled kapitala
+                      </h3>
+                  </div>
+              </div>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+            <th style="font-size: 12px;">ID</th>
+            <th style="font-size: 12px;">Delovodni broj</th>
+            <th style="font-size: 12px;">Status</th>
+            <th style="font-size: 12px;">Kreiran</th>
+            <th style="font-size: 12px;">Izmenjen</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-value>
+          <tr style="font-size: 12px;">
+              <td>{{value.id}}</td>
+              <td>{{value.refNumber}}</td>
+              <td>{{value.status}}</td>
+              <td>{{value.created}}</td>
+              <td>{{value.modified}}</td>
+          </tr>
+      </ng-template>
+  </p-table>
+
+  </div>
+</p-dialog> -->

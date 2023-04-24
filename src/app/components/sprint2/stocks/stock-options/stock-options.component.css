@@ -5,7 +5,7 @@
 }
 
 .in-the-money-color {
-  background-color: #cdf5cd;
+  background-color: #e1f6e1;
   border-radius: 24%;
   width: 30px;
   height: 30px;
@@ -16,8 +16,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  width: 160px;
-  border: 1px solid #b7b7b7;
-  border-radius: 12px;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  border-left-color: #e1f6e1;
+  border-left-width: 8px;
+}
+
+.stock-symbol {
+  color: #0f69ff;
+  font-weight: bold;
+  cursor: pointer
+}
+
+.stock-symbol:hover {
+  text-decoration: underline;
+}
+::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+  background: #ffffff;
+  color: #724bcb;
+  border-color: #8876b9;
+}
+
+.table-container {
+  margin: 70px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 20px;
+}
+
+.body-container {
+  background-color: #eff3f7;
+  min-height: 100vh;
 }

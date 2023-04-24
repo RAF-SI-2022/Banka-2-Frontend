@@ -96,6 +96,38 @@ export interface StockHistory {
   type: string
 }
 
+export interface Option {
+  id: number,
+  stockSymbol: string,
+  contractSymbol: string,
+  optionType: string,
+  strike: number,
+  impliedVolatility: number,
+  price: number,
+  expirationDate: Date,
+  openInterest: number,
+  contractSize: number,
+  maintenanceMargin: number,
+  bid: number,
+  ask: number,
+  changePrice: number,
+  percentChange: number,
+  inTheMoney: boolean
+}
+
+export interface MyOption{
+  id:number,
+  userId:number,
+  optionId:number,
+  premium: number,
+  amount: number,
+  type: string,
+  expirationDate: string,
+  strike: number,
+  stockSymbol: string
+}
+
+
 export interface Type {
   name: string,
 }
@@ -113,6 +145,18 @@ export interface Transaction {
   status: string,
   lastModifed: String,
 }
+
+export interface Order {
+  orderType: string, //Stock
+  tradeType: string, // BUY
+  symbol: string, //AAPL
+  amount: number, //12
+  price: number, //23
+  status: string, //Complete
+  lastModified: string // datum
+
+}
+
 
 
 export interface UserStock {

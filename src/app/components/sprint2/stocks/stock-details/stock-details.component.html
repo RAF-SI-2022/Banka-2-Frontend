@@ -96,11 +96,11 @@
   </div>
 
   <!--  TODO: kada se zavrsi options vratiti dugme-->
-  <!--  <ng-template pTemplate="footer">-->
-  <!--    <p-divider/>-->
-  <!--    <button style="background-color: #3d3d3d; border: none;" pButton pRipple label="Opcije" class="ms-5"-->
-  <!--            [routerLink]="'/stock-options/'+stock.ticker"></button>-->
-  <!--  </ng-template>-->
+    <ng-template pTemplate="footer">
+      <p-divider/>
+      <button style="background-color: #3d3d3d; border: none;" pButton pRipple label="Opcije" class="ms-5"
+              [routerLink]="'/stock-options/'+stock.symbol"></button>
+    </ng-template>
 
 </p-dialog>
 

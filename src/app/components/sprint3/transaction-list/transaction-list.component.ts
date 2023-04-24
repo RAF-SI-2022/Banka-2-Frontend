@@ -10,7 +10,6 @@ export interface TableTrData {
   isplate: number;
   rezervisano: number;
   koristi: number;
-
 }
 
 @Component({
@@ -26,5 +25,4 @@ export class TransactionListComponent {
 
   ];
 
-  loading: boolean = true;
 }

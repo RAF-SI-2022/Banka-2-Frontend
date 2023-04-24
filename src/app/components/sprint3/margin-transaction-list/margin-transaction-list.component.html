@@ -4,7 +4,7 @@
 
   <ng-template pTemplate="header">
     <!--  TODO:dodati ime valute umesto neke valute-->
-    <h2 style="font-weight: bolder" class="mb-0 mt-3">Transakcije neke valute</h2>
+    <h2 style="font-weight: bolder" class="mb-0 mt-3">Marzne transakcije neke valute</h2>
   </ng-template>
   <p-divider/>
   <div class="container text-center">
@@ -28,7 +28,28 @@
                 <th >
                     <div class="flex justify-content-between align-items-center">
                         <div class="icon-container">
-                            <p style="margin-bottom: 0; margin-top: 2px;">Korisnik</p>
+                            <p style="margin-bottom: 0; margin-top: 2px;">Tip Kapitala</p>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Iznos</p>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">Kredit</p>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="flex justify-content-between align-items-center">
+                        <div class="icon-container">
+                            <p style="margin-bottom: 0; margin-top: 2px;">M.Margin</p>
                         </div>
                     </div>
                 </th>
@@ -39,54 +60,17 @@
                         </div>
                     </div>
                 </th>
-                <th>
-                    <div class="flex justify-content-between align-items-center">
-                        <div class="icon-container">
-                            <p style="margin-bottom: 0; margin-top: 2px;">Valuta</p>
-                        </div>
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-content-between align-items-center">
-                        <div class="icon-container">
-                            <p style="margin-bottom: 0; margin-top: 2px;">Uplata</p>
-                        </div>
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-content-between align-items-center">
-                        <div class="icon-container">
-                            <p style="margin-bottom: 0; margin-top: 2px;">Isplata</p>
-                        </div>
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-content-between align-items-center">
-                        <div class="icon-container">
-                            <p style="margin-bottom: 0; margin-top: 2px;">Rezervisano</p>
-                        </div>
-                    </div>
-                </th>
-                <th>
-                    <div class="flex justify-content-between align-items-center">
-                        <div class="icon-container">
-                            <p style="margin-bottom: 0; margin-top: 2px;">Koristi</p>
-                        </div>
-                    </div>
-                </th>
             </tr>
         </ng-template>
 
         <ng-template pTemplate="body" let-d>
             <tr class="rowHover" style="font-size: 12px;">
                 <td>{{d.datum}}</td>
-                <td>{{d.korisnik}}</td>
+                <td>{{d.tipKapitala}}</td>
+                <td>{{d.iznos}}</td>
+                <td>{{d.kredit}}</td>
+                <td>{{d.margin}}</td>
                 <td>{{d.opis}}</td>
-                <td>{{d.valuta}}</td>
-                <td>{{d.uplata}}</td>
-                <td>{{d.isplata}}</td>
-                <td>{{d.rezervisano}}</td>
-                <td>{{d.koristi}}</td>
             </tr>
 
         </ng-template>

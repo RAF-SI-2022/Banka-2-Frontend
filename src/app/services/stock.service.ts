@@ -122,6 +122,7 @@ export class StockService {
         stop: stop,
         allOrNone: allOrNone,
         margin: margin,
+        currencyCode: 'USD' // TODO: ovo kasnije promeniti
       }
       , {headers: this.headers})
   }
@@ -139,10 +140,35 @@ export class StockService {
       , {headers: this.headers})
   }
 
+  getOptionsDates() {
+    return this.httpClient.get<any>(`http://localhost:8080/api/options/dates`, {headers: this.headers})
+  }
+
+  getStockOptionsBySymbol(symbol: string) {
+    return this.httpClient.get<any>(`http://localhost:8080/api/options/${symbol}`, {headers: this.headers})
+  }
+
+  getStockOptionsByDate(symbol: string, date: string) {
+    return this.httpClient.get<any>(`http://localhost:8080/api/options/${symbol}/${date}`, {headers: this.headers})
+  }
+
+  getMyStockOptions(symbol: string){
+    return this.httpClient.get<any>(`http://localhost:8080/api/options/user-options/${symbol}`
+    , {headers: this.headers})
+  }
+
   removeStockFromSale(symbol: string) {
     return this.httpClient.post<any>(`http://localhost:8080/api/stock/remove/${symbol}`,
       {}
       , {headers: this.headers})
+  }
+
+  buyOption(optionId: number, amount: number, premium: number) {
+    return this.httpClient.post<any>(
+      `http://localhost:8080/api/options/buy`,
+      {optionId: optionId, amount: amount, premium: premium},
+      { headers: this.headers }
+    );
   }
 
   removeFutureFromMarket(futureId: string): Observable<any> {
@@ -184,10 +210,15 @@ export class StockService {
       {
         fromCurrencyCode: fromCurrency,
         toCurrencyCode: toCurrency,
-        amountOfMoney: ammount,
+        amount: ammount,
       },
       {headers: this.headers})
   }
+
+  getAllOrders(): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:8080/api/orders`, {headers: this.headers})
+  }
+
 
 
 }

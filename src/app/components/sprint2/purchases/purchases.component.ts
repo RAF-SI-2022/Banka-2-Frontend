@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 import {MenuItem} from "primeng/api";
-import {Order, Transaction, Type} from 'src/app/models/stock-exchange.model';
+import {Order, Type} from 'src/app/models/stock-exchange.model';
 import {TransactionsArrayService} from "../../../services/transactions-array.service";
 import { StockService } from 'src/app/services/stock.service';
 
@@ -15,7 +15,7 @@ export class PurchasesComponent {
 
   breadcrumbItems: MenuItem[];
 
-  transactions: Transaction[]
+  specialOrders: Order[]
 
   orders: Order[]
 
@@ -46,7 +46,7 @@ export class PurchasesComponent {
       {label: 'Na čekanju', value: 'NA CEKANJU'}
     ]
 
-    this.transactions = this.transactionService.getTransactions()
+    this.specialOrders = this.transactionService.getTransactions()
     this.getOrdersFromBack()
   }
 
@@ -54,24 +54,25 @@ export class PurchasesComponent {
     this.stockService.getAllOrders().subscribe({
       next: val => {
         this.orders=val
+        this.orders = this.orders.concat(this.specialOrders)
         console.log(this.orders)
-        
+
         for(var o in this.orders)
         {
           if(this.orders[o].status==='WAITING'){
-            this.orders[o].status='NA CEKANJU' 
+            this.orders[o].status='NA CEKANJU'
           }
           if(this.orders[o].status==='DENIED'){
-            this.orders[o].status='ODBIJENA' 
+            this.orders[o].status='ODBIJENA'
           }
           if(this.orders[o].status==='IN_PROGRESS'){
-            this.orders[o].status='U TOKU' 
+            this.orders[o].status='U TOKU'
           }
           if(this.orders[o].status==='COMPLETE'){
-            this.orders[o].status='ZAVRSENA' 
+            this.orders[o].status='ZAVRSENA'
           }
         }
-      } 
+      }
 
     });
   }

@@ -57,7 +57,7 @@
           <th pSortableColumn="amountForSale" style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
-                <p style="margin-bottom: 0; margin-top: 2px;">Količina za prodaju</p>
+                <p style="margin-bottom: 0; margin-top: 2px;">Količina za Prodaju</p>
                 <p-sortIcon field="amountForSale"></p-sortIcon>
               </div>
             </div>
@@ -182,7 +182,7 @@
           <tr>
             <th style="font-size: 12px;">Tip Ordera</th>
             <th style="font-size: 12px;">Kolicina</th>
-            <th style="font-size: 12px;">Ukupno</th>
+            <th style="font-size: 12px;">Ukupna cena</th>
             <th style="font-size: 12px;">Datum</th>
           </tr>
       </ng-template>
@@ -190,14 +190,15 @@
           <tr style="font-size: 12px;">
               <td>{{value.orderType}}</td>
               <td>{{value.amount}}</td>
-              <td>{{value.total}}</td>
-              <td>{{value.date}}</td>
+              <td>{{value.price}}</td>
+              <td>{{value.lastModified}}</td>
           </tr>
       </ng-template>
   </p-table>
 
   </div>
 </p-dialog>
+
 
 <!-- <button *ngIf="userStock.amountForSale" type="button"
     (click)="toggleSellStockDialog($event, stock)"
@@ -218,40 +219,3 @@
 <app-sell-stock (stockSellEmitter)="refreshSell($event)"></app-sell-stock>
 
 
-<!-- <p-dialog [(visible)]="visible" header="Akcija {{selectedStock?.stock?.symbol}}" [style]="{ width: '50vw' }">
-  <div class="flex py-2 justify-content-center">
-
-    <p-table [value]="values" class="p-datatable-header" [rowHover]="true" [rows]="2">
-      <ng-template pTemplate="caption">
-          <div class="table-header row">
-              <div class="col-12 text-start table-name">
-                  <div style="display:flex; align-items: center; gap: 8px;">
-                      <h3 style="font-size: medium;">
-                          Pregled kapitala
-                      </h3>
-                  </div>
-              </div>
-          </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-          <tr>
-            <th style="font-size: 12px;">ID</th>
-            <th style="font-size: 12px;">Delovodni broj</th>
-            <th style="font-size: 12px;">Status</th>
-            <th style="font-size: 12px;">Kreiran</th>
-            <th style="font-size: 12px;">Izmenjen</th>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-value>
-          <tr style="font-size: 12px;">
-              <td>{{value.id}}</td>
-              <td>{{value.refNumber}}</td>
-              <td>{{value.status}}</td>
-              <td>{{value.created}}</td>
-              <td>{{value.modified}}</td>
-          </tr>
-      </ng-template>
-  </p-table>
-
-  </div>
-</p-dialog> -->

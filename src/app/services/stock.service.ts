@@ -136,6 +136,7 @@ export class StockService {
         stop: stop,
         allOrNone: allOrNone,
         margin: margin,
+        currencyCode: 'USD' // TODO: ovo kasnije promeniti
       }
       , {headers: this.headers})
   }

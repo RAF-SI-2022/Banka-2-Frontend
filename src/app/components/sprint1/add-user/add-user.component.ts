@@ -111,13 +111,21 @@ export class AddUserComponent {
   }
 
   addUser() {
+    let limits
+
+    if(this.addUserForm.get('selectedJob')?.value?.name === "AGENT" ){
+      limits = this.addUserForm.get('limit')?.value
+    }
+    else{
+      limits = 100000
+    }
     const user = {
       firstName: this.addUserForm.get('firstName')?.value,
       lastName: this.addUserForm.get('lastName')?.value,
       email: this.addUserForm.get('email')?.value,
       password: this.addUserForm.get('password')?.value,
       permissions: this.selectedJob.permissions,
-      dailyLimit: this.addUserForm.get('limit')?.value,
+      dailyLimit: limits,
       jobPosition: this.selectedJob.name,
       active: this.addUserForm.get('active')?.value,
       jmbg: this.addUserForm.get('jmbg')?.value,

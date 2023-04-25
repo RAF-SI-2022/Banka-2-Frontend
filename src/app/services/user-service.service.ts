@@ -60,7 +60,7 @@ export class UserService {
       {headers: this.headers})
   }
 
-  createNewUser(firstName: string, lastName: string, email: string, password: string, permissions: any, dailyLimit: number, jobPosition: string, active: string, jmbg: string, phone: string
+  createNewUser(firstName: string, lastName: string, email: string, password: string, permissions: any, dailyLimit: number | null, jobPosition: string, active: string, jmbg: string, phone: string
   ): Observable<any> {
     return this.httpClient.post<UserCreateDTO>(
       `${environment.apiUserServerUrl}/register`,

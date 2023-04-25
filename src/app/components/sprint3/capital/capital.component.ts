@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Transaction } from 'src/app/models/stock-exchange.model';
+import { Order } from 'src/app/models/stock-exchange.model';
 import { DepositWithdrawCapitalComponent } from '../deposit-withdraw-capital/deposit-withdraw-capital.component';
 import { TransactionListComponent } from '../transaction-list/transaction-list.component';
 import { Router } from '@angular/router';
@@ -32,7 +32,7 @@ export class CapitalComponent  {
 
   breadcrumbItems: MenuItem[];
 
-  transactions: Transaction[]
+  specialOrders: Order[]
 
   capitalOverview: any;
 
@@ -43,7 +43,7 @@ export class CapitalComponent  {
   constructor(private router: Router) {
 
   }
-  
+
   @ViewChild(DepositWithdrawCapitalComponent, {static: true}) depositWithdrawCapitalComponent: DepositWithdrawCapitalComponent
   @ViewChild(TransactionListComponent, {static: true}) transactionListComponent: TransactionListComponent
   @ViewChild(MarginTransactionListComponent, {static: true}) marginTransactionListComponent: MarginTransactionListComponent
@@ -74,7 +74,7 @@ export class CapitalComponent  {
       { type: 'AKCIJA', total: '$0' },
       { type: 'FUTURE_UGOVOR', total: '$0' }
     ];
-  
+
   }
 
   onCapitalRowClick(type: string) {

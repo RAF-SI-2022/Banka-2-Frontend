@@ -136,15 +136,15 @@ export interface ISO {
   name: string,
 }
 
-export interface Transaction {
-  exchangeMICCode: string, // NYCT
-  transaction: string,
-  hartija: string,
-  volume: number,
-  price: number,
-  status: string,
-  lastModifed: String,
-}
+// export interface Transaction {
+//   exchangeMICCode: string, // NYCT
+//   transaction: string,
+//   hartija: string,
+//   volume: number,
+//   price: number,
+//   status: string,
+//   lastModifed: String,
+// }
 
 export interface Order {
   orderType: string, //Stock

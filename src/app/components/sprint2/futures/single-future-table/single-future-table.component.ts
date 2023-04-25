@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
-import {Future, Transaction} from "../../../../models/stock-exchange.model";
+import {Future, Order} from "../../../../models/stock-exchange.model";
 import {StockService} from "../../../../services/stock.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {error} from 'cypress/types/jquery';
@@ -166,16 +166,16 @@ export class SingleFutureTableComponent {
     ).subscribe({
       next: val => {
         // console.log(val)
-        let tempTransaction: Transaction = {
-          exchangeMICCode: futureToBuy.futureName, // futureName
-          transaction: "Kupovina", //KUPLJENO Provalimo iz poziva
-          hartija: "Terminski ugovor",  //FUTURE provalimo iz poziva
-          volume: futureToBuy.contractSize,  //contractSize
+        let tempOrder: Order = {
+          symbol: futureToBuy.futureName, // futureName
+          tradeType: "BUY", //KUPLJENO Provalimo iz poziva
+          orderType: "FUTURE CONTRACT",  //FUTURE provalimo iz poziva
+          amount: futureToBuy.contractSize,  //contractSize
           price: futureToBuy.maintenanceMargin, // maintenanceMargin
-          status: "IZVRSENA",  //NA CEKANJU
-          lastModifed: futureToBuy.settlementDate, //settlementDate
+          status: "ZAVRSENA",  //NA CEKANJU
+          lastModified: futureToBuy.settlementDate.toString(), //settlementDate
         }
-        this.transactionService.addTransactions(tempTransaction)
+        this.transactionService.addTransactions(tempOrder)
         this.getAllFutures()
         this.toastr.info("Terminski ugovor je uspešno kupljen.")
 

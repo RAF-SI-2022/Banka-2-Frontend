@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Future, Stock, Transaction} from "../../../../models/stock-exchange.model";
+import {Future, Stock, Order} from "../../../../models/stock-exchange.model";
 import {StockService} from "../../../../services/stock.service";
 import {TransactionsArrayService} from "../../../../services/transactions-array.service";
 
@@ -66,17 +66,17 @@ export class SellFutureComponent {
         0
       ).subscribe({
         next: val => {
-          let tempTransaction: Transaction = {
-            exchangeMICCode: this.future.futureName, // futureName
-            transaction: "Prodaja", //KUPLJENO Provalimo iz poziva
-            hartija: "Terminski ugovor",  //FUTURE provalimo iz poziva
-            volume: this.future.contractSize,  //contractSize
+          let tempOrder: Order = {
+            symbol: this.future.futureName, // futureName
+            tradeType: "SELL", //KUPLJENO Provalimo iz poziva
+            orderType: "FUTURE CONTRACT",  //FUTURE provalimo iz poziva
+            amount: this.future.contractSize,  //contractSize
             price: this.future.maintenanceMargin, // maintenanceMargin
             status: "NA CEKANJU",  //NA CEKANJU
-            lastModifed: this.future.settlementDate, //settlementDate
+            lastModified: this.future.settlementDate.toString(), //settlementDate
           }
-          console.log(tempTransaction)
-          this.transactionService.addTransactions(tempTransaction)
+          console.log(tempOrder)
+          this.transactionService.addTransactions(tempOrder)
           this.futureSoldEmitter.emit(this.future.id);
           this.sellFutureVisible = false;
         },

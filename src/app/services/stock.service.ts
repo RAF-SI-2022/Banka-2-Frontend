@@ -232,7 +232,23 @@ export class StockService {
     return this.httpClient.get<any>(`http://localhost:8080/api/transactions/${currencyCode}`, {headers: this.headers})
   }
 
+  depositBalance(amount: number,userEmail:string,currencyCode:string): Observable<any> {
+    return this.httpClient.post<any>(`http://localhost:8080/api/balances/increase` , {
+      userEmail: userEmail,
+      currencyCode: currencyCode,
+      amount: amount,
+    }
+    , {headers: this.headers})
+  }
 
+  withdrawBalance(amount: number,userEmail:string,currencyCode:string): Observable<any> {
+    return this.httpClient.post<any>(`http://localhost:8080/api/balances/decrease` , {
+      userEmail: userEmail,
+      currencyCode: currencyCode,
+      amount: amount,
+    }
+    , {headers: this.headers})
+  }
 
 
 }

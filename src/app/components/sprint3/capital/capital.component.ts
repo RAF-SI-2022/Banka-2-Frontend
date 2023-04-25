@@ -92,27 +92,14 @@ export class CapitalComponent  {
     this.depositWithdrawCapitalComponent.visible=true;
   }
 
-  toggleTransactionListDialog() {
+  toggleTransactionListDialog(event:string) {
+    this.transactionListComponent.currencyCode = event;
+    this.transactionListComponent.getUser();
     this.transactionListComponent.visible=true;
   }
 
   toggleMarginTransactionListDialog() {
     this.marginTransactionListComponent.visible=true;
-  }
-
-  refresh() {
-    console.log("123")
-    //TODO ovde ide logika i poziv na servis koji ce pozvati refresh i resetovati tabelu na berza mode
-    //I odmah za njim i filtriranje za userove hartije
-    // this.loading = true;
-    // this.stocks-table = []
-    // setTimeout(()=>{
-    //   this.insertUsers()
-    //   this.BuySellOption = true
-    //   this.switch = false
-    //   this.loading = false
-    // }, 2000);
-
   }
 
   private getBalanceFromBack(): void {
@@ -127,6 +114,10 @@ export class CapitalComponent  {
 
   }
 
+  refresh(s:string){
+    this.getBalanceFromBack();
+  }
+
   async getUser(){
     this.userService.getUserData()
       .subscribe({
@@ -139,15 +130,6 @@ export class CapitalComponent  {
           console.log(err)
         }
       })
-  }
-
-  openMoreInfoDialog(event: string) {
-    // Slanje podataka na details dialog
-
-    this.transactionListComponent.currencyCode = event
-
-    this.toggleTransactionListDialog()
-
   }
 
   getPermission(): boolean {

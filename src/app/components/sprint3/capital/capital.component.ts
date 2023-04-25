@@ -1,10 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Order } from 'src/app/models/stock-exchange.model';
+import { Balance } from 'src/app/models/stock-exchange.model';
 import { DepositWithdrawCapitalComponent } from '../deposit-withdraw-capital/deposit-withdraw-capital.component';
 import { TransactionListComponent } from '../transaction-list/transaction-list.component';
 import { Router } from '@angular/router';
 import { MarginTransactionListComponent } from '../margin-transaction-list/margin-transaction-list.component';
+import { StockService } from 'src/app/services/stock.service';
+import { UserService } from 'src/app/services/user-service.service';
+import { User } from 'src/app/models/users.model';
 /* Model za privremene podatke */
 export interface TableData {
   valuta: string;
@@ -40,7 +44,11 @@ export class CapitalComponent  {
 
   status!: any[];
 
-  constructor(private router: Router) {
+  balance: Balance[]
+
+  user: User
+
+  constructor(private router: Router, private  stockService: StockService, private userService: UserService) {
 
   }
 
@@ -52,18 +60,14 @@ export class CapitalComponent  {
 
 
   ngOnInit() {
+
+    this.getUser()
+
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Porudžbine', routerLink: ['/purchases']}
     ];
 
-    this.status = [
-      {label: 'Sve', value: ''},
-      {label: 'Završene', value: 'ZAVRSENA'},
-      {label: 'Odobrene', value: 'ODOBRENA'},
-      {label: 'Odbijene', value: 'ODBIJENA'},
-      {label: 'Na čekanju', value: 'NA CEKANJU'}
-    ]
 
     this.capitalOverview = [
       { type: 'AKCIJA', total: '$0' },
@@ -109,6 +113,41 @@ export class CapitalComponent  {
     //   this.switch = false
     //   this.loading = false
     // }, 2000);
+
+  }
+
+  private getBalanceFromBack(): void {
+
+    this.stockService.getAllBalancesByUserId(this.user?.id)
+    .subscribe({
+      next: val => {
+        this.balance=val
+      },
+
+    })
+
+  }
+
+  async getUser(){
+    this.userService.getUserData()
+      .subscribe({
+        next: val => {
+          this.user = val
+          //TODO Porpaviti sinhronizaciju
+          this.getBalanceFromBack()
+        },
+        error: err => {
+          console.log(err)
+        }
+      })
+  }
+
+  openMoreInfoDialog(event: string) {
+    // Slanje podataka na details dialog
+
+    this.transactionListComponent.currencyCode = event
+
+    this.toggleTransactionListDialog()
 
   }
 

@@ -157,6 +157,17 @@ export interface Order {
 
 }
 
+export interface Balance {
+  amount: number,
+  currency: Currency,
+  free: number,
+  id: number,
+  reserved: number,
+}
+
+export interface Currency {
+  currencyCode: string
+}
 
 
 export interface UserStock {

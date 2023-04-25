@@ -4,6 +4,12 @@
     background-color: #fff;
     border-radius: 20px;
   }
+
+ ::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #ffffff;
+  color: #724bcb;
+  border-color: #8876b9;
+}
   
   .icon-container {
     display: flex;

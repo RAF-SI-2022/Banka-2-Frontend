@@ -32,7 +32,7 @@ export class TransactionListComponent {
 
   balance: Balance[]
 
-  currencyCode: string 
+  currencyCode: string = ''
 
   user: User
   
@@ -47,19 +47,18 @@ export class TransactionListComponent {
   }
 
   ngOnInit() {
-    this.currencyCode = 't'
     this.getUser()
   }
 
-  private getTransactionsFromBack(): void {
+  private getTransactionsFromBack(currencyCode: string ): void {
 
     
-    this.stockService.getAllTransactionsByCurrency('RSD')
+    this.stockService.getAllTransactionsByCurrency(currencyCode)
     .subscribe({
       next: val => {
-           console.log(val)
-       // this.balance=val
-        console.log(this.currencyCode)
+        //   console.log(val)
+        this.balance=val
+        console.log(currencyCode)
       },
 
     })
@@ -72,7 +71,8 @@ export class TransactionListComponent {
         next: val => {
           this.user = val
           //TODO Porpaviti sinhronizaciju
-          this.getTransactionsFromBack()
+          console.log(this.currencyCode)
+          this.getTransactionsFromBack(this.currencyCode)
         },
         error: err => {
           console.log(err)

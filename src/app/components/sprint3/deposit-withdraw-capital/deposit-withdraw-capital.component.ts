@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/models/users.model';
+import { StockService } from 'src/app/services/stock.service';
+import { UserService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-deposit-withdraw-capital',
@@ -8,30 +11,100 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class DepositWithdrawCapitalComponent {
 
-  depositWithdrawForm: FormGroup;
+  @Output() dwEmitter = new EventEmitter<any>();
+
+
+  depositForm: FormGroup;
+  withdrawForm: FormGroup;
   visible: boolean = false;
   isFormValid = false;
-  valute =[{name:"RSD"},{name:"USD"},{name:"EUR"},{name:"CHF"}]
+  isWFormValid = false;
+  valute =[{name:"RSD"},{name:"USD"},{name:"EUR"},{name:"CAD"}]
+  user: User
 
 
-  constructor(private formBuilder: FormBuilder) {
-    this.depositWithdrawForm = this.formBuilder.group({
+
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private  stockService: StockService) {
+    this.depositForm = this.formBuilder.group({
       iznos: [null, Validators.required],
       valuta: [null, Validators.required],
     });
+    this.withdrawForm = this.formBuilder.group({
+      iznos: [null, Validators.required],
+      valuta: [null, Validators.required],
+    });
+    this.withdrawForm.valueChanges.subscribe(() => {
+      this.isWFormValid = this.withdrawForm.valid;
+    });
+    this.depositForm.valueChanges.subscribe(() => {
+      this.isFormValid = this.depositForm.valid;
+    });
+  }
 
+  ngOnInit(){
   }
 
   submit(){
+    if (this.depositForm.valid) {
+        this.getUser(1)
+    }
+  }
 
+  submit2(){
+    if (this.withdrawForm.valid) {
+        this.getUser(2)
+    }
   }
 
   resetForm() {
-    this.depositWithdrawForm.get('iznos')?.reset();
-    this.depositWithdrawForm.get('valuta')?.reset();
+    this.depositForm.get('iznos')?.reset();
+    this.depositForm.get('valuta')?.reset();
+    this.withdrawForm.get('iznos')?.reset();
+    this.withdrawForm.get('valuta')?.reset();
   }
 
   open() {
     this.visible = true;
+  }
+
+  deposit(currencyCode:string,userEmail:string,amount:number){
+    console.log(userEmail+" "+currencyCode+" "+amount)
+    this.stockService.depositBalance(amount,userEmail,currencyCode)
+    .subscribe({
+      next: val => {
+        this.dwEmitter.emit(this.user.email);
+      },
+
+    })
+  }
+
+  withdraw(currencyCode:string,userEmail:string,amount:number){
+    console.log(userEmail+" "+currencyCode+" "+amount)
+
+    this.stockService.withdrawBalance(amount,userEmail,currencyCode)
+    .subscribe({
+      next: val => {
+        this.dwEmitter.emit(this.user.email);
+      },
+
+    })
+  }
+
+  async getUser(flag:number){
+    this.userService.getUserData()
+      .subscribe({
+        next: val => {
+          this.user = val
+          if(flag===1){
+            this.deposit(this.depositForm.value.valuta.name,this.user.email,this.depositForm.value.iznos)
+          }
+          if(flag===2){
+            this.withdraw(this.withdrawForm.value.valuta.name,this.user.email,this.withdrawForm.value.iznos)
+          }
+        },
+        error: err => {
+          console.log(err)
+        }
+      })
   }
 }

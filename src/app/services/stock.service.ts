@@ -223,6 +223,4 @@ export class StockService {
     return this.httpClient.get<any>(`http://localhost:8080/api/orders/${id}`, {headers: this.headers})
   }
 
-
-
 }

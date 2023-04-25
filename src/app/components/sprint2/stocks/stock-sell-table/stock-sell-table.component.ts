@@ -133,13 +133,13 @@ export class StockSellTableComponent {
           this.values = val
 
           for(let obj in this.values){
-            if(this.values[obj].orderType === "STOCK"){
+            if(this.values[obj].orderType === "STOCK" && this.values[obj].symbol === this.selectedStock?.stock?.symbol){
               this.tempList.push(this.values[obj])
             }
           }
 
           this.values = this.tempList;
-          
+
         },
         error: err => {
           console.log(err)

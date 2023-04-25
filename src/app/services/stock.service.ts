@@ -224,6 +224,15 @@ export class StockService {
     return this.httpClient.get<any>(`http://localhost:8080/api/orders/${id}`, {headers: this.headers})
   }
 
+  getAllBalancesByUserId(id: number): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:8080/api/balances/${id}`, {headers: this.headers})
+  }
+
+  getAllTransactionsByCurrency(currencyCode: string): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:8080/api/transactions/${currencyCode}`, {headers: this.headers})
+  }
+
+
 
 
 }

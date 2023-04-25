@@ -7,40 +7,47 @@
     <h2 style="font-weight: bolder" class="mb-0">Uplata/Isplata sredstava</h2>
   </ng-template>
   <p-divider/>
-  <div class="container text-center">
-    <div class="row">
-    <form (submit)="submit()" [formGroup]="depositForm">
-          <div class="col-lg-12 text-center mb-3">
-            <h4 class="mb-1">Valuta</h4>
+  <p-tabView>
+    <p-tabPanel header="Uplata">
+      <form (submit)="submit()" [formGroup]="depositForm">
+        <div class="col-lg-12 text-center mb-3">
+          <h4 class="mb-1">Valuta</h4>
 
           <p-dropdown [options]="valute" [formControlName]="'valuta'"  optionLabel="name"
-                          placeholder="Valuta"></p-dropdown>
-            </div>
+                      placeholder="Valuta"></p-dropdown>
+        </div>
         <div class="col-lg-12 text-center mb-3">
           <h4 class="mb-1">Iznos</h4>
-          <p-inputNumber placeholder="Količina" [formControlName]="'iznos'" inputId="integeronly"></p-inputNumber>
+          <p-inputNumber placeholder="Količina za UPLATU" [formControlName]="'iznos'" inputId="integeronly"></p-inputNumber>
         </div>
 
         <div class="col-lg-12">
           <button pButton [disabled]="!isFormValid" pRipple label="Uplati"></button>
         </div>
       </form>
+    </p-tabPanel>
+    <p-tabPanel header="Isplata">
       <form (submit)="submit2()" [formGroup]="withdrawForm">
         <div class="col-lg-12 text-center mb-3">
           <h4 class="mb-1">Valuta</h4>
 
-        <p-dropdown [options]="valute" [formControlName]="'valuta'"  optionLabel="name"
-                        placeholder="Valuta"></p-dropdown>
-          </div>
-      <div class="col-lg-12 text-center mb-3">
-        <h4 class="mb-1">Iznos</h4>
-        <p-inputNumber placeholder="Količina" [formControlName]="'iznos'" inputId="integeronly"></p-inputNumber>
-      </div>
+          <p-dropdown [options]="valute" [formControlName]="'valuta'"  optionLabel="name"
+                      placeholder="Valuta"></p-dropdown>
+        </div>
+        <div class="col-lg-12 text-center mb-3">
+          <h4 class="mb-1">Iznos</h4>
+          <p-inputNumber placeholder="Količina za ISPLATU" [formControlName]="'iznos'" inputId="integeronly"></p-inputNumber>
+        </div>
 
-      <div class="col-lg-12">
-        <button pButton [disabled]="!isWFormValid" pRipple label="Isplati"></button>
-      </div>
-    </form>
+        <div class="col-lg-12">
+          <button pButton [disabled]="!isWFormValid" pRipple label="Isplati"></button>
+        </div>
+      </form>
+    </p-tabPanel>
+  </p-tabView>
+  <div class="container text-center">
+    <div class="row">
+
     </div>
   </div>
 </p-dialog>

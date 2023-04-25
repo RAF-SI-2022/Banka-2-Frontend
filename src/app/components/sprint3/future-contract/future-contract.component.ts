@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {UserService} from 'src/app/services/user-service.service';
 import {User} from 'src/app/models/users.model';
+import {StockService} from "../../../services/stock.service";
+import {Future} from "../../../models/stock-exchange.model";
 
 @Component({
   selector: 'app-future-contract',
@@ -11,40 +13,45 @@ export class FutureContractComponent {
 
   futureContracts : any[];
 
+  tempList: any[]
+
   values: any[] = [];
+
+  userFuture: Future[]
+
+  selectedFuture: any;
 
   user: User
 
   visible: boolean;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private futureService: StockService) {
 
   }
 
   ngOnInit() {
 
     this.getUser();
-    // Test podaci 
+    // Test podaci
     this.futureContracts = [
       {
-        oznaka: 'ABC',
+        oznaka: 'corn',
         berza: 'NYSE',
         kolicinaUvlasnistvu: 10,
-        cena: 100,
-        vrednost: 1000,
-        vrednostRSD: 100000
+        cena: 1600,
+        vrednost: 16000,
+        vrednostRSD: 1697520
       },
       {
-        oznaka: 'XYZ',
+        oznaka: 'Chicago wheat',
         berza: 'NASDAQ',
         kolicinaUvlasnistvu: 5,
-        cena: 200,
-        vrednost: 1000,
-        vrednostRSD: 100000
+        cena: 2500,
+        vrednost: 12500,
+        vrednostRSD: 1326187
       }
     ];
 
-    this.fillValues();
 
   }
 
@@ -73,6 +80,29 @@ export class FutureContractComponent {
         modified: '2023-01-17',
       }
     ]
+
+  }
+
+  getMyFutures(){
+    this.futureService.getAllFutures().subscribe({
+      next: val => {
+        this.userFuture = val;
+        console.log(val)
+
+        this.tempList = []
+        for(let obj in this.userFuture){
+          if(this.userFuture[obj].user.id === this.user?.id){
+            this.tempList.push(this.userFuture[obj])
+          }
+        }
+        this.futureContracts = this.tempList
+      }
+      , error: err => {
+        console.log(err)
+      }
+    })
+
+
   }
 
 
@@ -81,6 +111,9 @@ export class FutureContractComponent {
       .subscribe({
         next: val => {
           this.user = val
+
+          // this.getMyFutures()
+          this.fillValues();
         },
         error: err => {
           console.log(err)

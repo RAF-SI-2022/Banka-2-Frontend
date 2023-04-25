@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {StockService} from 'src/app/services/stock.service';
 import {UserService} from 'src/app/services/user-service.service';
 import {ToastrService} from "ngx-toastr";
-import {Transaction} from "../../../models/stock-exchange.model";
+import {Order} from "../../../models/stock-exchange.model";
 import {TransactionsArrayService} from "../../../services/transactions-array.service";
 
 @Component({
@@ -183,16 +183,16 @@ export class ForexComponent {
     this.stockService.buyForex(this.currencyFrom.name, this.currencyTo.name, this.ammount ?? 1).subscribe({
       next: val => {
         const momentOfExchange = new Date();
-        let tempTransaction: Transaction = {
-          exchangeMICCode: this.currencyFrom.name + ' ' + this.currencyTo.name, // forexPairName
-          transaction: "Kupovina", //KUPLJENO Provalimo iz poziva
-          hartija: "Forex",  //FOREX provalimo iz poziva
-          volume: this.ammount ?? 1,  //Kolicina prvobitne valute
+        let tempOrder: Order = {
+          symbol: this.currencyFrom.name + ' ' + this.currencyTo.name, // forexPairName
+          tradeType: "BUY", //KUPLJENO Provalimo iz poziva
+          orderType: "FOREX",  //FOREX provalimo iz poziva
+          amount: this.ammount ?? 1,  //Kolicina prvobitne valute
           price: this.convertedAmmount, // konvertovana/razmenjena valuta
-          status: "IZVRSENA",  //NA CEKANJU
-          lastModifed: momentOfExchange.toLocaleString(), //nemamo jos izvlacenje sa beka pa uzima trenutak razmene novca
+          status: "ZAVRSENA",  //NA CEKANJU
+          lastModified: momentOfExchange.toLocaleString(), //nemamo jos izvlacenje sa beka pa uzima trenutak razmene novca
         }
-        this.transactionService.addTransactions(tempTransaction)
+        // this.transactionService.addTransactions(tempOrder)
         this.toaster.success("Uspešna kupovina")
       }
     })

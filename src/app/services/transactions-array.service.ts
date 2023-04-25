@@ -1,27 +1,27 @@
 import {Injectable} from '@angular/core';
-import {Transaction} from "../models/stock-exchange.model";
+import {Order} from "../models/stock-exchange.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionsArrayService {
 
-  transactionList: Transaction[]
+  orderList: Order[]
 
   constructor() {
     if (sessionStorage.getItem('porudzbine') !== null) {
-      this.transactionList = JSON.parse(sessionStorage.getItem('porudzbine')!)
+      this.orderList = JSON.parse(sessionStorage.getItem('porudzbine')!)
     } else {
-      this.transactionList = []
+      this.orderList = []
     }
   }
 
   getTransactions() {
-    return this.transactionList
+    return this.orderList
   }
 
-  addTransactions(transaction: Transaction) {
-    this.transactionList.push(transaction)
-    sessionStorage.setItem('porudzbine', JSON.stringify(this.transactionList))
+  addTransactions(transaction: Order) {
+    this.orderList.push(transaction)
+    sessionStorage.setItem('porudzbine', JSON.stringify(this.orderList))
   }
 }

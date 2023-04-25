@@ -87,8 +87,11 @@ export class StockSellTableComponent {
     })
   }
 
+  // event: MouseEvent,
+  //   event.stopPropagation()
 
-  toggleSellStockDialog(stock: Stock) {
+  toggleSellStockDialog(event: MouseEvent,stock: Stock) {
+    event.stopPropagation()
     this.sellStockComponent.sellStockVisible = true;
     this.sellStockComponent.stock = stock;
   }

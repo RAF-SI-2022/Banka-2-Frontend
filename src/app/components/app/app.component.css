@@ -18,6 +18,10 @@
   color: white;
 }
 
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
 .sidebar-nav-item:hover {
   background-color: #eff3f7;
 }
@@ -30,9 +34,6 @@
   margin-top: 19px;
 }
 
-.logo {
-
-}
 
 .nav-item > a {
   margin-left: 10px;

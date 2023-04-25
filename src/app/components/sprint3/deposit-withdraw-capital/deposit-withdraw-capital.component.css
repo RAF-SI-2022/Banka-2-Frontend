@@ -29,12 +29,12 @@
     display: flex;
   }
   
-  ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+  /* ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
     background: #ffffff;
     border-color: #3d3d3d;
     color: #3d3d3d;
   }
-  
+   */
   .search-bar input, .search-btn, .search-btn:before, .search-btn:after {
     transition: all 0.25s ease-out;
     border: 0;

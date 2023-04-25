@@ -69,7 +69,9 @@ export class SingleFutureTableComponent {
         label: 'Terminski ugovori',
         icon: 'pi pi-fw pi-file',
         command: event => {
+          
           this.futures = this.buyableFutures;
+          this.changeOption = false;
         }
       },
       {
@@ -77,6 +79,7 @@ export class SingleFutureTableComponent {
         icon: 'pi pi-fw pi-user',
         command: event => {
           this.futures = this.myFutures;
+          this.changeOption = true;
         }
       },
     ];

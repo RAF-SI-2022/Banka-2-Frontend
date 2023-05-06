@@ -42,6 +42,7 @@ export class ChangePasswordComponent {
       },
       error: err => {
         this.toaster.error("Došlo je do greške pri resetovanju lozinke.")
+        this.toaster.error(err.error)
         this.resetPasswordForm.setValue({
           password: [''],
           password2: [''],

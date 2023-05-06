@@ -4,6 +4,7 @@ import {MenuItem} from "primeng/api";
 import {Order, Type} from 'src/app/models/stock-exchange.model';
 import {TransactionsArrayService} from "../../../services/transactions-array.service";
 import { StockService } from 'src/app/services/stock.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class PurchasesComponent {
 
   status!: any[];
 
-  constructor(private transactionService: TransactionsArrayService, private  stockService: StockService) {
+  constructor(private transactionService: TransactionsArrayService,private toastr: ToastrService , private  stockService: StockService) {
 
   }
 
@@ -72,6 +73,9 @@ export class PurchasesComponent {
             this.orders[o].status='ZAVRSENA'
           }
         }
+      },
+      error: err =>{
+        this.toastr.error(err.error)
       }
 
     });

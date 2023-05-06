@@ -132,7 +132,7 @@ export class AddUserComponent {
       phone: this.addUserForm.get('phone')?.value,
     };
 
-    console.log(user)
+    // console.log(user)
 
     this.newUserEvent.emit(user)
   }

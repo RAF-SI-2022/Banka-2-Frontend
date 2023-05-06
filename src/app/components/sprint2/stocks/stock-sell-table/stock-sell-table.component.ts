@@ -81,7 +81,7 @@ export class StockSellTableComponent {
         this.loading = false;
       }
       , error: err => {
-        this.toastr.error("Greska pri dovlacenju podataka")
+        this.toastr.error(err.error)
         this.loading = false
       }
     })
@@ -111,7 +111,7 @@ export class StockSellTableComponent {
       },
       error: err => {
         // console.log(err);
-        this.toastr.error("Greska pri skidanju")
+        this.toastr.error(err.error)
       }
     })
   }
@@ -145,7 +145,8 @@ export class StockSellTableComponent {
 
         },
         error: err => {
-          console.log(err)
+          // console.log(err)
+          this.toastr.error(err.error)
         }
       })
   }
@@ -157,7 +158,8 @@ export class StockSellTableComponent {
           this.user = val
         },
         error: err => {
-          console.log(err)
+          // console.log(err)
+          this.toastr.error(err.error)
         }
       })
   }

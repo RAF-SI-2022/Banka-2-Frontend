@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { timeout } from 'rxjs';
 import { Balance } from 'src/app/models/stock-exchange.model';
 import { User } from 'src/app/models/users.model';
@@ -42,7 +43,7 @@ export class TransactionListComponent {
 
   ];
 
-  constructor(private  stockService: StockService, private userService: UserService) {
+  constructor(private  stockService: StockService,private toastr: ToastrService ,private userService: UserService) {
       
   }
 
@@ -60,6 +61,9 @@ export class TransactionListComponent {
         this.balance=val
         console.log(currencyCode)
       },
+      error: err =>{
+        this.toastr.error(err.error)
+      }
 
     })
 
@@ -75,7 +79,9 @@ export class TransactionListComponent {
           this.getTransactionsFromBack(this.currencyCode)
         },
         error: err => {
-          console.log(err)
+          // console.log(err)
+          this.toastr.error(err.error)
+
         }
       })
   }

@@ -9,6 +9,7 @@ import { MarginTransactionListComponent } from '../margin-transaction-list/margi
 import { StockService } from 'src/app/services/stock.service';
 import { UserService } from 'src/app/services/user-service.service';
 import { User } from 'src/app/models/users.model';
+import { ToastrService } from 'ngx-toastr';
 /* Model za privremene podatke */
 export interface TableData {
   valuta: string;
@@ -48,7 +49,7 @@ export class CapitalComponent  {
 
   user: User
 
-  constructor(private router: Router, private  stockService: StockService, private userService: UserService) {
+  constructor(private router: Router,private toastr: ToastrService, private  stockService: StockService, private userService: UserService) {
 
   }
 
@@ -110,7 +111,9 @@ export class CapitalComponent  {
       next: val => {
         this.balance=val
       },
-
+      error: err =>{
+        this.toastr.error(err.error)
+      }
     })
 
   }
@@ -128,7 +131,8 @@ export class CapitalComponent  {
           this.getBalanceFromBack()
         },
         error: err => {
-          console.log(err)
+          this.toastr.error(err.error)
+          // console.log(err)
         }
       })
   }

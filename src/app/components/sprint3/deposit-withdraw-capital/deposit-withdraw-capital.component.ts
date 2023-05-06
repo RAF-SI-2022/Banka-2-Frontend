@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/users.model';
 import { StockService } from 'src/app/services/stock.service';
 import { UserService } from 'src/app/services/user-service.service';
@@ -24,7 +25,7 @@ export class DepositWithdrawCapitalComponent {
 
 
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private  stockService: StockService) {
+  constructor(private formBuilder: FormBuilder,private toastr: ToastrService , private userService: UserService, private  stockService: StockService) {
     this.depositForm = this.formBuilder.group({
       iznos: [null, Validators.required],
       valuta: [null, Validators.required],
@@ -74,7 +75,9 @@ export class DepositWithdrawCapitalComponent {
       next: val => {
         this.dwEmitter.emit(this.user.email);
       },
-
+      error: err =>{
+        this.toastr.error(err.error)
+      }
     })
   }
 
@@ -86,6 +89,9 @@ export class DepositWithdrawCapitalComponent {
       next: val => {
         this.dwEmitter.emit(this.user.email);
       },
+      error: err =>{
+        this.toastr.error(err.error)
+      }
 
     })
   }
@@ -103,7 +109,9 @@ export class DepositWithdrawCapitalComponent {
           }
         },
         error: err => {
-          console.log(err)
+          // console.log(err)
+          this.toastr.error(err.error)
+
         }
       })
   }

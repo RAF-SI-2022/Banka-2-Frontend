@@ -96,8 +96,8 @@ export class SingleFutureTableComponent {
         this.getAllFutures()
       },
       error: err => {
-        console.log(err);
-        this.toastr.error("Greska probajte kasnije")
+        // console.log(err);
+        this.toastr.error(err.error)
         this.router.navigate(["home"]);
       }
     })
@@ -141,7 +141,8 @@ export class SingleFutureTableComponent {
         this.loading = false;
       },
       error: err => {
-        console.log(err);
+        // console.log(err);
+        this.toastr.error(err.error)
         this.allFutures = []
         this.loading = false;
       }
@@ -184,9 +185,10 @@ export class SingleFutureTableComponent {
 
       },
       error: err => {
-        console.log(err)
+        // console.log(err)
+        this.toastr.error(err.error)
         this.getAllFutures()
-        this.toastr.error("Greska pri kupovini")
+        // this.toastr.error("Greska pri kupovini")
       }
     })
   }
@@ -224,7 +226,8 @@ export class SingleFutureTableComponent {
       error: err => {
         console.log(err)
         this.getAllFutures()
-        this.toastr.error("Greska pri skidanju sa prodaje")
+        // this.toastr.error("Greska pri skidanju sa prodaje")
+        this.toastr.error(err.error)
       }
     })
   }
@@ -267,7 +270,8 @@ export class SingleFutureTableComponent {
         this.idsToBeSold = val;
       },
       error: err => {
-        console.log(err);
+        // console.log(err);
+        this.toastr.error(err.error)
       }
     })
   }
@@ -285,7 +289,8 @@ export class SingleFutureTableComponent {
         this.idsToBeBought = val
       },
       error: err => {
-        console.log(err);
+        // console.log(err);
+        this.toastr.error(err.error)
       }
     })
   }
@@ -322,7 +327,7 @@ export class SingleFutureTableComponent {
         },
         error: err => {
           // console.log(err);
-          this.toastr.error("Greska pri skidanju")
+          this.toastr.error(err.error)
           this.getAllFutures()
         }
       })
@@ -342,7 +347,7 @@ export class SingleFutureTableComponent {
         },
         error: err => {
           // console.log(err);
-          this.toastr.error("Greska pri skidanju")
+          this.toastr.error(err.error)
           this.getAllFutures()
         }
       })

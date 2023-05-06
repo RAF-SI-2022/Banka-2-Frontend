@@ -101,7 +101,7 @@ export class UsersComponent {
                 this.users = this.users.filter(user => user.email !== currentUser.email)
               },
               error: err => {
-
+                this.toastr.error(err.error)
               }
             })
           //strpati sve podatke u listu usera
@@ -124,7 +124,8 @@ export class UsersComponent {
 
   deleteUser() {
     if (this.selectedUserId === -1) {
-      alert("greska")
+      // alert("greska")
+      this.toastr.error("Neocekivana greska")
       return;
     }
     this.userService.deleteUser(this.selectedUserId)
@@ -135,10 +136,13 @@ export class UsersComponent {
           this.users = this.users.filter(user => user.id != this.selectedUserId);
           this.showToastDelete()
           this.closeDeleteConfirmationDialog()
+
+          // this.toastr.info("Korisnik uspesno izbrisan")
           //strpati sve podatke u listu usera
         },
         error: err => {
-          console.log(err)
+          // console.log(err)
+          this.toastr.error(err.error)
           this.selectedUserId = -1
           this.displayConfirmationDialog = !this.displayConfirmationDialog
         }
@@ -153,11 +157,12 @@ export class UsersComponent {
             if (item.id == id) {
               item.active = true;
               // this.userService.activateUser(id)
+              this.toastr.info("Korisnik uspesno aktiviran.")
             }
           }
         },
         error: err => {
-          alert(err)
+          this.toastr.error(err.error)
         }
       })
   }
@@ -171,11 +176,12 @@ export class UsersComponent {
             if (item.id == id) {
               item.active = false;
               //this.userService.deactivateUser(id)
+              this.toastr.info("Korisnik uspesno deaktiviran.")
             }
           }
         },
         error: err => {
-          alert(err.toString())
+          this.toastr.error(err.error)
         }
       })
   }
@@ -210,9 +216,10 @@ export class UsersComponent {
         next: val => {
           this.editUserChild.close()
           this.getUsers()
+          this.toastr.info("Korisnik uspesno promenjen.")
         },
         error: err => {
-          this.toastr.error("Pogresno uneti podaci!")
+          this.toastr.error(err.error)
         }
       })
   }
@@ -236,10 +243,13 @@ export class UsersComponent {
         this.getUsers()
         this.showToastAdd()
         this.addUserChild.close()
+        // this.toastr.info("Korisnik uspesno dodat.")
         //strpati sve podatke u listu usera
       },
       error: err => {
-        this.toastr.error("Pogresno uneti podaci!")
+        // console.log(err.error);
+        
+        this.toastr.error(err.error)
       }
     })
   }
@@ -248,9 +258,10 @@ export class UsersComponent {
     this.userService.resetUserLimit(id).subscribe({
       next: value => {
         this.getUsers();
+        this.toastr.info("Limit uspesno resetovan.")
       },
       error: err => {
-        console.log(err);
+        this.toastr.error(err.error)
       }
     })
   }

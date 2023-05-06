@@ -73,7 +73,8 @@ export class StockDetailsComponent {
               });
           },
           error: err => {
-            console.log(err)
+            // console.log(err)
+            this.toaster.error(err.error)
           }
         }
       )
@@ -91,6 +92,9 @@ export class StockDetailsComponent {
           error: err => {
             if (err.error.status === 429) {
               this.toaster.warning("Sačekajte par sekundi pre sledeće promene perioda.")
+            }
+            else{
+              this.toaster.error(err.error)
             }
           }
         }

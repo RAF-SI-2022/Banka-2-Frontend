@@ -59,7 +59,7 @@ export class LoginComponent {
 
               },
               error: err => {
-
+                this.toastr.error(err.error)
               }
             })
 
@@ -88,13 +88,13 @@ export class LoginComponent {
                 }
               },
               error: err => {
-
+                this.toastr.error(err.error)
               }
             })
         }
       },
       error: err => {
-        this.toastr.error("Pogrešni kredencijali.")
+        this.toastr.error(err.error)
       }
     })
   }

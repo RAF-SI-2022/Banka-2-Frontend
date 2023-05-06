@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Future, Stock, Order} from "../../../../models/stock-exchange.model";
 import {StockService} from "../../../../services/stock.service";
 import {TransactionsArrayService} from "../../../../services/transactions-array.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sell-future',
@@ -19,7 +20,8 @@ export class SellFutureComponent {
   isFormValid: boolean = true;
 
 
-  constructor(private formBuilder: FormBuilder, private stockService: StockService, private transactionService: TransactionsArrayService) {
+  constructor(private formBuilder: FormBuilder, private toastr: ToastrService, 
+    private stockService: StockService, private transactionService: TransactionsArrayService) {
     this.sellFutureForm = this.formBuilder.group({
       price: [null, Validators.required],
     });
@@ -79,9 +81,11 @@ export class SellFutureComponent {
           this.transactionService.addTransactions(tempOrder)
           this.futureSoldEmitter.emit(this.future.id);
           this.sellFutureVisible = false;
+          this.toastr.info("Terminski ugovor uspesno stavljen na prodaju")
         },
         error: err => {
-          console.log(err);
+          // console.log(err);
+          this.toastr.error(err.error)
 
         }
       })

@@ -32,9 +32,11 @@ export class ForgotPasswordComponent {
     this.authService.resetPassword(this.resetPasswordForm.get('email')?.value).subscribe({
       next: value => {
         console.log(value);
+        // this.toastr.info("Poslata vam je email adres")
       },
       error: err => {
-        console.log(err)
+        // console.log(err)
+        this.toastr.error(err.error)
       }
 
     })

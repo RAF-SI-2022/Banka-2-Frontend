@@ -3,6 +3,7 @@ import {UserService} from 'src/app/services/user-service.service';
 import {User} from 'src/app/models/users.model';
 import {StockService} from "../../../services/stock.service";
 import {Future} from "../../../models/stock-exchange.model";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-future-contract',
@@ -25,7 +26,7 @@ export class FutureContractComponent {
 
   visible: boolean;
 
-  constructor(private userService: UserService, private futureService: StockService) {
+  constructor(private userService: UserService, private toastr: ToastrService, private futureService: StockService) {
 
   }
 
@@ -98,7 +99,9 @@ export class FutureContractComponent {
         this.futureContracts = this.tempList
       }
       , error: err => {
-        console.log(err)
+        // console.log(err)
+        this.toastr.error(err.error)
+
       }
     })
 
@@ -116,7 +119,8 @@ export class FutureContractComponent {
           this.fillValues();
         },
         error: err => {
-          console.log(err)
+          // console.log(err)
+          this.toastr.error(err.error)
         }
       })
   }

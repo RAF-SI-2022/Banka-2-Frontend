@@ -64,7 +64,7 @@ export class EditUserComponent {
       };
       // Saljemo parent komponenti (UsersComponent) objekat editovanog User-a
       this.editUserEvent.emit(user)
-    } else this.toastr.error("Morate izabrati poziciju")
+    } else this.toastr.error("Popunite sve podatke ispravno")
 
 
   }

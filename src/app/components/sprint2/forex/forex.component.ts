@@ -4,6 +4,7 @@ import {UserService} from 'src/app/services/user-service.service';
 import {ToastrService} from "ngx-toastr";
 import {Order} from "../../../models/stock-exchange.model";
 import {TransactionsArrayService} from "../../../services/transactions-array.service";
+import { error } from 'cypress/types/jquery';
 
 @Component({
   selector: 'app-forex',
@@ -55,11 +56,17 @@ export class ForexComponent {
 
 
   getCurrencies() {
-    this.stockService.loadCSVData().subscribe(data => {
-      this.parseCSVData(data);
-    })
+    this.stockService.loadCSVData().subscribe({
+        next: data => {
+          this.parseCSVData(data);
+        },
+        error: err => {
+          this.toaster.error(err.error)
+        }
+      })
+    }
 
-  }
+  
 
   parseCSVData(data: string): void {
 
@@ -130,6 +137,9 @@ export class ForexComponent {
         this.stockService.getCurrencies(this.currencies[i][0], this.currencies[i][1]).subscribe({
           next: val => {
             this.result = val;
+          },
+          error: err =>{
+            this.toaster.error(err.error)
           }
         })
       }
@@ -142,6 +152,9 @@ export class ForexComponent {
       this.stockService.getCurrencies(curr[0], curr[1]).subscribe({
         next: val => {
           this.staticCurrenciesResponse.push(val)
+        },
+        error: err =>{
+          this.toaster.error(err.error)
         }
       })
 
@@ -167,6 +180,9 @@ export class ForexComponent {
           this.stockService.getCurrencies(this.currencies[i][0], this.currencies[i][1]).subscribe({
             next: val => {
               this.result = val;
+            },
+            error: err =>{
+              this.toaster.error(err.error)
             }
           })
         }
@@ -194,6 +210,9 @@ export class ForexComponent {
         }
         // this.transactionService.addTransactions(tempOrder)
         this.toaster.success("Uspešna kupovina")
+      },
+      error: err =>{
+        this.toaster.error(err.error)
       }
     })
   }

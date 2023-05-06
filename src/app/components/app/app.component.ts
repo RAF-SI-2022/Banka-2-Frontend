@@ -43,7 +43,8 @@ export class AppComponent implements OnInit {
             this.user = val
           },
           error: err => {
-            console.log(err)
+            // console.log(err)
+            this.toastr.error(err.error)
           }
         })
     }
@@ -61,7 +62,9 @@ export class AppComponent implements OnInit {
               this.user = val
             },
             error: err => {
-              console.log(err)
+              // console.log(err)
+              this.toastr.error(err.error)
+
               // console.log("posle eventa ERR")
             }
           })

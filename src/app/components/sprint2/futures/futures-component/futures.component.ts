@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Future} from '../../../../models/stock-exchange.model';
 import {StockService} from '../../../../services/stock.service';
 import {MenuItem} from 'primeng/api';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-futures-component',
@@ -17,7 +18,7 @@ export class FuturesComponent implements OnInit {
 
   breadcrumbItems: MenuItem[];
 
-  constructor(private httpClient: HttpClient, private stockService: StockService) {
+  constructor(private httpClient: HttpClient, private stockService: StockService, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -48,7 +49,8 @@ export class FuturesComponent implements OnInit {
         this.populateFuturesSingleMap();
       },
       error: (err: any) => {
-        console.log(err);
+        // console.log(err);
+        this.toastr.error(err.error)
       }
     });
   }

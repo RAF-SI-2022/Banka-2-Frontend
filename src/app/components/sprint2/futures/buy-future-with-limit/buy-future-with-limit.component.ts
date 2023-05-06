@@ -59,7 +59,7 @@ export class BuyFutureWithLimitComponent {
           this.toastr.info("Terminski ugovor je uspešno stavljen na čekanje.")
           this.futureBuyEmitter.emit(this.futureName);
         } else {
-          this.toastr.error("Greška pri kupovini.")
+          this.toastr.error(err.error)
         }
 
       }

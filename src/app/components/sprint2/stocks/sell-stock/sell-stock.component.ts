@@ -48,7 +48,7 @@ export class SellStockComponent {
 
         },
         error: err => {
-          this.toastr.error("Greska pri prodaji")
+          this.toastr.error(err.error)
           this.sellStockVisible = false;
         }
       });

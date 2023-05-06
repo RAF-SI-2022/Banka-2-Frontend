@@ -88,7 +88,8 @@ export class StockOptionsComponent {
         this.stockOptionsPuts = value.filter((val: Option) => val.optionType === 'PUT');
       },
       error: err => {
-        console.log(err);
+        // console.log(err);
+        this.toastr.error(err.error)
       }
     });
   }
@@ -103,7 +104,8 @@ export class StockOptionsComponent {
             this.stockOptionsPuts = value.filter((val: Option) => val.optionType === 'PUT');
           },
           error: err => {
-            console.log(err);
+            // console.log(err);
+            this.toastr.error(err.error)
           }
         }
       )
@@ -120,7 +122,8 @@ export class StockOptionsComponent {
         this.selectedDate = this.dates[0];
       },
       error: err => {
-        console.error(err);
+        this.toastr.error(err.error)
+        // console.error(err);
       }
     });
   }
@@ -134,7 +137,8 @@ export class StockOptionsComponent {
             this.loading = true
           },
           error: err => {
-            console.log(err)
+            // console.log(err)
+            this.toastr.error(err.error)
           }
         }
       )
@@ -158,7 +162,8 @@ export class StockOptionsComponent {
         this.buyStockOptionComponent.buyOptionVisible = false;
       },
       error: err => {
-        console.error(err)
+        // console.error(err)
+        this.toastr.error(err.error)
       }
     })
   }

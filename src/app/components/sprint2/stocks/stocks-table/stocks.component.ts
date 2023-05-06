@@ -115,7 +115,8 @@ export class StocksComponent {
         // this.stocks = this.allStocks
       },
       error: err => {
-        console.log(err);
+        // console.log(err);
+        this.toastr.error(err.error)
 
       }
     })
@@ -136,7 +137,8 @@ export class StocksComponent {
       },
       error: err => {
         console.log(err);
-        this.toastr.error("Greska pri dohvatanju podataka")
+        // this.toastr.error("Greska pri dohvatanju podataka")
+        this.toastr.error(err.error)
         this.allStocks = []
       }
     })
@@ -155,7 +157,8 @@ export class StocksComponent {
         },
         error: err => {
           console.log(err);
-          this.toastr.error("Greska pri trazenju akcije")
+          // this.toastr.error("Greska pri trazenju akcije")
+          this.toastr.error(err.error)
         }
       })
   }
@@ -186,8 +189,8 @@ export class StocksComponent {
       },
       error: err => {
         console.log(err);
-        this.toastr.error("Greska pri dohvatanju podataka")
-
+        // this.toastr.error("Greska pri dohvatanju podataka")
+        this.toastr.error(err.error)
       }
     })
   }
@@ -245,7 +248,8 @@ export class StocksComponent {
         this.getMyStocks();
       },
       error: err => {
-        this.toastr.error("Greska!");
+        // this.toastr.error("Greska!");
+        this.toastr.error(err.error)
         this.getAllStocks();
         this.getMyStocks();
 

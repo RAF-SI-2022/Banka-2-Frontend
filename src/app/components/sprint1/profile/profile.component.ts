@@ -52,12 +52,15 @@ export class ProfileComponent implements OnInit {
               firstName: this.user.firstName,
               lastName: this.user.lastName,
               phone: this.user.phone
+
             }
           )
+          // this.toastr.info("Uspesno promenjeni podaci")
         },
         error: err => {
-          console.log("nisam uspeo")
-          console.log(err)
+          // console.log("nisam uspeo")
+          // console.log(err)
+          this.toastr.error(err.error)
         }
       })
   }
@@ -78,8 +81,9 @@ export class ProfileComponent implements OnInit {
           )
         },
         error: err => {
-          console.log("nisam uspeo")
-          console.log(err)
+          // console.log("nisam uspeo")
+          // console.log(err)
+          this.toastr.error(err.error)
         }
       })
 
@@ -122,10 +126,11 @@ export class ProfileComponent implements OnInit {
         .subscribe({
           next: val => {
             this.closeChangePassword()
+            this.toastr.info("Uspesno promenjena lozinka")
           },
           error: err => {
-            console.log(err);
-
+            // console.log(err);
+            this.toastr.error(err.error)
           }
         })
     }
@@ -142,10 +147,11 @@ export class ProfileComponent implements OnInit {
       .subscribe({
         next: val => {
           this.closeEditProfile()
+          this.toastr.info("Uspesno promenjeni podaci")
         },
         error: err => {
-          console.log(err);
-
+          // console.log(err);
+          this.toastr.error(err.error)
         }
       })
 

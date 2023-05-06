@@ -90,25 +90,41 @@
             </p-table>
             <!--AGENT TABELA-->
             <p-card *ngIf="!getPermission()" header="{{balance[0].currency.currencyCode}} tekući račun ">
-<!--                <div class="row text-center">-->
-<!--                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">-->
-<!--                    <p style="font-size: 30px; font-weight: bold;"> Račun</p>-->
-<!--                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].currency.currencyCode}}</p>-->
-<!--                  </div>-->
-<!--                </div>-->
+                <div class="row text-center mb-5">
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <p style="font-size: 30px; font-weight: bold;">Ukupno novca</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].amount}}</p>
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <p style="font-size: 30px; font-weight: bold;">Raspoloživo novca</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].free}}</p>
+                  </div>
+                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
+                    <p style="font-size: 30px; font-weight: bold;">Rezervisano novca</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].reserved}}</p>
+                  </div>
+                </div>
                 <div class="row text-center">
+<!--                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">-->
+<!--                    <p style="font-size: 30px; font-weight: bold;">Limit</p>-->
+<!--                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{user.dailyLimit}}</p>-->
+<!--                  </div>-->
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
                     <p style="font-size: 30px; font-weight: bold;">Limit</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{user.dailyLimit}}</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{user.defaultDailyLimit}}</p>
                   </div>
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
                     <p style="font-size: 30px; font-weight: bold;">Iskoriscenost limita</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].reserved}}</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{user.defaultDailyLimit - user.dailyLimit}}</p>
                   </div>
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
-                    <p style="font-size: 30px; font-weight: bold;">Raspolozivo</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].free}}</p>
+                    <p style="font-size: 30px; font-weight: bold;">Raspolozivo limita</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{user.dailyLimit}}</p>
                   </div>
+<!--                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >-->
+<!--                    <p style="font-size: 30px; font-weight: bold;">Raspolozivo</p>-->
+<!--                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].free}}</p>-->
+<!--                  </div>-->
                 </div>
             </p-card>
 

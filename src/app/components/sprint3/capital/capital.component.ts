@@ -49,6 +49,8 @@ export class CapitalComponent  {
 
   user: User
 
+  defaultLimit: number
+
   constructor(private router: Router,private toastr: ToastrService, private  stockService: StockService, private userService: UserService) {
 
   }
@@ -63,6 +65,7 @@ export class CapitalComponent  {
   ngOnInit() {
 
     this.getUser()
+
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
@@ -128,6 +131,8 @@ export class CapitalComponent  {
         next: val => {
           this.user = val
           //TODO Porpaviti sinhronizaciju
+
+          // this.getDefaultLimit(this.user?.id)
           this.getBalanceFromBack()
         },
         error: err => {
@@ -149,6 +154,14 @@ export class CapitalComponent  {
           return true
     }
     return false
+  }
+
+  getDefaultLimit(id: number){
+    this.userService.getUserDefaultDailyLimit(id).subscribe({
+      next: val => {
+        this.defaultLimit = val;
+      }
+    })
   }
 
 }

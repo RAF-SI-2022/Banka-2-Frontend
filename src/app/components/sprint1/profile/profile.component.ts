@@ -12,6 +12,7 @@ import {UserService} from 'src/app/services/user-service.service';
 export class ProfileComponent implements OnInit {
 
   user: User
+  defaultLimit: number;
   editProfileForm: FormGroup;
   editPasswordForm: FormGroup;
   visible: boolean = false;
@@ -55,6 +56,8 @@ export class ProfileComponent implements OnInit {
 
             }
           )
+          this.defaultLimit = this.user.defaultDailyLimit
+          // this.getDefaultLimit(this.user.id)
           // this.toastr.info("Uspesno promenjeni podaci")
         },
         error: err => {
@@ -108,6 +111,15 @@ export class ProfileComponent implements OnInit {
   setVisiblePassword() {
     this.visiblePassword = true;
   }
+
+  getDefaultLimit(id: number){
+    this.userService.getUserDefaultDailyLimit(id).subscribe({
+      next: val => {
+        this.defaultLimit = val;
+    }
+    })
+  }
+
 
   editPassword() {
 

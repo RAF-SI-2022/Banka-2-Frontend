@@ -109,7 +109,7 @@ export class CapitalComponent  {
     this.stockService.getAllBalancesByUserId(this.user?.id)
     .subscribe({
       next: val => {
-        this.balance=val
+        this.balance = val
       },
       error: err =>{
         this.toastr.error(err.error)
@@ -136,6 +136,9 @@ export class CapitalComponent  {
         }
       })
   }
+
+  //TODO: iskoriscenog limita videti da li je azurirano, za sada koristimo kao alternativu samo ono sto je "rezervisano"
+  //TODO: od kolicine ukupne koju ima korisnik i nemamo an frontu nikakve provere za iskoriscenost limita!!!
 
   getPermission(): boolean {
     if (localStorage.getItem("remember") !== null) {

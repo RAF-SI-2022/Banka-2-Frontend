@@ -9,6 +9,7 @@ export interface User {
   jobPosition: string
   active: boolean
   dailyLimit: number
+  defaultDailyLimit: number
   permissions: Permission[]
 }
 

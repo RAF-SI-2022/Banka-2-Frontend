@@ -156,4 +156,7 @@ export class UserService {
     return this.httpClient.patch(`${environment.apiUserServerUrl}/reset-limit/${id}`, {}, {headers: this.headers})
   }
 
+  getUserDefaultDailyLimit(id: number): Observable<any> {
+    return this.httpClient.get(`${environment.apiUserServerUrl}/default-limit/${id}`, {headers: this.headers})
+  }
 }

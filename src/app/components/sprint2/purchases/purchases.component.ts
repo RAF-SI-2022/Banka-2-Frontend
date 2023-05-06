@@ -55,7 +55,8 @@ export class PurchasesComponent {
     this.stockService.getAllOrders().subscribe({
       next: val => {
         this.orders=val
-        this.orders = this.orders.concat(this.specialOrders)
+        //stara logika
+        //this.orders = this.orders.concat(this.specialOrders)
         console.log(this.orders)
 
         for(var o in this.orders)

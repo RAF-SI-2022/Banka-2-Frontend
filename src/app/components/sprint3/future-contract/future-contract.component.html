@@ -1,7 +1,7 @@
 <div class="body-container">
 
     <div class="text-center" style="margin-top: 5vh;">
-        <h1 style="font-size: 36px; color:#515151 ;">Future Ugovor</h1>
+        <h1 style="font-size: 36px; color:#515151 ;">Terminski Ugovori</h1>
     </div>
 
     <div class="table-container">
@@ -13,23 +13,25 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="font-size: 12px;">Oznaka</th>
-                    <th style="font-size: 12px;">Berza</th>
-                    <th style="font-size: 12px;">Kol. u vlasništvu</th>
-                    <th style="font-size: 12px;">Cena</th>
-                    <th style="font-size: 12px;">Vrednost</th>
-                    <th style="font-size: 12px;">Vrednost (RSD)</th>
+                    <th style="font-size: 12px;">Naziv</th>
+                    <th style="font-size: 12px;">Jedinica</th>
+                    <th style="font-size: 12px;">Tip</th>
+                    <th style="font-size: 12px;">Veličina Ugovora</th>
+                    <th style="font-size: 12px;">Marža (Cena)</th>
+                    <th style="font-size: 12px;">Na prodaju</th>
+                    <th style="font-size: 12px;">Datum izmirenja</th>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="body" let-futureContract>
                 <tr style="font-size: 12px;" (click)="onItemClicked(futureContract)">
-                    <td>{{futureContract.oznaka}}</td>
-                    <td>{{futureContract.berza}}</td>
-                    <td>{{futureContract.kolicinaUvlasnistvu}}</td>
-                    <td>{{futureContract.cena}}</td>
-                    <td>{{futureContract.vrednost}}</td>
-                    <td>{{futureContract.vrednostRSD}}</td>
+                    <td>{{futureContract.futureName}}</td>
+                    <td>{{futureContract.contractUnit}}</td>
+                    <td>{{futureContract.type}}</td>
+                    <td>{{futureContract.contractSize}}</td>
+                    <td>{{futureContract.maintenanceMargin}}</td>
+                    <td>{{ futureContract.forSale ? 'Da' : 'Ne' }}</td>
+                    <td>{{futureContract.settlementDate}}</td>
                 </tr>
             </ng-template>
 

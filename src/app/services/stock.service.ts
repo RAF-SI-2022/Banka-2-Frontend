@@ -85,6 +85,10 @@ export class StockService {
     return this.httpClient.get<any>(`http://localhost:8080/api/futures/name/${futureName}`, {headers: this.headers})
   }
 
+  getFuturesByUserId(userId: number): Observable<any>{
+    return this.httpClient.get<any>(`http://localhost:8080/api/futures/user/${userId}`, {headers: this.headers})
+  }
+
   buyFuture(id: string, futureName: string, action: string, price: number, limit: number, stop: number): Observable<any> {
     return this.httpClient.post<any>(`http://localhost:8080/api/futures/buy`
       , {

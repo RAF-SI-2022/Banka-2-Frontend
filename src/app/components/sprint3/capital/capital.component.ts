@@ -10,6 +10,7 @@ import { StockService } from 'src/app/services/stock.service';
 import { UserService } from 'src/app/services/user-service.service';
 import { Permission, User } from 'src/app/models/users.model';
 import { ToastrService } from 'ngx-toastr';
+
 /* Model za privremene podatke */
 export interface TableData {
   valuta: string;
@@ -37,37 +38,29 @@ export class CapitalComponent  {
 
   breadcrumbItems: MenuItem[];
 
+  futureContracts: any[] = [];
+
   specialOrders: Order[]
 
-  capitalOverview: any;
+  capitalOverview: any[] = [];
 
   capitalTableValues: string[];
 
   status!: any[];
 
+  totalContracts: number;
+  totalOrders: number;
+
   balance: Balance[]
+
+  myOrders: any[] = [];
 
   per: Permission[] =[{
   id: 0,
   permissionName: ""
   }]
 
-  user: User = 
-  {
-    id: 9999999999,
-    email: "",
-    firstName: "",
-    lastName: "",
-    password: "",
-    jmbg: "",
-    phone: "",
-    jobPosition: "",
-    active: true,
-    dailyLimit: 0,
-    defaultDailyLimit: 0,
-    permissions: this.per
-    
-  }
+  user: User
 
   defaultLimit: number
 
@@ -99,6 +92,7 @@ export class CapitalComponent  {
   ngOnInit() {
 
     this.getUser()
+    
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
@@ -106,15 +100,7 @@ export class CapitalComponent  {
     ];
 
 
-    this.capitalOverview = [
-      { type: 'AKCIJA', total: '$0' },
-      { type: 'FUTURE_UGOVOR', total: '$0' }
-    ];
-
-      this.capitalOverview = [
-      { type: 'AKCIJA', total: '$0' },
-      { type: 'FUTURE_UGOVOR', total: '$0' }
-    ];
+    // console.log(this.totalContracts)
 
   }
 
@@ -168,6 +154,8 @@ export class CapitalComponent  {
 
           // this.getDefaultLimit(this.user?.id)
           this.getBalanceFromBack()
+          this.getMyFutures();
+          this.getMyOrders();
         },
         error: err => {
           this.toastr.error(err.error)
@@ -197,6 +185,57 @@ export class CapitalComponent  {
       }
     })
   }
+
+  getMyFutures(){
+
+    this.stockService.getFuturesByUserId(this.user?.id).subscribe({
+      next: val => {
+        this.futureContracts = val;
+        
+        this.totalContracts = this.futureContracts.reduce((accumulator, contract) => {
+          return accumulator + contract.maintenanceMargin;
+        }, 0);
+
+        const el =  { type: 'FUTURE_UGOVOR', total: this.totalContracts }
+
+        this.capitalOverview.push(el)
+        
+      }
+      , error: err => {
+        this.toastr.error(err)
+      }
+    })
+  }
+
+  getMyOrders(){
+
+    this.stockService.getAllOrdersByUserId(this.user?.id)
+      .subscribe({
+        next: val => {
+          this.myOrders = val
+
+          for(let obj in this.myOrders){
+            if(this.myOrders[obj].orderType === "STOCK"){
+              this.totalOrders = this.myOrders.reduce((accumulator, order) => {
+                return accumulator + order.amount;
+              }, 0);
+            }
+          }
+
+          const el =  { type: 'AKCIJE', total: this.totalOrders }
+
+          this.capitalOverview.push(el)
+          
+
+        },
+        error: err => {
+          // console.log(err)
+          this.toastr.error(err.error)
+        }
+      })
+  }
+
+  
 
 }
 

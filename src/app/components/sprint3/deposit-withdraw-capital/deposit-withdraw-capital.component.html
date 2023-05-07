@@ -4,7 +4,8 @@
 
   <ng-template pTemplate="header">
     <!--  TODO:povuci iz stock modela ticker-->
-    <h2 style="font-weight: bolder" class="mb-0">Uplata/Isplata sredstava</h2>
+    <!-- TODO Isplata vratiti sve kako je bilo kad sredi back -->
+    <h2 style="font-weight: bolder" class="mb-0">Uplata sredstava</h2>
   </ng-template>
   <p-divider/>
   <p-tabView>
@@ -26,7 +27,7 @@
         </div>
       </form>
     </p-tabPanel>
-    <p-tabPanel header="Isplata">
+    <!-- <p-tabPanel header="Isplata">
       <form (submit)="submit2()" [formGroup]="withdrawForm">
         <div class="col-lg-12 text-center mb-3">
           <h4 class="mb-1">Valuta</h4>
@@ -43,7 +44,7 @@
           <button pButton [disabled]="!isWFormValid" pRipple label="Isplati"></button>
         </div>
       </form>
-    </p-tabPanel>
+    </p-tabPanel> -->
   </p-tabView>
   <div class="container text-center">
     <div class="row">

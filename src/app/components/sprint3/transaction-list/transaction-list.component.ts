@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { timeout } from 'rxjs';
-import { Balance } from 'src/app/models/stock-exchange.model';
+import { Balance, Transaction } from 'src/app/models/stock-exchange.model';
 import { User } from 'src/app/models/users.model';
 
 import { StockService } from 'src/app/services/stock.service';
@@ -33,6 +33,8 @@ export class TransactionListComponent {
 
   balance: Balance[]
 
+  transaction: Transaction[]
+
   currencyCode: string = ''
 
   user: User
@@ -57,9 +59,8 @@ export class TransactionListComponent {
     this.stockService.getAllTransactionsByCurrency(currencyCode)
     .subscribe({
       next: val => {
-        //   console.log(val)
-        this.balance=val
-        console.log(currencyCode)
+        console.log(val)
+        this.transaction=val
       },
       error: err =>{
         this.toastr.error(err.error)
@@ -75,7 +76,6 @@ export class TransactionListComponent {
         next: val => {
           this.user = val
           //TODO Porpaviti sinhronizaciju
-          console.log(this.currencyCode)
           this.getTransactionsFromBack(this.currencyCode)
         },
         error: err => {

@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-6 text-end">
                             <button (click)="toggleDepositWithdrawCapitalkDialog()" pButton pRipple styleClass="p-button-sm"
-                                class="p-button-raised p-button-secondary add-employee-btn-lg" label="Uplata/Isplata"
+                                class="p-button-raised p-button-secondary add-employee-btn-lg" label="Uplata" 
                                 style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
                             </button>
                             <button pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
@@ -40,7 +40,7 @@
 
                 <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="valuta" style="font-size: 12px;">
+                        <th pSortableColumn="currency.currencyCode" style="font-size: 12px;">
                             <div class="flex justify-content-between align-items-center">
                                 <div class="icon-container">
                                     <p style="margin-bottom: 0; margin-top: 2px;">Valuta</p>
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th pSortableColumn="ukupno" style="font-size: 12px;">
+                        <th pSortableColumn="amount" style="font-size: 12px;">
                             <div class="flex justify-content-between align-items-center">
                                 <div class="icon-container">
                                     <p style="margin-bottom: 0; margin-top: 2px;">Ukupno</p>
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th pSortableColumn="rezervisano" style="font-size: 12px; ">
+                        <th pSortableColumn="reserved" style="font-size: 12px; ">
                             <div class="flex justify-content-between align-items-center">
                                 <div class="icon-container">
                                     <p style="margin-bottom: 0; margin-top: 2px;">Rezervisano</p>
@@ -64,7 +64,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th pSortableColumn="raspolozivo" style="font-size: 12px; ">
+                        <th pSortableColumn="free" style="font-size: 12px; ">
                             <div class="flex justify-content-between align-items-center">
                                 <div class="icon-container">
                                     <p style="margin-bottom: 0; margin-top: 2px;">Raspoloživo</p>
@@ -89,19 +89,19 @@
 
             </p-table>
             <!--AGENT TABELA-->
-            <p-card *ngIf="!getPermission()" header="{{balance[0].currency.currencyCode}} tekući račun ">
+            <p-card *ngIf="!getPermission()" header="{{newselectedBalance.currency.currencyCode}} tekući račun ">
                 <div class="row text-center mb-5">
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
                     <p style="font-size: 30px; font-weight: bold;">Ukupno novca</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].amount}}</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{newselectedBalance.amount}}</p>
                   </div>
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
                     <p style="font-size: 30px; font-weight: bold;">Raspoloživo novca</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].free}}</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{newselectedBalance.free}}</p>
                   </div>
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
                     <p style="font-size: 30px; font-weight: bold;">Rezervisano novca</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].reserved}}</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{newselectedBalance.reserved}}</p>
                   </div>
                 </div>
                 <div class="row text-center">

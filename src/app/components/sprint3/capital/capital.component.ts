@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Order } from 'src/app/models/stock-exchange.model';
+import { Currency, Order } from 'src/app/models/stock-exchange.model';
 import { Balance } from 'src/app/models/stock-exchange.model';
 import { DepositWithdrawCapitalComponent } from '../deposit-withdraw-capital/deposit-withdraw-capital.component';
 import { TransactionListComponent } from '../transaction-list/transaction-list.component';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { MarginTransactionListComponent } from '../margin-transaction-list/margin-transaction-list.component';
 import { StockService } from 'src/app/services/stock.service';
 import { UserService } from 'src/app/services/user-service.service';
-import { User } from 'src/app/models/users.model';
+import { Permission, User } from 'src/app/models/users.model';
 import { ToastrService } from 'ngx-toastr';
 /* Model za privremene podatke */
 export interface TableData {
@@ -47,11 +47,45 @@ export class CapitalComponent  {
 
   balance: Balance[]
 
-  user: User
+  per: Permission[] =[{
+  id: 0,
+  permissionName: ""
+  }]
+
+  user: User = 
+  {
+    id: 9999999999,
+    email: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    jmbg: "",
+    phone: "",
+    jobPosition: "",
+    active: true,
+    dailyLimit: 0,
+    defaultDailyLimit: 0,
+    permissions: this.per
+    
+  }
 
   defaultLimit: number
 
-  constructor(private router: Router,private toastr: ToastrService, private  stockService: StockService, private userService: UserService) {
+  cur: Currency ={
+    currencyCode: "",
+    currencyName: "",
+    currencySymbol: "",
+     polity: ""
+   }
+
+  newselectedBalance: Balance = 
+    {  amount: 0,
+       currency: this.cur,
+      free: 0,
+      id: 0,
+      reserved: 0,}
+
+  constructor(private router: Router,private toastr: ToastrService, private  stockService: StockService, private userService: UserService, ) {
 
   }
 
@@ -65,7 +99,6 @@ export class CapitalComponent  {
   ngOnInit() {
 
     this.getUser()
-
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
@@ -113,6 +146,7 @@ export class CapitalComponent  {
     .subscribe({
       next: val => {
         this.balance = val
+        this.newselectedBalance = this.balance[0]
       },
       error: err =>{
         this.toastr.error(err.error)

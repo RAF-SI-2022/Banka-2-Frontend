@@ -1,4 +1,4 @@
-import {User} from "./users.model"
+import {User, UserCreateDTO} from "./users.model"
 
 export interface Currency {
   currencyName: string,
@@ -166,7 +166,9 @@ export interface Balance {
 }
 
 export interface Currency {
-  currencyCode: string
+  currencyCode: string,
+  currencyName: string
+
 }
 
 
@@ -178,5 +180,13 @@ export interface UserStock {
   amountForSale: number
 }
 
+export interface Transaction {
+  amount: number,
+  currency: Currency,
+  user: User,
+  description: string,
+  timestamp: Date,
+  reserved: number,
+}
 
 

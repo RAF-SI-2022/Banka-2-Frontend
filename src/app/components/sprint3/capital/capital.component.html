@@ -222,13 +222,13 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="font-size: 12px;">Tip kapitala</th>
-<!--                    <th style="font-size: 12px;">Ukupno</th>-->
+                   <th style="font-size: 12px;">Ukupno</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-capital>
                 <tr style="font-size: 12px;" (click)="onCapitalRowClick(capital.type)">
                     <td>{{capital.type}}</td>
-<!--                    <td>{{capital.total}}</td>-->
+                   <td *ngIf="totalContracts!=null">{{capital.total}}</td>
                 </tr>
             </ng-template>
         </p-table>

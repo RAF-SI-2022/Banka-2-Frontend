@@ -38,7 +38,7 @@ export class TransactionListComponent {
   currencyCode: string = ''
 
   user: User
-  
+
 
   dataset: TableTrData[] = [
     {datum: new Date("01/01/2001"), korsnik: "admin", opis: "opis", valuta: "RSD",uplata: 10, isplate: 25, rezervisano: 10, koristi: 15},
@@ -46,7 +46,7 @@ export class TransactionListComponent {
   ];
 
   constructor(private  stockService: StockService,private toastr: ToastrService ,private userService: UserService) {
-      
+
   }
 
   ngOnInit() {
@@ -55,11 +55,11 @@ export class TransactionListComponent {
 
   private getTransactionsFromBack(currencyCode: string ): void {
 
-    
+
     this.stockService.getAllTransactionsByCurrency(currencyCode)
     .subscribe({
       next: val => {
-        console.log(val)
+        //console.log(val)
         this.transaction=val
       },
       error: err =>{

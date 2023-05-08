@@ -71,7 +71,7 @@ export class CapitalComponent  {
      polity: ""
    }
 
-  newselectedBalance: Balance = 
+  newselectedBalance: Balance =
     {  amount: 0,
        currency: this.cur,
       free: 0,
@@ -89,7 +89,7 @@ export class CapitalComponent  {
   ngOnInit() {
 
     this.getUser()
-    
+
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
@@ -189,7 +189,7 @@ export class CapitalComponent  {
     this.stockService.getFuturesByUserId(this.user?.id).subscribe({
       next: val => {
         this.futureContracts = val;
-        
+
         this.totalContracts = this.futureContracts.reduce((accumulator, contract) => {
           return accumulator + contract.maintenanceMargin;
         }, 0);
@@ -197,7 +197,7 @@ export class CapitalComponent  {
         const el =  { type: 'FUTURE_UGOVOR', total: this.totalContracts }
 
         this.capitalOverview.push(el)
-        
+
       }
       , error: err => {
         this.toastr.error(err)
@@ -223,7 +223,7 @@ export class CapitalComponent  {
           const el =  { type: 'AKCIJA', total: this.totalOrders }
 
           this.capitalOverview.push(el)
-          
+
 
         },
         error: err => {
@@ -233,7 +233,10 @@ export class CapitalComponent  {
       })
   }
 
-  
+  roundNumber(num: number){
+    return Math.round(num * 10) / 10
+    // Math.round((num + Number.EPSILON) * 100) / 100
+  }
 
 }
 

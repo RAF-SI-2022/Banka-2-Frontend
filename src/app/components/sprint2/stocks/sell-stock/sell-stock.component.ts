@@ -47,12 +47,12 @@ export class SellStockComponent {
         this.toastr.error(err.error)
       }
     })
-    
+
   }
 
   submitSellStock() {
     console.log(this.userId);
-    
+
     if (this.sellStockForm.valid) {
       this.stockService.sellStock(
         this.stock.symbol,
@@ -68,7 +68,7 @@ export class SellStockComponent {
 
         },
         error: err => {
-          this.toastr.error(err.error.message)
+          this.toastr.error(err.error)
           this.sellStockVisible = false;
         }
       });

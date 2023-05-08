@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-6 text-end">
                             <button (click)="toggleDepositWithdrawCapitalkDialog()" pButton pRipple styleClass="p-button-sm"
-                                class="p-button-raised p-button-secondary add-employee-btn-lg" label="Uplata" 
+                                class="p-button-raised p-button-secondary add-employee-btn-lg" label="Uplata"
                                 style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
                             </button>
                             <button pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
@@ -115,11 +115,11 @@
                   </div>
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
                     <p style="font-size: 30px; font-weight: bold;">Iskoriscenost limita</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{user.defaultDailyLimit - user.dailyLimit}}</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{roundNumber(user.defaultDailyLimit - user.dailyLimit)}}</p>
                   </div>
                   <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
                     <p style="font-size: 30px; font-weight: bold;">Raspolozivo limita</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{user.dailyLimit}}</p>
+                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{roundNumber(user.dailyLimit)}}</p>
                   </div>
 <!--                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >-->
 <!--                    <p style="font-size: 30px; font-weight: bold;">Raspolozivo</p>-->
@@ -226,7 +226,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-capital>
-                <tr style="font-size: 12px;" (click)="onCapitalRowClick(capital.type)">
+                <tr class="rowHover" style="font-size: 12px;" (click)="onCapitalRowClick(capital.type)">
                     <td>{{capital.type}}</td>
                    <td>{{capital.total}}</td>
                 </tr>

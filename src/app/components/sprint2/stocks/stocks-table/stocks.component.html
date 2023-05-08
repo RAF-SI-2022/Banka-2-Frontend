@@ -28,7 +28,7 @@
           <div class="col-lg-6 col-md-6 col-6 text-end">
             <form action="" title="Dodaj akciju">
               <div class="add-stock-container">
-                <input pInputText class="me-1" name="add" placeholder="Unesite simbol akcije" [(ngModel)]="symbolInput"
+                <input pInputText class="me-1 "  name="add" placeholder="Unesite simbol akcije" [(ngModel)]="symbolInput" style = "color: black;"
                        required/>
                 <button pButton pRipple style="background-color: #3d3d3d; cursor: pointer;" icon="pi pi-plus"
                         (click)="getStockBySymbol(symbolInput)"></button>

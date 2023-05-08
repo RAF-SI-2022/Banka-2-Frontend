@@ -90,6 +90,21 @@ export class AppComponent implements OnInit {
     }
     return false
   }
+  getAgentPerm():boolean{
+    // console.log(localStorage.getItem("permissions"));
+    // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS"));
+    // console.log(!sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
+    // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
+    
+    if (localStorage.getItem("remember") !== null) {
+      if (localStorage.getItem("permissions")?.includes("UPDATE_USERS") && !localStorage.getItem("permissions")?.includes("ADMIN_USER"))
+        return true
+    } else {
+      if (sessionStorage.getItem("permissions")?.includes("UPDATE_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"))
+        return true
+   }
+  return false
+  }
 
   showSidebar() {
     this.display = true;

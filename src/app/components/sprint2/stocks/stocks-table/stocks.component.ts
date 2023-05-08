@@ -149,7 +149,8 @@ export class StocksComponent {
       .subscribe({
         next: val => {
           console.log(val);
-          //todo dodati u red
+          
+          // todo proveriti dali val vec postoji u allStocks
           this.allStocks.push(val)
           if (!this.switch) {
             this.stocks = this.allStocks
@@ -158,7 +159,7 @@ export class StocksComponent {
         error: err => {
           console.log(err);
           // this.toastr.error("Greska pri trazenju akcije")
-          this.toastr.error(err.error)
+          this.toastr.error(err.error.message)
         }
       })
   }

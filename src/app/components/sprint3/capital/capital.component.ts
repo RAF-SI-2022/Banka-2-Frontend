@@ -188,6 +188,7 @@ export class CapitalComponent  {
 
   getMyFutures(){
 
+    // TODO ova ruta ne postoji sta ti treba?
     this.stockService.getFuturesByUserId(this.user?.id).subscribe({
       next: val => {
         this.futureContracts = val;

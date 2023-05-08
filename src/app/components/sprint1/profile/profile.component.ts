@@ -171,4 +171,9 @@ export class ProfileComponent implements OnInit {
     // updateUser(id: number, email: string, firstName: string, lastName: string,
     //   jmbg: string, jobPosition: string, phone: string, active: boolean)
   }
+
+  roundNumber(num: number){
+    return Math.round(num * 10) / 10
+    // Math.round((num + Number.EPSILON) * 100) / 100
+  }
 }

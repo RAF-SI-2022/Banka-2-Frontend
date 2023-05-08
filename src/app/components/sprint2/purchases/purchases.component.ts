@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {Order, Type} from 'src/app/models/stock-exchange.model';
 import {TransactionsArrayService} from "../../../services/transactions-array.service";
@@ -6,6 +6,8 @@ import { StockService } from 'src/app/services/stock.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user-service.service';
 import { User } from 'src/app/models/users.model';
+import {Paginator} from "primeng/paginator";
+import {Table} from "primeng/table";
 
 
 @Component({
@@ -25,7 +27,7 @@ export class PurchasesComponent {
 
   temp: Order
 
-
+  currentPage: any
 
   loading: boolean = true;
 
@@ -33,10 +35,12 @@ export class PurchasesComponent {
 
   user: User
 
+  @ViewChild('dt') dt: Table;
+  @ViewChild('paginator', { static: true }) paginator?: Paginator;
+
   constructor(private transactionService: TransactionsArrayService,private toastr: ToastrService , private  stockService: StockService, private userService: UserService) {
 
   }
-
 
   ngOnInit() {
 
@@ -100,7 +104,7 @@ export class PurchasesComponent {
         this.orders=val
         //stara logika
         //this.orders = this.orders.concat(this.specialOrders)
-        console.log(this.orders)
+        //console.log(this.orders)
 
         for(var o in this.orders)
         {
@@ -141,9 +145,14 @@ export class PurchasesComponent {
     this.stockService.approveOrder(id)
     .subscribe({
       next: val => {
+        console.log("KLIKNUT APPROVE")
+        this.toastr.success("Porudzbina uspesno potvrdjena")
+        this.getOrdersFromBack()
       },
       error: err => {
         this.toastr.error(err.error)
+        console.log("PUCE KESA KUME")
+        console.log(err)
       }
     });
   }
@@ -152,10 +161,13 @@ export class PurchasesComponent {
     this.stockService.declineOrder(id)
     .subscribe({
       next: val => {
-        
+        this.toastr.success("Porudzbina uspesno odbijena")
+        this.getOrdersFromBack()
+        this.dt.first = this.currentPage * this.dt.rows
       },
       error: err => {
         this.toastr.error(err.error)
+        console.log(err)
       }
     });
 
@@ -176,6 +188,22 @@ export class PurchasesComponent {
           // console.log(err)
         }
       })
+  }
+
+  getAgentPerm():boolean{
+
+    if (localStorage.getItem("remember") !== null) {
+      if (localStorage.getItem("permissions")?.includes("UPDATE_USERS") && !localStorage.getItem("permissions")?.includes("ADMIN_USER"))
+        return true
+    } else {
+      if (sessionStorage.getItem("permissions")?.includes("UPDATE_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"))
+        return true
+    }
+    return false
+  }
+
+  saveCurrentPage(event: any){
+    this.currentPage = event.page || 0
   }
 
 }

@@ -85,7 +85,7 @@ export class StockService {
     return this.httpClient.get<any>(`http://localhost:8080/api/futures/name/${futureName}`, {headers: this.headers})
   }
 
-  getFuturesByUserId(userId: number): Observable<any>{
+  getFuturesByUserId(userId: number): Observable<any> {
     return this.httpClient.get<any>(`http://localhost:8080/api/futures/user/${userId}`, {headers: this.headers})
   }
 
@@ -131,7 +131,7 @@ export class StockService {
       , {headers: this.headers})
   }
 
-  sellStock(symbol: string, amount: number, limit: number, stop: number, allOrNone: boolean, margin: boolean,userId: number): Observable<any> {
+  sellStock(symbol: string, amount: number, limit: number, stop: number, allOrNone: boolean, margin: boolean, userId: number): Observable<any> {
     return this.httpClient.post<any>(`http://localhost:8080/api/stock/sell`
       , {
         stockSymbol: symbol,
@@ -158,9 +158,9 @@ export class StockService {
     return this.httpClient.get<any>(`http://localhost:8080/api/options/${symbol}/${date}`, {headers: this.headers})
   }
 
-  getMyStockOptions(symbol: string){
+  getMyStockOptions(symbol: string) {
     return this.httpClient.get<any>(`http://localhost:8080/api/options/user-options/${symbol}`
-    , {headers: this.headers})
+      , {headers: this.headers})
   }
 
   removeStockFromSale(symbol: string) {
@@ -173,7 +173,7 @@ export class StockService {
     return this.httpClient.post<any>(
       `http://localhost:8080/api/options/buy`,
       {optionId: optionId, amount: amount, premium: premium},
-      { headers: this.headers }
+      {headers: this.headers}
     );
   }
 
@@ -237,31 +237,33 @@ export class StockService {
     return this.httpClient.get<any>(`http://localhost:8080/api/transactions/${currencyCode}`, {headers: this.headers})
   }
 
-  depositBalance(amount: number,userEmail:string,currencyCode:string): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/balances/increase` , {
-      userEmail: userEmail,
-      currencyCode: currencyCode,
-      amount: amount,
-    }
-    , {headers: this.headers})
+  depositBalance(amount: number, userEmail: string, currencyCode: string): Observable<any> {
+    return this.httpClient.post<any>(`http://localhost:8080/api/balances/increase`, {
+        userEmail: userEmail,
+        currencyCode: currencyCode,
+        amount: amount,
+      }
+      , {headers: this.headers})
   }
 
-  withdrawBalance(amount: number,userEmail:string,currencyCode:string): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/balances/decrease` , {
-      userEmail: userEmail,
-      currencyCode: currencyCode,
-      amount: amount,
-    }
-    , {headers: this.headers})
+  withdrawBalance(amount: number, userEmail: string, currencyCode: string): Observable<any> {
+    return this.httpClient.post<any>(`http://localhost:8080/api/balances/decrease`, {
+        userEmail: userEmail,
+        currencyCode: currencyCode,
+        amount: amount,
+      }
+      , {headers: this.headers})
   }
 
   declineOrder(id: string): Observable<any> {
-    return this.httpClient.patch<any>(`http://localhost:8080/api/orders/deny/`+id
+    return this.httpClient.patch<any>(`http://localhost:8080/api/orders/deny/` + id,
+      {}
       , {headers: this.headers})
   }
 
   approveOrder(id: string): Observable<any> {
-    return this.httpClient.patch<any>(`http://localhost:8080/api/orders/approve/`+id
+    return this.httpClient.patch<any>(`http://localhost:8080/api/orders/approve/` + id,
+      {}
       , {headers: this.headers})
   }
 

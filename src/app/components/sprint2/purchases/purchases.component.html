@@ -5,11 +5,13 @@
 
   <div class="table-container">
 
-     <!--TABELA ZA ADMIN I SUPERVIZORA  -->
-    <p-table *ngIf="getPermission()" #dt [value]="orders" class="p-datatable-header" [rowHover]="true" [rows]="6"
-      [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
-      currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} hartija"
-      [globalFilterFields]="['status']">
+
+      <!--TABELA ZA ADMIN I SUPERVIZORA  -->
+    <p-table *ngIf="getPermission()" #dt [value]="orders" class="p-datatable-header"
+             [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
+             [paginator]="true" (onPageChange)="saveCurrentPage($event)" [alwaysShowPaginator]="false"
+             currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} hartija"
+             [globalFilterFields]="['status']">
 
 
       <ng-template pTemplate="caption">
@@ -109,7 +111,7 @@
             </div>
           </th>
 
-          <th style="font-size: 12px; ">
+          <th *ngIf="getAgentPerm()" style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Izmena statusa</p>
@@ -121,7 +123,7 @@
       </ng-template>
 
       <ng-template pTemplate="body" let-order>
-        <tr class="rowHover" style="font-size: 12px;">
+        <tr style="font-size: 12px;">
           <td>{{order.orderType}}</td>
           <td>{{order.tradeType}}</td>
           <td>{{order.symbol}}</td>
@@ -129,17 +131,18 @@
           <td>{{order.price}}</td>
           <td>{{order.status}}</td>
           <td>{{order.lastModified}}</td>
-          <td>
-            <button type="button" (click)="approveTransaction(order.id)" class="btn-i btn-circle"
-              title="Dozvoli porudzbinu">
-              <span>
-                <i class="bi bi-check" style="font-size: 20px;"></i>
-              </span>
+
+          <td *ngIf="getAgentPerm()">
+            <button *ngIf="order.status === 'NA CEKANJU'" type="button"  (click)="approveTransaction(order.id)"
+                    class="btn-i btn-circle" title="Prihvati porudzbinu">
+                <span>
+                  <i class="bi bi-check" style="font-size: 20px;"></i>
+                </span>
               <div class="wave"></div>
             </button>
-            <button type="button" class="btn-i btn-circle" (click)="declineTransaction(order.id)"
-              title="Odbi porudzbinu">
-              <span>
+              <button *ngIf="order.status === 'NA CEKANJU'" type="button"
+              class="btn-i btn-circle" (click)="declineTransaction(order.id)" title="Odbij porudzbinu">
+                <span>
                 <i class="bi bi-x" style="font-size: 20px;"></i>
               </span>
               <div class="wave"></div>

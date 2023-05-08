@@ -55,10 +55,12 @@ export class BuyFutureWithLimitComponent {
         this.futureBuyEmitter.emit(this.futureName);
       },
       error: err => {
-        if (err.error.text === 'Future is set for custom sale and is waiting for trigger') {
+        if (err.error.text === 'Future is set for custom sale and is waiting for trigger.') {
+          console.log("Usao u IF")
           this.toastr.info("Terminski ugovor je uspešno stavljen na čekanje.")
           this.futureBuyEmitter.emit(this.futureName);
         } else {
+          console.log("Usao u ELSE")
           this.toastr.error(err.error)
         }
 

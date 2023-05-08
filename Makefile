@@ -1,14 +1,5 @@
-.DEFAULT_GOAL := dev
+.DEFAULT_GOAL := dist
 
-build:
-	docker build -t banka2frontend .
-
-test:
-    #TODO
-
-dev:
-    #TODO
-
-prod:
-    docker build -t banka2frontend .
-    docker compose up -d banka2frontend
+dist:
+    docker tag frontend harbor.k8s.elab.rs/banka-2/frontend
+    docker build -t frontend . && docker push harbor.k8s.elab.rs/banka-2/frontend

@@ -17,8 +17,8 @@ COPY ./ /usr/local/app/
 # Install all the dependencies
 RUN npm install
 
-# Generate the build of the application
-RUN npm run build
+# Generate the production build of the application
+RUN npm run prod
 
 
 # Stage 2: Serve app with nginx server

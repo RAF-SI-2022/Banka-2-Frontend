@@ -131,7 +131,7 @@ export class StockService {
       , {headers: this.headers})
   }
 
-  sellStock(symbol: string, amount: number, limit: number, stop: number, allOrNone: boolean, margin: boolean): Observable<any> {
+  sellStock(symbol: string, amount: number, limit: number, stop: number, allOrNone: boolean, margin: boolean,userId: number): Observable<any> {
     return this.httpClient.post<any>(`http://localhost:8080/api/stock/sell`
       , {
         stockSymbol: symbol,
@@ -140,6 +140,7 @@ export class StockService {
         stop: stop,
         allOrNone: allOrNone,
         margin: margin,
+        userId: userId,
         currencyCode: 'USD' // TODO: ovo kasnije promeniti
       }
       , {headers: this.headers})

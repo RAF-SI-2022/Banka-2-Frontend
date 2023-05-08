@@ -145,23 +145,31 @@ export class StocksComponent {
   }
 
   getStockBySymbol(symbol: string) {
-    this.stockService.getStockBySymbol(symbol)
-      .subscribe({
-        next: val => {
-          console.log(val);
-          
-          // todo proveriti dali val vec postoji u allStocks
-          this.allStocks.push(val)
-          if (!this.switch) {
-            this.stocks = this.allStocks
+    if(symbol === undefined){
+      this.toastr.error("Popunite polje sa simbolom neke akcije koju zelite da pronadjete")
+    }
+    else{
+      this.stockService.getStockBySymbol(symbol)
+        .subscribe({
+          next: val => {
+            console.log(val);
+            
+            // todo proveriti dali val vec postoji u allStocks
+            if(this.allStocks.includes(val)){
+              this.allStocks.push(val)
+              this.toastr.info("Upesno pronadjena akcija")
+            }
+            else{
+              this.toastr.error("Vec postoji ova akcija u listu")
+            }
+          },
+          error: err => {
+            console.log(err);
+            // this.toastr.error("Greska pri trazenju akcije")
+            this.toastr.error(err.error.message)
           }
-        },
-        error: err => {
-          console.log(err);
-          // this.toastr.error("Greska pri trazenju akcije")
-          this.toastr.error(err.error.message)
-        }
-      })
+        })
+    }
   }
 
   getMyStocks() {

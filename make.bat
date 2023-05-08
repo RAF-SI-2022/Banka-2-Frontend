@@ -1,29 +1,11 @@
 @echo off
 
-if "%1" == "" goto dev
+if "%1" == "" goto dist
 
-if "%1" == "build" (
-    :build
-    docker build -t banka2frontend .
-    goto end
-)
-
-if "%1" == "test" (
-    :test
-    rem #todo
-    goto end
-)
-
-if "%1" == "dev" (
-    :dev
-    rem #todo
-    goto end
-)
-
-if "%1" == "prod" (
-    :prod
-    docker build -t banka2frontend .
-    docker compose up -d banka2frontend
+if "%1" == "dist" (
+    :dist
+    docker tag frontend harbor.k8s.elab.rs/banka-2/frontend
+    docker build -t frontend . && docker push harbor.k8s.elab.rs/banka-2/frontend
     goto end
 )
 

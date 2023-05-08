@@ -67,51 +67,63 @@ const routes: Routes = [
   },
   {
     path: 'stocks',
-    component: StocksComponent
+    component: StocksComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'forex',
-    component: ForexComponent
+    component: ForexComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "buysell",
-    component: BuysellComponent
+    component: BuysellComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "purchases",
-    component: PurchasesComponent
+    component: PurchasesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "stock-options/:name",
-    component: StockOptionsComponent
+    component: StockOptionsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "my-stock-options/:name",
-    component:MyStockOptionsComponent
+    component:MyStockOptionsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "stocks-table/sell",
-    component: StockSellTableComponent
+    component: StockSellTableComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "futures",
-    component: FuturesComponent
+    component: FuturesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "future/:name",
-    component: SingleFutureTableComponent
+    component: SingleFutureTableComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "capital",
-    component: CapitalComponent
+    component: CapitalComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "future-contract",
-    component: FutureContractComponent
+    component: FutureContractComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "agents",
-    component: AgentsComponent
+    component: AgentsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**', redirectTo: '404-not-found'

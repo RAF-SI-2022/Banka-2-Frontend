@@ -57,7 +57,7 @@ export class PurchasesComponent {
         this.orders=val
         //stara logika
         //this.orders = this.orders.concat(this.specialOrders)
-        console.log(this.orders)
+        //console.log(this.orders)
 
         for(var o in this.orders)
         {

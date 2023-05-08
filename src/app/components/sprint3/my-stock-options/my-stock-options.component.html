@@ -20,7 +20,7 @@
                 </div>
             </div> -->
     
-            <p-table *ngIf="myOptionsCalls.length != 0" styleClass="p-datatable-sm" [value]="myOptionsCalls" [tableStyle]="{ 'min-width': '50rem' }">
+            <p-table *ngIf="myOptionsCalls && myOptionsCalls.length != 0" styleClass="p-datatable-sm" [value]="myOptionsCalls" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="header">
                     <tr>
                         <th colspan="5" class="text-center">Calls</th>
@@ -51,7 +51,7 @@
                 </ng-template>
             </p-table>
             <br>
-            <p-table *ngIf="myOptionsPuts.length != 0" styleClass="p-datatable-sm" [value]="myOptionsPuts" [tableStyle]="{ 'min-width': '50rem' }">
+            <p-table *ngIf="myOptionsPuts && myOptionsPuts.length != 0" styleClass="p-datatable-sm" [value]="myOptionsPuts" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="header">
                     <tr>
                         <th colspan="5" class="text-center">Puts</th>

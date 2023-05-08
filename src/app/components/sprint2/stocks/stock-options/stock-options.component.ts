@@ -88,8 +88,8 @@ export class StockOptionsComponent {
         this.stockOptionsPuts = value.filter((val: Option) => val.optionType === 'PUT');
       },
       error: err => {
-        // console.log(err);
-        this.toastr.error(err.error)
+        console.log(err);
+        this.toastr.error(err.error.message)
       }
     });
   }
@@ -104,8 +104,8 @@ export class StockOptionsComponent {
             this.stockOptionsPuts = value.filter((val: Option) => val.optionType === 'PUT');
           },
           error: err => {
-            // console.log(err);
-            this.toastr.error(err.error)
+            console.log(err);
+            this.toastr.error(err.error.message)
           }
         }
       )

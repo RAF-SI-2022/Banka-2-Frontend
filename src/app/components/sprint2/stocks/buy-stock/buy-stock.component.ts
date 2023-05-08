@@ -46,7 +46,7 @@ export class BuyStockComponent {
       ).subscribe({
         next: val => {
           this.stockBuyEmitter.emit(this.stock.symbol);
-          this.toastr.info("Uspesno postavljena kupovina akcije")
+          // this.toastr.info("Uspesno postavljena kupovina akcije")
         },
         error: err => {
           this.toastr.error(err.error)

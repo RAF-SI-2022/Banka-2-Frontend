@@ -1,0 +1,17 @@
+<p-dialog class="edit-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
+          header="Izmeni limit korisnika {{firstName}} {{lastName}}" [(visible)]="visible" [modal]="true" (onHide)="close()">
+
+  <div class="edit-user-form">
+    <form [formGroup]="editUserForm" (submit)="editUser()" class="edit-user-form pt-4 pb-4 gap-4">
+      <span class="p-float-label">
+        <input [formControlName]="'limit'" id="limit-input" class="w-100" type="text" pInputText>
+        <label for="limit-input">Limit</label>
+      </span>
+      <!-- <ng-template pTemplate="footer"> -->
+      <button type="submit" pButton pRipple label="Izmeni" [disabled]="!isFormValid" class="w-100"></button>
+      <!-- </ng-template> -->
+
+    </form>
+  </div>
+</p-dialog>
+

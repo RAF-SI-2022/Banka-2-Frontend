@@ -129,7 +129,7 @@ export class CapitalComponent  {
     .subscribe({
       next: val => {
         this.balance = val
-        this.newselectedBalance = this.balance[0]
+        this.newselectedBalance = this.balance[1]//0 za dinarski 1 za dolarski
       },
       error: err =>{
         this.toastr.error(err.error)
@@ -211,13 +211,13 @@ export class CapitalComponent  {
       .subscribe({
         next: val => {
 
-          
+
           this.myOrders = val
 
           this.totalOrders = this.myOrders.reduce((accumulator, order) => {
             return accumulator + order.amount;
           }, 0);
-        
+
 
           const el =  { type: 'AKCIJA', total: this.totalOrders }
 

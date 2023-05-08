@@ -51,19 +51,11 @@ export class BuyFutureWithLimitComponent {
       this.buyFutureForm.get('stop')?.value
     ).subscribe({
       next: val => {
-        this.toastr.info("Terminski ugovor je uspešno stavljen na čekanje.")
+        this.toastr.info(val.message)
         this.futureBuyEmitter.emit(this.futureName);
       },
       error: err => {
-        if (err.error.text === 'Future is set for custom sale and is waiting for trigger.') {
-          console.log("Usao u IF")
-          this.toastr.info("Terminski ugovor je uspešno stavljen na čekanje.")
-          this.futureBuyEmitter.emit(this.futureName);
-        } else {
-          console.log("Usao u ELSE")
-          this.toastr.error(err.error)
-        }
-
+        this.toastr.error(err.error)
       }
     });
   }

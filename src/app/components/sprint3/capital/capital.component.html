@@ -228,7 +228,7 @@
             <ng-template pTemplate="body" let-capital>
                 <tr style="font-size: 12px;" (click)="onCapitalRowClick(capital.type)">
                     <td>{{capital.type}}</td>
-                   <td *ngIf="totalContracts!=null">{{capital.total}}</td>
+                   <td>{{capital.total}}</td>
                 </tr>
             </ng-template>
         </p-table>

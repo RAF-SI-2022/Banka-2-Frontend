@@ -4,6 +4,8 @@ import {Order, Type} from 'src/app/models/stock-exchange.model';
 import {TransactionsArrayService} from "../../../services/transactions-array.service";
 import { StockService } from 'src/app/services/stock.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/services/user-service.service';
+import { User } from 'src/app/models/users.model';
 import {Paginator} from "primeng/paginator";
 import {Table} from "primeng/table";
 
@@ -21,6 +23,8 @@ export class PurchasesComponent {
 
   orders: Order[]
 
+  ordersID: Order[]
+
   temp: Order
 
   currentPage: any
@@ -29,14 +33,19 @@ export class PurchasesComponent {
 
   status!: any[];
 
+  user: User
+
   @ViewChild('dt') dt: Table;
   @ViewChild('paginator', { static: true }) paginator?: Paginator;
 
-  constructor(private transactionService: TransactionsArrayService,private toastr: ToastrService , private  stockService: StockService) {
+  constructor(private transactionService: TransactionsArrayService,private toastr: ToastrService , private  stockService: StockService, private userService: UserService) {
 
   }
 
   ngOnInit() {
+
+    this.getUser()
+
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Porudžbine', routerLink: ['/purchases']}
@@ -53,6 +62,41 @@ export class PurchasesComponent {
     this.specialOrders = this.transactionService.getTransactions()
     this.getOrdersFromBack()
   }
+
+
+  private getOrdersFromBackbyID(): void {
+    this.stockService.getAllOrdersByUserId(this.user?.id).subscribe({
+      next: val => {
+        this.ordersID=val
+        //stara logika
+        //this.orders = this.orders.concat(this.specialOrders)
+        console.log(this.ordersID)
+
+        for(var o in this.ordersID)
+        {
+          if(this.ordersID[o].status==='WAITING'){
+            this.ordersID[o].status='NA CEKANJU'
+          }
+          if(this.ordersID[o].status==='DENIED'){
+            this.ordersID[o].status='ODBIJENA'
+          }
+          if(this.ordersID[o].status==='IN_PROGRESS'){
+            this.ordersID[o].status='U TOKU'
+          }
+          if(this.ordersID[o].status==='COMPLETE'){
+            this.ordersID[o].status='ZAVRSENA'
+          }
+        }
+      },
+      error: err =>{
+        this.toastr.error(err.error)
+      }
+
+    });
+
+
+  }
+
 
   private getOrdersFromBack(): void {
     this.stockService.getAllOrders().subscribe({
@@ -85,6 +129,18 @@ export class PurchasesComponent {
     });
   }
 
+  getPermission(): boolean {
+    if (localStorage.getItem("remember") !== null) {
+        if ((localStorage.getItem("permissions")?.includes("CREATE_USERS") && localStorage.getItem("permissions")?.includes("READ_USERS") && localStorage.getItem("permissions")?.includes("DELETE_USERS") && localStorage.getItem("permissions")?.includes("UPDATE_USERS") ) || (localStorage.getItem("permissions")?.includes("ADMIN_USER")))
+          return true
+      } else {
+        if ((sessionStorage.getItem("permissions")?.includes("CREATE_USERS") && sessionStorage.getItem("permissions")?.includes("READ_USERS") && sessionStorage.getItem("permissions")?.includes("DELETE_USERS") && sessionStorage.getItem("permissions")?.includes("UPDATE_USERS") ) || (sessionStorage.getItem("permissions")?.includes("ADMIN_USER")))
+          return true
+    }
+    return false
+  }
+
+
   approveTransaction(id :string){
     this.stockService.approveOrder(id)
     .subscribe({
@@ -115,6 +171,23 @@ export class PurchasesComponent {
       }
     });
 
+  }
+
+  async getUser(){
+    this.userService.getUserData()
+      .subscribe({
+        next: val => {
+          this.user = val
+          //TODO Porpaviti sinhronizaciju
+
+          // this.getDefaultLimit(this.user?.id)
+          this.getOrdersFromBackbyID()
+        },
+        error: err => {
+          this.toastr.error(err.error)
+          // console.log(err)
+        }
+      })
   }
 
   getAgentPerm():boolean{

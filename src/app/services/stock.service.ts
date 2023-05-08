@@ -264,4 +264,9 @@ export class StockService {
     return this.httpClient.patch<any>(`http://localhost:8080/api/orders/approve/`+id
       , {headers: this.headers})
   }
+
+
+
 }
+
+

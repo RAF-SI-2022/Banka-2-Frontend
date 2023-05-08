@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-
 import {MenuItem} from "primeng/api";
 import {Order, Type} from 'src/app/models/stock-exchange.model';
 import {TransactionsArrayService} from "../../../services/transactions-array.service";
@@ -82,20 +81,28 @@ export class PurchasesComponent {
     });
   }
 
-  refresh() {
-
-    //TODO ovde ide logika i poziv na servis koji ce pozvati refresh i resetovati tabelu na berza mode
-    //I odmah za njim i filtriranje za userove hartije
-    // this.loading = true;
-    // this.stocks-table = []
-    // setTimeout(()=>{
-    //   this.insertUsers()
-    //   this.BuySellOption = true
-    //   this.switch = false
-    //   this.loading = false
-    // }, 2000);
-
+  approveTransaction(id :string){
+    this.stockService.approveOrder(id)
+    .subscribe({
+      next: val => {
+      },
+      error: err => {
+        this.toastr.error(err.error)
+      }
+    });
   }
 
+  declineTransaction(id :string){
+    this.stockService.declineOrder(id)
+    .subscribe({
+      next: val => {
+        
+      },
+      error: err => {
+        this.toastr.error(err.error)
+      }
+    });
+
+  }
 
 }

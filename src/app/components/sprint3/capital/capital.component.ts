@@ -86,9 +86,6 @@ export class CapitalComponent  {
   @ViewChild(TransactionListComponent, {static: true}) transactionListComponent: TransactionListComponent
   @ViewChild(MarginTransactionListComponent, {static: true}) marginTransactionListComponent: MarginTransactionListComponent
 
-
-
-
   ngOnInit() {
 
     this.getUser()
@@ -96,7 +93,7 @@ export class CapitalComponent  {
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
-      {label: 'Porudžbine', routerLink: ['/purchases']}
+      {label: 'Kapital', routerLink: ['/capital']}
     ];
 
 

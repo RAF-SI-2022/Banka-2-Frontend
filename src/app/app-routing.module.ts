@@ -22,6 +22,7 @@ import {StockSellTableComponent} from './components/sprint2/stocks/stock-sell-ta
 import { CapitalComponent } from './components/sprint3/capital/capital.component';
 import { FutureContractComponent } from './components/sprint3/future-contract/future-contract.component';
 import { MyStockOptionsComponent } from './components/sprint3/my-stock-options/my-stock-options.component';
+import { AgentsComponent } from './components/sprint3/agents/agents.component';
 
 const routes: Routes = [
   {
@@ -107,6 +108,10 @@ const routes: Routes = [
   {
     path: "future-contract",
     component: FutureContractComponent
+  },
+  {
+    path: "agents",
+    component: AgentsComponent
   },
   {
     path: '**', redirectTo: '404-not-found'

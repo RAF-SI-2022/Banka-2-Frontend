@@ -209,18 +209,17 @@ export class CapitalComponent  {
 
   getMyOrders(){
 
-    this.stockService.getAllOrdersByUserId(this.user?.id)
+    this.stockService.getMyStocks()
       .subscribe({
         next: val => {
+
+          
           this.myOrders = val
 
-          for(let obj in this.myOrders){
-            if(this.myOrders[obj].orderType === "STOCK"){
-              this.totalOrders = this.myOrders.reduce((accumulator, order) => {
-                return accumulator + order.amount;
-              }, 0);
-            }
-          }
+          this.totalOrders = this.myOrders.reduce((accumulator, order) => {
+            return accumulator + order.amount;
+          }, 0);
+        
 
           const el =  { type: 'AKCIJA', total: this.totalOrders }
 

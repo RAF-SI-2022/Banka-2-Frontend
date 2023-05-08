@@ -222,7 +222,7 @@ export class CapitalComponent  {
             }
           }
 
-          const el =  { type: 'AKCIJE', total: this.totalOrders }
+          const el =  { type: 'AKCIJA', total: this.totalOrders }
 
           this.capitalOverview.push(el)
           

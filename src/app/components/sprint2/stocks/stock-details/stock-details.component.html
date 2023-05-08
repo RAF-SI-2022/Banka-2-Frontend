@@ -4,7 +4,7 @@
   <ng-template pTemplate="header" styleclass="reduce-padding">
     <!--    TODO: dohvati website URL sa yahoo finance, i onda bind-ovati taj URL dole na sliku-->
 
-    <div class="title-container">
+    <div *ngIf="stockDetails" class="title-container">
       <div class="img-container">
         <img class="logo" src="https://logo.clearbit.com/{{stockDetails.websiteUrl}}"/>
       </div>
@@ -29,7 +29,7 @@
           </span>
     </div>
   </div>
-  <div class="basic-info-container mb-4">
+  <div *ngIf="stockDetails" class="basic-info-container mb-4">
     <div style="flex-basis: 90%">
       <small>Price</small>
       <h3 style="font-weight: 800">${{stockDetails.priceValue}}</h3>
@@ -60,7 +60,7 @@
                [options]="basicOptions"></p-chart>
     </div>
   </div>
-  <div class="details-container">
+  <div *ngIf="stockDetails" class="details-container">
 
     <div class="row mb-3">
       <div class="col-lg-4 col-sm-6 text-center">

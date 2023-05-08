@@ -97,7 +97,7 @@ export class MyStockOptionsComponent {
         // }
       },
       error: err => {
-        // console.log(err);
+        console.log(err);
         this.toastr.error(err.error)
 
       }

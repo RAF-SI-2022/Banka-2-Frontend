@@ -255,5 +255,13 @@ export class StockService {
     , {headers: this.headers})
   }
 
+  declineOrder(id: string): Observable<any> {
+    return this.httpClient.patch<any>(`http://localhost:8080/api/orders/deny/`+id
+      , {headers: this.headers})
+  }
 
+  approveOrder(id: string): Observable<any> {
+    return this.httpClient.patch<any>(`http://localhost:8080/api/orders/approve/`+id
+      , {headers: this.headers})
+  }
 }

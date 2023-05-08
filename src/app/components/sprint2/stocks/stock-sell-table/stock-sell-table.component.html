@@ -181,6 +181,7 @@
       <ng-template pTemplate="header">
           <tr>
             <th style="font-size: 12px;">Tip Ordera</th>
+            <th style="font-size: 12px;">Tip transakcije</th>
             <th style="font-size: 12px;">Kolicina</th>
             <th style="font-size: 12px;">Ukupna cena</th>
             <th style="font-size: 12px;">Datum</th>
@@ -189,6 +190,7 @@
       <ng-template pTemplate="body" let-value>
           <tr style="font-size: 12px;">
               <td>{{value.orderType}}</td>
+              <td>{{value.tradeType}}</td>
               <td>{{value.amount}}</td>
               <td>{{value.price}}</td>
               <td>{{value.lastModified}}</td>

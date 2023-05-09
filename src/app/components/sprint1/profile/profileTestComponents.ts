@@ -50,7 +50,7 @@ export class ProfileTestComponents {
     cy.get('#jmbg-input').type('1234567890123')
     cy.get('.p-dropdown').click()
     cy.get('[ng-reflect-label="AGENT"] > .p-ripple').click()
-
+    cy.get('#limit-input').type("10000")
     cy.get('.edit-user-form > .p-ripple').click()
   }
 

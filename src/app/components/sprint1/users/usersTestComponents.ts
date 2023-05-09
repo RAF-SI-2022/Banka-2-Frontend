@@ -33,13 +33,20 @@ export class UsersTestComponents {
         cy.get('#editBtn' + id).click()
       }
       cy.get('#name-input').clear().type("NewName")
+      cy.wait(500)
       cy.get('#surname-input').clear().type("NewLastname")
+      cy.wait(500)
       cy.get('#email-input').clear().type("new@gmail.com")
-      cy.get('#phone-input').clear().type("111111111")
+      cy.wait(500)
+      cy.get('#phone-input').clear().type("455555")
+      cy.wait(500)
       cy.get('.p-dropdown').click()
-      cy.get('[ng-reflect-label="SUPERVISOR"] > .p-ripple').click()
-      cy.get('.p-checkbox-box').click()
+      cy.wait(500)
 
+      cy.get('[ng-reflect-label="AGENT"] > .p-ripple').click()
+      // cy.get('.p-checkbox-box').click()
+      cy.wait(500)
+      cy.get('#limit-input').clear().type("15000")
       cy.get('.edit-user-form > .p-ripple').click()
     });
   }
@@ -61,6 +68,7 @@ export class UsersTestComponents {
         cy.get('#activateBtn' + id).click()
       }
     });
+    cy.wait(3000)
   }
 
   testDeactivate(id: number) {
@@ -69,6 +77,7 @@ export class UsersTestComponents {
         cy.get('#deactivateBtn' + id).click()
       }
     });
+    cy.wait(500)
   }
 
   testDelete(id: number) {
@@ -84,15 +93,25 @@ export class UsersTestComponents {
     cy.get('#addUserBtn').click()
 
     cy.get('#name-input').type('TestName')
+    cy.wait(500)
     cy.get('#surname-input').type('TestLastname')
+    cy.wait(500)
     cy.get('#email-input').type(email)
+    cy.wait(500)
     cy.get('#password-input').type('@Testpassword1')
+    cy.wait(500)
     cy.get('#phone-input').type('123123123')
+    cy.wait(500)
     cy.get('#jmbg-input').type('1234567890123')
+    cy.wait(500)
     cy.get('.p-dropdown').click()
+    cy.wait(500)
     cy.get('[ng-reflect-label="AGENT"] > .p-ripple').click()
-
+    cy.wait(500)
+    cy.get('#limit-input').clear().type("10000")
+    cy.wait(500)
     cy.get('.edit-user-form > .p-ripple').click()
+    cy.wait(500)
   }
 
 

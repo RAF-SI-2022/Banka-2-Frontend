@@ -62,7 +62,9 @@ export class CapitalComponent  {
 
   user: User
 
-  defaultLimit: number
+  defaultLimit: number = 0;
+
+  currentDailyLimit: number = 0;
 
   cur: Currency ={
     currencyCode: "",
@@ -148,7 +150,8 @@ export class CapitalComponent  {
         next: val => {
           this.user = val
           //TODO Porpaviti sinhronizaciju
-
+          this.defaultLimit = this.user.defaultDailyLimit
+          this.currentDailyLimit = this.user.dailyLimit
           // this.getDefaultLimit(this.user?.id)
           this.getBalanceFromBack()
           this.getMyFutures();

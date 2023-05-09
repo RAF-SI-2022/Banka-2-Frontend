@@ -1,4 +1,4 @@
-import {LoginTestComponents} from "../../src/app/components/login/loginTestComponents";
+import {LoginTestComponents} from "../../src/app/components/sprint1/login/loginTestComponents";
 
 const loginComponents = new LoginTestComponents()
 

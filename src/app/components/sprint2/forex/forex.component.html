@@ -1,0 +1,110 @@
+<div class="body-container">
+
+  <div class="hero-section">
+    <div class="field-container">
+      <div class="input-container">
+
+        <div class="inputs col-3">
+          <div class="p-inputgroup">
+            <span id="ammount" class="p-inputgroup-addon">$</span>
+            <input type="number" [(ngModel)]="ammount" appAllowNumbersOnly pInputText placeholder="Iznos" min="1">
+          </div>
+        </div>
+
+
+        <div class="inputs col-6">
+          <p-dropdown [options]="uniqueLeftCurrencies" [(ngModel)]="currencyFrom"
+                      (ngModelChange)="onCurrencyFromChanged()" optionLabel="name" [filter]="true" [showClear]="true"
+                      placeholder="Iz valute">
+
+          </p-dropdown>
+        </div>
+
+
+        <!-- <button id="swapBtn" type="button" (click)="swap()"
+                class="btn-i btn-circle" title="Swap">
+            <span>
+            <i class="pi pi-arrow-right-arrow-left"></i>
+            </span>
+            <div class="wave"></div>
+         </button> -->
+
+        <i class="pi pi-angle-right" style="font-size: 1rem"></i>
+
+
+        <div class="inputs col-6">
+          <p-dropdown [options]="dynamicRightCurrencies" [(ngModel)]="currencyTo"
+                      (ngModelChange)="onCurrencyToChanged()" optionLabel="name" [filter]="true" [showClear]="true"
+                      placeholder="U valutu">
+
+          </p-dropdown>
+        </div>
+
+        <!-- <div class="inputs col-6">
+            <p-button id="convertBtn" (click)="convert()" label="Convert"></p-button>
+        </div> -->
+
+
+      </div>
+
+
+      <div *ngIf="currencyFrom && currencyTo && result" class="result-container" style="margin-bottom: 10px;">
+        <p id="result"><strong>{{ammount ? ammount : 1}}</strong> {{result.fromCurrencyName}} =
+          <strong>{{calculate(result.exchangeRate)}}</strong> {{result.toCurrencyName}} </p>
+        <p-button label="Kupi" (click)="buy()" styleClass="p-button p-button-rounded p-button-raised"></p-button>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <div class="table-container">
+    <p-table #dt [value]="staticCurrenciesResponse" class="p-datatable-header"
+             [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
+             [paginator]="true" [alwaysShowPaginator]="false"
+    >
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="pair" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Par</p>
+              </div>
+            </div>
+          </th>
+
+          <th pSortableColumn="kurs" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Kurs</p>
+              </div>
+            </div>
+          </th>
+
+          <th pSortableColumn="lastModified" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Poslednja izmena</p>
+              </div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-curr>
+        <tr style="font-size: 12px;">
+          <td>{{curr.fromCurrencyCode}} - {{curr.toCurrencyCode}}</td>
+          <td>{{toFixed(curr.exchangeRate)}}</td>
+          <td>{{curr.lastRefreshed}}</td>
+
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </div>
+
+</div>
+

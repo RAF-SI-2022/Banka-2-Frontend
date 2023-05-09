@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -7,17 +7,16 @@ import {
   RouterStateSnapshot,
   UrlTree
 } from '@angular/router';
-import { Observable } from 'rxjs';
-import {LoginComponent} from "../components/login/login.component";
+import {Observable} from 'rxjs';
 import {ToastrService} from "ngx-toastr";
-import {AuthService} from "../services/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard {
 
-  constructor(private toastr: ToastrService, private router: Router) { }
+  constructor(private toastr: ToastrService, private router: Router) {
+  }
 
   canActivate():
     | Observable<boolean | UrlTree>
@@ -25,12 +24,12 @@ export class AuthGuard {
     | boolean
     | UrlTree {
 
-    if(localStorage.getItem('token') || sessionStorage.getItem('token') !== null) {
+    if (localStorage.getItem('token') || sessionStorage.getItem('token') !== null) {
       return true;
     } else {
       this.toastr.error("Morate se ulogovati prvo.")
       this.router.navigate(['/login'])
-      return false
+      return false;
     }
   }
 

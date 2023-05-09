@@ -1,35 +1,70 @@
+<!--SIDEBAR KOD:-->
 <p-sidebar [(visible)]="display" *ngIf="user != undefined">
-  <div class="mb-3">
+  <div class="mb-3 ms-1">
     <img width="80" height="80" src="assets/icons/blogo.png" alt="My Happy SVG" class="mb-3 me-3 "/>
     <h1 class="mb-5" style="display: inline-block">Banka2</h1>
   </div>
   <div class="navbar-nav">
     <li class="nav-item sidebar-nav-item mb-3">
-      <a class="nav-link" [routerLink]="'/profile'" (click)="hideSidebar()" >
+      <a class="nav-link " [routerLink]="'/profile'" (click)="hideSidebar()">
         <img style="width: 48px" src="assets/icons/person-circle1.svg" alt="My Happy SVG" class="mb-2 me-2"/>
         <span style="font-size: x-large">
           {{user.firstName}} {{user.lastName}}
         </span>
       </a>
     </li>
-    <li class="nav-item mb-2 sidebar-nav-item ">
-      <a [routerLink]="'/home'" id="homeBtn"  class="nav-link" aria-current="page" (click)="hideSidebar()"  [routerLinkActive]="['active']">Početna</a>
+    <li class="nav-item mb-1 sidebar-nav-item ">
+      <a [routerLink]="'/home'" id="homeBtn" class="nav-link" aria-current="page" (click)="hideSidebar()"
+         [routerLinkActive]="['active']">Početna</a>
     </li>
-    <li class="nav-item mb-5 sidebar-nav-item">
-      <a *ngIf="getPermission()"  [routerLink]="'/users'" id="usersBtn" class="nav-link" aria-current="page" (click)="hideSidebar()"  [routerLinkActive]="['active']">Korisnici</a>
+    <li class="nav-item mb-1 sidebar-nav-item">
+      <a *ngIf="getPermission()" [routerLink]="'/users'" id="usersBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Korisnici</a>
+      <a *ngIf="getAgentPerm()" [routerLink]="'/agents'" id="usersBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Agenti</a>
     </li>
-<!--    <li class="nav-item sidebar-nav-item mb-2">-->
-<!--      <a class="nav-link" [routerLink]="'/profile'">Profil</a>-->
-<!--    </li>-->
+
+    <hr class="solid">
+
+    <li class="nav-item mb-1 sidebar-nav-item">
+      <a  [routerLink]="'/stocks'" id="stockBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Akcije</a>
+    </li>
+    <li class="nav-item mb-1 sidebar-nav-item">
+      <a  [routerLink]="'/forex'" id="forexBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Forex</a>
+    </li>
+    <li class="nav-item mb-1 sidebar-nav-item">
+      <a  [routerLink]="'/futures'" id="futureBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Terminski ugovori</a>
+    </li>
+
+    <hr class="solid">
+
+    <li class="nav-item mb-1 sidebar-nav-item">
+      <a  [routerLink]="'/purchases'" id="orderBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Porudžbine</a>
+    </li>
+    <li class="nav-item mb-1 sidebar-nav-item">
+      <a  [routerLink]="'/capital'" id="capitalBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Kapital</a>
+    </li>
+
+    <hr class="solid">
+
     <li class="nav-item sidebar-nav-item">
       <a class="nav-link logout-btn" (click)="logOut()">Logout</a>
     </li>
   </div>
 </p-sidebar>
 
+<!--NAVBAR KOD:-->
+
 <header *ngIf="checkIsLoggedIn()">
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #724bcb;">
-    <button (click)="showSidebar()" class="navbar-toggler ms-2" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <button (click)="showSidebar()" class="navbar-toggler ms-2" type="button" data-toggle="collapse"
+            data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+            aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="container-fluid">
@@ -40,22 +75,76 @@
             Banka2
           </a>
           <li class="nav-item">
-            <a id="homeButton" [routerLink]="'/home'" class="nav-link" aria-current="page" [routerLinkActive]="['active']">Početna</a>
+            <a id="homeButton" [routerLink]="'/home'" class="nav-link" aria-current="page"
+               [routerLinkActive]="['active']">Početna</a>
+          </li>
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              <a>Berza</a>
+            </a>
+            <ul class="dropdown-menu -dark dropdown-menu-end nav-item"
+                aria-labelledby="navbarDarkDropdownMenuLink"
+                [routerLinkActive]="['active']">
+                <li>
+                  <a  id="stockButton" [routerLink]="'/stocks'"  class="dropdown-item "
+                     [routerLinkActive]="['active']">Akcije</a>
+                </li>
+                <li>
+                  <a  id="forexButton" [routerLink]="'/forex'" class="dropdown-item"
+                     [routerLinkActive]="['active']">Forex</a>
+                </li>
+                <li>
+                  <a  id="futuresButton" [routerLink]="'/futures'"  class="dropdown-item"
+                     [routerLinkActive]="['active']">Terminski ugovori</a>
+                </li>
+            </ul>
+          </li> -->
+          <li class="nav-item">
+            <a *ngIf="getPermission()" id="usersButton" [routerLink]="'/users'" class="nav-link" aria-current="page"
+               [routerLinkActive]="['active']">Korisnici</a>
+            <a *ngIf="getAgentPerm()" id="usersButton" [routerLink]="'/agents'" class="nav-link" aria-current="page"
+               [routerLinkActive]="['active']">Agenti</a>
           </li>
           <li class="nav-item">
-            <a *ngIf="getPermission()" id="usersButton" [routerLink]="'/users'" class="nav-link" aria-current="page" [routerLinkActive]="['active']">Korisnici</a>
+            <a  id="stockButton" [routerLink]="'/stocks'" class="nav-link" aria-current="page"
+               [routerLinkActive]="['active']">Akcije</a>
           </li>
+
+          <li class="nav-item">
+            <a  id="forexButton" [routerLink]="'/forex'" class="nav-link" aria-current="page"
+               [routerLinkActive]="['active']">Forex</a>
+          </li>
+          <li class="nav-item">
+            <a  id="futuresButton" [routerLink]="'/futures'" class="nav-link" aria-current="page"
+               [routerLinkActive]="['active']">Terminski ugovori</a>
+          </li>
+          <li class="nav-item">
+            <a  id="capitalButton" [routerLink]="'/capital'" class="nav-link" aria-current="page"
+               [routerLinkActive]="['active']">Kapital</a>
+          </li>
+          <li class="nav-item">
+            <a  id="purchasesButton" [routerLink]="'/purchases'" class="nav-link"
+               aria-current="page"
+               [routerLinkActive]="['active']">Porudžbine</a>
+          </li>
+
         </ul>
+
       </div>
+
     </div>
+
     <ul class="navbar-nav">
       <div class="collapse navbar-collapse me-4" id="navbarNavDarkDropdown">
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
               <i class="pi pi-cog" style="font-size: 20px"></i>
             </a>
-            <ul class="dropdown-menu dropdown-menu -dark dropdown-menu-end"  aria-labelledby="navbarDarkDropdownMenuLink">
+            <ul class="dropdown-menu dropdown-menu -dark dropdown-menu-end"
+                aria-labelledby="navbarDarkDropdownMenuLink">
               <li><a class="dropdown-item" [routerLink]="'/profile'">Profil</a></li>
               <li><a class="dropdown-item" (click)="logOut()">Logout</a></li>
             </ul>
@@ -69,6 +158,6 @@
 
 <!-- <div class="container-fluid pt-3 pe-3 ps-3">-->
 <!--   <div class="card shadow-sm">-->
-     <router-outlet></router-outlet>
+<router-outlet></router-outlet>
 <!--   </div>-->
 <!-- </div>-->

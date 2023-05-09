@@ -1,0 +1,47 @@
+<p-dialog [style]="{width: '35vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
+          [(visible)]="buyStockVisible" *ngIf="true" [modal]="true" (onHide)="resetForm()">
+  <!--  TODO:staviti bajndovanje na visible-->
+  <ng-template pTemplate="header">
+    <!--  TODO:povuci iz stock modela ticker-->
+    <h2 style="font-weight: bolder" class="mb-3">Kupovina hartije {{stock.symbol}} </h2>
+
+  </ng-template>
+  <p-divider/>
+  <div class="container text-center">
+    <div class="row">
+      <form (submit)="submitBuyStock()" [formGroup]="buyStockForm">
+        <div class="col-lg-12 text-center mb-3">
+          <h4 class="mb-1">Količina</h4>
+          <p-inputNumber placeholder="Količina" [formControlName]="'kolicina'" inputId="integeronly"></p-inputNumber>
+        </div>
+        <div class="col-lg-12 text-center mb-3">
+          <h4 class="mb-1">Limit</h4>
+          <p-inputNumber placeholder="Limit" [formControlName]="'limit'" inputId="integeronly"></p-inputNumber>
+        </div>
+        <div class="col-lg-12 text-center mb-3">
+          <h4 class="mb-1">Stop</h4>
+          <p-inputNumber placeholder="Stop" [formControlName]="'stop'" inputId="integeronly"></p-inputNumber>
+        </div>
+        <div class="col-lg-12 text-center mb-3">
+          <small style="font-weight: 300">* Ako su oba 0 onda se radi Market Order <br>
+            * Ako je jedan stavljen, a drugi 0, radi se šta ste odabrali (Limit ili Stop Order) <br>
+            * Ako su oba stavljena, radi se Stop-Limit order</small>
+        </div>
+        <div class="row ">
+          <div class="col-lg-6 text-end mb-3">
+            <p-checkbox [formControlName]="'allOrNone'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
+            <label style="font-weight: 500">AllOrNone</label>
+          </div>
+          <div class="col-lg-6 text-start mb-3">
+            <p-checkbox [formControlName]="'margin'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
+            <label style="font-weight: 500">Margin</label>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <button pButton pRipple [disabled]="!isFormValid" label="Kupi"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</p-dialog>

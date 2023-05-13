@@ -1,0 +1,40 @@
+<p-dialog [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
+          [(visible)]="createCompanyVisible" *ngIf="true" [modal]="true" (onHide)="resetForm()">
+  <!--  TODO:staviti bajndovanje na visible-->
+  <ng-template pTemplate="header">
+    <!--  TODO:povuci iz stock modela ticker-->
+    <h2 style="font-weight: bolder" class="mb-3">Kreiranje kompanije</h2>
+
+  </ng-template>
+  <p-divider/>
+  <div class="create-company-form">
+    <form (submit)="submitCreateCompany()" [formGroup]="createCompanyForm" class="create-company-form pt-4 pb-4 gap-4">
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="name-input" [formControlName]="'name'">
+        <label for="name-input">Naziv</label>
+      </span>
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="id-number-input" [formControlName]="'idNumber'">
+        <label for="id-number-input">Matični broj</label>
+      </span>
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="tax-number-input" [formControlName]="'taxNumber'">
+        <label for="tax-number-input">PIB</label>
+      </span>
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="activity-number-input" [formControlName]="'activityCode'">
+        <label for="activity-number-input">Šifra delatnosti</label>
+      </span>
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="address-input" [formControlName]="'address'">
+        <label for="address-input">Adresa</label>
+      </span>
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="country-input" [formControlName]="'country'">
+        <label for="country-input">Država</label>
+      </span>
+      <button type="submit" pButton pRipple label="Dodaj" [disabled]="!isFormValid" class="w-100"></button>
+    </form>
+  </div>
+</p-dialog>

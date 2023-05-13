@@ -71,7 +71,9 @@ import { BuyStockOptionComponent } from './components/sprint3/buy-stock-option/b
 import { MyStockOptionsComponent } from './components/sprint3/my-stock-options/my-stock-options.component';
 import { AgentsComponent } from './components/sprint3/agents/agents.component';
 import { ChangeAgentLimitComponent } from './components/sprint3/change-agent-limit/change-agent-limit.component';
-
+import { CompaniesComponent } from './components/sprint4/companies/companies.component';
+import { CreateCompanyComponent } from './components/sprint4/create-company/create-company.component';
+import { CompanyDetailsComponent } from './components/sprint4/company-details/company-details.component';
 
 
 @NgModule({
@@ -113,6 +115,9 @@ import { ChangeAgentLimitComponent } from './components/sprint3/change-agent-lim
     MyStockOptionsComponent,
     AgentsComponent,
     ChangeAgentLimitComponent,
+    CompaniesComponent,
+    CreateCompanyComponent,
+    CompanyDetailsComponent,
     // FutureContractComponent,
 
   ],

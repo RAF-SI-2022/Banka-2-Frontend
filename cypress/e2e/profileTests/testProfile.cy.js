@@ -1,6 +1,6 @@
-import {ProfileTestComponents} from "../../src/app/components/sprint1/profile/profileTestComponents";
-import {LoginTestComponents} from "../../src/app/components/sprint1/login/loginTestComponents";
-import {UsersTestComponents} from "../../src/app/components/sprint1/users/usersTestComponents";
+import {ProfileTestComponents} from "../../../src/app/components/sprint1/profile/profileTestComponents";
+import {LoginTestComponents} from "../../../src/app/components/sprint1/login/loginTestComponents";
+import {UsersTestComponents} from "../../../src/app/components/sprint1/users/usersTestComponents";
 
 
 const profileComponents = new ProfileTestComponents()

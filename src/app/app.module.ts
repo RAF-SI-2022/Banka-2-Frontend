@@ -74,6 +74,7 @@ import { ChangeAgentLimitComponent } from './components/sprint3/change-agent-lim
 import { CompaniesComponent } from './components/sprint4/companies/companies.component';
 import { CreateCompanyComponent } from './components/sprint4/create-company/create-company.component';
 import { CompanyDetailsComponent } from './components/sprint4/company-details/company-details.component';
+import { SingleContractComponent } from './components/sprint4/single-contract/single-contract.component';
 
 
 @NgModule({
@@ -118,6 +119,7 @@ import { CompanyDetailsComponent } from './components/sprint4/company-details/co
     CompaniesComponent,
     CreateCompanyComponent,
     CompanyDetailsComponent,
+    SingleContractComponent,
     // FutureContractComponent,
 
   ],

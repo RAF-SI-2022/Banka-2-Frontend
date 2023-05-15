@@ -189,4 +189,29 @@ export interface Transaction {
   reserved: number,
 }
 
+export interface Company {
+  id: number,
+  name: string,
+  address: string,
+  country: string,
+  idNumber: string, // maticni broj
+  taxNumber: string, // poreski broj
+  activityCode: string // sifra aktivnosti
+}
+
+export interface CompanyAccount {
+  id: number,
+  currency: Currency,
+  bank: string,
+  accountNumber: string,
+  active: boolean
+}
+
+export interface CompanyContract {
+  id: number,
+  referenceNumber: number,
+  status: string,
+  created: Date,
+  modified: Date
+}
 

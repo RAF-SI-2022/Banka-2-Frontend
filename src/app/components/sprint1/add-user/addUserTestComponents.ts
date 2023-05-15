@@ -85,4 +85,9 @@ export class AddUserTestComponents {
     cy.get("#deleteBtn" + id).click()
     cy.get('.text-start > .p-ripple').click()
   }
+  closeDialog(){
+    cy.wait(2000)
+    cy.get('#toast-container > .ng-trigger').click()
+    cy.get('.p-dialog-header-close-icon').click()
+  }
 }

@@ -25,6 +25,7 @@ export class UsersComponent {
   }
 
   users: User[];
+  tempUsers: User[];
   selectedPermissions: Permission[];
   permissions: Permission[];
   displayDialog: boolean = false;
@@ -89,7 +90,9 @@ export class UsersComponent {
     this.userService.getAllUsers()
       .subscribe({
         next: val => {
-          this.users = val;
+
+          this.tempUsers = val
+          // this.users = val;
 
           this.userService.getUserData()
             .subscribe({
@@ -98,7 +101,8 @@ export class UsersComponent {
 
                 const currentUser = res
                 this.loading = true
-                this.users = this.users.filter(user => user.email !== currentUser.email)
+                this.tempUsers = this.tempUsers.filter(user => user.email !== currentUser.email)
+                this.users = this.tempUsers
               },
               error: err => {
                 this.toastr.error(err.error)
@@ -219,7 +223,13 @@ export class UsersComponent {
           this.toastr.info("Korisnik uspesno promenjen.")
         },
         error: err => {
-          this.toastr.error(err.error)
+          // console.log(err);
+          if(err.status === 500){
+            this.toastr.error("Korisnik sa ovom email adresom vec postoji")
+          }
+          else{
+            this.toastr.error("Neocekivana greska")
+          }
         }
       })
   }

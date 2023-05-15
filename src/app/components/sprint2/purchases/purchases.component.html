@@ -133,14 +133,14 @@
           <td>{{order.lastModified}}</td>
 
           <td>
-            <button type="button"  (click)="approveTransaction(order.id)"
+            <button *ngIf="order.status === 'NA CEKANJU'" type="button"  (click)="approveTransaction(order.id)"
                     class="btn-i btn-circle" title="Prihvati porudzbinu">
                 <span>
                   <i class="bi bi-check" style="font-size: 20px;"></i>
                 </span>
               <div class="wave"></div>
             </button>
-              <button type="button"
+              <button *ngIf="order.status === 'NA CEKANJU'" type="button"
               class="btn-i btn-circle" (click)="declineTransaction(order.id)" title="Odbij porudzbinu">
                 <span>
                 <i class="bi bi-x" style="font-size: 20px;"></i>

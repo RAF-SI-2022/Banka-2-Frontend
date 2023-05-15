@@ -164,9 +164,6 @@ export class CapitalComponent  {
       })
   }
 
-  //TODO: iskoriscenog limita videti da li je azurirano, za sada koristimo kao alternativu samo ono sto je "rezervisano"
-  //TODO: od kolicine ukupne koju ima korisnik i nemamo an frontu nikakve provere za iskoriscenost limita!!!
-
   getPermission(): boolean {
     if (localStorage.getItem("remember") !== null) {
         if ((localStorage.getItem("permissions")?.includes("CREATE_USERS") && localStorage.getItem("permissions")?.includes("READ_USERS") && localStorage.getItem("permissions")?.includes("DELETE_USERS") && localStorage.getItem("permissions")?.includes("UPDATE_USERS") ) || (localStorage.getItem("permissions")?.includes("ADMIN_USER")))

@@ -23,6 +23,8 @@ import { CapitalComponent } from './components/sprint3/capital/capital.component
 import { FutureContractComponent } from './components/sprint3/future-contract/future-contract.component';
 import { MyStockOptionsComponent } from './components/sprint3/my-stock-options/my-stock-options.component';
 import { AgentsComponent } from './components/sprint3/agents/agents.component';
+import {CompaniesComponent} from "./components/sprint4/companies/companies.component";
+import {CompanyDetailsComponent} from "./components/sprint4/company-details/company-details.component";
 
 const routes: Routes = [
   {
@@ -124,6 +126,15 @@ const routes: Routes = [
     path: "agents",
     component: AgentsComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: "companies",
+    component: CompaniesComponent,
+
+  },
+  {
+    path: "company/:id",
+    component: CompanyDetailsComponent
   },
   {
     path: '**', redirectTo: '404-not-found'

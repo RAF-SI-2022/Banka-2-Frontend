@@ -1,5 +1,5 @@
-import {HomeTestComponents} from "../../src/app/components/sprint1/home/homeTestComponents";
-import {LoginTestComponents} from "../../src/app/components/sprint1/login/loginTestComponents";
+import {HomeTestComponents} from "../../../src/app/components/sprint1/home/homeTestComponents";
+import {LoginTestComponents} from "../../../src/app/components/sprint1/login/loginTestComponents";
 
 const homeComp = new HomeTestComponents()
 const loginComponents = new LoginTestComponents()

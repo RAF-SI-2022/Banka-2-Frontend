@@ -29,14 +29,14 @@ export class BuyStockOptionComponent {
   }
 
   resetForm() {
-
+    this.buyOptionForm.get('kolicina')?.reset();
   }
 
   submitBuyOption() {
 
     const amount = this.buyOptionForm.get('kolicina')?.value;
 
-    if(amount > this.stockOption.openInterest) {
+    if (amount > this.stockOption.openInterest) {
       this.toastr.error(`Nema dovoljno opcija na stanju. Količina na stanju: ${this.stockOption.openInterest}`)
       return;
     }

@@ -47,5 +47,5 @@
 
 .body-container {
   background-color: #eff3f7;
-  min-height: 100vh;
+  padding-bottom: 10px;
 }

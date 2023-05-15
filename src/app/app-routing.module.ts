@@ -127,15 +127,14 @@ const routes: Routes = [
     component: AgentsComponent,
     canActivate: [AuthGuard]
   },
-  {
-    path: "companies",
-    component: CompaniesComponent,
-
-  },
-  {
-    path: "company/:id",
-    component: CompanyDetailsComponent
-  },
+  // {
+  //   path: "companies",
+  //   component: CompaniesComponent,
+  // },
+  // {
+  //   path: "company/:id",
+  //   component: CompanyDetailsComponent
+  // },
   {
     path: '**', redirectTo: '404-not-found'
   }

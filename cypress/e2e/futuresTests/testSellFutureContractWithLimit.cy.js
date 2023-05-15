@@ -4,10 +4,10 @@ import {FutureContractTestComponents} from "../../../src/app/components/sprint3/
 const loginComponents = new LoginTestComponents()
 const futureContractComponents = new FutureContractTestComponents()
 
-it("testFutureContract", function (){
+it("testSellFutureContract", function (){
   loginComponents.testSessionLogin(loginComponents.admin)
   cy.wait(500)
   cy.visit('http://localhost:4200/futures')
   cy.wait(500)
-  futureContractComponents.testFutureContract(loginComponents.id)
+  futureContractComponents.testSellFutureContractWithLimit()
 })

@@ -162,8 +162,13 @@ export class StockOptionsComponent {
         this.buyStockOptionComponent.buyOptionVisible = false;
       },
       error: err => {
-        // console.error(err)
-        this.toastr.error(err.error)
+        console.error(err)
+        if(err.error.message !== undefined){
+          this.toastr.error(err.error.message)
+        }
+        else{
+          this.toastr.error(err.error)
+        }
       }
     })
   }

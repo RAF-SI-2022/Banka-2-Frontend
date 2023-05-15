@@ -1,5 +1,5 @@
-import {LoginTestComponents} from "../../src/app/components/sprint1/login/loginTestComponents";
-import {BuyStockTestComponents} from "../../src/app/components/sprint2/stocks/buy-stock/buyStockTestComponents";
+import {LoginTestComponents} from "../../../src/app/components/sprint1/login/loginTestComponents";
+import {BuyStockTestComponents} from "../../../src/app/components/sprint2/stocks/buy-stock/buyStockTestComponents";
 
 const loginComponents = new LoginTestComponents()
 const buyStockComponents = new BuyStockTestComponents()

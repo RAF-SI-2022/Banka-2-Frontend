@@ -155,13 +155,15 @@ export class StocksComponent {
             console.log(val);
             
             // todo proveriti dali val vec postoji u allStocks
-            if(this.allStocks.includes(val)){
-              this.allStocks.push(val)
-              this.toastr.info("Upesno pronadjena akcija")
-            }
-            else{
-              this.toastr.error("Vec postoji ova akcija u listu")
-            }
+            // if(this.allStocks.includes(val)){
+            //   this.allStocks.push(val)
+            //   this.toastr.info("Upesno pronadjena akcija")
+            // }
+            // else{
+            //   this.toastr.error("Vec postoji ova akcija u listu")
+            // }
+            this.allStocks.push(val)
+            this.toastr.info("Upesno pronadjena akcija")
           },
           error: err => {
             console.log(err);

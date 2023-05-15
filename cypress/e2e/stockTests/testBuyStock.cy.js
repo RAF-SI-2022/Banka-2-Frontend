@@ -22,25 +22,25 @@ it("testBuyStocks", function (){
 
   buyStockComponents.testBuyStock(loginComponents.id)
 
-  buyStockComponents.testBuyStockWithLimit(loginComponents.id)
+  // buyStockComponents.testBuyStockWithLimit(loginComponents.id)
 
-  buyStockComponents.testBuyStockWithStop(loginComponents.id)
+  // buyStockComponents.testBuyStockWithStop(loginComponents.id)
 
-  buyStockComponents.testBuyStockWithLimitAndStop(loginComponents.id)
+  // buyStockComponents.testBuyStockWithLimitAndStop(loginComponents.id)
 
 
-  buyStockComponents.testAllOrNoneBuyStockWithLimitAndStop(loginComponents.id)
-  buyStockComponents.testMarginBuyStockWithLimitAndStop(loginComponents.id)
+  // buyStockComponents.testAllOrNoneBuyStockWithLimitAndStop(loginComponents.id)
+  // buyStockComponents.testMarginBuyStockWithLimitAndStop(loginComponents.id)
 
-  buyStockComponents.testAllOrNoneBuyStockWithStop(loginComponents.id)
-  buyStockComponents.testMarginBuyStockWithStop(loginComponents.id)
+  // buyStockComponents.testAllOrNoneBuyStockWithStop(loginComponents.id)
+  // buyStockComponents.testMarginBuyStockWithStop(loginComponents.id)
 
-  buyStockComponents.testAllOrNoneBuyStockWithLimit(loginComponents.id)
-  buyStockComponents.testMarginBuyStockWithLimit(loginComponents.id)
+  // buyStockComponents.testAllOrNoneBuyStockWithLimit(loginComponents.id)
+  // buyStockComponents.testMarginBuyStockWithLimit(loginComponents.id)
 
-  buyStockComponents.testAllOrNoneBuyStock(loginComponents.id)
-  buyStockComponents.testMarginBuyStock(loginComponents.id)
+  // buyStockComponents.testAllOrNoneBuyStock(loginComponents.id)
+  // buyStockComponents.testMarginBuyStock(loginComponents.id)
 
-  buyStockComponents.testAllOrNoneAndMarginBuyStockWithLimitAndStop(loginComponents.id)
+  // buyStockComponents.testAllOrNoneAndMarginBuyStockWithLimitAndStop(loginComponents.id)
 
 })

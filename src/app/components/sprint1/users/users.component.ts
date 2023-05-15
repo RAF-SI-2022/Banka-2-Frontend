@@ -146,7 +146,13 @@ export class UsersComponent {
         },
         error: err => {
           // console.log(err)
-          this.toastr.error(err.error)
+          if(err.error.message !== undefined){
+            this.toastr.error(err.error.message)
+          }
+          else{
+            this.toastr.error(err.error)
+          }
+          
           this.selectedUserId = -1
           this.displayConfirmationDialog = !this.displayConfirmationDialog
         }

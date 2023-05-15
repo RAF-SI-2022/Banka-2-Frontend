@@ -44,14 +44,14 @@
   
           <ng-template pTemplate="header">
             <tr>
-              <!-- <th pSortableColumn="id" style="min-width: 5rem; font-size: 12px; ">
+              <th pSortableColumn="id" style="min-width: 5rem; font-size: 12px; ">
                 <div class="flex justify-content-between align-items-center">
                   <div class="icon-container">
                     <p style="margin-bottom: 0; margin-top: 2px;">ID</p>
                     <p-sortIcon field="id"></p-sortIcon>
                   </div>
                 </div>
-              </th> -->
+              </th>
               <th pSortableColumn="email" style="min-width: 3rem; font-size: 12px;">
                 <div class="flex justify-content-between align-items-center">
                   <!-- Email -->
@@ -149,7 +149,7 @@
           <ng-template pTemplate="body" let-user>
             <!-- <div *ngIf="user.jobPosition === 'AGENT'"></div> -->
             <tr *ngIf="user.jobPosition === 'AGENT'"style="font-size: 12px;">
-              <!-- <td>{{user.id}}</td>s -->
+              <td>{{user.id}}</td>
               <td>{{user.email}}</td>
               <!-- <td>{{user.first_name }} {{user.last_name}}</td> -->
               <td>

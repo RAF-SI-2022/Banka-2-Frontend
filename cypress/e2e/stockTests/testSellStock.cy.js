@@ -12,19 +12,7 @@ it("testSellStocks", function (){
   cy.visit('http://localhost:4200/stocks-table/sell')
   cy.wait(500)
   sellStockComponents.testSellStock(loginComponents.id)
-  // usersComponents.testAddUser(loginComponents.testUser.mail)//kreiramo test usera
-  // cy.reload()
-  // cy.get('[psortablecolumn="id"]').click().click()
-  //
-  // cy.get('.p-datatable-tbody > :nth-child(1) > :nth-child(1)').invoke('text')//dobijamo prvog slobodnog usera
-  //   .then(text => {
-  //     loginComponents.id = parseInt(text)
-  //     cy.log("ID USERA = " + loginComponents.id)
-  //
-  //     // usersComponents.testListFilter()
-  //     usersComponents.testDeactivate(loginComponents.id)//id elementa liste
-  //     usersComponents.testActivate(loginComponents.id)
-  //     usersComponents.testEditUser(loginComponents.id)
-  //     usersComponents.testDelete(loginComponents.id)
-  //   });
+
+
+  
 })

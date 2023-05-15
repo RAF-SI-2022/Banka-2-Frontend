@@ -16,11 +16,10 @@ export class StockOptionsComponent {
 
   @ViewChild(BuyStockOptionComponent, {static: true}) buyStockOptionComponent: BuyStockOptionComponent
 
-  private stockTicker: string;
-  inTheMoneyColor = "#cdf5cd"
   breadcrumbItems: MenuItem[];
   dates: string[];
   selectedDate: string;
+  selectedDateFormatted: Date
   stockSymbol: string;
   stockOptionsCalls: Option[]
   stockOptionsPuts: Option[]
@@ -29,13 +28,13 @@ export class StockOptionsComponent {
   tabMenuItems: MenuItem[];
   activeTabMenuItem: MenuItem
 
-  loading: boolean = false;
+  loading: boolean = true;
 
-  constructor(private route: ActivatedRoute, 
-    private stockService: StockService, 
-    private toastr: ToastrService,
-    private router: Router
-    ) {
+  constructor(private route: ActivatedRoute,
+              private stockService: StockService,
+              private toastr: ToastrService,
+              private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -49,10 +48,11 @@ export class StockOptionsComponent {
         label: this.stockSymbol + ' opcije',
         icon: 'pi pi-fw pi-chart-line',
         command: event => {
-          this.router.navigate([`/stock-options/`+ this.stockSymbol])
+          this.router.navigate([`/stock-options/` + this.stockSymbol])
         }
       },
-      { label: 'Moje ' + this.stockSymbol + ' opcije',
+      {
+        label: 'Moje ' + this.stockSymbol + ' opcije',
         icon: 'pi pi-fw pi-user',
         command: event => {
           this.router.navigate(['/my-stock-options/' + this.stockSymbol])
@@ -64,8 +64,6 @@ export class StockOptionsComponent {
     this.activeTabMenuItem = this.tabMenuItems[0];
 
 
-
-
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
       {label: 'Akcije', routerLink: ['/stocks']},
@@ -74,22 +72,25 @@ export class StockOptionsComponent {
 
     this.getStockDetails(this.stockSymbol);
     this.getOptionDates();
-    this.getStockOptionsBySymbol();
-
-
-
   }
 
   // TODO: dohvatiti informacije o akciji po ticker-u
   getStockOptionsBySymbol() {
     this.stockService.getStockOptionsBySymbol(this.stockSymbol).subscribe({
       next: value => {
-        this.stockOptionsCalls = value.filter((val: Option) => val.optionType === 'CALL');
-        this.stockOptionsPuts = value.filter((val: Option) => val.optionType === 'PUT');
+
+
+        console.log(value[0].expirationDate);
+        console.log(this.selectedDate)
+
+        this.stockOptionsCalls = value.filter((val: Option) => val.optionType === 'CALL' && val.expirationDate.toString() === this.selectedDate);
+        this.stockOptionsPuts = value.filter((val: Option) => val.optionType === 'PUT' && val.expirationDate.toString() === this.selectedDate);
+
+        this.loading = false;
       },
       error: err => {
-        console.log(err);
-        this.toastr.error(err.error.message)
+          console.log(err);
+          this.toastr.error(err.error.message)
       }
     });
   }
@@ -120,6 +121,8 @@ export class StockOptionsComponent {
         localStorage.setItem('dates', JSON.stringify(value));
         this.dates = value;
         this.selectedDate = this.dates[0];
+        this.getStockOptionsBySymbol();
+
       },
       error: err => {
         this.toastr.error(err.error)

@@ -20,6 +20,15 @@ export class LoginTestComponents {
     password: "@Testpassword1"
   }
 
+  agentUser = {
+    mail: "agentt@raf.rs",
+    password: "agentt"
+  }
+  supervisorUser ={
+    mail: "super@raf.rs",
+    password: "super"
+  }
+
   id: number
 
   testSessionLogin(user: { mail: string; password: string }) {

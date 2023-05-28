@@ -266,9 +266,6 @@ export class StockService {
       {}
       , {headers: this.headers})
   }
-
-
-
 }
 
 

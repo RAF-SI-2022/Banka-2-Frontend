@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../../../services/user-service.service";
@@ -6,6 +6,8 @@ import {StockService} from "../../../services/stock.service";
 import {Router} from "@angular/router";
 import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import {Permission, User} from "../../../models/users.model";
+import {AddUserComponent} from "../../sprint1/add-user/add-user.component";
+import {CreateCompanyContractComponent} from "../create-company-contract/create-company-contract.component";
 
 @Component({
   selector: 'app-company-details',
@@ -13,6 +15,8 @@ import {Permission, User} from "../../../models/users.model";
   styleUrls: ['./company-details.component.css']
 })
 export class CompanyDetailsComponent {
+
+  @ViewChild(CreateCompanyContractComponent, {static: true}) createCompanyContractComponent: CreateCompanyContractComponent
 
   breadcrumbItems: MenuItem[];
   loading: boolean = false; // TODO: promeniti na true
@@ -57,6 +61,7 @@ export class CompanyDetailsComponent {
       {
         id: 1,
         referenceNumber: 111,
+        description: 'Description1',
         status: 'ACCEPTED',
         created: new Date(),
         modified: new Date()
@@ -66,6 +71,7 @@ export class CompanyDetailsComponent {
         id: 2,
         referenceNumber: 222,
         status: 'REJECTED',
+        description: 'Description2',
         created: new Date(),
         modified: new Date()
       },
@@ -108,6 +114,7 @@ export class CompanyDetailsComponent {
 
   openCreateCompanyContractDialog() {
     // TODO: otvoriti popup za kreiranje novog racuna
+    this.createCompanyContractComponent.createCompanyContractVisible = true;
   }
 
   openContractDetailsDialog(contract: CompanyContract) {
@@ -119,6 +126,11 @@ export class CompanyDetailsComponent {
   }
 
   openUserDetailsDialog(user: any) {
-    
+
+  }
+
+  submitCreateCompanyContract(contract: CompanyContract) {
+    // TODO: poslati ovo na stock service metodu za kreiranje contract-a kada uradi back
+    console.log(contract);
   }
 }

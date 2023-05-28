@@ -210,6 +210,7 @@ export interface CompanyAccount {
 export interface CompanyContract {
   id: number,
   referenceNumber: number,
+  description: string,
   status: string,
   created: Date,
   modified: Date

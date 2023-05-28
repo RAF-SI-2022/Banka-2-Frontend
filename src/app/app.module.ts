@@ -75,6 +75,8 @@ import { CompaniesComponent } from './components/sprint4/companies/companies.com
 import { CreateCompanyComponent } from './components/sprint4/create-company/create-company.component';
 import { CompanyDetailsComponent } from './components/sprint4/company-details/company-details.component';
 import { SingleContractComponent } from './components/sprint4/single-contract/single-contract.component';
+import { CreateCompanyContractComponent } from './components/sprint4/create-company-contract/create-company-contract.component';
+import {InputTextareaModule} from "primeng/inputtextarea";
 
 
 @NgModule({
@@ -120,43 +122,45 @@ import { SingleContractComponent } from './components/sprint4/single-contract/si
     CreateCompanyComponent,
     CompanyDetailsComponent,
     SingleContractComponent,
+    CreateCompanyContractComponent,
     // FutureContractComponent,
 
   ],
-    imports: [
-        InputNumberModule,
-        SelectButtonModule,
-        MultiSelectModule,
-        BrowserModule,
-        AppRoutingModule,
-        NgbModule,
-        InputTextModule,
-        RippleModule,
-        CheckboxModule,
-        ReactiveFormsModule,
-        PasswordModule,
-        ButtonModule,
-        BrowserAnimationsModule,
-        CardModule,
-        HttpClientModule,
-        TableModule,
-        DialogModule,
-        DropdownModule,
-        TableModule,
-        FormsModule,
-        BreadcrumbModule,
-        SkeletonModule,
-        ToastrModule.forRoot(),
-        SidebarModule,
-        ChartModule,
-        DividerModule,
-        InputSwitchModule,
-        StyleClassModule,
-        ColorPickerModule,
-        AccordionModule,
-        TabMenuModule,
-        TabViewModule
-    ],
+  imports: [
+    InputNumberModule,
+    SelectButtonModule,
+    MultiSelectModule,
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    InputTextModule,
+    RippleModule,
+    CheckboxModule,
+    ReactiveFormsModule,
+    PasswordModule,
+    ButtonModule,
+    BrowserAnimationsModule,
+    CardModule,
+    HttpClientModule,
+    TableModule,
+    DialogModule,
+    DropdownModule,
+    TableModule,
+    FormsModule,
+    BreadcrumbModule,
+    SkeletonModule,
+    ToastrModule.forRoot(),
+    SidebarModule,
+    ChartModule,
+    DividerModule,
+    InputSwitchModule,
+    StyleClassModule,
+    ColorPickerModule,
+    AccordionModule,
+    TabMenuModule,
+    TabViewModule,
+    InputTextareaModule
+  ],
   // exports: [
   //   ActivityPipe
   // ],

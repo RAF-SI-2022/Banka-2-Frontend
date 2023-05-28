@@ -1,0 +1,24 @@
+<p-dialog [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
+          [(visible)]="createCompanyContractVisible" *ngIf="true" [modal]="true" (onHide)="resetForm()">
+  <ng-template pTemplate="header">
+    <h2 style="font-weight: bolder" class="mb-3">Kreiranje ugovora</h2>
+
+  </ng-template>
+  <p-divider/>
+  <div class="create-company-contract-form-container">
+    <form (submit)="submitCreateCompanyContract()" [formGroup]="createCompanyContractForm"
+          class="create-company-contract-form pt-4 pb-4 gap-4">
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="ref-number-input" [formControlName]="'referenceNumber'">
+        <label for="ref-number-input">Delovodni broj</label>
+      </span>
+      <span class="p-float-label">
+        <textarea pInputTextarea class="w-100" id="description-input" [formControlName]="'description'"></textarea>
+        <label for="description-input">Opis</label>
+      </span>
+      <button type="submit" pButton pRipple label="Dodaj" [disabled]="!isFormValid" class="w-100"></button>
+    </form>
+  </div>
+</p-dialog>
+

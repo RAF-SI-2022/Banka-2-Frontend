@@ -27,3 +27,15 @@
   background-color: #eff3f7;
   min-height: 100vh;
 }
+
+.rowHover:hover {
+  cursor: pointer;
+}
+
+.icon-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: center;
+   */
+}

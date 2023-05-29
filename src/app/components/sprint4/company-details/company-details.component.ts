@@ -7,7 +7,10 @@ import {Router} from "@angular/router";
 import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import {Permission, User} from "../../../models/users.model";
 import {AddUserComponent} from "../../sprint1/add-user/add-user.component";
-import {CreateCompanyContractComponent} from "../create-company-contract/create-company-contract.component";
+import {CreateCompanyContractComponent,} from "../create-company-contract/create-company-contract.component";
+import {CreateCompanyAccountComponent} from "../create-company-account/create-company-account.component";
+import { SingleAccountComponent } from '../single-account/single-account.component';
+
 
 @Component({
   selector: 'app-company-details',
@@ -17,6 +20,8 @@ import {CreateCompanyContractComponent} from "../create-company-contract/create-
 export class CompanyDetailsComponent {
 
   @ViewChild(CreateCompanyContractComponent, {static: true}) createCompanyContractComponent: CreateCompanyContractComponent
+  @ViewChild(CreateCompanyAccountComponent, {static: true}) createCompanyAccountComponent: CreateCompanyAccountComponent
+  @ViewChild(SingleAccountComponent, {static: true}) singleAccountComponent: SingleAccountComponent
 
   breadcrumbItems: MenuItem[];
   loading: boolean = false; // TODO: promeniti na true
@@ -105,11 +110,12 @@ export class CompanyDetailsComponent {
   }
 
   openCreateCompanyAccountDialog() {
-    // TODO: otvoriti popup za kreiranje novog racuna za kompaniju
+    this.createCompanyAccountComponent.createCompanyAccountVisible = true;
   }
 
   openAccountDetailsDialog(account: CompanyAccount) {
-    // TODO: otvoriti popup sa detaljima racuna
+    this.singleAccountComponent.account = account;
+    console.log(account)
   }
 
   openCreateCompanyContractDialog() {
@@ -133,4 +139,13 @@ export class CompanyDetailsComponent {
     // TODO: poslati ovo na stock service metodu za kreiranje contract-a kada uradi back
     console.log(contract);
   }
+
+  submitCreateCompanyAccount(account: CompanyAccount){
+    console.log(account)
+  }
+
+  submitEditCompanyAccount(account: CompanyAccount){
+    console.log(account)
+  }
+
 }

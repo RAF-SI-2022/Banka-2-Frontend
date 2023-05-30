@@ -10,7 +10,8 @@ import {AddUserComponent} from "../../sprint1/add-user/add-user.component";
 import {CreateCompanyContractComponent,} from "../create-company-contract/create-company-contract.component";
 import {CreateCompanyAccountComponent} from "../create-company-account/create-company-account.component";
 import { SingleAccountComponent } from '../single-account/single-account.component';
-
+import { SingleContractComponent } from '../single-contract/single-contract.component';
+import { ContractService } from 'src/app/services/contract.service';
 
 @Component({
   selector: 'app-company-details',
@@ -28,16 +29,57 @@ export class CompanyDetailsComponent {
   isFormValid = true;
 
   companyAccounts: CompanyAccount[];
-  companyContracts: CompanyContract[];
+  
+  companyContracts: CompanyContract[] = [
+    {
+      id: 1,
+      referenceNumber: 111,
+      description: 'Description1',
+      status: 'DRAFT',
+      created: new Date(),
+      modified: new Date()
+    },
+
+    {
+      id: 2,
+      referenceNumber: 222,
+      status: 'DRAFT',
+      description: 'Description2',
+      created: new Date(),
+      modified: new Date()
+    },
+    {
+      id: 3,
+      referenceNumber: 333,
+      status: 'ACCEPTED',
+      description: 'Description3',
+      created: new Date(),
+      modified: new Date()
+    },
+  ];
+
   contactUsers: User[];
 
+
+
   constructor(private toastr: ToastrService, private userService: UserService,
-              private stockService: StockService, private router: Router) {
+              private stockService: StockService, private router: Router,
+              private contractService: ContractService) {
+
   }
 
   ngOnInit() {
 
-    // TODO: uzeti id iz URL-a i uraditi get za taj url kako bi se popunila forma
+    this.contractService.contract$.subscribe((contract: CompanyContract | null) => {
+      if(contract){
+
+        const index = this.companyContracts.findIndex(item => item.id === contract.id);
+        if(index !== -1) {
+          this.companyContracts[index] = contract;
+        }
+      }
+      
+    });
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
@@ -62,25 +104,7 @@ export class CompanyDetailsComponent {
       }
     ];
 
-    this.companyContracts = [
-      {
-        id: 1,
-        referenceNumber: 111,
-        description: 'Description1',
-        status: 'ACCEPTED',
-        created: new Date(),
-        modified: new Date()
-      },
-
-      {
-        id: 2,
-        referenceNumber: 222,
-        status: 'REJECTED',
-        description: 'Description2',
-        created: new Date(),
-        modified: new Date()
-      },
-    ];
+    
 
     this.contactUsers = [
       {
@@ -156,5 +180,8 @@ export class CompanyDetailsComponent {
   submitEditCompanyAccount(account: CompanyAccount){
     console.log(account)
   }
+
+
+  
 
 }

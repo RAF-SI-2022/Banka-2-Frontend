@@ -16,9 +16,11 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import {TableModule} from 'primeng/table';
 import {FormsModule} from '@angular/forms';
 import {ToastrModule} from 'ngx-toastr';
+import { ToastModule } from 'primeng/toast';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {SkeletonModule} from 'primeng/skeleton';
 import {InputSwitchModule} from 'primeng/inputswitch';
+
 
 
 import {LoginComponent} from './components/sprint1/login/login.component';
@@ -58,6 +60,8 @@ import {SellFutureComponent} from './components/sprint2/futures/sell-future/sell
 import {SellFutureWithLimitComponent} from './components/sprint2/futures/sell-future-with-limit/sell-future-with-limit.component';
 import {BuyFutureWithLimitComponent} from './components/sprint2/futures/buy-future-with-limit/buy-future-with-limit.component';
 import { TabViewModule } from 'primeng/tabview';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 
 import {AllowNumbersOnlyDirective} from 'src/app/directives/allow-numbers-only.directive';
 import {StockSellTableComponent} from './components/sprint2/stocks/stock-sell-table/stock-sell-table.component';
@@ -77,6 +81,8 @@ import { CompanyDetailsComponent } from './components/sprint4/company-details/co
 import { SingleContractComponent } from './components/sprint4/single-contract/single-contract.component';
 import { CreateCompanyContractComponent } from './components/sprint4/create-company-contract/create-company-contract.component';
 import {InputTextareaModule} from "primeng/inputtextarea";
+import { CreateCompanyAccountComponent } from './components/sprint4/create-company-account/create-company-account.component';
+import { SingleAccountComponent } from './components/sprint4/single-account/single-account.component';
 
 
 @NgModule({
@@ -123,6 +129,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
     CompanyDetailsComponent,
     SingleContractComponent,
     CreateCompanyContractComponent,
+    CreateCompanyAccountComponent,
+    SingleAccountComponent,
     // FutureContractComponent,
 
   ],
@@ -150,6 +158,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
     BreadcrumbModule,
     SkeletonModule,
     ToastrModule.forRoot(),
+    ToastModule,
     SidebarModule,
     ChartModule,
     DividerModule,
@@ -159,7 +168,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
     AccordionModule,
     TabMenuModule,
     TabViewModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ConfirmDialogModule,
   ],
   // exports: [
   //   ActivityPipe

@@ -25,6 +25,7 @@ import { MyStockOptionsComponent } from './components/sprint3/my-stock-options/m
 import { AgentsComponent } from './components/sprint3/agents/agents.component';
 import {CompaniesComponent} from "./components/sprint4/companies/companies.component";
 import {CompanyDetailsComponent} from "./components/sprint4/company-details/company-details.component";
+import { SingleContractComponent } from './components/sprint4/single-contract/single-contract.component';
 
 const routes: Routes = [
   {
@@ -134,6 +135,10 @@ const routes: Routes = [
   {
     path: "company/:id",
     component: CompanyDetailsComponent
+  },
+  {
+    path: 'company/:companyId/contract/:contractId',
+    component: SingleContractComponent,
   },
   {
     path: '**', redirectTo: '404-not-found'

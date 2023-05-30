@@ -1,4 +1,4 @@
-<div class="body-container">
+<div class="body-container" *ngIf="contract">
 
     <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 
@@ -9,46 +9,53 @@
 
     <div  class="details-container">
         
-        <form [formGroup]="contractForm">
+        <form [formGroup]="contractForm" >
 
             <div class="row  justify-content-center mt-3 ">
                 <div class="col-5 text-start">
                     <label style="font-weight: 500; margin-right: 10px;">Status</label>
-                    <input  [disabled]="disabled" [formControlName]="'status'"  class="w-100" type="text" pInputText>
+                    <input  [readOnly]="true" [formControlName]="'status'"  class="w-100" type="text" pInputText>
                 </div>
                 <div class="col-5 text-start">
                     <label style="font-weight: 500; margin-right: 10px;">Delovodni broj</label>
-                   <input [disabled]="disabled" [formControlName]="'delovodniBroj'" class="w-100" type="text" pInputText>
+                   <input [readOnly]="disable" [formControlName]="'referenceNumber'" class="w-100" type="text" pInputText>
                 </div>
             </div>
             
             <div class="row  justify-content-center mt-3">
                 <div class="col-5 text-start">
                   <label style="font-weight: 500; margin-right: 10px;">Kreiran</label>
-                  <input [disabled]="disabled" [formControlName]="'kreiran'" class="w-100" type="text" pInputText>
+                  <input [readOnly]="true" [formControlName]="'created'" class="w-100" type="text" pInputText>
                 </div>
                 <div class="col-5 text-start">
                     <label style="font-weight: 500; margin-right: 10px;">Izmenjen</label>
-                    <input [disabled]="disabled" [formControlName]="'izmenjen'" class="w-100" type="text" pInputText>
+                    <input [readOnly]="true" [formControlName]="'modified'" class="w-100" type="text" pInputText>
                 </div>
             </div>
             <div class="row  justify-content-center mt-3">
                 <div class="col-10 text-start">
                     <label style="font-weight: 500; margin-right: 10px;">Opis</label>
-                    <input [disabled]="disabled" [formControlName]="'opis'" class="w-100" type="text" pInputText>
+                    <input [readOnly]="disable" [formControlName]="'description'" class="w-100" type="text" pInputText>
                 </div>
                
             </div>
 
             <div class="row  justify-content-center mt-5">
-                <div class="col-10 text-end">                
-                    <p-button label="Odbaci" class="actionBtn" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
-                    <p-button label="Ažuriraj" class="actionBtn" styleClass="p-button-outlined p-button-sm"></p-button>
-                    <p-button label="Finalizuj" class="actionBtn" styleClass="p-button-sm"></p-button>
+                <div *ngIf="contract.status === 'DRAFT'" class="col-10 text-end">                
+                    <p-button label="Odbaci"  (click)="confirm1()" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+                    <p-button label="Ažuriraj" (click)="confirm2()" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-sm"></p-button>
+                    <p-button label="Finalizuj" (click)="confirm3()" type="submit" class="actionBtn" styleClass="p-button-sm"></p-button>
+                </div>
+                <div *ngIf="contract.status != 'DRAFT'" class="col-10 text-end">                
+                    <p-button label="Preuzmi" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-sm"></p-button>
                 </div>
             </div>
         
         </form>
+
+        <p-toast></p-toast>
+        <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
 
     </div>
 
@@ -112,3 +119,4 @@
         </p-table>
     </div>
 </div>
+

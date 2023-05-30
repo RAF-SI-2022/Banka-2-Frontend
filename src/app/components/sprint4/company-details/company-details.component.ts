@@ -3,7 +3,7 @@ import {MenuItem} from "primeng/api";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../../../services/user-service.service";
 import {StockService} from "../../../services/stock.service";
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
 import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import {Permission, User} from "../../../models/users.model";
 import {AddUserComponent} from "../../sprint1/add-user/add-user.component";
@@ -123,9 +123,17 @@ export class CompanyDetailsComponent {
     this.createCompanyContractComponent.createCompanyContractVisible = true;
   }
 
-  openContractDetailsDialog(contract: CompanyContract) {
 
+  openContractDetailsDialog(contract: CompanyContract) {
+    const navigationExtras: NavigationExtras = {
+        state: {
+            contract: contract
+        }
+    };
+    console.log(contract)
+    this.router.navigate(['company', '1', 'contract', contract.id], navigationExtras);
   }
+
 
   openAddContactUserDialog() {
     // TODO: dodati kontakt osobu
@@ -137,7 +145,8 @@ export class CompanyDetailsComponent {
 
   submitCreateCompanyContract(contract: CompanyContract) {
     // TODO: poslati ovo na stock service metodu za kreiranje contract-a kada uradi back
-    console.log(contract);
+    this.companyContracts.push(contract)
+    // console.log(contract);
   }
 
   submitCreateCompanyAccount(account: CompanyAccount){

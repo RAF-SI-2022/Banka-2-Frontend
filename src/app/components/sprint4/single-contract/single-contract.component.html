@@ -1,42 +1,68 @@
-<div class="body-container">
-    <div >
-        <ng-template pTemplate="header">
-            <h4 style="font-weight: bolder" class="mb-1">{{contractName}}</h4>
-        </ng-template>
-        
-        <form [formGroup]="contractForm">
+<div class="body-container" *ngIf="contract">
 
-            <div class="row ">
-                <div class="col-lg-6 text-end mb-3">
-                    <label style="font-weight: 500">Status</label>
-                    <input  [disabled]="disabled" [formControlName]="'status'"  class="me-2" type="text" pInputText>
+    <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
+
+    <div class="heading-container">
+        <h5 style="text-align: center;">Ugovor {{contract.id}}</h5>
+    </div>
+
+
+    <div  class="details-container">
+        
+        <form [formGroup]="contractForm" >
+
+            <div class="row  justify-content-center mt-3 ">
+                <div class="col-5 text-start">
+                    <label style="font-weight: 500; margin-right: 10px;">Status</label>
+                    <input  [readOnly]="true" [formControlName]="'status'"  class="w-100" type="text" pInputText>
                 </div>
-                <div class="col-lg-6 text-start mb-3">
-                    <label style="font-weight: 500">Delovodni broj</label>
-                   <input [disabled]="disabled" [formControlName]="'delovodniBroj'" class="me-2" type="text" pInputText>
+                <div class="col-5 text-start">
+                    <label style="font-weight: 500; margin-right: 10px;">Delovodni broj</label>
+                   <input [readOnly]="disable" [formControlName]="'referenceNumber'" class="w-100" type="text" pInputText>
                 </div>
             </div>
-            <div class="row ">
-                <div class="col-lg-6 text-end mb-3">
-                  <label style="font-weight: 500">Kreiran</label>
-                  <input [disabled]="disabled" [formControlName]="'kreiran'" class="me-2" type="text" pInputText>
+            
+            <div class="row  justify-content-center mt-3">
+                <div class="col-5 text-start">
+                  <label style="font-weight: 500; margin-right: 10px;">Kreiran</label>
+                  <input [readOnly]="true" [formControlName]="'created'" class="w-100" type="text" pInputText>
                 </div>
-                <div class="col-lg-6 text-start mb-3">
-                    <label style="font-weight: 500">Izmenjen</label>
-                    <input [disabled]="disabled" [formControlName]="'izmenjen'" class="me-2" type="text" pInputText>
+                <div class="col-5 text-start">
+                    <label style="font-weight: 500; margin-right: 10px;">Izmenjen</label>
+                    <input [readOnly]="true" [formControlName]="'modified'" class="w-100" type="text" pInputText>
                 </div>
             </div>
-            <div class="row ">
-                <div class="col-lg-6 text-end mb-3">
-                    <label style="font-weight: 500">Opis</label>
-                    <input [disabled]="disabled" [formControlName]="'opis'" class="me-2" type="text" pInputText>
+            <div class="row  justify-content-center mt-3">
+                <div class="col-10 text-start">
+                    <label style="font-weight: 500; margin-right: 10px;">Opis</label>
+                    <input [readOnly]="disable" [formControlName]="'description'" class="w-100" type="text" pInputText>
+                </div>
+               
+            </div>
+
+            <div class="row  justify-content-center mt-5">
+                <div *ngIf="contract.status === 'DRAFT'" class="col-10 text-end">                
+                    <p-button label="Odbaci"  (click)="confirm1()" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+                    <p-button label="Ažuriraj" (click)="confirm2()" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-sm"></p-button>
+                    <p-button label="Finalizuj" (click)="confirm3()" type="submit" class="actionBtn" styleClass="p-button-sm"></p-button>
+                </div>
+                <div *ngIf="contract.status != 'DRAFT'" class="col-10 text-end">                
+                    <p-button label="Preuzmi" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-sm"></p-button>
                 </div>
             </div>
         
         </form>
 
-    </div>>
-    <div >
+        <p-toast></p-toast>
+        <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
+
+    </div>
+
+    
+
+
+    <div class="details-container">
         <p-table #dt [value]="stavke" class="p-datatable-header"
         [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
         [paginator]="true" [alwaysShowPaginator]="false">
@@ -92,4 +118,5 @@
             </ng-template>
         </p-table>
     </div>
-</div>>
+</div>
+

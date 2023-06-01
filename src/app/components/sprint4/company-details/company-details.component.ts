@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../../../services/user-service.service";
 import {StockService} from "../../../services/stock.service";
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
 import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import {Permission, User} from "../../../models/users.model";
+import {AddUserComponent} from "../../sprint1/add-user/add-user.component";
+import {CreateCompanyContractComponent,} from "../create-company-contract/create-company-contract.component";
+import {CreateCompanyAccountComponent} from "../create-company-account/create-company-account.component";
+import { SingleAccountComponent } from '../single-account/single-account.component';
+import { SingleContractComponent } from '../single-contract/single-contract.component';
+import { ContractService } from 'src/app/services/contract.service';
 
 @Component({
   selector: 'app-company-details',
@@ -14,21 +20,66 @@ import {Permission, User} from "../../../models/users.model";
 })
 export class CompanyDetailsComponent {
 
+  @ViewChild(CreateCompanyContractComponent, {static: true}) createCompanyContractComponent: CreateCompanyContractComponent
+  @ViewChild(CreateCompanyAccountComponent, {static: true}) createCompanyAccountComponent: CreateCompanyAccountComponent
+  @ViewChild(SingleAccountComponent, {static: true}) singleAccountComponent: SingleAccountComponent
+
   breadcrumbItems: MenuItem[];
   loading: boolean = false; // TODO: promeniti na true
   isFormValid = true;
 
   companyAccounts: CompanyAccount[];
-  companyContracts: CompanyContract[];
+  
+  companyContracts: CompanyContract[] = [
+    {
+      id: 1,
+      referenceNumber: 111,
+      description: 'Description1',
+      status: 'DRAFT',
+      created: new Date(),
+      modified: new Date()
+    },
+
+    {
+      id: 2,
+      referenceNumber: 222,
+      status: 'DRAFT',
+      description: 'Description2',
+      created: new Date(),
+      modified: new Date()
+    },
+    {
+      id: 3,
+      referenceNumber: 333,
+      status: 'ACCEPTED',
+      description: 'Description3',
+      created: new Date(),
+      modified: new Date()
+    },
+  ];
+
   contactUsers: User[];
 
+
+
   constructor(private toastr: ToastrService, private userService: UserService,
-              private stockService: StockService, private router: Router) {
+              private stockService: StockService, private router: Router,
+              private contractService: ContractService) {
+
   }
 
   ngOnInit() {
 
-    // TODO: uzeti id iz URL-a i uraditi get za taj url kako bi se popunila forma
+    this.contractService.contract$.subscribe((contract: CompanyContract | null) => {
+      if(contract){
+
+        const index = this.companyContracts.findIndex(item => item.id === contract.id);
+        if(index !== -1) {
+          this.companyContracts[index] = contract;
+        }
+      }
+      
+    });
 
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
@@ -53,23 +104,7 @@ export class CompanyDetailsComponent {
       }
     ];
 
-    this.companyContracts = [
-      {
-        id: 1,
-        referenceNumber: 111,
-        status: 'ACCEPTED',
-        created: new Date(),
-        modified: new Date()
-      },
-
-      {
-        id: 2,
-        referenceNumber: 222,
-        status: 'REJECTED',
-        created: new Date(),
-        modified: new Date()
-      },
-    ];
+    
 
     this.contactUsers = [
       {
@@ -99,26 +134,54 @@ export class CompanyDetailsComponent {
   }
 
   openCreateCompanyAccountDialog() {
-    // TODO: otvoriti popup za kreiranje novog racuna za kompaniju
+    this.createCompanyAccountComponent.createCompanyAccountVisible = true;
   }
 
   openAccountDetailsDialog(account: CompanyAccount) {
-    // TODO: otvoriti popup sa detaljima racuna
+    this.singleAccountComponent.account = account;
+    console.log(account)
   }
 
   openCreateCompanyContractDialog() {
     // TODO: otvoriti popup za kreiranje novog racuna
+    this.createCompanyContractComponent.createCompanyContractVisible = true;
   }
+
 
   openContractDetailsDialog(contract: CompanyContract) {
-
+    const navigationExtras: NavigationExtras = {
+        state: {
+            contract: contract
+        }
+    };
+    console.log(contract)
+    this.router.navigate(['company', '1', 'contract', contract.id], navigationExtras);
   }
+
 
   openAddContactUserDialog() {
     // TODO: dodati kontakt osobu
   }
 
   openUserDetailsDialog(user: any) {
-    
+
   }
+
+  submitCreateCompanyContract(contract: CompanyContract) {
+    // TODO: poslati ovo na stock service metodu za kreiranje contract-a kada uradi back
+    this.companyContracts.push(contract)
+    // console.log(contract);
+  }
+
+  submitCreateCompanyAccount(account: CompanyAccount){
+    console.log(account)
+  }
+
+  submitEditCompanyAccount(account: CompanyAccount){
+    console.log(account)
+  }
+
+
+  
+
 }

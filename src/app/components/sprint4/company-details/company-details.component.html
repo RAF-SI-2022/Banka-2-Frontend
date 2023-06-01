@@ -42,7 +42,8 @@
         </div>
         <div class="row">
           <div class="text-end">
-            <button type="submit" style="background-color: #3d3d3d;" pButton pRipple label="Sačuvaj" [disabled]="!isFormValid"></button>
+            <button type="submit" style="background-color: #3d3d3d;" pButton pRipple label="Sačuvaj"
+                    [disabled]="!isFormValid"></button>
           </div>
         </div>
       </div>
@@ -596,3 +597,7 @@
 
   </div>
 </div>
+
+<app-create-company-contract (companyContractEmitter)="submitCreateCompanyContract($event)"></app-create-company-contract>
+<app-create-company-account (companyAccountEmitter)="submitCreateCompanyAccount($event)"></app-create-company-account>
+<app-single-account (editCompanyAccountEmitter)="submitEditCompanyAccount($event)"></app-single-account>

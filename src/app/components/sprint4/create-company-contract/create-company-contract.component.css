@@ -1,0 +1,4 @@
+.create-company-contract-form {
+  display: flex;
+  flex-direction: column;
+}

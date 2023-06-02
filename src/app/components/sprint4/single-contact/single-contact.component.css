@@ -1,0 +1,15 @@
+.account-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+
+
+.account-form > * {
+    margin-bottom: 15px; 
+}
+
+
+.account-form > *:last-child {
+    margin-bottom: 0px;
+}

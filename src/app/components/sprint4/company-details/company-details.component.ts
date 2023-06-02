@@ -8,10 +8,13 @@ import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.mo
 import {Permission, User} from "../../../models/users.model";
 import {AddUserComponent} from "../../sprint1/add-user/add-user.component";
 import {CreateCompanyContractComponent,} from "../create-company-contract/create-company-contract.component";
+
 import {CreateCompanyAccountComponent} from "../create-company-account/create-company-account.component";
 import { SingleAccountComponent } from '../single-account/single-account.component';
 import { SingleContractComponent } from '../single-contract/single-contract.component';
 import { ContractService } from 'src/app/services/contract.service';
+import { CreateCompanyContactComponent } from '../create-company-contact/create-company-contact.component';
+import { SingleContactComponent } from '../single-contact/single-contact.component';
 
 @Component({
   selector: 'app-company-details',
@@ -20,16 +23,21 @@ import { ContractService } from 'src/app/services/contract.service';
 })
 export class CompanyDetailsComponent {
 
+  
   @ViewChild(CreateCompanyContractComponent, {static: true}) createCompanyContractComponent: CreateCompanyContractComponent
   @ViewChild(CreateCompanyAccountComponent, {static: true}) createCompanyAccountComponent: CreateCompanyAccountComponent
   @ViewChild(SingleAccountComponent, {static: true}) singleAccountComponent: SingleAccountComponent
+  @ViewChild(SingleContactComponent, {static: true}) singleContactComponent: SingleContactComponent
+  @ViewChild(CreateCompanyContactComponent, {static: true}) createCompanyContactComponent: CreateCompanyContactComponent
 
+ 
   breadcrumbItems: MenuItem[];
   loading: boolean = false; // TODO: promeniti na true
   isFormValid = true;
 
   companyAccounts: CompanyAccount[];
   
+
   companyContracts: CompanyContract[] = [
     {
       id: 1,
@@ -78,7 +86,7 @@ export class CompanyDetailsComponent {
           this.companyContracts[index] = contract;
         }
       }
-      
+
     });
 
     this.breadcrumbItems = [
@@ -104,7 +112,7 @@ export class CompanyDetailsComponent {
       }
     ];
 
-    
+
 
     this.contactUsers = [
       {
@@ -160,10 +168,15 @@ export class CompanyDetailsComponent {
 
 
   openAddContactUserDialog() {
-    // TODO: dodati kontakt osobu
+    this.createCompanyContactComponent.createCompanyContactVisible = true;
   }
 
-  openUserDetailsDialog(user: any) {
+  openUserDetailsDialog(user: User) {
+    this.singleContactComponent.user = user;
+    console.log(user)
+  }
+
+  submitCreateCompanyContact(contract: CompanyContract){
 
   }
 

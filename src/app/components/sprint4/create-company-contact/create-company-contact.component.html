@@ -29,6 +29,17 @@
         <label for="phone">Broj telefona</label>
       </span>
 
+      <span class="p-float-label">
+        <textarea pInputTextarea class="w-100" id="note-input" [formControlName]="'note'"></textarea>
+        <label for="note-input">Note</label>
+      </span>
+
+      <span class="p-float-label">     
+        <p-dropdown [options]="jobs" [formControlName]="'selectedJob'" [(ngModel)]="selectedJob" optionLabel="name"
+                    placeholder="Pozicija"></p-dropdown>    
+      </span>
+    
+
       
       <button type="submit" pButton pRipple label="Dodaj" [disabled]="!isFormValid" class="w-100"></button>
     </form>

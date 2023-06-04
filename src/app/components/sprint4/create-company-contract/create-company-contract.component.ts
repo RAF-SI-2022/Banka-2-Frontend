@@ -3,6 +3,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {StockService} from "../../../services/stock.service";
 import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
+import { OtcService } from 'src/app/services/otc.service';
+import { descriptors } from 'chart.js/dist/core/core.defaults';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-company-contract',
@@ -16,8 +19,11 @@ export class CreateCompanyContractComponent {
   createCompanyContractVisible: boolean = false;
   isFormValid: boolean = false;
   createCompanyContractForm: FormGroup;
+  companyId: string = '';
+  desc: string = '';
+  ref: string = '';
 
-  constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private stockService: StockService) {
+  constructor(private route: ActivatedRoute, private otcService: OtcService, private toastr: ToastrService, private formBuilder: FormBuilder, private stockService: StockService) {
     this.createCompanyContractForm = this.formBuilder.group({
       referenceNumber: ['', Validators.required],
       description: ['', Validators.required],
@@ -48,5 +54,43 @@ export class CreateCompanyContractComponent {
 
     this.companyContractEmitter.emit(companyContract);
     this.createCompanyContractVisible = false;*/
+
+     this.desc = this.createCompanyContractForm.get("description")?.value
+     this.ref = this.createCompanyContractForm.get("referenceNumber")?.value
+
+
+    this.route.paramMap.subscribe(params => {
+      this.companyId = params.get('id')!;
+    });
+
+    let contract:any= {
+      companyId: this.companyId,
+      contractStatus: 'DRAFT',
+      contractNumber: this.ref,
+      description:  this.desc,
+
+    }
+
+    this.companyContractEmitter.emit(contract)
+    this.createCompanyContractVisible = false
+
+    // this.otcService.openCompanyContract(this.companyId, 'DRAFT', this.ref, this.desc)
+    // .subscribe
+    // ({
+    //     next:value=>{
+    //       this.toastr.success("Uspesno dodat ugovor")
+    //       this.createCompanyContractVisible = false;
+    //       this.companyContractEmitter.emit('refresh')
+    //     },
+    //     error: err => {
+    //       this.toastr.error(err.error)
+    //     }
+      
+    // })
+
+
+
+    
+
   }
 }

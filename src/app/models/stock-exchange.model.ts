@@ -234,7 +234,8 @@ export interface TransactionElement {
 
 export interface ContactPerson {
   id: string,
-  name: string,
+  firstName: string,
+  lastName: string
   phoneNumber: string,
   email: string,
   position: string,

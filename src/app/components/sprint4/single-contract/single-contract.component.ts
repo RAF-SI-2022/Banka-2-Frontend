@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import {MenuItem} from "primeng/api";
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
-import { ContractService } from 'src/app/services/contract.service';
+import { OtcService } from 'src/app/services/otc.service';
 
 enum Status {
   REJECTED = 'REJECTED',
@@ -31,11 +31,11 @@ export class SingleContractComponent {
   disable: boolean;
 
   constructor(
-    private router: Router, 
-    private formBuilder: FormBuilder, 
+    private router: Router,
+    private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private contractService: ContractService,
+    private contractService: OtcService,
   ) {
 
 
@@ -45,10 +45,10 @@ export class SingleContractComponent {
     }
 
     this.contractForm = this.formBuilder.group({
-      status: [this.contract.status, Validators.required],
-      referenceNumber: [this.contract.referenceNumber, Validators.required],
-      created: [this.contract.created, Validators.required],
-      modified: [this.contract.modified, Validators.required],
+      status: [this.contract.contractStatus, Validators.required],
+      referenceNumber: [this.contract.contractNumber, Validators.required],
+      created: [this.contract.creationDate, Validators.required],
+      modified: [this.contract.lastUpdatedDate, Validators.required],
       description: [this.contract.description, Validators.required],
     });
   }
@@ -70,18 +70,18 @@ export class SingleContractComponent {
     this.isDraft()
 
     this.contractForm = this.formBuilder.group({
-      status: [this.contract.status, Validators.required],
-      referenceNumber: [this.contract.referenceNumber, Validators.required],
-      created: [this.contract.created, Validators.required],
-      modified: [this.contract.modified, Validators.required],
+      status: [this.contract.contractStatus, Validators.required],
+      referenceNumber: [this.contract.contractNumber, Validators.required],
+      created: [this.contract.creationDate, Validators.required],
+      modified: [this.contract.lastUpdatedDate, Validators.required],
       description: [this.contract.description, Validators.required],
     });
 
   }
 
-  
+
   isDraft(){
-    if(this.contract.status.includes(Status.DRAFT)){
+    if(this.contract.contractStatus.includes(Status.DRAFT)){
       this.disable=false;
     } else{
       this.disable=true;
@@ -89,20 +89,20 @@ export class SingleContractComponent {
   }
 
   finalizeContract(){
-    this.contract.status = Status.ACCEPTED;
+    this.contract.contractStatus = Status.ACCEPTED;
 
      // salje se update-ovani contract na back, kad se vrati zove se ovaj notify i updateuje se (ovo ispod je template)
 
-    this.contractService.notify(this.contract)    
+    this.contractService.notify(this.contract)
     this.update()
 
     console.log(this.contract)
   }
 
   editContract(){
-    this.contract.referenceNumber = this.contractForm.get('referenceNumber')?.value
+    this.contract.contractNumber = this.contractForm.get('referenceNumber')?.value
     this.contract.description = this.contractForm.get('description')?.value
-    this.contract.modified = new Date()
+    this.contract.lastUpdatedDate = new Date()
 
     // salje se update-ovani contract na back, kad se vrati zove se ovaj notify i updateuje se (ovo ispod je template)
 
@@ -110,12 +110,12 @@ export class SingleContractComponent {
     this.update()
 
     console.log(this.contract)
-    
-    
+
+
   }
 
   rejectContract(){
-    this.contract.status = Status.REJECTED;
+    this.contract.contractStatus = Status.REJECTED;
 
     // salje se na back odavde da se update sa REJECTED statusom, kad se vrati zove se ovaj notify i updateuje se (ovo ispod je template)
 
@@ -123,10 +123,10 @@ export class SingleContractComponent {
     this.update()
 
     console.log(this.contract)
-    
+
   }
 
-  
+
   confirm1() {
     this.confirmationService.confirm({
         message: 'Da li ste sigurni da želite da odbacite ugovor?',
@@ -173,6 +173,6 @@ export class SingleContractComponent {
     });
   }
 
-  
+
 
 }

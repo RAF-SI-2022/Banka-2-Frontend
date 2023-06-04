@@ -11,7 +11,7 @@ import {CreateCompanyContractComponent,} from "../create-company-contract/create
 import {CreateCompanyAccountComponent} from "../create-company-account/create-company-account.component";
 import { SingleAccountComponent } from '../single-account/single-account.component';
 import { SingleContractComponent } from '../single-contract/single-contract.component';
-import { ContractService } from 'src/app/services/contract.service';
+import { OtcService } from 'src/app/services/otc.service';
 
 @Component({
   selector: 'app-company-details',
@@ -29,34 +29,8 @@ export class CompanyDetailsComponent {
   isFormValid = true;
 
   companyAccounts: CompanyAccount[];
-  
-  companyContracts: CompanyContract[] = [
-    {
-      id: 1,
-      referenceNumber: 111,
-      description: 'Description1',
-      status: 'DRAFT',
-      created: new Date(),
-      modified: new Date()
-    },
 
-    {
-      id: 2,
-      referenceNumber: 222,
-      status: 'DRAFT',
-      description: 'Description2',
-      created: new Date(),
-      modified: new Date()
-    },
-    {
-      id: 3,
-      referenceNumber: 333,
-      status: 'ACCEPTED',
-      description: 'Description3',
-      created: new Date(),
-      modified: new Date()
-    },
-  ];
+  companyContracts: CompanyContract[];
 
   contactUsers: User[];
 
@@ -64,7 +38,7 @@ export class CompanyDetailsComponent {
 
   constructor(private toastr: ToastrService, private userService: UserService,
               private stockService: StockService, private router: Router,
-              private contractService: ContractService) {
+              private contractService: OtcService) {
 
   }
 
@@ -78,7 +52,7 @@ export class CompanyDetailsComponent {
           this.companyContracts[index] = contract;
         }
       }
-      
+
     });
 
     this.breadcrumbItems = [
@@ -89,9 +63,9 @@ export class CompanyDetailsComponent {
     ]
 
     // TODO: skloniti kad stigne back, placeholder
-    this.companyAccounts = [
+    /*this.companyAccounts = [
       {
-        id: 1,
+        id: "1",
         currency: {
           currencyName: 'RSD',
           currencyCode: 'RSD',
@@ -102,9 +76,21 @@ export class CompanyDetailsComponent {
         accountNumber: '1111111',
         bank: 'Banka'
       }
-    ];
+    ];*/
 
-    
+    this.getCompanyContracts().subscribe(
+      {
+        next: value => {
+          console.log(value);
+          this.companyContracts = value;
+        },
+        error: err => {
+          this.toastr.error('Greška pri dohvatanju ugovora.');
+        }
+      }
+    );
+
+
 
     this.contactUsers = [
       {
@@ -130,7 +116,10 @@ export class CompanyDetailsComponent {
   }
 
   submitEditCompany() {
+  }
 
+  getCompanyContracts() {
+    return this.contractService.getAllCompanyContracts();
   }
 
   openCreateCompanyAccountDialog() {
@@ -182,6 +171,6 @@ export class CompanyDetailsComponent {
   }
 
 
-  
+
 
 }

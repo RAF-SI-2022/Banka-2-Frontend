@@ -34,7 +34,9 @@ export class CreateCompanyAccountComponent {
 
   submitCreateCompanyAccount() {
 
-    const tempCurrency: Currency = {
+    // TODO: promenjeni modeli, srediti
+
+    /*const tempCurrency: Currency = {
       currencyName: "US Dollar",
       currencyCode: '123',
       currencySymbol: "USD",
@@ -50,13 +52,13 @@ export class CreateCompanyAccountComponent {
     }
 
     this.companyAccountEmitter.emit(companyAccount);
-    this.createCompanyAccountVisible = false;
+    this.createCompanyAccountVisible = false;*/
   }
 
   resetForm() {
 
   }
-  
+
 }
 
 

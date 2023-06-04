@@ -36,7 +36,8 @@ export class CreateCompanyContractComponent {
   }
 
   submitCreateCompanyContract() {
-    const companyContract: CompanyContract = {
+    // TODO: promenjeni modeli, srediti
+    /*const companyContract: CompanyContract = {
       id: 1,
       referenceNumber: this.createCompanyContractForm.get('referenceNumber')?.value,
       description: this.createCompanyContractForm.get('description')?.value,
@@ -46,6 +47,6 @@ export class CreateCompanyContractComponent {
     }
 
     this.companyContractEmitter.emit(companyContract);
-    this.createCompanyContractVisible = false;
+    this.createCompanyContractVisible = false;*/
   }
 }

@@ -7,6 +7,8 @@ import {Router} from "@angular/router";
 import {Company} from "../../../models/stock-exchange.model";
 import {BuyStockComponent} from "../../sprint2/stocks/buy-stock/buy-stock.component";
 import {CreateCompanyComponent} from "../create-company/create-company.component";
+import {OtcService} from "../../../services/otc.service";
+import {CompanyService} from "../../../services/company.service";
 
 @Component({
   selector: 'app-companies',
@@ -24,7 +26,7 @@ export class CompaniesComponent {
   selectedCompany: any = {}
 
   constructor(private toastr: ToastrService, private userService: UserService,
-              private stockService: StockService, private router: Router) {
+              private stockService: StockService, private router: Router, private companyService: CompanyService) {
   }
 
   ngOnInit() {
@@ -33,34 +35,21 @@ export class CompaniesComponent {
       {label: 'Kompanije', routerLink: ['/companies']}
     ]
 
-    // TODO: skloniti ovo kada stigne back
-    this.companies.push(
+    this.getAllCompanies();
+
+  }
+
+  getAllCompanies() {
+    this.companyService.getAllCompanies().subscribe(
       {
-        id: 1,
-        name: 'Kompanija1',
-        address: 'Adresa1',
-        country: 'Drzava1',
-        idNumber: '1111i',
-        taxNumber: '1111t',
-        activityCode: '1111a'
-      },
-      {
-        id: 2,
-        name: 'Kompanija2',
-        address: 'Adresa2',
-        country: 'Drzava2',
-        idNumber: '2222i',
-        taxNumber: '2222t',
-        activityCode: '2222a'
-      },
-      {
-        id: 3,
-        name: 'Kompanija3',
-        address: 'Adresa3',
-        country: 'Drzava3',
-        idNumber: '3333i',
-        taxNumber: '3333t',
-        activityCode: '3333a'
+        next: value => {
+          this.companies = value;
+          console.log(value);
+        },
+        error: err => {
+          this.toastr.error("Greška prilikom dohvatanja kompanija iz baze.")
+          console.log(err);
+        }
       }
     )
   }
@@ -68,8 +57,35 @@ export class CompaniesComponent {
   openCreateCompanyDialog() {
     this.createCompanyComponent.createCompanyVisible = true;
   }
+
   createCompany(company: any) {
-    alert("Inside companies component")
+
     console.log(company);
+
+    this.companyService.createCompany(
+      company.name,
+      company.registrationNumber,
+      company.taxNumber,
+      company.activityCode,
+      company.address
+    ).subscribe({
+      next: value => {
+        this.companyService.getAllCompanies().subscribe(
+          {
+            next: value1 => {
+              this.companies = value1;
+            },
+            error: err1 => {
+              this.toastr.error("Greška prilikom dohvatanja kompanija iz baze.")
+              console.log(err1);
+            }
+          }
+        )
+      },
+      error: err => {
+        this.toastr.error("Greška prilikom kreiranja kompanije.")
+        console.log(err);
+      }
+    })
   }
 }

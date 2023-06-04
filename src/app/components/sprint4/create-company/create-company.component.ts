@@ -19,13 +19,11 @@ export class CreateCompanyComponent {
 
   constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private stockService: StockService) {
     this.createCompanyForm = this.formBuilder.group({
-      name: [null, Validators.required],
-      idNumber: [null, Validators.required],
-      taxNumber: [null, Validators.required],
-      activityCode: [null, Validators.required],
-      country: [null, Validators.required],
-      address: [null, Validators.required],
-
+      name: ['', Validators.required],
+      registrationNumber: ['', Validators.required],
+      taxNumber: ['', Validators.required],
+      activityCode: ['', Validators.required],
+      address: ['', Validators.required],
     });
 
     this.createCompanyForm.valueChanges.subscribe(() => {
@@ -35,21 +33,24 @@ export class CreateCompanyComponent {
 
   resetForm() {
     this.createCompanyForm.get('name')?.reset();
-    this.createCompanyForm.get('idNumber')?.reset();
+    this.createCompanyForm.get('registrationNumber')?.reset();
     this.createCompanyForm.get('taxNumber')?.reset();
     this.createCompanyForm.get('activityCode')?.reset();
-    this.createCompanyForm.get('country')?.reset();
     this.createCompanyForm.get('address')?.reset();
   }
 
   submitCreateCompany() {
 
+
+    // TODO: promenjeni modeli, izmeniti posle
+
     let company: Company = {
-      id: 1,
+      id: '1',
       name: this.createCompanyForm.get('name')?.value,
       address: this.createCompanyForm.get('address')?.value,
-      country: this.createCompanyForm.get('country')?.value,
-      idNumber: this.createCompanyForm.get('idNumber')?.value,
+      contractPersons: [],
+      bankAccounts: [],
+      registrationNumber: this.createCompanyForm.get('registrationNumber')?.value,
       taxNumber: this.createCompanyForm.get('taxNumber')?.value,
       activityCode: this.createCompanyForm.get('activityCode')?.value,
     }

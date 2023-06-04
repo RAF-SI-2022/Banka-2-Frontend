@@ -11,8 +11,8 @@
     <form (submit)="submitCreateCompanyAccount()" [formGroup]="createCompanyAccountForm"
           class="create-company-account-form pt-4 pb-4 gap-4">
 
-      <span class="p-float-label">
-        <input pInputText class="w-100" id="currency" [formControlName]="'currency'">
+      <span class="p-float-label currency-dropdown-container" >
+        <p-dropdown [style]="{'width':'100%'}" id="currency" [formControlName]="'currency'"></p-dropdown>
         <label for="currency">Valuta</label>
       </span>
 
@@ -25,7 +25,7 @@
         <input pInputText class="w-100" id="bank-input" [formControlName]="'bank'">
         <label for="bank-input">Banka</label>
       </span>
-      
+
       <button type="submit" pButton pRipple label="Dodaj" [disabled]="!isFormValid" class="w-100"></button>
     </form>
   </div>

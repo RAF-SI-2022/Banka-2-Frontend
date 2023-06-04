@@ -30,7 +30,7 @@ export class SingleAccountComponent {
     });
 
   }
-  
+
 
   resetForm(){
 
@@ -45,16 +45,18 @@ export class SingleAccountComponent {
       polity: 'test'
     }
 
-    const companyAccount: CompanyAccount = {
+    // TODO: izmenjeni modeli
+
+    /*const companyAccount: CompanyAccount = {
       id: this.account.id,
       currency: tempCurrency,
-      bank: this.editCompanyAccountForm.get('bank')?.value || this.account.bank,
+      bankName: this.editCompanyAccountForm.get('bank')?.value || this.account.bankName,
       accountNumber: this.editCompanyAccountForm.get('accountNumber')?.value || this.account.accountNumber,
       active: false,
-    }
+    }*/
 
-    this.editCompanyAccountEmitter.emit(companyAccount);
-    this.account = null;
+    /*this.editCompanyAccountEmitter.emit(companyAccount);
+    this.account = null;*/
 
   }
 

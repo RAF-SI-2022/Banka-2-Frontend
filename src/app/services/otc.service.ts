@@ -44,9 +44,36 @@ export class OtcService {
       , {headers: this.headers})
   }
 
+  getAllCompanyContacts(): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:8082/api/contact`
+      , {headers: this.headers})
+  }
+
+
   getCompanyContractById(id: string): Observable<any> {
     return this.httpClient.get<any>(`http://localhost:8082/api/otc/${id}`
       , {headers: this.headers})
+  }
+
+  createCompanyContact(
+    firstName: string,
+    lastName: string,
+    phone: string,
+    email: string,
+    position: string,
+    note: string
+  ): Observable<any> {
+    return this.httpClient.post<any>(`http://localhost:8082/api/contact`,
+      {
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phone,
+        email: email,
+        position: position,
+        note: note
+      },
+      {headers: this.headers}
+    );
   }
 
   openCompanyContract(
@@ -78,6 +105,28 @@ export class OtcService {
         contractStatus: contractStatus,
         contractNumber: contractNumber,
         description: description
+      },
+      {headers: this.headers})
+  }
+
+  editCompanyContact(
+    id: string,
+    firstName: string,
+    lastName: string,
+    phone: string,
+    email: string,
+    position: string,
+    note: string
+  ): Observable<any> {
+    return this.httpClient.post<any>(`http://localhost:8082/api/contact/edit`,
+      {
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phone,
+        email: email,
+        position: position,
+        note: note
       },
       {headers: this.headers})
   }

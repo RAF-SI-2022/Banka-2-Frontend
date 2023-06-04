@@ -204,10 +204,9 @@ export interface Company {
 
 export interface CompanyAccount {
   id: string,
-  company: Company
-  currency: Currency,
-  bankName: string,
   accountNumber: string,
+  currency: string,
+  bankName: string,
 }
 
 export interface CompanyContract {
@@ -222,6 +221,7 @@ export interface CompanyContract {
   lastUpdatedDate: Date
 }
 
+// TODO: bice promenjen
 export interface TransactionElement {
   id: string,
   buyOrSell: string,

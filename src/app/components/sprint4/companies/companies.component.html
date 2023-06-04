@@ -97,15 +97,6 @@
               </div>
             </div>
           </th>
-          <th pSortableColumn="country" style="font-size: 12px; ">
-            <div class="flex justify-content-between align-items-center">
-              <div class="icon-container">
-                <p style="margin-bottom: 0; margin-top: 2px;">Država</p>
-                <p-sortIcon field="country"></p-sortIcon>
-              </div>
-            </div>
-          </th>
-
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
@@ -125,9 +116,6 @@
           <td>
             <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
           </td>
-          <td>
-            <p-skeleton styleClass="mb-2"></p-skeleton>
-          </td>
         </tr>
         <tr>
           <td>
@@ -145,9 +133,6 @@
           <td>
             <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
           </td>
-          <td>
-            <p-skeleton styleClass="mb-2"></p-skeleton>
-          </td>
         </tr>
         <tr>
           <td>
@@ -164,9 +149,6 @@
           </td>
           <td>
             <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
-          </td>
-          <td>
-            <p-skeleton styleClass="mb-2"></p-skeleton>
           </td>
         </tr>
       </ng-template>
@@ -192,11 +174,9 @@
         <tr class="rowHover" [routerLink]="'/company/' + company.id" style="font-size: 12px;">
           <td>{{company.id}}</td>
           <td>{{company.name}}</td>
-          <td>{{company.address}}</td>
-          <td>{{company.country}}</td>
-          <td>{{company.idNumber}}</td>
           <td>{{company.taxNumber}}</td>
-
+          <td>{{company.registrationNumber}}</td>
+          <td>{{company.address}}</td>
         </tr>
       </ng-template>
     </p-table>

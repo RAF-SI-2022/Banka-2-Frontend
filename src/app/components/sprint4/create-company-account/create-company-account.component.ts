@@ -17,8 +17,10 @@ export class CreateCompanyAccountComponent {
   createCompanyAccountVisible: boolean = false;
   isFormValid: boolean = false;
   createCompanyAccountForm: FormGroup;
+  currencies: Currency[]
+  selectedCurrency: Currency;
 
-  constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private stockService: StockService) {
+  constructor(private toastr: ToastrService, private formBuilder: FormBuilder) {
 
     this.createCompanyAccountForm = this.formBuilder.group({
       currency: ['', Validators.required],
@@ -29,30 +31,42 @@ export class CreateCompanyAccountComponent {
     this.createCompanyAccountForm.valueChanges.subscribe(() => {
       this.isFormValid = this.createCompanyAccountForm.valid;
     });
+  }
 
+  ngOnInit() {
+    this.initCurrencies();
+  }
+
+  initCurrencies() {
+    this.currencies = [
+      {
+        currencyName: "US Dollar",
+        currencyCode: '123',
+        currencySymbol: "USD",
+        polity: 'test'
+      },
+      {
+        currencyName: "Euro",
+        currencyCode: '123',
+        currencySymbol: "EUR",
+        polity: 'test1'
+      }
+    ]
+
+    this.selectedCurrency = this.currencies[0];
   }
 
   submitCreateCompanyAccount() {
-
-    // TODO: promenjeni modeli, srediti
-
-    /*const tempCurrency: Currency = {
-      currencyName: "US Dollar",
-      currencyCode: '123',
-      currencySymbol: "USD",
-      polity: 'test'
-    }
-
-    const companyAccount: CompanyAccount = {
-      id: 1,
-      currency: tempCurrency,
-      bank: this.createCompanyAccountForm.get('bank')?.value,
+    let account: CompanyAccount = {
+      id: '1',
       accountNumber: this.createCompanyAccountForm.get('accountNumber')?.value,
-      active: false,
+      currency: this.createCompanyAccountForm.get('currency')?.value.currencySymbol,
+      bankName: this.createCompanyAccountForm.get('bank')?.value,
     }
 
-    this.companyAccountEmitter.emit(companyAccount);
-    this.createCompanyAccountVisible = false;*/
+    this.companyAccountEmitter.emit(account);
+    this.createCompanyAccountVisible = false;
+    this.resetForm();
   }
 
   resetForm() {

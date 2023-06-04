@@ -85,12 +85,12 @@ export class CreateCompanyContractComponent {
     //     error: err => {
     //       this.toastr.error(err.error)
     //     }
-      
+
     // })
 
 
 
-    
+
 
   }
 }

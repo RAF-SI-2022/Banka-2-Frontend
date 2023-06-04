@@ -56,15 +56,15 @@ export class CompanyService {
     address: string
   ): Observable<any> {
     return this.httpClient.post<any>(`http://localhost:8082/api/company/edit`,
-    {
-      id: id,
-      name: name,
-      registrationNumber: registrationNumber,
-      taxNumber: taxNumber,
-      activityCode: activityCode,
-      address: address
-    },
-    {headers: this.headers}
+      {
+        id: id,
+        name: name,
+        registrationNumber: registrationNumber,
+        taxNumber: taxNumber,
+        activityCode: activityCode,
+        address: address
+      },
+      {headers: this.headers}
     )
 
   }
@@ -90,7 +90,49 @@ export class CompanyService {
     )
   }
 
+  createCompanyBankAccount(
+    companyId: string,
+    accountNumber: string,
+    currency: string,
+    bankName: string
+  ): Observable<any> {
+    return this.httpClient.post<any>(`http://localhost:8082/api/bankaccount/${companyId}`,
+      {
+        id: "1",
+        accountNumber: accountNumber,
+        currency: currency,
+        bankName: bankName
+      },
+      {headers: this.headers}
+    )
+  }
 
+  getAllCompanyBankAccounts(companyId: string): Observable<any> {
+    return this.httpClient.get(`http://localhost:8082/api/bankaccount/company/${companyId}`,
+      {headers: this.headers});
+  }
+
+  editCompanyBankAccount(
+    id: string,
+    accountNumber: string,
+    currency: string,
+    bankName: string
+  ): Observable<any> {
+    return this.httpClient.post<any>(`http://localhost:8082/api/bankaccount/edit`,
+      {
+        id: id,
+        accountNumber: accountNumber,
+        currency: currency,
+        bankName: bankName
+      },
+      {headers: this.headers}
+    )
+  }
+
+  deleteCompanyBankAccount(id: string): Observable<any> {
+    return this.httpClient.delete<any>(`http://localhost:8082/api/bankaccount/delete/${id}`,
+      {headers: this.headers})
+  }
 
 
 }

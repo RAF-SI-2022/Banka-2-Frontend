@@ -6,44 +6,40 @@
 
     <h3 class="mb-4" style="font-weight: 700">Podaci</h3>
 
-    <form (submit)="submitEditCompany()">
+    <form (submit)="submitEditCompany()" [formGroup]="companyForm">
       <div class="form-container">
         <div class="row">
           <div class="col-lg-6">
             <small>Naziv</small>
-            <input pInputText class="w-100"/>
+            <input pInputText [formControlName]="'name'" class="w-100"/>
           </div>
           <div class="col-lg-6">
             <small>Šifra delatnosti</small>
-            <input pInputText class="w-100"/>
+            <input pInputText [formControlName]="'activityCode'" class="w-100"/>
           </div>
         </div>
 
         <div class="row">
           <div class="col-lg-6">
             <small>Matični broj</small>
-            <input pInputText class="w-100"/>
+            <input pInputText [formControlName]="'registrationNumber'" class="w-100"/>
           </div>
           <div class="col-lg-6">
             <small>PIB</small>
-            <input pInputText class="w-100"/>
+            <input pInputText [formControlName]="'taxNumber'" class="w-100"/>
           </div>
         </div>
 
         <div class="row">
           <div class="col-lg-6">
             <small>Adresa</small>
-            <input pInputText class="w-100"/>
-          </div>
-          <div class="col-lg-6">
-            <small>Država</small>
-            <input pInputText class="w-100"/>
+            <input pInputText [formControlName]="'address'" class="w-100"/>
           </div>
         </div>
         <div class="row">
           <div class="text-end">
             <button type="submit" style="background-color: #3d3d3d;" pButton pRipple label="Sačuvaj"
-                    [disabled]="!isFormValid"></button>
+                    [disabled]="!isFormValid"  ></button>
           </div>
         </div>
       </div>

@@ -85,6 +85,7 @@ import { CreateCompanyAccountComponent } from './components/sprint4/create-compa
 import { SingleAccountComponent } from './components/sprint4/single-account/single-account.component';
 import { CreateCompanyContactComponent } from './components/sprint4/create-company-contact/create-company-contact.component';
 import { SingleContactComponent } from './components/sprint4/single-contact/single-contact.component';
+import { RegisterComponent } from './components/newSpec/register/register.component';
 
 
 @NgModule({
@@ -135,6 +136,7 @@ import { SingleContactComponent } from './components/sprint4/single-contact/sing
     SingleAccountComponent,
     CreateCompanyContactComponent,
     SingleContactComponent,
+    RegisterComponent,
     // FutureContractComponent,
 
   ],

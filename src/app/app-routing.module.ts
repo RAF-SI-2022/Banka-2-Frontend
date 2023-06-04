@@ -26,6 +26,7 @@ import { AgentsComponent } from './components/sprint3/agents/agents.component';
 import {CompaniesComponent} from "./components/sprint4/companies/companies.component";
 import {CompanyDetailsComponent} from "./components/sprint4/company-details/company-details.component";
 import { SingleContractComponent } from './components/sprint4/single-contract/single-contract.component';
+import { RegisterComponent } from './components/newSpec/register/register.component';
 
 const routes: Routes = [
   {
@@ -135,6 +136,10 @@ const routes: Routes = [
   {
     path: "company/:id",
     component: CompanyDetailsComponent
+  },
+  {
+    path: "register",
+    component: RegisterComponent,
   },
   {
     path: 'company/:companyId/contract/:contractId',

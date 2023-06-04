@@ -42,9 +42,31 @@ export class CompanyService {
       , {headers: this.headers})
   }
 
-  getCompanyById(id: number): Observable<any> {
+  getCompanyById(id: string): Observable<any> {
     return this.httpClient.get<any>(`http://localhost:8082/api/company/${id}`
       , {headers: this.headers})
+  }
+
+  changeCompany(
+    id: string,
+    name: string,
+    registrationNumber: string,
+    taxNumber: string,
+    activityCode: string,
+    address: string
+  ): Observable<any> {
+    return this.httpClient.post<any>(`http://localhost:8082/api/company/edit`,
+    {
+      id: id,
+      name: name,
+      registrationNumber: registrationNumber,
+      taxNumber: taxNumber,
+      activityCode: activityCode,
+      address: address
+    },
+    {headers: this.headers}
+    )
+
   }
 
   createCompany(name: string,

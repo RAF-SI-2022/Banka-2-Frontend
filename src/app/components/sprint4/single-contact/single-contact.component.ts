@@ -49,7 +49,14 @@ export class SingleContactComponent  {
   }
 
   resetForm(){
-
+    this.editCompanyContactForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
+      phone: ['', Validators.required],
+      note: ['', Validators.required],
+      selectedJob: ['', Validators.required]
+    });
   }
 
   submitEditCompanyContact(){
@@ -66,8 +73,8 @@ export class SingleContactComponent  {
     }
 
       this.editCompanyContactEmitter.emit(contact);
-
       this.editCompanyContactVisible = false;
+      this.resetForm();
 
 
   }

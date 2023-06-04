@@ -196,13 +196,13 @@ export interface Company {
   name: string,
   address: string,
   contractPersons: ContactPerson[],
-  bankAccounts: CompanyBankAccount[],
+  bankAccounts: CompanyAccount[],
   registrationNumber: string, // maticni broj
   taxNumber: string, // poreski broj
   activityCode: string // sifra aktivnosti
 }
 
-export interface CompanyBankAccount {
+export interface CompanyAccount {
   id: string,
   accountNumber: string,
   currency: string,
@@ -221,6 +221,7 @@ export interface CompanyContract {
   lastUpdatedDate: Date
 }
 
+// TODO: bice promenjen
 export interface TransactionElement {
   id: string,
   buyOrSell: string,

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {MenuItem} from "primeng/api";
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import {CompanyBankAccount, CompanyContract} from "../../../models/stock-exchange.model";
+import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import { OtcService } from 'src/app/services/otc.service';
 
 enum Status {

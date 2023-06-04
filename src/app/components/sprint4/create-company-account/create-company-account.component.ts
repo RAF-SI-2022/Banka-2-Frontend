@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
-import {CompanyBankAccount, CompanyContract} from "../../../models/stock-exchange.model";
+import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import { StockService } from 'src/app/services/stock.service';
 import { Currency } from '../../../models/stock-exchange.model';
 
@@ -20,7 +20,7 @@ export class CreateCompanyAccountComponent {
   currencies: Currency[]
   selectedCurrency: Currency;
 
-  constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private stockService: StockService) {
+  constructor(private toastr: ToastrService, private formBuilder: FormBuilder) {
 
     this.createCompanyAccountForm = this.formBuilder.group({
       currency: ['', Validators.required],
@@ -35,7 +35,6 @@ export class CreateCompanyAccountComponent {
 
   ngOnInit() {
     this.initCurrencies();
-
   }
 
   initCurrencies() {
@@ -58,26 +57,16 @@ export class CreateCompanyAccountComponent {
   }
 
   submitCreateCompanyAccount() {
-
-    // TODO: promenjeni modeli, srediti
-
-    /*const tempCurrency: Currency = {
-      currencyName: "US Dollar",
-      currencyCode: '123',
-      currencySymbol: "USD",
-      polity: 'test'
-    }
-
-    const companyAccount: CompanyAccount = {
-      id: 1,
-      currency: tempCurrency,
-      bank: this.createCompanyAccountForm.get('bank')?.value,
+    let account: CompanyAccount = {
+      id: '1',
       accountNumber: this.createCompanyAccountForm.get('accountNumber')?.value,
-      active: false,
+      currency: this.createCompanyAccountForm.get('currency')?.value.currencySymbol,
+      bankName: this.createCompanyAccountForm.get('bank')?.value,
     }
 
-    this.companyAccountEmitter.emit(companyAccount);
-    this.createCompanyAccountVisible = false;*/
+    this.companyAccountEmitter.emit(account);
+    this.createCompanyAccountVisible = false;
+    this.resetForm();
   }
 
   resetForm() {

@@ -107,19 +107,20 @@ export class CompanyService {
     )
   }
 
-  getAllCompanyBankAccounts() {
-    return this.httpClient.get('http://localhost:8082/api/company/accounts',
+  getAllCompanyBankAccounts(companyId: string): Observable<any> {
+    return this.httpClient.get(`http://localhost:8082/api/bankaccount/company/${companyId}`,
       {headers: this.headers});
   }
 
   editCompanyBankAccount(
+    id: string,
     accountNumber: string,
     currency: string,
     bankName: string
   ): Observable<any> {
     return this.httpClient.post<any>(`http://localhost:8082/api/bankaccount/edit`,
       {
-        id: "1",
+        id: id,
         accountNumber: accountNumber,
         currency: currency,
         bankName: bankName

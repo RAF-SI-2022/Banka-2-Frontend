@@ -14,11 +14,13 @@ export class SingleContactComponent  {
 
   @Output() editCompanyContactEmitter = new EventEmitter<any>();
 
+  editCompanyContactVisible: boolean = false;
   contact: ContactPerson;
   account: any = null;
   editCompanyContactForm: FormGroup;
   isFormValid: boolean = false;
 
+  userID: string = '';
   selectedJob: Job
 
   jobs: Job []
@@ -46,16 +48,14 @@ export class SingleContactComponent  {
 
   }
 
-
   resetForm(){
-
   }
 
   submitEditCompanyContact(){
-
     this.selectedJob = this.editCompanyContactForm.get("selectedJob")?.value
- 
+
     let contact:any= {
+      id: this.userID,
       firstName: this.editCompanyContactForm.get("firstName")?.value,
       lastName: this.editCompanyContactForm.get("lastName")?.value,
       phone: this.editCompanyContactForm.get("phone")?.value,
@@ -66,7 +66,9 @@ export class SingleContactComponent  {
 
       this.editCompanyContactEmitter.emit(contact);
 
-
+      this.editCompanyContactVisible = false;
+  
+      
   }
 
 }

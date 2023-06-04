@@ -110,6 +110,7 @@ export class OtcService {
   }
 
   editCompanyContact(
+    id: string,
     firstName: string,
     lastName: string,
     phone: string,
@@ -117,8 +118,9 @@ export class OtcService {
     position: string,
     note: string
   ): Observable<any> {
-    return this.httpClient.patch<any>(`http://localhost:8082/api/contact/edit`,
+    return this.httpClient.post<any>(`http://localhost:8082/api/contact/edit`,
       {
+        id: id,
         firstName: firstName,
         lastName: lastName,
         phoneNumber: phone,

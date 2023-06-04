@@ -1,8 +1,8 @@
 <p-dialog [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
           [draggable]="false"
-          [(visible)]="contact" *ngIf="contact!=null" [modal]="true" (onHide)="resetForm()">
+          [(visible)]="editCompanyContactVisible" *ngIf="contact!=null" [modal]="true" (onHide)="resetForm()">
   <ng-template pTemplate="header">
-    <h2 style="font-weight: bolder" class="mb-3">Izmeni račun</h2>
+    <h2 style="font-weight: bolder" class="mb-3">Izmeni kontakt</h2>
 
   </ng-template>
   <p-divider/>
@@ -10,11 +10,6 @@
   <div class="account-form-container">
     <form (submit)="submitEditCompanyContact()" [formGroup]="editCompanyContactForm"
           class="account-form pt-4 pb-4 gap-4">
-
-          <!-- <span class="p-float-label">
-            <input [formControlName]="'firstName'" id="name-input" class="w-100" type="text" pInputText>
-            <label for="name-input">Ime</label>
-          </span> -->
 
       <span class="p-float-label">
         <input pInputText  type="text" class="w-100" id="firstName-input" [formControlName]="'firstName'" >

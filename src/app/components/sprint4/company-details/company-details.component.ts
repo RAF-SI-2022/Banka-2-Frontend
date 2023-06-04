@@ -3,10 +3,8 @@ import {MenuItem} from "primeng/api";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../../../services/user-service.service";
 import {StockService} from "../../../services/stock.service";
-import {NavigationExtras, Router} from "@angular/router";
 import {CompanyAccount, CompanyContract, ContactPerson} from "../../../models/stock-exchange.model";
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
-import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import {Permission, User} from "../../../models/users.model";
 import {AddUserComponent} from "../../sprint1/add-user/add-user.component";
 import {CreateCompanyContractComponent,} from "../create-company-contract/create-company-contract.component";
@@ -207,20 +205,19 @@ export class CompanyDetailsComponent {
       note: user.note,
       selectedJob: user.position
     });
+    console.log(user.position)
     if(user.position===("ADMINISTRATOR")){
       this.singleContactComponent.selectedJob = this.singleContactComponent.jobs[0]
     }
-    if(user.position ===("SUPERVISOR")){
+    if(user.position===("SUPERVISOR")){
       this.singleContactComponent.selectedJob = this.singleContactComponent.jobs[1]
     }
-    if(user.position ===("AGENT")){
+    if(user.position===("AGENT")){
       this.singleContactComponent.selectedJob = this.singleContactComponent.jobs[2]
     }
-
-
+    console.log( this.singleContactComponent.selectedJob)
     this.singleContactComponent.contact = user;
-
-
+    this.singleContactComponent.editCompanyContactVisible = true
   }
 
   getAllContracts(){
@@ -314,8 +311,9 @@ export class CompanyDetailsComponent {
   }
 
   submitEditCompanyContact(contact :any){
+    console.log(contact.id)
     this.contractService.editCompanyContact(
-      contact.firstName, contact.lastName, contact.phone,
+      contact.id, contact.firstName, contact.lastName, contact.phone,
       contact.email, contact.position, contact.note)
     .subscribe
     ({

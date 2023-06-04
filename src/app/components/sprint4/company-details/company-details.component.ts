@@ -197,6 +197,7 @@ export class CompanyDetailsComponent {
   }
 
   openUserDetailsDialog(user: any) {
+    
     this.singleContactComponent.editCompanyContactForm.setValue({
       firstName: user.firstName,
       lastName: user.lastName,
@@ -205,6 +206,7 @@ export class CompanyDetailsComponent {
       note: user.note,
       selectedJob: user.position
     });
+    this.singleContactComponent.userID = user.id
     console.log(user.position)
     if(user.position===("ADMINISTRATOR")){
       this.singleContactComponent.selectedJob = this.singleContactComponent.jobs[0]
@@ -215,9 +217,11 @@ export class CompanyDetailsComponent {
     if(user.position===("AGENT")){
       this.singleContactComponent.selectedJob = this.singleContactComponent.jobs[2]
     }
+
     console.log( this.singleContactComponent.selectedJob)
     this.singleContactComponent.contact = user;
     this.singleContactComponent.editCompanyContactVisible = true
+
   }
 
   getAllContracts(){

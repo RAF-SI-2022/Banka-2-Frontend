@@ -3,8 +3,8 @@ import {MenuItem} from "primeng/api";
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../../../services/user-service.service";
 import {StockService} from "../../../services/stock.service";
+import {CompanyAccount, CompanyContract, ContactPerson} from "../../../models/stock-exchange.model";
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
-import {CompanyBankAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import {Permission, User} from "../../../models/users.model";
 import {AddUserComponent} from "../../sprint1/add-user/add-user.component";
 import {CreateCompanyContractComponent,} from "../create-company-contract/create-company-contract.component";
@@ -12,6 +12,9 @@ import {CreateCompanyAccountComponent} from "../create-company-account/create-co
 import { SingleAccountComponent } from '../single-account/single-account.component';
 import { SingleContractComponent } from '../single-contract/single-contract.component';
 import { OtcService } from 'src/app/services/otc.service';
+import { CreateCompanyContactComponent } from '../create-company-contact/create-company-contact.component';
+import { SingleContactComponent } from '../single-contact/single-contact.component';
+
 import { CompanyService } from 'src/app/services/company.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -22,15 +25,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CompanyDetailsComponent {
 
+  @ViewChild(CreateCompanyContactComponent, {static: true}) createCompanyContactComponent: CreateCompanyContactComponent
   @ViewChild(CreateCompanyContractComponent, {static: true}) createCompanyContractComponent: CreateCompanyContractComponent
   @ViewChild(CreateCompanyAccountComponent, {static: true}) createCompanyAccountComponent: CreateCompanyAccountComponent
   @ViewChild(SingleAccountComponent, {static: true}) singleAccountComponent: SingleAccountComponent
+  @ViewChild(SingleContactComponent, {static: true}) singleContactComponent: SingleContactComponent
+
 
   breadcrumbItems: MenuItem[];
   loading: boolean = false; // TODO: promeniti na true
   isFormValid = true;
 
-  companyAccounts: CompanyBankAccount[];
+  companyContacts: ContactPerson[];
+
+  companyAccounts: CompanyAccount[];
 
   companyContracts: CompanyContract[];
 
@@ -100,41 +108,12 @@ export class CompanyDetailsComponent {
       }
     ];*/
 
-    this.getCompanyContracts().subscribe(
-      {
-        next: value => {
-          console.log(value);
-          this.companyContracts = value;
-        },
-        error: err => {
-          this.toastr.error('Greška pri dohvatanju ugovora.');
-        }
-      }
-    );
+    this.getAllContracts()
 
 
+    this.getAllContacts()
 
-    this.contactUsers = [
-      {
-        id: 1,
-        email: "email@gmail.com",
-        firstName: "Ime",
-        lastName: "Prezime",
-        password: "pass",
-        jmbg: '1111',
-        phone: '252525',
-        jobPosition: 'ADMIN',
-        active: true,
-        dailyLimit: 1000,
-        defaultDailyLimit: 1000,
-        permissions: [
-          {
-            id: 1,
-            permissionName: 'Permisija'
-          }
-        ]
-      }
-    ]
+
   }
 
   getCompanyById(){
@@ -185,15 +164,13 @@ export class CompanyDetailsComponent {
     })
   }
 
-  getCompanyContracts() {
-    return this.contractService.getAllCompanyContracts();
-  }
+
 
   openCreateCompanyAccountDialog() {
     this.createCompanyAccountComponent.createCompanyAccountVisible = true;
   }
 
-  openAccountDetailsDialog(account: CompanyBankAccount) {
+  openAccountDetailsDialog(account: CompanyAccount) {
     this.singleAccountComponent.account = account;
     console.log(account)
   }
@@ -216,25 +193,142 @@ export class CompanyDetailsComponent {
 
 
   openAddContactUserDialog() {
-    // TODO: dodati kontakt osobu
+    this.createCompanyContactComponent.createCompanyContactVisible = true
   }
 
   openUserDetailsDialog(user: any) {
+    this.singleContactComponent.editCompanyContactForm.setValue({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phone: user.phoneNumber,
+      note: user.note,
+      selectedJob: user.position
+    });
+    console.log(user.position)
+    if(user.position===("ADMINISTRATOR")){
+      this.singleContactComponent.selectedJob = this.singleContactComponent.jobs[0]
+    }
+    if(user.position===("SUPERVISOR")){
+      this.singleContactComponent.selectedJob = this.singleContactComponent.jobs[1]
+    }
+    if(user.position===("AGENT")){
+      this.singleContactComponent.selectedJob = this.singleContactComponent.jobs[2]
+    }
+    console.log( this.singleContactComponent.selectedJob)
+    this.singleContactComponent.contact = user;
+    this.singleContactComponent.editCompanyContactVisible = true
+  }
+
+  getAllContracts(){
+
+    this.contractService.getAllCompanyContracts().subscribe(
+            {
+              next: val => {
+                console.log(val);
+                this.companyContracts = val;
+              },
+              error: err => {
+                this.toastr.error('Greška pri dohvatanju ugovora.');
+
+                console.log(err)
+              }
+            }
+          );
+  }
+
+
+  getAllContacts(){
+    this.contractService.getAllCompanyContacts().subscribe(
+            {
+              next: val => {
+                console.log(val);
+                this.companyContacts = val;
+              },
+              error: err => {
+                this.toastr.error('Greška pri dohvatanju kontakta.');
+
+                console.log(err)
+              }
+            }
+          );
+  }
+
+  submitCreateCompanyContact(contact :any){
+    //console.log(contact.)
+    this.contractService.createCompanyContact(
+      contact.firstName, contact.lastName, contact.phone,
+      contact.email, contact.position, contact.note)
+    .subscribe
+    ({
+        next:value=>{
+
+          this.getAllContacts()
+
+          this.toastr.success("Uspesno dodat kontakt")
+        },
+        error: err => {
+          this.toastr.error(err.error)
+          console.log(err)
+        }
+
+    })
 
   }
 
-  submitCreateCompanyContract(contract: CompanyContract) {
+  submitCreateCompanyContract(contract: any ) {
     // TODO: poslati ovo na stock service metodu za kreiranje contract-a kada uradi back
-    this.companyContracts.push(contract)
+    console.log(contract)
+    this.contractService.openCompanyContract(
+      contract.companyId, contract.contractStatus,
+      contract.contractNumber, contract.description)
+    .subscribe
+    ({
+        next:value=>{
+
+          this.getAllContracts()
+
+          this.toastr.success("Uspesno dodat ugovor")
+        },
+        error: err => {
+          this.toastr.error(err.error)
+          console.log(err)
+        }
+
+    })
+
+    //this.companyContracts.push(contract)
     // console.log(contract);
   }
 
-  submitCreateCompanyAccount(account: CompanyBankAccount){
+
+  submitCreateCompanyAccount(account: CompanyAccount){
     console.log(account)
   }
 
-  submitEditCompanyAccount(account: CompanyBankAccount){
+  submitEditCompanyAccount(account: CompanyAccount){
     console.log(account)
+  }
+
+  submitEditCompanyContact(contact :any){
+    console.log(contact.id)
+    this.contractService.editCompanyContact(
+      contact.id, contact.firstName, contact.lastName, contact.phone,
+      contact.email, contact.position, contact.note)
+    .subscribe
+    ({
+        next:value=>{
+
+          this.getAllContacts()
+
+          this.toastr.success("Uspesno editovan kontakt")
+        },
+        error: err => {
+          this.toastr.error(err.error)
+          console.log(err)
+        }
+
+    })
   }
 
 

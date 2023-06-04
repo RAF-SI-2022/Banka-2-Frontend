@@ -33,7 +33,7 @@ export class SingleContactComponent  {
     });
 
   }
-  
+
 
   resetForm(){
 
@@ -41,22 +41,7 @@ export class SingleContactComponent  {
 
   submitEditCompanyContact(){
 
-    const tempCurrency: Currency = {
-      currencyName: "US Dollar",
-      currencyCode: '123',
-      currencySymbol: "USD",
-      polity: 'test'
-    }
-
-    const companyAccount: CompanyAccount = {
-      id: this.account.id,
-      currency: tempCurrency,
-      bank: this.editCompanyContactForm.get('bank')?.value || this.account.bank,
-      accountNumber: this.editCompanyContactForm.get('accountNumber')?.value || this.account.accountNumber,
-      active: false,
-    }
-
-    this.editCompanyAccountEmitter.emit(companyAccount);
+    // this.editCompanyAccountEmitter.emit(companyAccount);
     this.account = null;
 
   }

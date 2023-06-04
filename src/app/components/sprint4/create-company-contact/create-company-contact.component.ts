@@ -38,16 +38,8 @@ export class CreateCompanyContactComponent {
   }
 
   submitCreateCompanyContact() {
-    const companyContract: CompanyContract = {
-      id: 1,
-      referenceNumber: this.createCompanyContactForm.get('referenceNumber')?.value,
-      description: this.createCompanyContactForm.get('description')?.value,
-      status: 'DRAFT',
-      created: new Date(),
-      modified: new Date()
-    }
 
-    this.companyContactEmitter.emit(companyContract);
+    // this.companyContactEmitter.emit(companyContract);
     this.createCompanyContactVisible = false;
   }
 }

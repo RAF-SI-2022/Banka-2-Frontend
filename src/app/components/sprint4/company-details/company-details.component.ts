@@ -8,13 +8,10 @@ import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.mo
 import {Permission, User} from "../../../models/users.model";
 import {AddUserComponent} from "../../sprint1/add-user/add-user.component";
 import {CreateCompanyContractComponent,} from "../create-company-contract/create-company-contract.component";
-
 import {CreateCompanyAccountComponent} from "../create-company-account/create-company-account.component";
 import { SingleAccountComponent } from '../single-account/single-account.component';
 import { SingleContractComponent } from '../single-contract/single-contract.component';
-import { ContractService } from 'src/app/services/contract.service';
-import { CreateCompanyContactComponent } from '../create-company-contact/create-company-contact.component';
-import { SingleContactComponent } from '../single-contact/single-contact.component';
+import { OtcService } from 'src/app/services/otc.service';
 
 @Component({
   selector: 'app-company-details',
@@ -23,48 +20,17 @@ import { SingleContactComponent } from '../single-contact/single-contact.compone
 })
 export class CompanyDetailsComponent {
 
-  
   @ViewChild(CreateCompanyContractComponent, {static: true}) createCompanyContractComponent: CreateCompanyContractComponent
   @ViewChild(CreateCompanyAccountComponent, {static: true}) createCompanyAccountComponent: CreateCompanyAccountComponent
   @ViewChild(SingleAccountComponent, {static: true}) singleAccountComponent: SingleAccountComponent
-  @ViewChild(SingleContactComponent, {static: true}) singleContactComponent: SingleContactComponent
-  @ViewChild(CreateCompanyContactComponent, {static: true}) createCompanyContactComponent: CreateCompanyContactComponent
 
- 
   breadcrumbItems: MenuItem[];
   loading: boolean = false; // TODO: promeniti na true
   isFormValid = true;
 
   companyAccounts: CompanyAccount[];
-  
 
-  companyContracts: CompanyContract[] = [
-    {
-      id: 1,
-      referenceNumber: 111,
-      description: 'Description1',
-      status: 'DRAFT',
-      created: new Date(),
-      modified: new Date()
-    },
-
-    {
-      id: 2,
-      referenceNumber: 222,
-      status: 'DRAFT',
-      description: 'Description2',
-      created: new Date(),
-      modified: new Date()
-    },
-    {
-      id: 3,
-      referenceNumber: 333,
-      status: 'ACCEPTED',
-      description: 'Description3',
-      created: new Date(),
-      modified: new Date()
-    },
-  ];
+  companyContracts: CompanyContract[];
 
   contactUsers: User[];
 
@@ -72,7 +38,7 @@ export class CompanyDetailsComponent {
 
   constructor(private toastr: ToastrService, private userService: UserService,
               private stockService: StockService, private router: Router,
-              private contractService: ContractService) {
+              private contractService: OtcService) {
 
   }
 
@@ -97,9 +63,9 @@ export class CompanyDetailsComponent {
     ]
 
     // TODO: skloniti kad stigne back, placeholder
-    this.companyAccounts = [
+    /*this.companyAccounts = [
       {
-        id: 1,
+        id: "1",
         currency: {
           currencyName: 'RSD',
           currencyCode: 'RSD',
@@ -110,7 +76,19 @@ export class CompanyDetailsComponent {
         accountNumber: '1111111',
         bank: 'Banka'
       }
-    ];
+    ];*/
+
+    this.getCompanyContracts().subscribe(
+      {
+        next: value => {
+          console.log(value);
+          this.companyContracts = value;
+        },
+        error: err => {
+          this.toastr.error('Greška pri dohvatanju ugovora.');
+        }
+      }
+    );
 
 
 
@@ -138,7 +116,10 @@ export class CompanyDetailsComponent {
   }
 
   submitEditCompany() {
+  }
 
+  getCompanyContracts() {
+    return this.contractService.getAllCompanyContracts();
   }
 
   openCreateCompanyAccountDialog() {
@@ -168,15 +149,10 @@ export class CompanyDetailsComponent {
 
 
   openAddContactUserDialog() {
-    this.createCompanyContactComponent.createCompanyContactVisible = true;
+    // TODO: dodati kontakt osobu
   }
 
-  openUserDetailsDialog(user: User) {
-    this.singleContactComponent.user = user;
-    console.log(user)
-  }
-
-  submitCreateCompanyContact(contract: CompanyContract){
+  openUserDetailsDialog(user: any) {
 
   }
 
@@ -195,6 +171,6 @@ export class CompanyDetailsComponent {
   }
 
 
-  
+
 
 }

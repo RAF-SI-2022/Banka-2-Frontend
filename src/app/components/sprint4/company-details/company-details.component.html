@@ -4,7 +4,7 @@
 
   <div class="details-container">
 
-    <h3 style="font-weight: 700">Podaci</h3>
+    <h3 class="mb-4" style="font-weight: 700">Podaci</h3>
 
     <form (submit)="submitEditCompany()">
       <div class="form-container">
@@ -65,7 +65,7 @@
         <div class="table-header row">
           <div class="col-6 col-lg-6 col-md-6 text-start table-name">
             <div style="display:flex; align-items: center; gap: 8px;">
-              <h3 style="font-weight: 700; font-size: medium">
+              <h3 style="font-weight: 700; font-size: medium; margin-bottom: 0">
                 Računi
               </h3>
             </div>
@@ -246,7 +246,7 @@
         <div class="table-header row">
           <div class="col-6 col-lg-6 col-md-6 text-start table-name">
             <div style="display:flex; align-items: center; gap: 8px;">
-              <h3 style="font-weight: 700; font-size: medium">
+              <h3 style="font-weight: 700; font-size: medium; margin-bottom: 0">
                 Ugovori
               </h3>
             </div>
@@ -396,10 +396,10 @@
       <ng-template pTemplate="body" let-contract>
         <tr class="rowHover" (click)="openContractDetailsDialog(contract)" style="font-size: 12px;">
           <td>{{contract.id}}</td>
-          <td>{{contract.referenceNumber}}</td>
-          <td>{{contract.status}}</td>
-          <td>{{contract.created}}</td>
-          <td>{{contract.modified}}</td>
+          <td>{{contract.contractNumber}}</td>
+          <td>{{contract.contractStatus}}</td>
+          <td>{{contract.creationDate}}</td>
+          <td>{{contract.lastUpdatedDate}}</td>
         </tr>
       </ng-template>
     </p-table>
@@ -421,7 +421,7 @@
         <div class="table-header row">
           <div class="col-6 col-lg-6 col-md-6 text-start table-name">
             <div style="display:flex; align-items: center; gap: 8px;">
-              <h3 style="font-weight: 700; font-size: medium">
+              <h3 style="font-weight: 700; font-size: medium; margin-bottom: 0">
                 Kontakt osobe
               </h3>
             </div>
@@ -597,7 +597,6 @@
 
   </div>
 </div>
-<app-create-company-contact (companyContactEmitter)="submitCreateCompanyContact($event)"></app-create-company-contact>
 <app-create-company-contract (companyContractEmitter)="submitCreateCompanyContract($event)"></app-create-company-contract>
 <app-create-company-account (companyAccountEmitter)="submitCreateCompanyAccount($event)"></app-create-company-account>
 <app-single-account (editCompanyAccountEmitter)="submitEditCompanyAccount($event)"></app-single-account>

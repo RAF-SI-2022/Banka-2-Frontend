@@ -4,7 +4,7 @@ import {ToastrService} from "ngx-toastr";
 import {UserService} from "../../../services/user-service.service";
 import {StockService} from "../../../services/stock.service";
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
-import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
+import {CompanyBankAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import {Permission, User} from "../../../models/users.model";
 import {AddUserComponent} from "../../sprint1/add-user/add-user.component";
 import {CreateCompanyContractComponent,} from "../create-company-contract/create-company-contract.component";
@@ -30,7 +30,7 @@ export class CompanyDetailsComponent {
   loading: boolean = false; // TODO: promeniti na true
   isFormValid = true;
 
-  companyAccounts: CompanyAccount[];
+  companyAccounts: CompanyBankAccount[];
 
   companyContracts: CompanyContract[];
 
@@ -53,7 +53,7 @@ export class CompanyDetailsComponent {
           activityCode: [null, Validators.required],
           registrationNumber: [null, Validators.required]
         });
-    
+
         this.companyForm.valueChanges.subscribe(() => {
           this.isFormValid = this.companyForm.valid;
         });
@@ -148,7 +148,7 @@ export class CompanyDetailsComponent {
             activityCode: value.activityCode,
             registrationNumber: value.registrationNumber
           });
-          
+
       },
       error: err=>{
           // todo dodati error ako ikad bek to uradi
@@ -160,7 +160,7 @@ export class CompanyDetailsComponent {
 
   submitEditCompany() {
 
-    
+
 
 
     this.companyService.changeCompany(
@@ -180,7 +180,7 @@ export class CompanyDetailsComponent {
         // console.log(err);
         // alert("nisam")
         this.toastr.error("Greska pri izmeni")
-        
+
       }
     })
   }
@@ -193,7 +193,7 @@ export class CompanyDetailsComponent {
     this.createCompanyAccountComponent.createCompanyAccountVisible = true;
   }
 
-  openAccountDetailsDialog(account: CompanyAccount) {
+  openAccountDetailsDialog(account: CompanyBankAccount) {
     this.singleAccountComponent.account = account;
     console.log(account)
   }
@@ -229,11 +229,11 @@ export class CompanyDetailsComponent {
     // console.log(contract);
   }
 
-  submitCreateCompanyAccount(account: CompanyAccount){
+  submitCreateCompanyAccount(account: CompanyBankAccount){
     console.log(account)
   }
 
-  submitEditCompanyAccount(account: CompanyAccount){
+  submitEditCompanyAccount(account: CompanyBankAccount){
     console.log(account)
   }
 

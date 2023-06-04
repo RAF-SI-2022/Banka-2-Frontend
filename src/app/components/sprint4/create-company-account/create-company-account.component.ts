@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
-import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
+import {CompanyBankAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import { StockService } from 'src/app/services/stock.service';
 import { Currency } from '../../../models/stock-exchange.model';
 
@@ -17,6 +17,8 @@ export class CreateCompanyAccountComponent {
   createCompanyAccountVisible: boolean = false;
   isFormValid: boolean = false;
   createCompanyAccountForm: FormGroup;
+  currencies: Currency[]
+  selectedCurrency: Currency;
 
   constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private stockService: StockService) {
 
@@ -29,7 +31,30 @@ export class CreateCompanyAccountComponent {
     this.createCompanyAccountForm.valueChanges.subscribe(() => {
       this.isFormValid = this.createCompanyAccountForm.valid;
     });
+  }
 
+  ngOnInit() {
+    this.initCurrencies();
+
+  }
+
+  initCurrencies() {
+    this.currencies = [
+      {
+        currencyName: "US Dollar",
+        currencyCode: '123',
+        currencySymbol: "USD",
+        polity: 'test'
+      },
+      {
+        currencyName: "Euro",
+        currencyCode: '123',
+        currencySymbol: "EUR",
+        polity: 'test1'
+      }
+    ]
+
+    this.selectedCurrency = this.currencies[0];
   }
 
   submitCreateCompanyAccount() {

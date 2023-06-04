@@ -2,7 +2,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {StockService} from "../../../services/stock.service";
-import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
+import {CompanyBankAccount, CompanyContract} from "../../../models/stock-exchange.model";
 
 @Component({
   selector: 'app-create-company-contract',

@@ -196,18 +196,17 @@ export interface Company {
   name: string,
   address: string,
   contractPersons: ContactPerson[],
-  bankAccounts: CompanyAccount[],
+  bankAccounts: CompanyBankAccount[],
   registrationNumber: string, // maticni broj
   taxNumber: string, // poreski broj
   activityCode: string // sifra aktivnosti
 }
 
-export interface CompanyAccount {
+export interface CompanyBankAccount {
   id: string,
-  company: Company
-  currency: Currency,
-  bankName: string,
   accountNumber: string,
+  currency: string,
+  bankName: string,
 }
 
 export interface CompanyContract {

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
-import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
+import {CompanyBankAccount, CompanyContract} from "../../../models/stock-exchange.model";
 import { StockService } from 'src/app/services/stock.service';
 import { Currency } from '../../../models/stock-exchange.model';
 import { User } from 'src/app/models/users.model';

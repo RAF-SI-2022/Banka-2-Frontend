@@ -12,7 +12,8 @@
           class="create-company-account-form pt-4 pb-4 gap-4">
 
       <span class="p-float-label currency-dropdown-container" >
-        <p-dropdown [style]="{'width':'100%'}" id="currency" [formControlName]="'currency'"></p-dropdown>
+        <p-dropdown [options]="currencies" [(ngModel)]="selectedCurrency" optionLabel="currencySymbol"
+                    [style]="{'width':'100%'}" id="currency" [formControlName]="'currency'"></p-dropdown>
         <label for="currency">Valuta</label>
       </span>
 

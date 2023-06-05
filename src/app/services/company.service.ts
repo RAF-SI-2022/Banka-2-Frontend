@@ -2,6 +2,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {CompanyContract} from "../models/stock-exchange.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {OtcService} from "./otc.service";
 
 @Injectable({
   providedIn: 'root',

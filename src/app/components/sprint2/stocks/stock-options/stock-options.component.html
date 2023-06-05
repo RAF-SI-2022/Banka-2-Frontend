@@ -43,6 +43,22 @@
           <th>OTC</th>
         </tr>
       </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+      </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
           <!-- TODO centrirati ovo u tabelu -->
@@ -75,7 +91,7 @@
             [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.openInterest}}</td>
           <td
             [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">{{ stockOption.impliedVolatility}}</td>
-          <td>
+          <td [ngStyle]="{'background-color': stockOption.inTheMoney ? '#e1f6e1': 'white'}">
             <button type="button"
                     (click)="otcRedirect(stockOption)"
                     class="btn-i btn-circle" title="Kupi opciju">
@@ -112,7 +128,7 @@
           <th>Contract Size</th>
           <th>Open Interest</th>
           <th>Implied Volatility</th>
-          <th>OTC</th>  
+          <th>OTC</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">

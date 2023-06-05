@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {MenuItem} from "primeng/api";
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import {CompanyAccount, CompanyContract, Future} from "../../../models/stock-exchange.model";
+import {CompanyAccount, CompanyContract, Future, TransactionElement} from "../../../models/stock-exchange.model";
 import { OtcService } from 'src/app/services/otc.service';
+import {ToastrService} from "ngx-toastr";
 
 enum Status {
   REJECTED = 'REJECTED',
@@ -23,7 +24,7 @@ export class SingleContractComponent {
 
 
   contractName:string="Ugovor Template"
-  stavke:[]=[];
+  elements: TransactionElement[]
   contractForm: FormGroup;
   contract: CompanyContract;
   breadcrumbItems: MenuItem[];
@@ -34,6 +35,7 @@ export class SingleContractComponent {
   showOptions: boolean = false;
   futures: Future[] // za prikaz
   futuresLoading: boolean = false;
+  contractId: string
 
   constructor(
     private router: Router,
@@ -41,7 +43,14 @@ export class SingleContractComponent {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private contractService: OtcService,
+    private toastr: ToastrService,
+    private route: ActivatedRoute
   ) {
+
+    // ovde contractId
+    this.route.paramMap.subscribe(params => {
+      this.contractId = params.get('contractId')!;
+    });
 
 
     const navigation = this.router.getCurrentNavigation();
@@ -68,6 +77,21 @@ export class SingleContractComponent {
       // TODO: ovde treba promeniti u pravi naziv kompanije
       {label: 'Kompanija1', routerLink: ['/companies']}
     ]
+
+    this.getAllContractElements();
+  }
+
+
+  getAllContractElements() {
+    this.contractService.getAllContractElements(this.contract.id).subscribe({
+      next: value => {
+        this.elements = value;
+      },
+
+      error: err => {
+
+      }
+    })
   }
 
   update(){
@@ -101,6 +125,15 @@ export class SingleContractComponent {
     this.contractService.notify(this.contract)
     this.update()
 
+    this.contractService.closeCompanyContract(this.contractId).subscribe({
+        next: val=>{
+          alert("val")
+        },
+        error: err=>{
+          alert("eror")
+        }
+    })
+
     console.log(this.contract)
   }
 
@@ -111,8 +144,27 @@ export class SingleContractComponent {
 
     // salje se update-ovani contract na back, kad se vrati zove se ovaj notify i updateuje se (ovo ispod je template)
 
-    this.contractService.notify(this.contract)
-    this.update()
+    //this.contractService.notify(this.contract)
+    //this.update()
+
+    console.log(this.contract);
+
+    this.contractService.editCompanyContract(
+      this.contractId,
+      this.contract.contractStatus,
+      this.contract.contractNumber,
+      this.contract.description
+      ).subscribe({
+        next:val=>{
+          alert("val")
+        },
+        error: err=>{
+          alert("err")
+          console.log(err);
+
+        }
+      })
+
 
     console.log(this.contract)
 
@@ -139,10 +191,12 @@ export class SingleContractComponent {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
             this.rejectContract();
-            this.messageService.add({ severity: 'info', summary: 'Završeno', detail: 'Uspešno ste odbacili ugovor' });
+            //this.messageService.add({ severity: 'info', summary: 'Završeno', detail: 'Uspešno ste odbacili ugovor' });
+            this.toastr.success("Uspešno ste odbacili ugovor")
         },
         reject: () => {
-          this.messageService.add({ severity: 'error', summary: 'Odbijeno', detail: 'Niste odbacili ugovor' });
+          this.toastr.info("Niste odbacili ugovor")
+          //this.messageService.add({ severity: 'error', summary: 'Odbijeno', detail: 'Niste odbacili ugovor' });
         }
     });
   }
@@ -154,10 +208,12 @@ export class SingleContractComponent {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
             this.editContract();
-            this.messageService.add({ severity: 'info', summary: 'Izmenjeno', detail: 'Uspešno ste izmenili ugovor' });
+            //this.messageService.add({ severity: 'info', summary: 'Izmenjeno', detail: 'Uspešno ste izmenili ugovor' });
+            this.toastr.success("Uspešno ste izmenili ugovor")
         },
         reject: () => {
-          this.messageService.add({ severity: 'error', summary: 'Odbijeno', detail: 'Niste izmenili ugovor' });
+          //this.messageService.add({ severity: 'error', summary: 'Odbijeno', detail: 'Niste izmenili ugovor' });
+          this.toastr.info("Niste izmenili ugovor")
         }
     });
   }
@@ -170,11 +226,29 @@ export class SingleContractComponent {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
             this.finalizeContract();
-            this.messageService.add({ severity: 'info', summary: 'Završeno', detail: 'Uspešno ste finalizovali ugovor' });
+            //this.messageService.add({ severity: 'info', summary: 'Završeno', detail: 'Uspešno ste finalizovali ugovor' });
+            this.toastr.success("Uspešno ste finalizovali ugovor")
         },
         reject: () => {
-          this.messageService.add({ severity: 'error', summary: 'Odbijeno', detail: 'Niste finalizovali ugovor' });
+          //this.messageService.add({ severity: 'error', summary: 'Odbijeno', detail: 'Niste finalizovali ugovor' });
+          this.toastr.info("Niste finalizovali ugovor")
         }
     });
+  }
+
+  deleteElement(elementId: string) {
+    this.contractService.deleteElement(this.contract.id, elementId).subscribe({
+      next: value => {
+
+      },
+      error: err => {
+        if (err.error.text === 'Rezervacija uspesno sklonjena') {
+          this.toastr.success("Uspešno obrisana rezervacija")
+          this.getAllContractElements();
+        } else {
+          this.toastr.error("Greška prilikom brisanja rezervacija")
+        }
+      }
+    })
   }
 }

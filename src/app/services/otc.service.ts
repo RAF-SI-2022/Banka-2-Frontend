@@ -1,6 +1,6 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {CompanyContract} from "../models/stock-exchange.model";
+import {CompanyContract, TransactionElement} from "../models/stock-exchange.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
@@ -165,26 +165,20 @@ export class OtcService {
       , {headers: this.headers})
   }
 
-  createElement(
-    contractId: string,
-    elementId: string,
-    buyOrSell: string,
-    transactionElement: string,
-    balance: string,
-    currency: string,
-    amount: number,
-    priceOfOneElement: number
-  ): Observable<any> {
+  createElement(element: TransactionElement): Observable<any> {
     return this.httpClient.post<any>(`http://localhost:8082/api/otc/add_element`,
       {
-        contractId: contractId,
-        elementId: elementId,
-        buyOrSell: buyOrSell,
-        transactionElement: transactionElement,
-        balance: balance,
-        currency: currency,
-        amount: amount,
-        priceOfOneElement: priceOfOneElement
+        contractId: element.contractId,
+        elementId: element.elementId,
+        buyOrSell: element.buyOrSell,
+        transactionElement: element.transactionElement,
+        balance: element.balance,
+        currency: element.currency,
+        amount: element.amount,
+        priceOfOneElement: element.priceOfOneElement,
+        userId: element.userId,
+        mariaDbId: element.mariaDbId,
+        futureStorageField: element.futureStorageField
       },
       {headers: this.headers})
   }

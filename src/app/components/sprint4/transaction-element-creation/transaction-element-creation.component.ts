@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {Currency} from 'src/app/models/stock-exchange.model';
+import {CompanyContract, Currency, TransactionElement} from 'src/app/models/stock-exchange.model';
 import {UserService} from "../../../services/user-service.service";
 import {ToastrService} from "ngx-toastr";
 import {User} from "../../../models/users.model";
+import {OtcService} from "../../../services/otc.service";
 
 
 enum Trade {
@@ -37,12 +38,15 @@ export class TransactionElementCreationComponent {
   mariadbID: number;
   user: User
   futureStorageField: string
+  priceOfOneElement: number
+  contracts: CompanyContract[]
+  selectedContract: CompanyContract
 
   title: string;
 
 
   constructor(private router: Router, private formBuilder: FormBuilder,
-              private userService: UserService, private toastr: ToastrService) {
+              private userService: UserService, private toastr: ToastrService, private otcService: OtcService) {
     const navigation = this.router.getCurrentNavigation();
 
 
@@ -51,25 +55,28 @@ export class TransactionElementCreationComponent {
     if (navigation && navigation.extras && navigation.extras.state) {
 
       let futureStorageFieldJSON = {}
-      
+
       if ('stock' in navigation.extras.state) {
         this.receivedItem = navigation.extras.state['stock'];
         this.buyOrSell = Trade.BUY;
         this.transactionElement = Type.STOCK
         this.title = this.receivedItem.symbol
+        this.priceOfOneElement = this.receivedItem.priceValue
 
         futureStorageFieldJSON = {
-          stock_id: this.receivedItem.id
+          stock_id: this.receivedItem.stock.priceValue
         }
 
       } else if ('userStock' in navigation.extras.state) {
+        console.log(this.receivedItem)
         this.receivedItem = navigation.extras.state['userStock'];
         this.buyOrSell = Trade.SELL;
         this.transactionElement = Type.STOCK
         this.title = this.receivedItem.stock.symbol
+        this.priceOfOneElement = this.receivedItem.stock.priceValue
 
         futureStorageFieldJSON = {
-          stock_id: this.receivedItem.id
+          stock_id: this.receivedItem.stock.priceValue
         }
 
       } else if ('stockOption' in navigation.extras.state) {
@@ -77,14 +84,16 @@ export class TransactionElementCreationComponent {
         this.buyOrSell = Trade.BUY;
         this.transactionElement = Type.OPTION
         this.title = this.receivedItem.stockSymbol
+        this.priceOfOneElement = this.receivedItem.price
 
         futureStorageFieldJSON = {
           "option_id": this.receivedItem.id,
-          "premium": this.receivedItem.premium,
+          "premium": 20,
           "type": this.receivedItem.optionType,
           "expiration_date": this.receivedItem.expirationDate,
           "strike": this.receivedItem.strike,
-          "stock_symbol": this.receivedItem.stockSymbol
+          "stock_symbol": this.receivedItem.stockSymbol,
+          "last_price": this.receivedItem.price
         }
 
       } else if ('userStockOption' in navigation.extras.state) {
@@ -92,14 +101,16 @@ export class TransactionElementCreationComponent {
         this.buyOrSell = Trade.SELL;
         this.transactionElement = Type.OPTION
         this.title = this.receivedItem.stockSymbol
+        this.priceOfOneElement = this.receivedItem.option.price
 
         futureStorageFieldJSON = {
           "option_id": this.receivedItem.id,
-          "premium": this.receivedItem.premium,
+          "premium": 20,
           "type": this.receivedItem.optionType,
           "expiration_date": this.receivedItem.expirationDate,
           "strike": this.receivedItem.strike,
-          "stock_symbol": this.receivedItem.stockSymbol
+          "stock_symbol": this.receivedItem.stockSymbol,
+          "last_price": this.receivedItem.price
         }
 
       } else if ('futureContract' in navigation.extras.state) {
@@ -107,38 +118,40 @@ export class TransactionElementCreationComponent {
         this.buyOrSell = Trade.BUY;
         this.transactionElement = Type.FUTURE
         tempAmount = 1;
-        futureStorageFieldJSON = JSON.stringify(this.receivedItem);
+        futureStorageFieldJSON = this.receivedItem
         this.title = this.receivedItem.futureName
+        this.priceOfOneElement = this.receivedItem.maintenanceMargin;
 
       } else if ('userFutureContract' in navigation.extras.state) {
         this.receivedItem = navigation.extras.state['userFutureContract'];
         this.buyOrSell = Trade.SELL;
         this.transactionElement = Type.FUTURE
         tempAmount = 1;
-        futureStorageFieldJSON = JSON.stringify(this.receivedItem);
+        futureStorageFieldJSON = this.receivedItem;
         this.title = this.receivedItem.futureName
+        this.priceOfOneElement = this.receivedItem.maintenanceMargin;
 
       }
-
-      this.futureStorageField = JSON.stringify(futureStorageFieldJSON);
-      console.log(this.receivedItem);
+      this.futureStorageField = this.flattenJSON(futureStorageFieldJSON);
       this.mariadbID = this.receivedItem.id;
-      this.getUser();
     }
 
     this.elementForm = this.formBuilder.group({
       status: ["", Validators.required],
       referenceNumber: ["", Validators.required],
-      priceOfOneElement: [this.receivedItem.stock === undefined ? this.receivedItem.priceValue : this.receivedItem.stock.priceValue, Validators.required],
+      priceOfOneElement: [this.priceOfOneElement, Validators.required],
       amount: [tempAmount !== undefined ? tempAmount : this.receivedItem.amount, Validators.required],
       balance: ["CASH", Validators.required],
       currency: ['', Validators.required],
+      selectedContract: ['', Validators.required]
     });
   }
 
 
   ngOnInit() {
     this.initCurrencies();
+    this.getUser();
+    this.getContracts();
   }
 
   initCurrencies() {
@@ -160,6 +173,20 @@ export class TransactionElementCreationComponent {
     this.selectedCurrency = this.currencies[0];
   }
 
+  getContracts() {
+    this.otcService.getAllCompanyContracts().subscribe({
+      next: value => {
+        console.log(value);
+        this.contracts = value;
+      },
+      error: err => {
+        this.toastr.error("Greška pri dohvatanju ugovora")
+        console.log(err);
+      }
+    })
+  }
+
+
   getUser() {
     this.userService.getUserData()
       .subscribe({
@@ -178,9 +205,61 @@ export class TransactionElementCreationComponent {
     let amount = this.elementForm.get('amount')?.value
     let priceOfOneElement = this.elementForm.get('priceOfOneElement')?.value
     let userId = this.user.id;
+    let selectedContract = this.elementForm.get('selectedContract')?.value;
 
-    console.log(balance, currency, amount, priceOfOneElement, userId, this.futureStorageField);
+    let element: TransactionElement = {
+      contractId: selectedContract.id,
+      elementId: "0",
+      buyOrSell: this.buyOrSell,
+      transactionElement: this.transactionElement,
+      balance: balance,
+      currency: currency,
+      amount: amount,
+      priceOfOneElement: priceOfOneElement,
+      userId: userId,
+      mariaDbId: this.mariadbID,
+      futureStorageField: this.futureStorageField
+    }
 
+    console.log(element);
+
+
+    this.otcService.createElement(element).subscribe({
+      next: value => {
+
+      },
+      error: err => {
+        if (err.error.text === 'Element uspesno dodat') {
+          this.toastr.success("Uspešno dodat element")
+        } else {
+          this.toastr.error("Greška prilikom čuvanja elementa")
+        }
+      }
+    })
+  }
+
+  flattenJSON(jsonObj: any): string {
+    const values: any[] = [];
+
+    function processValue(value: any) {
+      if (typeof value === 'object') {
+        if (Array.isArray(value)) {
+          value.forEach((item) => {
+            processValue(item);
+          });
+        } else {
+          for (const key in value) {
+            processValue(value[key]);
+          }
+        }
+      } else {
+        values.push(value);
+      }
+    }
+
+    processValue(jsonObj);
+
+    return values.join(',');
   }
 
 }

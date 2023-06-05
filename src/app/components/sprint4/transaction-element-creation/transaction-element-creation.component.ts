@@ -28,6 +28,7 @@ enum Type {
 export class TransactionElementCreationComponent {
 
 
+
   receivedItem: any;
   elementForm: FormGroup;
   buyOrSell: string;
@@ -42,10 +43,14 @@ export class TransactionElementCreationComponent {
   constructor(private router: Router, private formBuilder: FormBuilder,
               private userService: UserService, private toastr: ToastrService) {
     const navigation = this.router.getCurrentNavigation();
+
+
+    let tempAmount: number | undefined;
+
     if (navigation && navigation.extras && navigation.extras.state) {
 
       let futureStorageFieldJSON = {}
-
+      
       if ('stock' in navigation.extras.state) {
         this.receivedItem = navigation.extras.state['stock'];
         this.buyOrSell = Trade.BUY;
@@ -97,14 +102,14 @@ export class TransactionElementCreationComponent {
         this.receivedItem = navigation.extras.state['futureContract'];
         this.buyOrSell = Trade.BUY;
         this.transactionElement = Type.FUTURE
-        this.elementForm.get('amount')?.setValue(1)
+        tempAmount = 1;
         futureStorageFieldJSON = JSON.stringify(this.receivedItem);
 
       } else if ('userFutureContract' in navigation.extras.state) {
         this.receivedItem = navigation.extras.state['userFutureContract'];
         this.buyOrSell = Trade.SELL;
         this.transactionElement = Type.FUTURE
-        this.elementForm.get('amount')?.setValue(1)
+        tempAmount = 1;
         futureStorageFieldJSON = JSON.stringify(this.receivedItem);
 
       }
@@ -119,7 +124,7 @@ export class TransactionElementCreationComponent {
       status: ["", Validators.required],
       referenceNumber: ["", Validators.required],
       priceOfOneElement: [this.receivedItem.stock === undefined ? this.receivedItem.priceValue : this.receivedItem.stock.priceValue, Validators.required],
-      amount: [this.receivedItem.amount, Validators.required],
+      amount: [tempAmount !== undefined ? tempAmount : this.receivedItem.amount, Validators.required],
       balance: ["CASH", Validators.required],
       currency: ['', Validators.required],
     });

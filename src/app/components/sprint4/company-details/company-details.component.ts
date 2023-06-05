@@ -279,7 +279,7 @@ export class CompanyDetailsComponent {
 
   submitCreateCompanyContract(contract: any) {
     // TODO: poslati ovo na stock service metodu za kreiranje contract-a kada uradi back
-    console.log(contract)
+    //console.log(contract)
     this.contractService.openCompanyContract(
       contract.companyId, contract.contractStatus,
       contract.contractNumber, contract.description)
@@ -292,8 +292,14 @@ export class CompanyDetailsComponent {
           this.toastr.success("Uspesno dodat ugovor")
         },
         error: err => {
-          this.toastr.error(err.error)
-          console.log(err)
+          
+          if(err.error.text === "Ugovor je uspesno otvoren"){
+            this.getAllContracts()
+            this.toastr.success(err.error.text)
+          }
+          else{
+            this.toastr.error(err.error.text)
+          }
         }
 
       })

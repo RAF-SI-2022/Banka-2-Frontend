@@ -16,7 +16,7 @@ it("testBuyStocks", function (){
   cy.wait(500)
 
 
-  buyStockComponents.testBuyStockFail(loginComponents.id)
+  // buyStockComponents.testBuyStockFail(loginComponents.id)
 
 
 

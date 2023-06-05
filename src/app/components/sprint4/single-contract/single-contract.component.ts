@@ -6,6 +6,10 @@ import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/a
 import {CompanyAccount, CompanyContract, Future} from "../../../models/stock-exchange.model";
 import { OtcService } from 'src/app/services/otc.service';
 import { ToastrService } from 'ngx-toastr';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 enum Status {
   REJECTED = 'REJECTED',
@@ -77,6 +81,22 @@ export class SingleContractComponent {
       // TODO: ovde treba promeniti u pravi naziv kompanije
       {label: 'Kompanija1', routerLink: ['/companies']}
     ]
+
+    this.contractService.getCompanyContractById(this.contractId).subscribe({
+      next:val=>{
+        this.contractForm = this.formBuilder.group({
+          status: [val.contractStatus, Validators.required],
+          referenceNumber: [val.contractNumber, Validators.required],
+          created: [val.creationDate, Validators.required],
+          modified: [val.lastUpdatedDate, Validators.required],
+          description: [val.description, Validators.required],
+        });
+      },
+      error: err=>{
+        alert("erorr");
+      }
+    })
+
   }
 
   update(){
@@ -110,6 +130,8 @@ export class SingleContractComponent {
     this.contractService.notify(this.contract)
     this.update()
 
+    //todo upload
+
     this.contractService.closeCompanyContract(this.contractId).subscribe({
         next: val=>{
           alert("val")
@@ -129,10 +151,10 @@ export class SingleContractComponent {
 
     // salje se update-ovani contract na back, kad se vrati zove se ovaj notify i updateuje se (ovo ispod je template)
 
-    //this.contractService.notify(this.contract)
-    //this.update()
+    this.contractService.notify(this.contract)
+    this.update()
 
-    console.log(this.contract);
+    //console.log(this.contract);
     
     this.contractService.editCompanyContract(
       this.contractId,
@@ -151,7 +173,7 @@ export class SingleContractComponent {
       })
 
 
-    console.log(this.contract)
+    //console.log(this.contract)
 
 
   }
@@ -175,7 +197,8 @@ export class SingleContractComponent {
         header: 'Potvrda',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.rejectContract();
+            //this.rejectContract();
+            this.deleteContract();
             //this.messageService.add({ severity: 'info', summary: 'Završeno', detail: 'Uspešno ste odbacili ugovor' });
             this.toastr.success("Uspešno ste odbacili ugovor")
         },
@@ -219,5 +242,55 @@ export class SingleContractComponent {
           this.toastr.info("Niste finalizovali ugovor")
         }
     });
+  }
+
+  deleteContract(){
+    this.contractService.deleteCompanyContract(this.contractId).subscribe({
+      next:val=>{
+          //redirect
+      },
+      error:err=>{
+          if(err.error.text===""){
+            //redirect
+          }
+          else{
+            //toastr
+          }
+      }
+    })
+  }
+  
+  generatePDF() {
+    // download()
+    this.contractService.getCompanyContractById(this.contractId).subscribe({
+      next:val=>{
+        this.contractForm = this.formBuilder.group({
+          status: [val.contractStatus, Validators.required],
+          referenceNumber: [val.contractNumber, Validators.required],
+          created: [val.creationDate, Validators.required],
+          modified: [val.lastUpdatedDate, Validators.required],
+          description: [val.description, Validators.required],
+        });
+        console.log(val);
+        
+        const documentDefinition = {
+          content: [
+            'Status: '+val.contractStatus,
+            'Delovodni broj: '+val.contractNumber,
+            'Zadnje modifikovan: '+val.lastUpdatedDate,
+            'Deskripcija: '+val.description
+          ],
+          defaultStyle: {
+            font: 'Roboto', // Replace with your desired font name
+          },
+        };
+      
+        const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+        pdfDocGenerator.download(val.contractNumber+'.pdf');
+      },
+      error: err=>{
+        alert("erorr");
+      }
+    })
   }
 }

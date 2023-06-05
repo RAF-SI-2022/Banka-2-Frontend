@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-5 text-start">
                     <label style="font-weight: 500; margin-right: 10px;">Delovodni broj</label>
-                   <input [readOnly]="disable" [formControlName]="'referenceNumber'" class="w-100" type="text" pInputText>
+                   <input [readOnly]="true" [formControlName]="'referenceNumber'" class="w-100" type="text" pInputText>
                 </div>
             </div>
 
@@ -41,12 +41,12 @@
 
             <div class="row  justify-content-center mt-5">
                 <div *ngIf="contract.contractStatus === 'DRAFT'" class="col-10 text-end">
-                    <p-button label="Odbaci"  (click)="confirm1()" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+                    <p-button label="Izbrisi"  (click)="confirm1()" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
                     <p-button label="Ažuriraj" (click)="confirm2()" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-sm"></p-button>
                     <p-button label="Finalizuj" (click)="confirm3()" type="submit" class="actionBtn" styleClass="p-button-sm"></p-button>
                 </div>
                 <div *ngIf="contract.contractStatus != 'DRAFT'" class="col-10 text-end">
-                    <p-button label="Preuzmi" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-sm"></p-button>
+                    <p-button label="Preuzmi" (click)="generatePDF()" type="submit" class="actionBtn" styleClass="p-button-outlined p-button-sm"></p-button>
                 </div>
             </div>
 

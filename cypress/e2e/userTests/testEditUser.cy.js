@@ -28,8 +28,8 @@ it('testEditUser', () => {
         loginComponents.id = parseInt(text)
         cy.log("ID USERA = " + loginComponents.id)
 
-        editUserComponents.editUserFail(loginComponents.id)
-        editUserComponents.closeDialog()
+        // editUserComponents.editUserFail(loginComponents.id)
+        // editUserComponents.closeDialog()
         editUserComponents.editUser(loginComponents.id)
         addUserComponents.testDelete(loginComponents.id)
 

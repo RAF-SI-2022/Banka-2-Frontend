@@ -6,6 +6,11 @@ import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/a
 import {CompanyAccount, CompanyContract, Future, TransactionElement} from "../../../models/stock-exchange.model";
 import { OtcService } from 'src/app/services/otc.service';
 import {ToastrService} from "ngx-toastr";
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { UserService } from 'src/app/services/user-service.service';
+
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 enum Status {
   REJECTED = 'REJECTED',
@@ -37,6 +42,8 @@ export class SingleContractComponent {
   futuresLoading: boolean = false;
   contractId: string
 
+  isAuthorised: boolean = false;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -44,7 +51,8 @@ export class SingleContractComponent {
     private messageService: MessageService,
     private contractService: OtcService,
     private toastr: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserService
   ) {
 
     // ovde contractId
@@ -79,6 +87,7 @@ export class SingleContractComponent {
     ]
 
     this.getAllContractElements();
+
   }
 
 
@@ -92,6 +101,24 @@ export class SingleContractComponent {
 
       }
     })
+
+    this.contractService.getCompanyContractById(this.contractId).subscribe({
+      next:val=>{
+        this.contractForm = this.formBuilder.group({
+          status: [val.contractStatus, Validators.required],
+          referenceNumber: [val.contractNumber, Validators.required],
+          created: [val.creationDate, Validators.required],
+          modified: [val.lastUpdatedDate, Validators.required],
+          description: [val.description, Validators.required],
+        });
+      },
+      error: err=>{
+        this.toastr.error("Doslo je do neocekivane greske")
+        this.router.navigate(['/companies'])
+        // alert("erorr");
+      }
+    })
+
   }
 
   update(){
@@ -125,6 +152,8 @@ export class SingleContractComponent {
     this.contractService.notify(this.contract)
     this.update()
 
+    //todo upload
+
     this.contractService.closeCompanyContract(this.contractId).subscribe({
         next: val=>{
           alert("val")
@@ -144,11 +173,11 @@ export class SingleContractComponent {
 
     // salje se update-ovani contract na back, kad se vrati zove se ovaj notify i updateuje se (ovo ispod je template)
 
-    //this.contractService.notify(this.contract)
-    //this.update()
+    this.contractService.notify(this.contract)
+    this.update()
 
-    console.log(this.contract);
-
+    //console.log(this.contract);
+    
     this.contractService.editCompanyContract(
       this.contractId,
       this.contract.contractStatus,
@@ -166,7 +195,7 @@ export class SingleContractComponent {
       })
 
 
-    console.log(this.contract)
+    //console.log(this.contract)
 
 
   }
@@ -190,12 +219,13 @@ export class SingleContractComponent {
         header: 'Potvrda',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
-            this.rejectContract();
+            //this.rejectContract();
+            this.deleteContract();
             //this.messageService.add({ severity: 'info', summary: 'Završeno', detail: 'Uspešno ste odbacili ugovor' });
-            this.toastr.success("Uspešno ste odbacili ugovor")
+            //this.toastr.success("Uspešno ste odbacili ugovor")
         },
         reject: () => {
-          this.toastr.info("Niste odbacili ugovor")
+          this.toastr.info("Niste izbrisali ugovor")
           //this.messageService.add({ severity: 'error', summary: 'Odbijeno', detail: 'Niste odbacili ugovor' });
         }
     });
@@ -250,5 +280,101 @@ export class SingleContractComponent {
         }
       }
     })
+  }
+
+  deleteContract(){
+    this.contractService.deleteCompanyContract(this.contractId).subscribe({
+      next:val=>{
+        console.log(val);
+        
+          this.toastr.success("Uspesno obrisan ugovor")
+          this.router.navigate(['/companies'])
+      },
+      error:err=>{
+        console.log(err);
+        
+          if(err.error.text==="Ugovor uspesno izbrisan"){
+            this.toastr.success("Uspesno obrisan ugovor")
+            this.router.navigate(['/companies'])
+          }
+          else{
+            this.toastr.error("Doslo je do greske pri brisanju ugovor")
+          }
+      }
+    })
+  }
+
+  elementiString: string = ''
+
+  generateElementsToString(){
+    this.elements.forEach(element=>{
+      this.elementiString += "Tip hartije " +element.transactionElement + ' '
+      this.elementiString += "Tip " +element.buyOrSell + ' '
+      this.elementiString += "Cena jednog " +element.priceOfOneElement + ' '
+      this.elementiString += "Kolicina " +element.amount + ' '
+      this.elementiString += "Balans " +element.balance + ' '
+      this.elementiString += "Valuta " + element.currency + '\n'
+    })
+  }
+  getS(){
+    console.log(this.elements)
+    this.generateElementsToString()
+    console.log(this.elementiString);
+    
+    
+  }
+
+  generatePDF() {
+    this.generateElementsToString()
+    // download()
+    this.contractService.getCompanyContractById(this.contractId).subscribe({
+      next:val=>{
+        this.contractForm = this.formBuilder.group({
+          status: [val.contractStatus, Validators.required],
+          referenceNumber: [val.contractNumber, Validators.required],
+          created: [val.creationDate, Validators.required],
+          modified: [val.lastUpdatedDate, Validators.required],
+          description: [val.description, Validators.required],
+        });
+        console.log(val);
+        
+        const documentDefinition = {
+          content: [
+            'Status: '+val.contractStatus,
+            'Delovodni broj: '+val.contractNumber,
+            'Zadnje modifikovan: '+val.lastUpdatedDate,
+            'Deskripcija: '+val.description,
+            '',
+            'Elementi:\n ' + this.elementiString
+
+          ],
+          defaultStyle: {
+            font: 'Roboto', // Replace with your desired font name
+          },
+        };
+      
+        const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+        pdfDocGenerator.download(val.contractNumber+'.pdf');
+      },
+      error: err=>{
+        alert("erorr");
+      }
+    })
+  }
+
+  getAgentPerm():boolean{
+    // console.log(localStorage.getItem("permissions"));
+    // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS"));
+    // console.log(!sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
+    // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
+    
+    if (localStorage.getItem("remember") !== null) {
+      if (localStorage.getItem("permissions")?.includes("UPDATE_USERS") && !localStorage.getItem("permissions")?.includes("ADMIN_USER"))
+        return true
+    } else {
+      if (sessionStorage.getItem("permissions")?.includes("UPDATE_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"))
+        return true
+   }
+    return false
   }
 }

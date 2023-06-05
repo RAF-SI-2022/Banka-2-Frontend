@@ -79,6 +79,7 @@ export class CompanyDetailsComponent {
         const index = this.companyContracts.findIndex(item => item.id === contract.id);
         if (index !== -1) {
           this.companyContracts[index] = contract;
+          
         }
       }
 

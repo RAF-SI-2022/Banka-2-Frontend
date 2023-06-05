@@ -37,6 +37,16 @@ export class TransactionElementCreationComponent {
 
 
   constructor(private router: Router, private formBuilder: FormBuilder) {
+
+    this.elementForm = this.formBuilder.group({
+      status: ["", Validators.required],
+      referenceNumber: ["", Validators.required],
+      priceOfOneElement: ["", Validators.required],
+      amount: ["", Validators.required],
+      balance: ["CASH", Validators.required],
+      currency: ['', Validators.required],
+    });
+
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras && navigation.extras.state) {
 
@@ -64,7 +74,6 @@ export class TransactionElementCreationComponent {
 
       } else if ('futureContract' in navigation.extras.state) {
         this.receivedItem = navigation.extras.state['futureContract'];
-        console.log(this.receivedItem);
         this.buyOrSell = Trade.BUY;
         this.transactionElement = Type.FUTURE
         this.elementForm.get('amount')?.setValue(1)
@@ -78,18 +87,11 @@ export class TransactionElementCreationComponent {
       }
 
 
-      console.log(this.receivedItem);
+      // console.log(this.receivedItem);
       this.mariadbID = this.receivedItem.id;
     }
 
-    this.elementForm = this.formBuilder.group({
-      status: ["", Validators.required],
-      referenceNumber: ["", Validators.required],
-      priceOfOneElement: ["", Validators.required],
-      amount: ["", Validators.required],
-      balance: ["CASH", Validators.required],
-      currency: ['', Validators.required],
-    });
+    
   }
 
 

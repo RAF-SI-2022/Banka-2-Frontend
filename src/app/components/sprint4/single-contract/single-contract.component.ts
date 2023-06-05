@@ -152,7 +152,7 @@ export class SingleContractComponent {
     this.contractService.editCompanyContract(
       this.contractId,
       this.contract.contractStatus,
-      this.contract.contractNumber,
+      this.contract.contractNumber.toString(),
       this.contract.description
       ).subscribe({
         next:val=>{

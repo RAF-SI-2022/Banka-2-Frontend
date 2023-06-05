@@ -11,7 +11,7 @@ import {SellStockComponent} from '../sell-stock/sell-stock.component';
 import {StockService} from 'src/app/services/stock.service';
 import {UserService} from 'src/app/services/user-service.service';
 import {interval} from 'rxjs';
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-stocks-table',
@@ -274,4 +274,15 @@ export class StocksComponent {
     this.buyStockComponent.buyStockVisible = false;
     this.toastr.info("Akcija " + symbol + " je uspesno kupljena!")
   }
+
+  otcRedirect(stock: Stock){
+    const navigationExtras: NavigationExtras = {
+      state: {
+        stock: stock
+      }
+    };
+
+    this.router.navigate(['transaction', 'element'], navigationExtras);
+  }
+  
 }

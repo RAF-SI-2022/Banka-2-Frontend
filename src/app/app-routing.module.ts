@@ -27,6 +27,7 @@ import {CompaniesComponent} from "./components/sprint4/companies/companies.compo
 import {CompanyDetailsComponent} from "./components/sprint4/company-details/company-details.component";
 import { SingleContractComponent } from './components/sprint4/single-contract/single-contract.component';
 import { RegisterComponent } from './components/newSpec/register/register.component';
+import { TransactionElementCreationComponent } from './components/sprint4/transaction-element-creation/transaction-element-creation.component';
 
 const routes: Routes = [
   {
@@ -144,6 +145,10 @@ const routes: Routes = [
   {
     path: 'company/:companyId/contract/:contractId',
     component: SingleContractComponent,
+  },
+  {
+    path: 'transaction/element',
+    component: TransactionElementCreationComponent,
   },
   {
     path: '**', redirectTo: '404-not-found'

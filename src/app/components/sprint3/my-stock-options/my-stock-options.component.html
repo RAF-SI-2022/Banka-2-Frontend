@@ -23,7 +23,7 @@
             <p-table *ngIf="myOptionsCalls && myOptionsCalls.length != 0" styleClass="p-datatable-sm" [value]="myOptionsCalls" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th colspan="5" class="text-center">Calls</th>
+                        <th colspan="6" class="text-center">Calls</th>
                     </tr>
                     <tr>
                         <th>Stock Ticker</th>
@@ -38,6 +38,7 @@
                         <th>Premium</th>
                         <th>Amount</th>
                         <th>Expiration date</th>
+                        <th>OTC</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-stockOption>
@@ -47,6 +48,16 @@
                         <td>{{ stockOption.premium }}</td>
                         <td>{{ stockOption.amount }}</td>
                         <td>{{ stockOption.expirationDate }}</td>
+                        <td>
+                            <button type="button"
+                                    (click)="otcRedirect(stockOption)"
+                                    class="btn-i btn-circle" title="Prodaj opciju">
+                                            <span>
+                                                <i class="bi bi-cart-x" style="font-size: 20px;"></i>
+                                            </span>
+                              <div class="wave"></div>
+                            </button>
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -54,7 +65,7 @@
             <p-table *ngIf="myOptionsPuts && myOptionsPuts.length != 0" styleClass="p-datatable-sm" [value]="myOptionsPuts" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th colspan="5" class="text-center">Puts</th>
+                        <th colspan="6" class="text-center">Puts</th>
                     </tr>
                     <tr>
                         <th>Stock Ticker</th>
@@ -69,6 +80,7 @@
                         <th>Premium</th>
                         <th>Amount</th>
                         <th>Expiration date</th>
+                        <th>OTC</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-stockOption>
@@ -78,6 +90,16 @@
                     <td>{{ stockOption.premium }}</td>
                     <td>{{ stockOption.amount }}</td>
                     <td>{{ stockOption.expirationDate }}</td>
+                    <td>
+                        <button type="button"
+                                (click)="otcRedirect(stockOption)"
+                                class="btn-i btn-circle" title="Prodaj opciju">
+                                        <span>
+                                            <i class="bi bi-cart-x" style="font-size: 20px;"></i>
+                                        </span>
+                          <div class="wave"></div>
+                        </button>
+                    </td>
                     </tr>
                 </ng-template>
             </p-table>

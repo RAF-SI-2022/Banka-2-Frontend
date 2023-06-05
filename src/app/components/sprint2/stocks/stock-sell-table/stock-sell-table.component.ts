@@ -4,7 +4,7 @@ import {Stock, UserStock} from 'src/app/models/stock-exchange.model';
 import {SellStockComponent} from '../sell-stock/sell-stock.component';
 import {ToastrService} from 'ngx-toastr';
 import {StockService} from 'src/app/services/stock.service';
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
 import {UserService} from 'src/app/services/user-service.service';
 import {User} from 'src/app/models/users.model';
 import { error } from 'cypress/types/jquery';
@@ -85,6 +85,16 @@ export class StockSellTableComponent {
         this.loading = false
       }
     })
+  }
+
+  otcRedirect(stock: Stock){
+    const navigationExtras: NavigationExtras = {
+      state: {
+        stock: stock
+      }
+    };
+
+    this.router.navigate(['transaction', 'element'], navigationExtras);
   }
 
   // event: MouseEvent,

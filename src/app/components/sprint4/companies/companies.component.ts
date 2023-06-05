@@ -39,7 +39,7 @@ export class CompaniesComponent {
       {label: 'Kompanije', routerLink: ['/companies']}
     ]
 
-    // this.getAllCompanies();
+    this.getAllCompanies();
 
   }
 

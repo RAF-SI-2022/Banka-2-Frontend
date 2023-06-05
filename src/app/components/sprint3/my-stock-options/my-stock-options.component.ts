@@ -31,8 +31,8 @@ export class MyStockOptionsComponent {
   loading: boolean = false;
 
 
-  constructor(private route: ActivatedRoute, 
-    private stockService: StockService, 
+  constructor(private route: ActivatedRoute,
+    private stockService: StockService,
     private toastr: ToastrService,
     private router: Router
     ) {
@@ -85,13 +85,13 @@ export class MyStockOptionsComponent {
     this.stockService.getMyStockOptions(this.stockSymbol).subscribe({
       next: value => {
         // console.log(value);
-        
+
         this.myOptionsCalls = value.filter((val: MyOption) => val.type === 'CALL');
         this.myOptionsPuts = value.filter((val: MyOption) => val.type === 'PUT');
 
         // if(this.myOptionsCalls.length === 0 ){
         //   this.myOptionsCalls = []
-        // } 
+        // }
         // if(this.myOptionsPuts.length === 0 ){
         //   this.myOptionsPuts = []
         // }
@@ -159,7 +159,7 @@ export class MyStockOptionsComponent {
   otcRedirect(stockOption: Option){
     const navigationExtras: NavigationExtras = {
       state: {
-        stockOption: stockOption
+        userStockOption: stockOption
       }
     };
 

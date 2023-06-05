@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MenuItem} from "primeng/api";
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import {CompanyAccount, CompanyContract, Future} from "../../../models/stock-exchange.model";
+import {CompanyAccount, CompanyContract, Future, TransactionElement} from "../../../models/stock-exchange.model";
 import { OtcService } from 'src/app/services/otc.service';
-import { ToastrService } from 'ngx-toastr';
+import {ToastrService} from "ngx-toastr";
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -28,7 +28,7 @@ export class SingleContractComponent {
 
 
   contractName:string="Ugovor Template"
-  stavke:[]=[];
+  elements: TransactionElement[]
   contractForm: FormGroup;
   contract: CompanyContract;
   breadcrumbItems: MenuItem[];
@@ -81,6 +81,21 @@ export class SingleContractComponent {
       // TODO: ovde treba promeniti u pravi naziv kompanije
       {label: 'Kompanija1', routerLink: ['/companies']}
     ]
+
+    this.getAllContractElements();
+  }
+
+
+  getAllContractElements() {
+    this.contractService.getAllContractElements(this.contract.id).subscribe({
+      next: value => {
+        this.elements = value;
+      },
+
+      error: err => {
+
+      }
+    })
 
     this.contractService.getCompanyContractById(this.contractId).subscribe({
       next:val=>{
@@ -168,7 +183,7 @@ export class SingleContractComponent {
         error: err=>{
           alert("err")
           console.log(err);
-          
+
         }
       })
 
@@ -242,6 +257,22 @@ export class SingleContractComponent {
           this.toastr.info("Niste finalizovali ugovor")
         }
     });
+  }
+
+  deleteElement(elementId: string) {
+    this.contractService.deleteElement(this.contract.id, elementId).subscribe({
+      next: value => {
+
+      },
+      error: err => {
+        if (err.error.text === 'Rezervacija uspesno sklonjena') {
+          this.toastr.success("Uspešno obrisana rezervacija")
+          this.getAllContractElements();
+        } else {
+          this.toastr.error("Greška prilikom brisanja rezervacija")
+        }
+      }
+    })
   }
 
   deleteContract(){

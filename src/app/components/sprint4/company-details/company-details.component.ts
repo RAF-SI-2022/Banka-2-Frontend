@@ -192,14 +192,9 @@ export class CompanyDetailsComponent {
 
   openUserDetailsDialog(user: any) {
 
-    this.singleContactComponent.editCompanyContactForm.setValue({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phone: user.phoneNumber,
-      note: user.note,
-      selectedJob: user.position
-    });
+
+
+
     this.singleContactComponent.userID = user.id
     console.log(user.position)
     if (user.position === ("ADMINISTRATOR")) {
@@ -212,6 +207,14 @@ export class CompanyDetailsComponent {
       this.singleContactComponent.selectedJob = this.singleContactComponent.jobs[2]
     }
 
+    this.singleContactComponent.editCompanyContactForm.patchValue({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phone: user.phoneNumber,
+      note: user.note,
+      selectedJob: this.singleContactComponent.selectedJob 
+    });
     console.log(this.singleContactComponent.selectedJob)
     this.singleContactComponent.contact = user;
     this.singleContactComponent.editCompanyContactVisible = true

@@ -15,7 +15,7 @@
         <label for="name-input">Naziv</label>
       </span>
       <span class="p-float-label">
-        <input pInputText class="w-100" id="id-number-input" [formControlName]="'idNumber'">
+        <input pInputText class="w-100" id="id-number-input" [formControlName]="'registrationNumber'">
         <label for="id-number-input">Matični broj</label>
       </span>
       <span class="p-float-label">
@@ -29,10 +29,6 @@
       <span class="p-float-label">
         <input pInputText class="w-100" id="address-input" [formControlName]="'address'">
         <label for="address-input">Adresa</label>
-      </span>
-      <span class="p-float-label">
-        <input pInputText class="w-100" id="country-input" [formControlName]="'country'">
-        <label for="country-input">Država</label>
       </span>
       <button type="submit" pButton pRipple label="Dodaj" [disabled]="!isFormValid" class="w-100"></button>
     </form>

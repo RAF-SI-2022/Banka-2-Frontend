@@ -189,30 +189,56 @@ export interface Transaction {
   reserved: number,
 }
 
+// Ispod ovoga je mongo, pa su id string
+
 export interface Company {
-  id: number,
+  id: string,
   name: string,
   address: string,
-  country: string,
-  idNumber: string, // maticni broj
+  contractPersons: ContactPerson[],
+  bankAccounts: CompanyAccount[],
+  registrationNumber: string, // maticni broj
   taxNumber: string, // poreski broj
   activityCode: string // sifra aktivnosti
 }
 
 export interface CompanyAccount {
-  id: number,
-  currency: Currency,
-  bank: string,
+  id: string,
   accountNumber: string,
-  active: boolean
+  currency: string,
+  bankName: string,
 }
 
 export interface CompanyContract {
-  id: number,
-  referenceNumber: number,
+  id: string,
+  company: Company,
+  contractElement: string,
+  contractNumber: number,
   description: string,
-  status: string,
-  created: Date,
-  modified: Date
+  transactionElements: TransactionElement[]
+  contractStatus: string,
+  creationDate: Date,
+  lastUpdatedDate: Date
+}
+
+// TODO: bice promenjen
+export interface TransactionElement {
+  id: string,
+  buyOrSell: string,
+  transactionElement: string,
+  balance: string,
+  currency: string,
+  amount: number,
+  priceOfOneElement: number
+}
+
+export interface ContactPerson {
+  id: string,
+  firstName: string,
+  lastName: string
+  phoneNumber: string,
+  email: string,
+  position: string,
+  note: string
 }
 

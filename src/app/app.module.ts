@@ -83,6 +83,9 @@ import { CreateCompanyContractComponent } from './components/sprint4/create-comp
 import {InputTextareaModule} from "primeng/inputtextarea";
 import { CreateCompanyAccountComponent } from './components/sprint4/create-company-account/create-company-account.component';
 import { SingleAccountComponent } from './components/sprint4/single-account/single-account.component';
+import { CreateCompanyContactComponent } from './components/sprint4/create-company-contact/create-company-contact.component';
+import { SingleContactComponent } from './components/sprint4/single-contact/single-contact.component';
+import { RegisterComponent } from './components/newSpec/register/register.component';
 
 
 @NgModule({
@@ -131,6 +134,9 @@ import { SingleAccountComponent } from './components/sprint4/single-account/sing
     CreateCompanyContractComponent,
     CreateCompanyAccountComponent,
     SingleAccountComponent,
+    CreateCompanyContactComponent,
+    SingleContactComponent,
+    RegisterComponent,
     // FutureContractComponent,
 
   ],

@@ -4,46 +4,42 @@
 
   <div class="details-container">
 
-    <h3 style="font-weight: 700">Podaci</h3>
+    <h3 class="mb-4" style="font-weight: 700">Podaci</h3>
 
-    <form (submit)="submitEditCompany()">
+    <form (submit)="submitEditCompany()" [formGroup]="companyForm">
       <div class="form-container">
         <div class="row">
           <div class="col-lg-6">
             <small>Naziv</small>
-            <input pInputText class="w-100"/>
+            <input pInputText [formControlName]="'name'" class="w-100"/>
           </div>
           <div class="col-lg-6">
             <small>Šifra delatnosti</small>
-            <input pInputText class="w-100"/>
+            <input pInputText [formControlName]="'activityCode'" class="w-100"/>
           </div>
         </div>
 
         <div class="row">
           <div class="col-lg-6">
             <small>Matični broj</small>
-            <input pInputText class="w-100"/>
+            <input pInputText [formControlName]="'registrationNumber'" class="w-100"/>
           </div>
           <div class="col-lg-6">
             <small>PIB</small>
-            <input pInputText class="w-100"/>
+            <input pInputText [formControlName]="'taxNumber'" class="w-100"/>
           </div>
         </div>
 
         <div class="row">
           <div class="col-lg-6">
             <small>Adresa</small>
-            <input pInputText class="w-100"/>
-          </div>
-          <div class="col-lg-6">
-            <small>Država</small>
-            <input pInputText class="w-100"/>
+            <input pInputText [formControlName]="'address'" class="w-100"/>
           </div>
         </div>
         <div class="row">
           <div class="text-end">
             <button type="submit" style="background-color: #3d3d3d;" pButton pRipple label="Sačuvaj"
-                    [disabled]="!isFormValid"></button>
+                    [disabled]="!isFormValid"  ></button>
           </div>
         </div>
       </div>
@@ -65,7 +61,7 @@
         <div class="table-header row">
           <div class="col-6 col-lg-6 col-md-6 text-start table-name">
             <div style="display:flex; align-items: center; gap: 8px;">
-              <h3 style="font-weight: 700; font-size: medium">
+              <h3 style="font-weight: 700; font-size: medium; margin-bottom: 0">
                 Računi
               </h3>
             </div>
@@ -134,14 +130,6 @@
                                 [showAddButton]="false">
 
                 </p-columnFilter>
-              </div>
-            </div>
-          </th>
-          <th pSortableColumn="active" style="font-size: 12px; ">
-            <div class="flex justify-content-between align-items-center">
-              <div class="icon-container">
-                <p style="margin-bottom: 0; margin-top: 2px;">Aktivan</p>
-                <p-sortIcon field="active"></p-sortIcon>
               </div>
             </div>
           </th>
@@ -221,10 +209,9 @@
       <ng-template pTemplate="body" let-account>
         <tr class="rowHover" (click)="openAccountDetailsDialog(account)" style="font-size: 12px;">
           <td>{{account.id}}</td>
-          <td>{{account.currency.currencyName}}</td>
-          <td>{{account.bank}}</td>
+          <td>{{account.currency}}</td>
+          <td>{{account.bankName}}</td>
           <td>{{account.accountNumber}}</td>
-          <td>{{account.active}}</td>
         </tr>
       </ng-template>
     </p-table>
@@ -246,7 +233,7 @@
         <div class="table-header row">
           <div class="col-6 col-lg-6 col-md-6 text-start table-name">
             <div style="display:flex; align-items: center; gap: 8px;">
-              <h3 style="font-weight: 700; font-size: medium">
+              <h3 style="font-weight: 700; font-size: medium; margin-bottom: 0">
                 Ugovori
               </h3>
             </div>
@@ -396,10 +383,10 @@
       <ng-template pTemplate="body" let-contract>
         <tr class="rowHover" (click)="openContractDetailsDialog(contract)" style="font-size: 12px;">
           <td>{{contract.id}}</td>
-          <td>{{contract.referenceNumber}}</td>
-          <td>{{contract.status}}</td>
-          <td>{{contract.created}}</td>
-          <td>{{contract.modified}}</td>
+          <td>{{contract.contractNumber}}</td>
+          <td>{{contract.contractStatus}}</td>
+          <td>{{contract.creationDate}}</td>
+          <td>{{contract.lastUpdatedDate}}</td>
         </tr>
       </ng-template>
     </p-table>
@@ -408,7 +395,7 @@
 
   <div class="details-container">
 
-    <p-table #dt [value]="contactUsers" class="p-datatable-header"
+    <p-table #dt [value]="companyContacts" class="p-datatable-header"
              [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
              [paginator]="true" [alwaysShowPaginator]="false"
              [loading]="loading" [loadingIcon]="''"
@@ -421,7 +408,7 @@
         <div class="table-header row">
           <div class="col-6 col-lg-6 col-md-6 text-start table-name">
             <div style="display:flex; align-items: center; gap: 8px;">
-              <h3 style="font-weight: 700; font-size: medium">
+              <h3 style="font-weight: 700; font-size: medium; margin-bottom: 0">
                 Kontakt osobe
               </h3>
             </div>
@@ -589,8 +576,8 @@
           <td>{{user.firstName}}</td>
           <td>{{user.lastName}}</td>
           <td>{{user.email}}</td>
-          <td>{{user.phone}}</td>
-          <td>{{user.jobPosition}}</td>
+          <td>{{user.phoneNumber}}</td>
+          <td>{{user.position}}</td>
         </tr>
       </ng-template>
     </p-table>
@@ -598,6 +585,8 @@
   </div>
 </div>
 
+<app-create-company-contact (companyContactEmitter)="submitCreateCompanyContact($event)"></app-create-company-contact>
 <app-create-company-contract (companyContractEmitter)="submitCreateCompanyContract($event)"></app-create-company-contract>
 <app-create-company-account (companyAccountEmitter)="submitCreateCompanyAccount($event)"></app-create-company-account>
 <app-single-account (editCompanyAccountEmitter)="submitEditCompanyAccount($event)"></app-single-account>
+<app-single-contact (editCompanyContactEmitter)="submitEditCompanyContact($event)"></app-single-contact>

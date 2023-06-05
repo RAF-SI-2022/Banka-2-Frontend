@@ -8,6 +8,7 @@ import { OtcService } from 'src/app/services/otc.service';
 import {ToastrService} from "ngx-toastr";
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { UserService } from 'src/app/services/user-service.service';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -41,6 +42,8 @@ export class SingleContractComponent {
   futuresLoading: boolean = false;
   contractId: string
 
+  isAuthorised: boolean = false;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -48,7 +51,8 @@ export class SingleContractComponent {
     private messageService: MessageService,
     private contractService: OtcService,
     private toastr: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserService
   ) {
 
     // ovde contractId
@@ -83,6 +87,7 @@ export class SingleContractComponent {
     ]
 
     this.getAllContractElements();
+
   }
 
 
@@ -108,7 +113,9 @@ export class SingleContractComponent {
         });
       },
       error: err=>{
-        alert("erorr");
+        this.toastr.error("Doslo je do neocekivane greske")
+        this.router.navigate(['/companies'])
+        // alert("erorr");
       }
     })
 
@@ -215,10 +222,10 @@ export class SingleContractComponent {
             //this.rejectContract();
             this.deleteContract();
             //this.messageService.add({ severity: 'info', summary: 'Završeno', detail: 'Uspešno ste odbacili ugovor' });
-            this.toastr.success("Uspešno ste odbacili ugovor")
+            //this.toastr.success("Uspešno ste odbacili ugovor")
         },
         reject: () => {
-          this.toastr.info("Niste odbacili ugovor")
+          this.toastr.info("Niste izbrisali ugovor")
           //this.messageService.add({ severity: 'error', summary: 'Odbijeno', detail: 'Niste odbacili ugovor' });
         }
     });
@@ -278,20 +285,47 @@ export class SingleContractComponent {
   deleteContract(){
     this.contractService.deleteCompanyContract(this.contractId).subscribe({
       next:val=>{
-          //redirect
+        console.log(val);
+        
+          this.toastr.success("Uspesno obrisan ugovor")
+          this.router.navigate(['/companies'])
       },
       error:err=>{
-          if(err.error.text===""){
-            //redirect
+        console.log(err);
+        
+          if(err.error.text==="Ugovor uspesno izbrisan"){
+            this.toastr.success("Uspesno obrisan ugovor")
+            this.router.navigate(['/companies'])
           }
           else{
-            //toastr
+            this.toastr.error("Doslo je do greske pri brisanju ugovor")
           }
       }
     })
   }
-  
+
+  elementiString: string = ''
+
+  generateElementsToString(){
+    this.elements.forEach(element=>{
+      this.elementiString += "Tip hartije " +element.transactionElement + ' '
+      this.elementiString += "Tip " +element.buyOrSell + ' '
+      this.elementiString += "Cena jednog " +element.priceOfOneElement + ' '
+      this.elementiString += "Kolicina " +element.amount + ' '
+      this.elementiString += "Balans " +element.balance + ' '
+      this.elementiString += "Valuta " + element.currency + '\n'
+    })
+  }
+  getS(){
+    console.log(this.elements)
+    this.generateElementsToString()
+    console.log(this.elementiString);
+    
+    
+  }
+
   generatePDF() {
+    this.generateElementsToString()
     // download()
     this.contractService.getCompanyContractById(this.contractId).subscribe({
       next:val=>{
@@ -309,7 +343,10 @@ export class SingleContractComponent {
             'Status: '+val.contractStatus,
             'Delovodni broj: '+val.contractNumber,
             'Zadnje modifikovan: '+val.lastUpdatedDate,
-            'Deskripcija: '+val.description
+            'Deskripcija: '+val.description,
+            '',
+            'Elementi:\n ' + this.elementiString
+
           ],
           defaultStyle: {
             font: 'Roboto', // Replace with your desired font name
@@ -323,5 +360,21 @@ export class SingleContractComponent {
         alert("erorr");
       }
     })
+  }
+
+  getAgentPerm():boolean{
+    // console.log(localStorage.getItem("permissions"));
+    // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS"));
+    // console.log(!sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
+    // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
+    
+    if (localStorage.getItem("remember") !== null) {
+      if (localStorage.getItem("permissions")?.includes("UPDATE_USERS") && !localStorage.getItem("permissions")?.includes("ADMIN_USER"))
+        return true
+    } else {
+      if (sessionStorage.getItem("permissions")?.includes("UPDATE_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"))
+        return true
+   }
+    return false
   }
 }

@@ -213,7 +213,7 @@ export interface CompanyContract {
   id: string,
   company: Company,
   contractElement: string,
-  contractNumber: number,
+  contractNumber: string,
   description: string,
   transactionElements: TransactionElement[]
   contractStatus: string,

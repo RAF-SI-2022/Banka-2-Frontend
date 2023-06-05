@@ -283,8 +283,8 @@ export class SingleFutureTableComponent {
       this.futureName
     ).subscribe({
       next: val => {
-        console.log("BUY");
-        console.log(val);
+        //console.log("BUY");
+        //console.log(val);
         // TODO ovde mora da se doda ili na beku da mi se proveri da li ima konkretni user to
         this.idsToBeBought = val
       },

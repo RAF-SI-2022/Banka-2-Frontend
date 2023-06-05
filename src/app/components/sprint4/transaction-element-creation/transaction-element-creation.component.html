@@ -9,12 +9,12 @@
                   <label style="font-weight: 500; margin-right: 10px;">Cena po komadu</label>
                   <input [formControlName]="'priceOfOneElement'" class="w-100" type="number" pInputText>
                 </div>
-                <div class="col-5 text-start">
+                <div *ngIf="showAmount" class="col-5 text-start">
                     <label style="font-weight: 500; margin-right: 10px;">Amount</label>
                     <input [formControlName]="'amount'" class="w-100" type="number" pInputText>
                 </div>
             </div>
-           
+
 
             <div class="row  justify-content-center mt-3">
                 <div class="col-5 text-start">
@@ -27,16 +27,16 @@
                         <p-radioButton  value="CASH" [formControlName]="'balance'" inputId="cash"></p-radioButton>
                         <label for="cash" class="ml-2">Cash</label>
                     </div>
-                    
+
                     <div class="flex align-items-center" style="margin-left: 10px;">
                         <p-radioButton value="MARGIN" [formControlName]="'balance'" inputId="margin"></p-radioButton>
                         <label for="margin" class="ml-2">Margin</label>
                     </div>
                 </div>
-                
+
             </div>
 
-            
+
             <div class="row  justify-content-center mt-5">
                 <div  class="col-10 text-center">
                     <p-button type="submit" label="Dodaj"></p-button>
@@ -44,7 +44,7 @@
             </div>
 
 
-            
+
 
         </form>
 

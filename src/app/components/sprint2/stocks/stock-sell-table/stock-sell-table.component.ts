@@ -90,7 +90,7 @@ export class StockSellTableComponent {
   otcRedirect(stock: Stock){
     const navigationExtras: NavigationExtras = {
       state: {
-        stock: stock
+        userStock: stock
       }
     };
 

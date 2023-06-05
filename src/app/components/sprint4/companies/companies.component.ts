@@ -10,6 +10,10 @@ import {CreateCompanyComponent} from "../create-company/create-company.component
 import {OtcService} from "../../../services/otc.service";
 import {CompanyService} from "../../../services/company.service";
 
+
+import {Stock, UserStock} from 'src/app/models/stock-exchange.model';
+
+
 @Component({
   selector: 'app-companies',
   templateUrl: './companies.component.html',
@@ -20,10 +24,10 @@ export class CompaniesComponent {
   @ViewChild(CreateCompanyComponent, {static: true}) createCompanyComponent: CreateCompanyComponent;
 
   breadcrumbItems: MenuItem[];
-  companies: Company[] = [];
+  companies: Company[] = []
   loading: boolean = false;
-
   selectedCompany: any = {}
+  
 
   constructor(private toastr: ToastrService, private userService: UserService,
               private stockService: StockService, private router: Router, private companyService: CompanyService) {
@@ -35,7 +39,7 @@ export class CompaniesComponent {
       {label: 'Kompanije', routerLink: ['/companies']}
     ]
 
-    this.getAllCompanies();
+    // this.getAllCompanies();
 
   }
 
@@ -88,4 +92,5 @@ export class CompaniesComponent {
       }
     })
   }
+  
 }

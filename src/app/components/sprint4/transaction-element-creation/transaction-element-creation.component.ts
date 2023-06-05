@@ -48,12 +48,14 @@ export class TransactionElementCreationComponent {
             this.receivedItem = navigation.extras.state['contract'];
             this.buyOrSell = Trade.SELL;
             this.transactionElement = Type.STOCK
+            console.log("asd")
 
         } 
          else if ('stockOption' in navigation.extras.state) {
             this.receivedItem = navigation.extras.state['stockOption'];
             this.buyOrSell = Trade.BUY;
             this.transactionElement = Type.OPTION
+
 
         }    
          else if ('userStockOption' in navigation.extras.state) {
@@ -126,7 +128,7 @@ export class TransactionElementCreationComponent {
     let priceOfOneElement = this.elementForm.get('priceOfOneElement')?.value
 
     console.log(balance,currency, amount, priceOfOneElement)
-    
+
   }
 
 }

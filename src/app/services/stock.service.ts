@@ -266,6 +266,11 @@ export class StockService {
       {}
       , {headers: this.headers})
   }
+
+  getAllFuturesByUser(userId: number) {
+    return this.httpClient.get<any>(`http://localhost:8080/api/futures/user/${userId}`,
+      {headers: this.headers})
+  }
 }
 
 

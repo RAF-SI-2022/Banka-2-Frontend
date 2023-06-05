@@ -27,9 +27,8 @@ enum Type {
 
 export class TransactionElementCreationComponent {
 
-
-
   receivedItem: any;
+
   elementForm: FormGroup;
   buyOrSell: string;
   transactionElement: string;
@@ -38,6 +37,8 @@ export class TransactionElementCreationComponent {
   mariadbID: number;
   user: User
   futureStorageField: string
+
+  title: string;
 
 
   constructor(private router: Router, private formBuilder: FormBuilder,
@@ -55,6 +56,7 @@ export class TransactionElementCreationComponent {
         this.receivedItem = navigation.extras.state['stock'];
         this.buyOrSell = Trade.BUY;
         this.transactionElement = Type.STOCK
+        this.title = this.receivedItem.symbol
 
         futureStorageFieldJSON = {
           stock_id: this.receivedItem.id
@@ -64,6 +66,7 @@ export class TransactionElementCreationComponent {
         this.receivedItem = navigation.extras.state['userStock'];
         this.buyOrSell = Trade.SELL;
         this.transactionElement = Type.STOCK
+        this.title = this.receivedItem.stock.symbol
 
         futureStorageFieldJSON = {
           stock_id: this.receivedItem.id
@@ -73,7 +76,7 @@ export class TransactionElementCreationComponent {
         this.receivedItem = navigation.extras.state['stockOption'];
         this.buyOrSell = Trade.BUY;
         this.transactionElement = Type.OPTION
-
+        this.title = this.receivedItem.stockSymbol
 
         futureStorageFieldJSON = {
           "option_id": this.receivedItem.id,
@@ -88,6 +91,7 @@ export class TransactionElementCreationComponent {
         this.receivedItem = navigation.extras.state['userStockOption'];
         this.buyOrSell = Trade.SELL;
         this.transactionElement = Type.OPTION
+        this.title = this.receivedItem.stockSymbol
 
         futureStorageFieldJSON = {
           "option_id": this.receivedItem.id,
@@ -104,6 +108,7 @@ export class TransactionElementCreationComponent {
         this.transactionElement = Type.FUTURE
         tempAmount = 1;
         futureStorageFieldJSON = JSON.stringify(this.receivedItem);
+        this.title = this.receivedItem.futureName
 
       } else if ('userFutureContract' in navigation.extras.state) {
         this.receivedItem = navigation.extras.state['userFutureContract'];
@@ -111,6 +116,7 @@ export class TransactionElementCreationComponent {
         this.transactionElement = Type.FUTURE
         tempAmount = 1;
         futureStorageFieldJSON = JSON.stringify(this.receivedItem);
+        this.title = this.receivedItem.futureName
 
       }
 

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {MenuItem} from "primeng/api";
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
+import {CompanyAccount, CompanyContract, Future} from "../../../models/stock-exchange.model";
 import { OtcService } from 'src/app/services/otc.service';
 
 enum Status {
@@ -29,6 +29,11 @@ export class SingleContractComponent {
   breadcrumbItems: MenuItem[];
   visible: boolean;
   disable: boolean;
+  showStocks: boolean = false;
+  showFutures: boolean = true;
+  showOptions: boolean = false;
+  futures: Future[] // za prikaz
+  futuresLoading: boolean = false;
 
   constructor(
     private router: Router,
@@ -172,7 +177,4 @@ export class SingleContractComponent {
         }
     });
   }
-
-
-
 }

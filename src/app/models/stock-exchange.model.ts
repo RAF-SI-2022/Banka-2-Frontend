@@ -223,13 +223,17 @@ export interface CompanyContract {
 
 // TODO: bice promenjen
 export interface TransactionElement {
-  id: string,
+  contractId: string,
+  elementId: string,
   buyOrSell: string,
   transactionElement: string,
   balance: string,
   currency: string,
   amount: number,
-  priceOfOneElement: number
+  priceOfOneElement: number,
+  userId: number,
+  mariaDbId: number,
+  futureStorageField: string
 }
 
 export interface ContactPerson {

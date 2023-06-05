@@ -374,12 +374,12 @@ export class SingleContractComponent {
     // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
     
     if (localStorage.getItem("remember") !== null) {
-      if (localStorage.getItem("permissions")?.includes("UPDATE_USERS") && !localStorage.getItem("permissions")?.includes("ADMIN_USER"))
-        return true
+      if (!localStorage.getItem("permissions")?.includes("UPDATE_USERS") && !localStorage.getItem("permissions")?.includes("ADMIN_USER"))
+        return false
     } else {
-      if (sessionStorage.getItem("permissions")?.includes("UPDATE_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"))
-        return true
+      if (!sessionStorage.getItem("permissions")?.includes("UPDATE_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"))
+        return false
    }
-    return false
+    return true
   }
 }

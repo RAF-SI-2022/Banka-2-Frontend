@@ -145,7 +145,7 @@ export class SingleContractComponent {
   }
 
   finalizeContract(){
-    this.contract.contractStatus = Status.ACCEPTED;
+    //this.contract.contractStatus = Status.ACCEPTED;
 
      // salje se update-ovani contract na back, kad se vrati zove se ovaj notify i updateuje se (ovo ispod je template)
 
@@ -154,16 +154,21 @@ export class SingleContractComponent {
 
     //todo upload
 
-    this.contractService.closeCompanyContract(this.contractId).subscribe({
+    this.contractService.finalizeCompanyContract(this.contractId).subscribe({
         next: val=>{
-          alert("val")
+          // alert("val")
+          console.log("ods");
+          
+          console.log(val);
+          
         },
         error: err=>{
-          alert("eror")
+          console.log(err);
+          
         }
     })
 
-    console.log(this.contract)
+    //console.log(this.contract)
   }
 
   editContract(){

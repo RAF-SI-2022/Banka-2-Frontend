@@ -131,8 +131,8 @@ export class OtcService {
       {headers: this.headers})
   }
 
-  closeCompanyContract(id: string): Observable<any> {
-    return this.httpClient.patch<any>(`http://localhost:8082/api/otc/close/${id}`,
+  finalizeCompanyContract(id: string): Observable<any> {
+    return this.httpClient.patch<any>(`http://localhost:8082/api/otc/finalize/${id}`,
       {
 
       },

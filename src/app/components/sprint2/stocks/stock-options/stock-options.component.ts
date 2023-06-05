@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {MenuItem} from "primeng/api";
 import {StockService} from "../../../../services/stock.service";
 import {Option, Stock, StockDetails} from "../../../../models/stock-exchange.model";
@@ -174,6 +174,16 @@ export class StockOptionsComponent {
         }
       }
     })
+  }
+
+  otcRedirect(stockOption: Option){
+    const navigationExtras: NavigationExtras = {
+      state: {
+        stockOption: stockOption
+      }
+    };
+
+    this.router.navigate(['transaction', 'element'], navigationExtras);
   }
 
 }

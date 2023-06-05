@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MenuItem } from 'primeng/api';
 import { MyOption, Option, StockDetails } from 'src/app/models/stock-exchange.model';
@@ -154,5 +154,15 @@ export class MyStockOptionsComponent {
           }
         }
       )
+  }
+
+  otcRedirect(stockOption: Option){
+    const navigationExtras: NavigationExtras = {
+      state: {
+        stockOption: stockOption
+      }
+    };
+
+    this.router.navigate(['transaction', 'element'], navigationExtras);
   }
 }

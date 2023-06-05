@@ -86,6 +86,8 @@ import { SingleAccountComponent } from './components/sprint4/single-account/sing
 import { CreateCompanyContactComponent } from './components/sprint4/create-company-contact/create-company-contact.component';
 import { SingleContactComponent } from './components/sprint4/single-contact/single-contact.component';
 import { RegisterComponent } from './components/newSpec/register/register.component';
+import { TransactionElementCreationComponent } from './components/sprint4/transaction-element-creation/transaction-element-creation.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 
 @NgModule({
@@ -137,6 +139,7 @@ import { RegisterComponent } from './components/newSpec/register/register.compon
     CreateCompanyContactComponent,
     SingleContactComponent,
     RegisterComponent,
+    TransactionElementCreationComponent,
     // FutureContractComponent,
 
   ],
@@ -176,6 +179,7 @@ import { RegisterComponent } from './components/newSpec/register/register.compon
     TabViewModule,
     InputTextareaModule,
     ConfirmDialogModule,
+    RadioButtonModule,
   ],
   // exports: [
   //   ActivityPipe

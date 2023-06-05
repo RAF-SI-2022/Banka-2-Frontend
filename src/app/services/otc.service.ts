@@ -155,8 +155,8 @@ export class OtcService {
       , {headers: this.headers})
   }
 
-  getAllContractElements(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/otc/contract_elements`
+  getAllContractElements(contractId: string): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:8082/api/otc/contract_elements/${contractId}`
       , {headers: this.headers})
   }
 

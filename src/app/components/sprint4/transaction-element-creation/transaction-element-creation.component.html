@@ -20,29 +20,33 @@
       </div>
 
 
-      <div class="row  justify-content-center mt-3">
+      <div class="row justify-content-center mt-3">
         <div class="col-5 text-start">
+          <label style="font-weight: 500; margin-right: 10px;">Valuta</label>
           <p-dropdown [options]="currencies" [(ngModel)]="selectedCurrency" optionLabel="currencySymbol"
                       [style]="{'width':'100%'}" id="currency" [formControlName]="'currency'"></p-dropdown>
         </div>
 
-        <div class="col-5 justify-content-start" style="display: inline-flex; align-items: center; text-align: center;">
-          <div class="flex align-items-center">
-            <p-radioButton value="CASH" [formControlName]="'balance'" inputId="cash"></p-radioButton>
-            <label for="cash" class="ml-2">Cash</label>
-          </div>
-
-          <div class="flex align-items-center" style="margin-left: 10px;">
-            <p-radioButton value="MARGIN" [formControlName]="'balance'" inputId="margin"></p-radioButton>
-            <label for="margin" class="ml-2">Margin</label>
-          </div>
+        <div class="col-5">
+          <label style="font-weight: 500; margin-right: 10px;">Ugovor</label>
+          <p-dropdown [options]="contracts" [formControlName]="'selectedContract'" [(ngModel)]="selectedContract"
+                      optionLabel="contractNumber" [style]="{'width':'100%'}" placeholder="Ugovor"></p-dropdown>
         </div>
 
       </div>
 
-      <div class="row">
-        <p-dropdown [options]="contracts" [formControlName]="'selectedContract'" [(ngModel)]="selectedContract" optionLabel="contractNumber"
-                    placeholder="Ugovor"></p-dropdown>
+      <div class="row justify-content-center mt-5">
+        <div class="justify-content-center" style="display: inline-flex; align-items: center; text-align: center;">
+          <div class="flex align-items-center">
+            <p-radioButton value="CASH" [formControlName]="'balance'" inputId="cash"></p-radioButton>
+            <label class="ms-2">Cash</label>
+          </div>
+
+          <div class="flex align-items-center" style="margin-left: 10px;">
+            <p-radioButton value="MARGIN" [formControlName]="'balance'" inputId="margin"></p-radioButton>
+            <label class="ms-2">Margin</label>
+          </div>
+        </div>
       </div>
 
 

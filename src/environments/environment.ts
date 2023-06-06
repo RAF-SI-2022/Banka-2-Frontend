@@ -1,10 +1,10 @@
 export const environment = {
-  mainHost: 'localhost',
-  otcHost: 'localhost',
-  usersHost: 'localhost',
-  mainPort: '8080',
-  usersPort: '8081',
-  otcPort: '8082',
+  // mainHost: 'localhost',
+  // otcHost: 'localhost',
+  // usersHost: 'localhost',
+  // mainPort: '8080',
+  // usersPort: '8081',
+  // otcPort: '8082',
 
   mainServiceURL: 'http://localhost:8080',
   // mainURL: host+port

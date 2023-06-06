@@ -32,7 +32,7 @@ presubmits:
               image_tags+=" ${tag_name}"
               image_tags=$(echo $image_tags | xargs)
 
-              for $service in $services
+              for service in $services
               do
                 for tag in $image_tags
                 do

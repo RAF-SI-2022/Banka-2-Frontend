@@ -42,6 +42,8 @@ export class SingleContractComponent {
   futuresLoading: boolean = false;
   contractId: string
 
+  status: string;
+
   isAuthorised: boolean = false;
 
   constructor(
@@ -102,6 +104,11 @@ export class SingleContractComponent {
       }
     })
 
+    this.getCompanyContractById()
+
+  }
+
+  getCompanyContractById(){
     this.contractService.getCompanyContractById(this.contractId).subscribe({
       next:val=>{
         this.contractForm = this.formBuilder.group({
@@ -111,6 +118,7 @@ export class SingleContractComponent {
           modified: [val.lastUpdatedDate, Validators.required],
           description: [val.description, Validators.required],
         });
+        this.status = val.contractStatus
       },
       error: err=>{
         this.toastr.error("Doslo je do neocekivane greske")
@@ -157,13 +165,19 @@ export class SingleContractComponent {
     this.contractService.finalizeCompanyContract(this.contractId).subscribe({
         next: val=>{
           // alert("val")
-          console.log("ods");
-          
-          console.log(val);
+          this.contract.contractStatus = Status.ACCEPTED;
+          this.toastr.success("Ugovor uspesno kompletiran")
+          this.getCompanyContractById()
           
         },
         error: err=>{
-          console.log(err);
+          if(err.error.text === "Ugovor uspesno kompletiran"){
+            this.contract.contractStatus = Status.ACCEPTED;
+            this.toastr.success("Ugovor uspesno kompletiran")
+            this.getCompanyContractById()
+          }else{
+            this.toastr.error("Doslo je do neocekivane greske")
+          }
           
         }
     })
@@ -190,11 +204,17 @@ export class SingleContractComponent {
       this.contract.description
       ).subscribe({
         next:val=>{
-          alert("val")
+          this.getCompanyContractById()
+          this.toastr.success("Ugovor je uspesno promenjen")
         },
         error: err=>{
-          alert("err")
-          console.log(err);
+          if(err.error.text === "Ugovor je uspesno promenjen"){
+            this.getCompanyContractById()
+            this.toastr.success("Ugovor je uspesno promenjen")
+          }
+          else{
+            this.toastr.error("Doslo je do neocekivane greske")
+          }
 
         }
       })
@@ -244,7 +264,7 @@ export class SingleContractComponent {
         accept: () => {
             this.editContract();
             //this.messageService.add({ severity: 'info', summary: 'Izmenjeno', detail: 'Uspešno ste izmenili ugovor' });
-            this.toastr.success("Uspešno ste izmenili ugovor")
+            //this.toastr.success("Uspešno ste izmenili ugovor")
         },
         reject: () => {
           //this.messageService.add({ severity: 'error', summary: 'Odbijeno', detail: 'Niste izmenili ugovor' });
@@ -262,7 +282,7 @@ export class SingleContractComponent {
         accept: () => {
             this.finalizeContract();
             //this.messageService.add({ severity: 'info', summary: 'Završeno', detail: 'Uspešno ste finalizovali ugovor' });
-            this.toastr.success("Uspešno ste finalizovali ugovor")
+            //this.toastr.success("Uspešno ste finalizovali ugovor")
         },
         reject: () => {
           //this.messageService.add({ severity: 'error', summary: 'Odbijeno', detail: 'Niste finalizovali ugovor' });
@@ -309,7 +329,7 @@ export class SingleContractComponent {
     })
   }
 
-  elementiString: string = ''
+  elementiString: string = 'Elementi:\n '
 
   generateElementsToString(){
     this.elements.forEach(element=>{
@@ -350,7 +370,7 @@ export class SingleContractComponent {
             'Zadnje modifikovan: '+val.lastUpdatedDate,
             'Deskripcija: '+val.description,
             '',
-            'Elementi:\n ' + this.elementiString
+            this.elementiString
 
           ],
           defaultStyle: {

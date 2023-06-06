@@ -49,6 +49,10 @@ export class OtcService {
       , {headers: this.headers})
   }
 
+  getAllCompanyMyContracts(id:string): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:8082/api/otc/byCompany/${id}`
+      , {headers: this.headers})
+  }
 
   getCompanyContractById(id: string): Observable<any> {
     return this.httpClient.get<any>(`http://localhost:8082/api/otc/${id}`

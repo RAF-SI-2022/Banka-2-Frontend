@@ -41,6 +41,9 @@ export class TransactionElementCreationComponent {
   priceOfOneElement: number
   contracts: CompanyContract[]
   selectedContract: CompanyContract
+  isFormValid: boolean = false;
+  disabled: boolean = true;
+
 
   title: string;
 
@@ -137,13 +140,17 @@ export class TransactionElementCreationComponent {
     }
 
     this.elementForm = this.formBuilder.group({
-      status: ["", Validators.required],
-      referenceNumber: ["", Validators.required],
       priceOfOneElement: [this.priceOfOneElement, Validators.required],
       amount: [tempAmount !== undefined ? tempAmount : this.receivedItem.amount, Validators.required],
       balance: ["CASH", Validators.required],
       currency: ['', Validators.required],
       selectedContract: ['', Validators.required]
+    });
+
+    this.elementForm.controls['priceOfOneElement'].disable();
+
+    this.elementForm.valueChanges.subscribe(() => {
+      this.isFormValid = this.elementForm.valid;
     });
   }
 

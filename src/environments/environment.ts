@@ -1,10 +1,10 @@
 export const environment = {
 
-  mainServiceURL: 'http://localhost:8080',
+  mainServiceURL: 'https://banka-2.k8s.elab.rs/backend/main',
   // mainURL: host+port
-  usersServiceURL: 'http://localhost:8081',
+  usersServiceURL: 'https://banka-2.k8s.elab.rs/backend/users',
   // usersURL: host+port
-  otcServiceURL: 'http://localhost:8082',
+  otcServiceURL: 'https://banka-2.k8s.elab.rs/backend/otc',
   // otcURL: host+port
 
   //utility putanje

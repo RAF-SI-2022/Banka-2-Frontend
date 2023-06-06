@@ -125,7 +125,7 @@ export class SingleContractComponent {
     this.contractService.notify(this.contract)
     this.update()
 
-    this.contractService.closeCompanyContract(this.contractId).subscribe({
+    this.contractService.finalizeCompanyContract(this.contractId).subscribe({
         next: val=>{
           alert("val")
         },

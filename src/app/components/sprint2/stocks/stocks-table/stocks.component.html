@@ -99,6 +99,13 @@
               </div>
             </div>
           </th>
+          <th style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">OTC</p>
+              </div>
+            </div>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
@@ -226,6 +233,16 @@
                 <span>
                   <i class="bi bi-cart" style="font-size: 20px;"></i>
                 </span>
+              <div class="wave"></div>
+            </button>
+          </td>
+          <td>
+            <button type="button"
+                    (click)="otcRedirect(stock)"
+                    class="btn-i btn-circle" style="color: white; background: #3d3d3d;" title="Kupi hartiju">
+                            <span>
+                                <i class="bi bi-cart" style="font-size: 20px;"></i>
+                            </span>
               <div class="wave"></div>
             </button>
           </td>

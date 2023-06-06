@@ -111,7 +111,7 @@
             </div>
           </th>
 
-          <th style="font-size: 12px; ">
+          <th *ngIf="getAgentPerm()" style="font-size: 12px; ">
             <div class="flex justify-content-between align-items-center">
               <div class="icon-container">
                 <p style="margin-bottom: 0; margin-top: 2px;">Izmena statusa</p>
@@ -132,15 +132,15 @@
           <td>{{order.status}}</td>
           <td>{{order.lastModified}}</td>
 
-          <td>
-            <button type="button"  (click)="approveTransaction(order.id)"
+          <td *ngIf="getAgentPerm()">
+            <button *ngIf="order.status === 'NA CEKANJU'" type="button"  (click)="approveTransaction(order.id)"
                     class="btn-i btn-circle" title="Prihvati porudzbinu">
                 <span>
                   <i class="bi bi-check" style="font-size: 20px;"></i>
                 </span>
               <div class="wave"></div>
             </button>
-              <button type="button"
+              <button *ngIf="order.status === 'NA CEKANJU'" type="button"
               class="btn-i btn-circle" (click)="declineTransaction(order.id)" title="Odbij porudzbinu">
                 <span>
                 <i class="bi bi-x" style="font-size: 20px;"></i>

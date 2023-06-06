@@ -1,7 +1,7 @@
 
 export class CapitalTestComponents{
 
-  testCapital(id: number){
+  testCapital(){
 
     let waitTime = 500
     cy.log("CAPITAL TEST------------------------------")
@@ -21,6 +21,18 @@ export class CapitalTestComponents{
     cy.get('.p-dialog-header-close-icon').click()
     cy.wait(waitTime)
     cy.get('#pr_id_2-table > .p-datatable-tbody > :nth-child(1) > :nth-child(1)').click()
+
+  }
+
+  testOpenUSDCapital(){
+    let waitTime = 500
+    cy.log("CAPITAL TEST II------------------------------")
+
+    cy.get('#pr_id_2-table > .p-datatable-tbody > :nth-child(2) > :nth-child(1)').click()
+    cy.wait(waitTime)
+    cy.get('.p-dialog-header-icons > .p-ripple').click()
+    cy.wait(waitTime)
+    cy.contains('tr', 'AKCIJA').click()
 
   }
 

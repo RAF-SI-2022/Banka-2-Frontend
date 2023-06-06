@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Currency, Order } from 'src/app/models/stock-exchange.model';
-import { Balance } from 'src/app/models/stock-exchange.model';
+import { Balance,MarginBalance } from 'src/app/models/stock-exchange.model';
 import { DepositWithdrawCapitalComponent } from '../deposit-withdraw-capital/deposit-withdraw-capital.component';
 import { TransactionListComponent } from '../transaction-list/transaction-list.component';
 import { Router } from '@angular/router';
@@ -35,6 +35,7 @@ export class CapitalComponent  {
     {valuta: "CHF", ukupno: 123, rezervisano: 123, raspolozivo: 0},
   ];
 
+  marginBalance: MarginBalance[];
 
   breadcrumbItems: MenuItem[];
 
@@ -156,6 +157,7 @@ export class CapitalComponent  {
           this.getBalanceFromBack()
           this.getMyFutures();
           this.getMyOrders();
+          this.getMarginBalanceFromBack();
         },
         error: err => {
           this.toastr.error(err.error)
@@ -163,9 +165,6 @@ export class CapitalComponent  {
         }
       })
   }
-
-  //TODO: iskoriscenog limita videti da li je azurirano, za sada koristimo kao alternativu samo ono sto je "rezervisano"
-  //TODO: od kolicine ukupne koju ima korisnik i nemamo an frontu nikakve provere za iskoriscenost limita!!!
 
   getPermission(): boolean {
     if (localStorage.getItem("remember") !== null) {
@@ -238,6 +237,23 @@ export class CapitalComponent  {
   roundNumber(num: number){
     return Math.round(num * 10) / 10
     // Math.round((num + Number.EPSILON) * 100) / 100
+  }
+  
+  private getMarginBalanceFromBack(): void {
+
+    this.stockService.getAllMarginBalance()
+    .subscribe({
+      next: val => {
+        console.log(val);
+        this.marginBalance = val;
+        //console.log(this.marginBalance);
+       // this.newselectedBalance = this.balance[1]//0 za dinarski 1 za dolarski
+      },
+      error: err =>{
+        this.toastr.error(err.error)
+      }
+    })
+
   }
 
 }

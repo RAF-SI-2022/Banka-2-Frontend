@@ -1,0 +1,34 @@
+<p-dialog [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
+          [(visible)]="createCompanyAccountVisible" *ngIf="true" [modal]="true" (onHide)="resetForm()">
+  <ng-template pTemplate="header">
+    <h2 style="font-weight: bolder" class="mb-3">Kreiranje računa</h2>
+
+  </ng-template>
+  <p-divider/>
+
+  <div class="create-company-account-form-container">
+    <form (submit)="submitCreateCompanyAccount()" [formGroup]="createCompanyAccountForm"
+          class="create-company-account-form pt-4 pb-4 gap-4">
+
+      <span class="p-float-label currency-dropdown-container" >
+        <p-dropdown [options]="currencies" [(ngModel)]="selectedCurrency" optionLabel="currencySymbol"
+                    [style]="{'width':'100%'}" id="currency" [formControlName]="'currency'"></p-dropdown>
+        <label for="currency">Valuta</label>
+      </span>
+
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="account-number-input" [formControlName]="'accountNumber'">
+        <label for="account-number-input">Šifra</label>
+      </span>
+
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="bank-input" [formControlName]="'bank'">
+        <label for="bank-input">Banka</label>
+      </span>
+
+      <button type="submit" pButton pRipple label="Dodaj" [disabled]="!isFormValid" class="w-100"></button>
+    </form>
+  </div>
+</p-dialog>
+

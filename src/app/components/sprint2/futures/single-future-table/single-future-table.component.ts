@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {Future, Order} from "../../../../models/stock-exchange.model";
 import {StockService} from "../../../../services/stock.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {error} from 'cypress/types/jquery';
 import {UserService} from 'src/app/services/user-service.service';
 import {User} from 'src/app/models/users.model';
@@ -283,8 +283,8 @@ export class SingleFutureTableComponent {
       this.futureName
     ).subscribe({
       next: val => {
-        console.log("BUY");
-        console.log(val);
+        //console.log("BUY");
+        //console.log(val);
         // TODO ovde mora da se doda ili na beku da mi se proveri da li ima konkretni user to
         this.idsToBeBought = val
       },
@@ -351,9 +351,28 @@ export class SingleFutureTableComponent {
           this.getAllFutures()
         }
       })
-
-
   }
+
+  otcMyFutureRedirect(future: Future){
+    const navigationExtras: NavigationExtras = {
+      state: {
+        userFutureContract: future
+      }
+    };
+    
+    this.router.navigate(['transaction', 'element'], navigationExtras);
+  }
+
+  otcFutureRedirect(future: Future){
+    const navigationExtras: NavigationExtras = {
+      state: {
+        futureContract: future
+      }
+    };
+    
+    this.router.navigate(['transaction', 'element'], navigationExtras);
+  }
+
 
 
 }

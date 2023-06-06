@@ -69,6 +69,9 @@
           <th>
             <p style="margin-bottom: 0; margin-top: 2px;">Opcije</p>
           </th>
+          <th>
+            <p style="margin-bottom: 0; margin-top: 2px;">OTC</p>
+          </th>
         </tr>
         <tr *ngIf="changeOption">
           <th>
@@ -98,6 +101,9 @@
           </th>
           <th>
             <p style="margin-bottom: 0; margin-top: 2px;">Opcije</p>
+          </th>
+          <th>
+            <p style="margin-bottom: 0; margin-top: 2px;">OTC</p>
           </th>
         </tr>
       </ng-template>
@@ -150,6 +156,18 @@
             <!--              <button *ngIf="changeOption"  (click)="openBuyFutureDialog(future)" pButton label="Kupi sa limitom"></button>-->
 
           </td>
+
+          <td>
+            <button type="button"
+                    (click)="otcFutureRedirect(future)"
+                    class="btn-i btn-circle" style="color: white; background: #3d3d3d;" title="Kupi hartiju">
+                            <span>
+                                <i class="bi bi-cart" style="font-size: 20px;"></i>
+                            </span>
+              <div class="wave"></div>
+            </button>
+          </td>
+
         </tr>
         <tr *ngIf="changeOption">
 
@@ -195,6 +213,16 @@
                 <div class="wave"></div>
               </button>
             </div>
+          </td>
+          <td>
+            <button type="button"
+                    (click)="otcMyFutureRedirect(future)"
+                    class="btn-i btn-circle"style="color: white; background: #3d3d3d;" title="Prodaj hartiju">
+                            <span>
+                                <i class="bi bi-cart-x" style="font-size: 20px;"></i>
+                            </span>
+              <div class="wave"></div>
+            </button>
           </td>
         </tr>
       </ng-template>

@@ -69,6 +69,13 @@
               </div>
             </div>
           </th>
+          <th style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">OTC</p>
+              </div>
+            </div>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="loadingbody">
@@ -157,6 +164,16 @@
               <div class="wave"></div>
             </button>
           </td>
+          <td>
+            <button type="button"
+                    (click)="otcRedirect(userStock)"
+                    class="btn-i btn-circle" style="color: white; background: #3d3d3d;" title="Prodaj hartiju">
+                            <span>
+                                <i class="bi bi-cart-x" style="font-size: 20px;"></i>
+                            </span>
+              <div class="wave"></div>
+            </button>
+          </td>
         </tr>
       </ng-template>
     </p-table>
@@ -174,7 +191,7 @@
               <div class="col-12 text-start table-name">
                   <div style="display:flex; align-items: center; gap: 8px;">
                       <h3 style="font-size: medium;">
-                          Pregled kapitala
+                          Pregled porudžbina
                       </h3>
                   </div>
               </div>

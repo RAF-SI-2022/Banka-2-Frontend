@@ -1,0 +1,592 @@
+<div class="body-container">
+
+  <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
+
+  <div class="details-container">
+
+    <h3 class="mb-4" style="font-weight: 700">Podaci</h3>
+
+    <form (submit)="submitEditCompany()" [formGroup]="companyForm">
+      <div class="form-container">
+        <div class="row">
+          <div class="col-lg-6">
+            <small>Naziv</small>
+            <input pInputText [formControlName]="'name'" class="w-100"/>
+          </div>
+          <div class="col-lg-6">
+            <small>Šifra delatnosti</small>
+            <input pInputText [formControlName]="'activityCode'" class="w-100"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <small>Matični broj</small>
+            <input pInputText [formControlName]="'registrationNumber'" class="w-100"/>
+          </div>
+          <div class="col-lg-6">
+            <small>PIB</small>
+            <input pInputText [formControlName]="'taxNumber'" class="w-100"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <small>Adresa</small>
+            <input pInputText [formControlName]="'address'" class="w-100"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="text-end">
+            <button type="submit" style="background-color: #3d3d3d;" pButton pRipple label="Sačuvaj"
+                    [disabled]="!isFormValid"  ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="details-container">
+
+    <p-table #dt [value]="companyAccounts" class="p-datatable-header"
+             [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
+             [paginator]="true" [alwaysShowPaginator]="false"
+             [loading]="loading" [loadingIcon]="''"
+             currentPageReportTemplate="Prikazano je {first}-{last} od ukupno {totalRecords} ugovora"
+             [globalFilterFields]="['symbol']"
+    >
+      <ng-template pTemplate="caption">
+
+
+        <div class="table-header row">
+          <div class="col-6 col-lg-6 col-md-6 text-start table-name">
+            <div style="display:flex; align-items: center; gap: 8px;">
+              <h3 style="font-weight: 700; font-size: medium; margin-bottom: 0">
+                Računi
+              </h3>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-6 text-end">
+            <form action="" title="Dodaj račun">
+              <div class="add-stock-container">
+                <button label="Dodaj račun" pButton pRipple style="background-color: #3d3d3d; cursor: pointer;"
+                        icon="pi pi-plus"
+                        (click)="openCreateCompanyAccountDialog()"></button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id" style="font-size: 12px;">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">ID</p>
+                <p-sortIcon field="id"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="currency" style="font-size: 12px;">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Valuta</p>
+                <p-sortIcon field="currency"></p-sortIcon>
+                <!--                <p-columnFilter id="nameFilter" type="text" field="name" display="menu" class="ml-auto"-->
+                <!--                                matchMode="contains"-->
+                <!--                                [showMatchModes]="false" placeholder="Unesite naziv" [showOperator]="false"-->
+                <!--                                [showAddButton]="false">-->
+
+                <!--                </p-columnFilter>-->
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="bank" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Banka</p>
+                <p-sortIcon field="bank"></p-sortIcon>
+                <p-columnFilter id="bankFilter" type="text" field="bank" display="menu" class="ml-auto"
+                                matchMode="contains"
+                                [showMatchModes]="false" placeholder="Unesite naziv banke" [showOperator]="false"
+                                [showAddButton]="false">
+
+                </p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="accountNumber" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Šifra</p>
+                <p-sortIcon field="accountNumber"></p-sortIcon>
+                <p-columnFilter id="accountNumberFilter" type="text" field="accountNumber" display="menu"
+                                class="ml-auto"
+                                matchMode="contains"
+                                [showMatchModes]="false" placeholder="Unesite broj računa" [showOperator]="false"
+                                [showAddButton]="false">
+
+                </p-columnFilter>
+              </div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- TODO centrirati ovo u tabelu -->
+          <td [attr.colspan]="7">
+            <div class="text-center">
+              <span>Nema podataka za prikazivanje</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!--      id: number,-->
+      <!--      companyName: string,-->
+      <!--      address: string,-->
+      <!--      country: string,-->
+      <!--      idNumber: string, // maticni broj-->
+      <!--      taxNumber: string // poreski broj-->
+
+      <ng-template pTemplate="body" let-account>
+        <tr class="rowHover" (click)="openAccountDetailsDialog(account)" style="font-size: 12px;">
+          <td>{{account.id}}</td>
+          <td>{{account.currency}}</td>
+          <td>{{account.bankName}}</td>
+          <td>{{account.accountNumber}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+  <div class="details-container">
+
+    <p-table #dt [value]="companyContracts" class="p-datatable-header"
+             [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
+             [paginator]="true" [alwaysShowPaginator]="false"
+             [loading]="loading" [loadingIcon]="''"
+             currentPageReportTemplate="Prikazano je {first}-{last} od ukupno {totalRecords} kompanija"
+             [globalFilterFields]="['symbol']"
+    >
+      <ng-template pTemplate="caption">
+
+
+        <div class="table-header row">
+          <div class="col-6 col-lg-6 col-md-6 text-start table-name">
+            <div style="display:flex; align-items: center; gap: 8px;">
+              <h3 style="font-weight: 700; font-size: medium; margin-bottom: 0">
+                Ugovori
+              </h3>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-6 text-end">
+            <form action="" title="Dodaj ugovor">
+              <div class="add-stock-container">
+                <button label="Dodaj ugovor" pButton pRipple style="background-color: #3d3d3d; cursor: pointer;"
+                        icon="pi pi-plus"
+                        (click)="openCreateCompanyContractDialog()"></button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id" style="font-size: 12px;">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">ID</p>
+                <p-sortIcon field="id"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="referenceNumber" style="font-size: 12px;">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Delovodni broj</p>
+                <p-sortIcon field="referenceNumber"></p-sortIcon>
+                <!--                <p-columnFilter id="nameFilter" type="text" field="name" display="menu" class="ml-auto"-->
+                <!--                                matchMode="contains"-->
+                <!--                                [showMatchModes]="false" placeholder="Unesite naziv" [showOperator]="false"-->
+                <!--                                [showAddButton]="false">-->
+
+                <!--                </p-columnFilter>-->
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="status" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Status</p>
+                <p-sortIcon field="status"></p-sortIcon>
+                <p-columnFilter id="statusFilter" type="text" field="status" display="menu" class="ml-auto"
+                                matchMode="contains"
+                                [showMatchModes]="false" placeholder="Unesite status" [showOperator]="false"
+                                [showAddButton]="false">
+
+                </p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="created" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Kreiran</p>
+                <p-sortIcon field="created"></p-sortIcon>
+
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="modified" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Izmenjen</p>
+                <p-sortIcon field="modified"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- TODO centrirati ovo u tabelu -->
+          <td [attr.colspan]="7">
+            <div class="text-center">
+              <span>Nema podataka za prikazivanje</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!--      id: number,-->
+      <!--      companyName: string,-->
+      <!--      address: string,-->
+      <!--      country: string,-->
+      <!--      idNumber: string, // maticni broj-->
+      <!--      taxNumber: string // poreski broj-->
+
+      <ng-template pTemplate="body" let-contract>
+        <tr class="rowHover" (click)="openContractDetailsDialog(contract)" style="font-size: 12px;">
+          <td>{{contract.id}}</td>
+          <td>{{contract.contractNumber}}</td>
+          <td>{{contract.contractStatus}}</td>
+          <td>{{contract.creationDate}}</td>
+          <td>{{contract.lastUpdatedDate}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+  <div class="details-container">
+
+    <p-table #dt [value]="companyContacts" class="p-datatable-header"
+             [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
+             [paginator]="true" [alwaysShowPaginator]="false"
+             [loading]="loading" [loadingIcon]="''"
+             currentPageReportTemplate="Prikazano je {first}-{last} od ukupno {totalRecords} korisnika"
+             [globalFilterFields]="['symbol']"
+    >
+      <ng-template pTemplate="caption">
+
+
+        <div class="table-header row">
+          <div class="col-6 col-lg-6 col-md-6 text-start table-name">
+            <div style="display:flex; align-items: center; gap: 8px;">
+              <h3 style="font-weight: 700; font-size: medium; margin-bottom: 0">
+                Kontakt osobe
+              </h3>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-6 text-end">
+            <form action="" title="Dodaj osobu">
+              <div class="add-stock-container">
+                <button label="Dodaj osobu" pButton pRipple style="background-color: #3d3d3d; cursor: pointer;"
+                        icon="pi pi-plus"
+                        (click)="openAddContactUserDialog()"></button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id" style="font-size: 12px;">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">ID</p>
+                <p-sortIcon field="id"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="firstName" style="font-size: 12px;">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Ime</p>
+                <p-sortIcon field="firstName"></p-sortIcon>
+                <p-columnFilter id="firstNameFilter" type="text" field="firstName" display="menu" class="ml-auto"
+                                matchMode="contains"
+                                [showMatchModes]="false" placeholder="Unesite ime" [showOperator]="false"
+                                [showAddButton]="false">
+
+                </p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="lastName" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Prezime</p>
+                <p-sortIcon field="status"></p-sortIcon>
+                <p-columnFilter id="lastNameFilter" type="text" field="lastName" display="menu" class="ml-auto"
+                                matchMode="contains"
+                                [showMatchModes]="false" placeholder="Unesite prezime" [showOperator]="false"
+                                [showAddButton]="false">
+
+                </p-columnFilter>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="email" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Email</p>
+                <p-sortIcon field="email"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="phone" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Broj telefona</p>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="jobPosition" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Pozicija</p>
+                <p-sortIcon field="jobPosition"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p-skeleton width="3rem"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="3rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton width="4rem" styleClass="mb-2"></p-skeleton>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <!-- TODO centrirati ovo u tabelu -->
+          <td [attr.colspan]="7">
+            <div class="text-center">
+              <span>Nema podataka za prikazivanje</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!--      id: number,-->
+      <!--      companyName: string,-->
+      <!--      address: string,-->
+      <!--      country: string,-->
+      <!--      idNumber: string, // maticni broj-->
+      <!--      taxNumber: string // poreski broj-->
+
+      <ng-template pTemplate="body" let-user>
+        <tr class="rowHover" (click)="openUserDetailsDialog(user)" style="font-size: 12px;">
+          <td>{{user.id}}</td>
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.phoneNumber}}</td>
+          <td>{{user.position}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+</div>
+
+<app-create-company-contact (companyContactEmitter)="submitCreateCompanyContact($event)"></app-create-company-contact>
+<app-create-company-contract (companyContractEmitter)="submitCreateCompanyContract($event)"></app-create-company-contract>
+<app-create-company-account (companyAccountEmitter)="submitCreateCompanyAccount($event)"></app-create-company-account>
+<app-single-account (editCompanyAccountEmitter)="submitEditCompanyAccount($event)"></app-single-account>
+<app-single-contact (editCompanyContactEmitter)="submitEditCompanyContact($event)"></app-single-contact>

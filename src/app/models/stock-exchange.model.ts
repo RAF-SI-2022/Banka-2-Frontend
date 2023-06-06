@@ -189,4 +189,79 @@ export interface Transaction {
   reserved: number,
 }
 
+// Ispod ovoga je mongo, pa su id string
 
+export interface Company {
+  id: string,
+  name: string,
+  address: string,
+  contractPersons: ContactPerson[],
+  bankAccounts: CompanyAccount[],
+  registrationNumber: string, // maticni broj
+  taxNumber: string, // poreski broj
+  activityCode: string // sifra aktivnosti
+}
+
+export interface CompanyAccount {
+  id: string,
+  accountNumber: string,
+  currency: string,
+  bankName: string,
+}
+
+export interface CompanyContract {
+  id: string,
+  company: Company,
+  contractElement: string,
+  contractNumber: string,
+  description: string,
+  transactionElements: TransactionElement[]
+  contractStatus: string,
+  creationDate: Date,
+  lastUpdatedDate: Date
+}
+
+// TODO: bice promenjen
+export interface TransactionElement {
+  contractId: string,
+  elementId: string,
+  buyOrSell: string,
+  transactionElement: string,
+  balance: string,
+  currency: string,
+  amount: number,
+  priceOfOneElement: number,
+  userId: number,
+  mariaDbId: number,
+  futureStorageField: string
+}
+
+export interface ContactPerson {
+  id: string,
+  firstName: string,
+  lastName: string
+  phoneNumber: string,
+  email: string,
+  position: string,
+  note: string
+}
+
+export interface MarginBalance {
+  accountType: string,
+  currencyCode: string,
+  listingGroup: string,
+  investedResources: number,
+  loanedResources: number,
+  maintananceMargin: number,
+  marginCall: boolean,
+}
+
+export interface MarginTransactions {
+  accountType: string,
+  orderID: number,
+  transactionComment: string,
+  currencyCode: string,
+  transactionType: string,
+  initialMargin: number,
+  maintananceMargin: number,
+}

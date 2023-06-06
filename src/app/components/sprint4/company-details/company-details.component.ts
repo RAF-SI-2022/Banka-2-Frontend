@@ -79,6 +79,7 @@ export class CompanyDetailsComponent {
         const index = this.companyContracts.findIndex(item => item.id === contract.id);
         if (index !== -1) {
           this.companyContracts[index] = contract;
+
         }
       }
 
@@ -213,7 +214,7 @@ export class CompanyDetailsComponent {
       email: user.email,
       phone: user.phoneNumber,
       note: user.note,
-      selectedJob: this.singleContactComponent.selectedJob 
+      selectedJob: this.singleContactComponent.selectedJob
     });
     console.log(this.singleContactComponent.selectedJob)
     this.singleContactComponent.contact = user;
@@ -223,7 +224,7 @@ export class CompanyDetailsComponent {
 
   getAllContracts() {
 
-    this.contractService.getAllCompanyContracts().subscribe(
+    this.contractService.getAllCompanyMyContracts(this.companyId).subscribe(
       {
         next: val => {
           console.log(val);
@@ -292,7 +293,7 @@ export class CompanyDetailsComponent {
           this.toastr.success("Uspesno dodat ugovor")
         },
         error: err => {
-          
+
           if(err.error.text === "Ugovor je uspesno otvoren"){
             this.getAllContracts()
             this.toastr.success(err.error.text)

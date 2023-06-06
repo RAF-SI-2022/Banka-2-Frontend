@@ -50,6 +50,10 @@ export class OtcService {
       , {headers: this.headers})
   }
 
+  getAllCompanyMyContracts(id:string): Observable<any> {
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/otc/byCompany/${id}`
+      , {headers: this.headers})
+  }
 
   getCompanyContractById(id: string): Observable<any> {
     return this.httpClient.get<any>(`${environment.otcServiceURL}/api/otc/${id}`

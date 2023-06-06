@@ -64,7 +64,7 @@ export class TransactionElementCreationComponent {
         this.priceOfOneElement = this.receivedItem.priceValue
 
         futureStorageFieldJSON = {
-          stock_id: this.receivedItem.stock.priceValue
+          stock_id: this.receivedItem.priceValue
         }
 
       } else if ('userStock' in navigation.extras.state) {
@@ -76,7 +76,7 @@ export class TransactionElementCreationComponent {
         this.priceOfOneElement = this.receivedItem.stock.priceValue
 
         futureStorageFieldJSON = {
-          stock_id: this.receivedItem.stock.priceValue
+          stock_id: this.receivedItem.priceValue
         }
 
       } else if ('stockOption' in navigation.extras.state) {

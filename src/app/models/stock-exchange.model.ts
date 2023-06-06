@@ -246,3 +246,22 @@ export interface ContactPerson {
   note: string
 }
 
+export interface MarginBalance {
+  accountType: string,
+  currencyCode: string,
+  listingGroup: string,
+  investedResources: number,
+  loanedResources: number,
+  maintananceMargin: number,
+  marginCall: boolean,
+}
+
+export interface MarginTransactions {
+  accountType: string,
+  orderID: number,
+  transactionComment: string,
+  currencyCode: string,
+  transactionType: string,
+  initialMargin: number,
+  maintananceMargin: number,
+}

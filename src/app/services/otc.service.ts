@@ -222,5 +222,13 @@ export class OtcService {
     this.contractSubject.next(null);
   }
 
+  uploadContractToBack(){
+
+  }
+
+  downloadContractFromBack(){
+
+  }
+
 
 }

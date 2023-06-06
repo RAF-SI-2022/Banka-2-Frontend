@@ -168,7 +168,7 @@ export class SingleContractComponent {
           this.contract.contractStatus = Status.ACCEPTED;
           this.toastr.success("Ugovor uspesno kompletiran")
           this.getCompanyContractById()
-          
+
         },
         error: err=>{
           if(err.error.text === "Ugovor uspesno kompletiran"){
@@ -178,7 +178,7 @@ export class SingleContractComponent {
           }else{
             this.toastr.error("Doslo je do neocekivane greske")
           }
-          
+
         }
     })
 
@@ -196,7 +196,7 @@ export class SingleContractComponent {
     this.update()
 
     //console.log(this.contract);
-    
+
     this.contractService.editCompanyContract(
       this.contractId,
       this.contract.contractStatus,
@@ -311,13 +311,13 @@ export class SingleContractComponent {
     this.contractService.deleteCompanyContract(this.contractId).subscribe({
       next:val=>{
         console.log(val);
-        
+
           this.toastr.success("Uspesno obrisan ugovor")
           this.router.navigate(['/companies'])
       },
       error:err=>{
         console.log(err);
-        
+
           if(err.error.text==="Ugovor uspesno izbrisan"){
             this.toastr.success("Uspesno obrisan ugovor")
             this.router.navigate(['/companies'])
@@ -345,8 +345,8 @@ export class SingleContractComponent {
     console.log(this.elements)
     this.generateElementsToString()
     console.log(this.elementiString);
-    
-    
+
+
   }
 
   generatePDF() {
@@ -362,7 +362,7 @@ export class SingleContractComponent {
           description: [val.description, Validators.required],
         });
         console.log(val);
-        
+
         const documentDefinition = {
           content: [
             'Status: '+val.contractStatus,
@@ -377,7 +377,7 @@ export class SingleContractComponent {
             font: 'Roboto', // Replace with your desired font name
           },
         };
-      
+
         const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
         pdfDocGenerator.download(val.contractNumber+'.pdf');
       },
@@ -392,7 +392,7 @@ export class SingleContractComponent {
     // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS"));
     // console.log(!sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
     // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
-    
+
     if (localStorage.getItem("remember") !== null) {
       if (!localStorage.getItem("permissions")?.includes("UPDATE_USERS") && !localStorage.getItem("permissions")?.includes("ADMIN_USER"))
         return false

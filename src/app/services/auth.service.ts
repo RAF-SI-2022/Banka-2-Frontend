@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.httpClient.post<LoginResponse>(`${environment.apiAuthServerUrl}/login`, {
+    return this.httpClient.post<LoginResponse>(`${environment.mainServiceURL}/auth/login`, {
       email: email,
       password: password
     }, {observe: 'response'})
@@ -32,11 +32,11 @@ export class AuthService {
   }
 
   resetPassword(email: string) {
-    return this.httpClient.post<any>(`${environment.apiForgotPassUrl}`, {email: email}, {observe: 'response'});
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/auth/reset-password`, {email: email}, {observe: 'response'});
   }
 
   submitNewPassword(password: string, token: string) {
-    return this.httpClient.post<any>(`${environment.apiPasswordRestoreUrl}`, {
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/auth/change-user-password`, {
       token: token,
       newPassword: password
     }, {observe: 'response'});

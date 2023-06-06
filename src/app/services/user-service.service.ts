@@ -50,20 +50,20 @@ export class UserService {
 
   getAllUsers(): Observable<any> {
     return this.httpClient.get<any>(
-      `${environment.apiUserServerUrl}`,
+      `${environment.mainServiceURL}/api/users`,
       {headers: this.headers})
   }
 
   getUserById(id: number): Observable<User> {
     return this.httpClient.get<User>(
-      `${environment.apiUserServerUrl}/` + id,
+      `${environment.mainServiceURL}/api/users/` + id,
       {headers: this.headers})
   }
 
   createNewUser(firstName: string, lastName: string, email: string, password: string, permissions: any, dailyLimit: number | null, jobPosition: string, active: string, jmbg: string, phone: string
   ): Observable<any> {
     return this.httpClient.post<UserCreateDTO>(
-      `${environment.apiUserServerUrl}/register`,
+      `${environment.mainServiceURL}/api/users/register`,
       {
         firstName: firstName,
         lastName: lastName,
@@ -91,7 +91,7 @@ export class UserService {
     phone: string,
     active: boolean
   ): Observable<any> {
-    return this.httpClient.put<any>(`${environment.apiUserServerUrl}/` + id,
+    return this.httpClient.put<any>(`${environment.mainServiceURL}/api/users/` + id,
       {
         email: email,
         firstName: firstName,
@@ -107,7 +107,7 @@ export class UserService {
 
   updateProfile(id: number, email: string, firstName: string,
                 lastName: string, phone: string): Observable<any> {
-    return this.httpClient.put<any>(`${environment.apiUserServerUrl}/edit-profile/` + id,
+    return this.httpClient.put<any>(`${environment.mainServiceURL}/api/users/edit-profile/` + id,
       {
         email: email,
         firstName: firstName,
@@ -118,7 +118,7 @@ export class UserService {
   }
 
   changePassword(id: number, password: string): Observable<any> {
-    return this.httpClient.put<any>(`${environment.apiUserServerUrl}/password/` + id,
+    return this.httpClient.put<any>(`${environment.mainServiceURL}/api/users/password/` + id,
       {
         password: password
       },
@@ -126,12 +126,12 @@ export class UserService {
   }
 
   deleteUser(id: number): Observable<any> {
-    return this.httpClient.delete(`${environment.apiUserServerUrl}/` + id, {headers: this.headers})
+    return this.httpClient.delete(`${environment.mainServiceURL}/api/users/` + id, {headers: this.headers})
   }
 
   activateUser(id: number): Observable<User> {
     return this.httpClient.post<User>(
-      `${environment.apiUserServerUrl}/reactivate/` + id,
+      `${environment.mainServiceURL}/api/users/reactivate/` + id,
       {},
       {headers: this.headers});
 
@@ -139,27 +139,27 @@ export class UserService {
 
   deactivateUser(id: number): Observable<any> {
     return this.httpClient.post(
-      `${environment.apiUserServerUrl}/deactivate/` + id,
+      `${environment.mainServiceURL}/api/users/deactivate/` + id,
       {},
       {headers: this.headers})
   }
 
   getUserData(): Observable<any> {
-    return this.httpClient.get(`${environment.apiUserServerUrl}/email`, {headers: this.headers})
+    return this.httpClient.get(`${environment.mainServiceURL}/api/users/email`, {headers: this.headers})
   }
 
   getUserPermissions(id: number): Observable<any> {
-    return this.httpClient.get(`${environment.apiUserServerUrl}/permissions` + id, {headers: this.headers})
+    return this.httpClient.get(`${environment.mainServiceURL}/api/users/permissions` + id, {headers: this.headers})
   }
 
   resetUserLimit(id: number): Observable<any> {
-    return this.httpClient.patch(`${environment.apiUserServerUrl}/reset-limit/${id}`, {}, {headers: this.headers})
+    return this.httpClient.patch(`${environment.mainServiceURL}/api/users/reset-limit/${id}`, {}, {headers: this.headers})
   }
 
   getUserDefaultDailyLimit(id: number): Observable<any> {
-    return this.httpClient.get(`${environment.apiUserServerUrl}/default-limit/${id}`, {headers: this.headers})
+    return this.httpClient.get(`${environment.mainServiceURL}/api/users/default-limit/${id}`, {headers: this.headers})
   }
   changeUsersDailyLimit(id: number, limit: number): Observable<any>{
-    return this.httpClient.patch(`${environment.apiUserServerUrl}/change-limit/${id}/${limit}`, {}, {headers: this.headers})
+    return this.httpClient.patch(`${environment.mainServiceURL}/api/users/change-limit/${id}/${limit}`, {}, {headers: this.headers})
   }
 }

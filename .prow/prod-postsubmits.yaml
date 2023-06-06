@@ -62,6 +62,11 @@ postsubmits:
                 --set namespace=$namespace \
                 --set domainPrefix=$domainPrefix \
                 --set frontend.imageVer=$imageVer \
+                -n banka-2-prod || \
+              helm install banka-2-prod . --reuse-values \
+                --set namespace=$namespace \
+                --set domainPrefix=$domainPrefix \
+                --set frontend.imageVer=$imageVer \
                 -n banka-2-prod
 
           securityContext:

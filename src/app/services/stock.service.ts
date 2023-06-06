@@ -42,55 +42,55 @@ export class StockService {
   }
 
   getAllStocks(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/stock`
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/stock`
       , {headers: this.headers})
   }
 
   getStockBySymbol(symbol: string): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/stock/symbol/${symbol}`
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/stock/symbol/${symbol}`
       , {headers: this.headers})
   }
 
   getMyStocks(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/stock/user-stocks`
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/stock/user-stocks`
       , {headers: this.headers})
   }
 
 
   getStockDetails(id: number): Observable<any> {
     return this.httpClient.get<StockDetails>(
-      `${environment.apiStockDetails}` + id,
+      `${environment.mainServiceURL}/api/stock/` + id,
       {headers: this.headers})
   }
 
   getStockGraph(id: number, type: string): Observable<any> {
     return this.httpClient.get<StockDetails>(
-      `${environment.apiStockGraph}${id}/history/${type}`,
+      `${environment.mainServiceURL}/api/stock/${id}/history/${type}`,
       {headers: this.headers})
   }
 
   getAllFutures(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/futures`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/futures`, {headers: this.headers})
   }
 
   getCurrencies(curr0: string, curr1: string): Observable<any> {
-    return this.httpClient.get(`${environment.apiForexUrl}/${curr0}/${curr1}`, {headers: this.headers})
+    return this.httpClient.get(`${environment.mainServiceURL}/api/forex/${curr0}/${curr1}`, {headers: this.headers})
   }
 
   loadCSVData() {
-    return this.httpClient.get('assets/csv/filtered_forex_pairs.csv', {responseType: 'text'});
+    return this.httpClient.get(`${environment.csvPath}`, {responseType: 'text'});
   }
 
   getAllFuturesByName(futureName: string): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/futures/name/${futureName}`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/futures/name/${futureName}`, {headers: this.headers})
   }
 
   getFuturesByUserId(userId: number): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/futures/user/${userId}`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/futures/user/${userId}`, {headers: this.headers})
   }
 
   buyFuture(id: string, futureName: string, action: string, price: number, limit: number, stop: number): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/futures/buy`
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/api/futures/buy`
       , {
         id: id,
         futureName: futureName,
@@ -103,7 +103,7 @@ export class StockService {
   }
 
   sellFuture(id: string, futureName: string, action: string, price: number, limit: number, stop: number): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/futures/sell`
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/api/futures/sell`
       , {
         id: id,
         userId: null,
@@ -118,7 +118,7 @@ export class StockService {
 
 
   buyStock(symbol: string, amount: number, limit: number, stop: number, allOrNone: boolean, margin: boolean): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/stock/buy`
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/api/stock/buy`
       , {
         stockSymbol: symbol,
         amount: amount,
@@ -132,7 +132,7 @@ export class StockService {
   }
 
   sellStock(symbol: string, amount: number, limit: number, stop: number, allOrNone: boolean, margin: boolean, userId: number): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/stock/sell`
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/api/stock/sell`
       , {
         stockSymbol: symbol,
         amount: amount,
@@ -147,60 +147,60 @@ export class StockService {
   }
 
   getOptionsDates() {
-    return this.httpClient.get<any>(`http://localhost:8080/api/options/dates`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/options/dates`, {headers: this.headers})
   }
 
   getStockOptionsBySymbol(symbol: string) {
-    return this.httpClient.get<any>(`http://localhost:8080/api/options/${symbol}`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/options/${symbol}`, {headers: this.headers})
   }
 
   getStockOptionsByDate(symbol: string, date: string) {
-    return this.httpClient.get<any>(`http://localhost:8080/api/options/${symbol}/${date}`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/options/${symbol}/${date}`, {headers: this.headers})
   }
 
   getMyStockOptions(symbol: string) {
-    return this.httpClient.get<any>(`http://localhost:8080/api/options/user-options/${symbol}`
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/options/user-options/${symbol}`
       , {headers: this.headers})
   }
 
   removeStockFromSale(symbol: string) {
-    return this.httpClient.post<any>(`http://localhost:8080/api/stock/remove/${symbol}`,
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/api/stock/remove/${symbol}`,
       {}
       , {headers: this.headers})
   }
 
   buyOption(optionId: number, amount: number, premium: number) {
     return this.httpClient.post<any>(
-      `http://localhost:8080/api/options/buy`,
+      `${environment.mainServiceURL}/api/options/buy`,
       {optionId: optionId, amount: amount, premium: premium},
       {headers: this.headers}
     );
   }
 
   removeFutureFromMarket(futureId: string): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/futures/remove/${futureId}`,
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/api/futures/remove/${futureId}`,
       {}
       , {headers: this.headers})
   }
 
   getAllWaitingFuturesForUser(type: string, futureName: string): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/futures/waiting-futures/${type}/${futureName}`
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/futures/waiting-futures/${type}/${futureName}`
       , {headers: this.headers})
   }
 
   getExchangeStatus(micCode: string): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiExchangeUrl}/status/${micCode}`,
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/futures/status/${micCode}`,
       {headers: this.headers})
   }
 
   removeFromWaitingSellFuture(id: number): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/futures/remove-waiting-sell/${id}`
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/api/futures/remove-waiting-sell/${id}`
       , {}
       , {headers: this.headers})
   }
 
   removeFromWaitingBuyFuture(id: number): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/futures/remove-waiting-buy/${id}`
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/api/futures/remove-waiting-buy/${id}`
       , {}
       , {headers: this.headers})
   }
@@ -212,7 +212,7 @@ export class StockService {
       ammount = 1
     }
 
-    return this.httpClient.post(`${environment.apiForexUrl}/buy-sell`,
+    return this.httpClient.post(`${environment.mainServiceURL}/api/forex/buy-sell`,
       {
         fromCurrencyCode: fromCurrency,
         toCurrencyCode: toCurrency,
@@ -222,23 +222,23 @@ export class StockService {
   }
 
   getAllOrders(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/orders`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/orders`, {headers: this.headers})
   }
 
   getAllOrdersByUserId(id: number): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/orders/${id}`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/orders/${id}`, {headers: this.headers})
   }
 
   getAllBalancesByUserId(id: number): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/balances/${id}`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/balances/${id}`, {headers: this.headers})
   }
 
   getAllTransactionsByCurrency(currencyCode: string): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8080/api/transactions/${currencyCode}`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/transactions/${currencyCode}`, {headers: this.headers})
   }
 
   depositBalance(amount: number, userEmail: string, currencyCode: string): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/balances/increase`, {
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/api/balances/increase`, {
         userEmail: userEmail,
         currencyCode: currencyCode,
         amount: amount,
@@ -247,7 +247,7 @@ export class StockService {
   }
 
   withdrawBalance(amount: number, userEmail: string, currencyCode: string): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8080/api/balances/decrease`, {
+    return this.httpClient.post<any>(`${environment.mainServiceURL}/api/balances/decrease`, {
         userEmail: userEmail,
         currencyCode: currencyCode,
         amount: amount,
@@ -256,18 +256,29 @@ export class StockService {
   }
 
   declineOrder(id: string): Observable<any> {
-    return this.httpClient.patch<any>(`http://localhost:8080/api/orders/deny/` + id,
+    return this.httpClient.patch<any>(`${environment.mainServiceURL}/api/orders/deny/` + id,
       {}
       , {headers: this.headers})
   }
 
   approveOrder(id: string): Observable<any> {
-    return this.httpClient.patch<any>(`http://localhost:8080/api/orders/approve/` + id,
+    return this.httpClient.patch<any>(`${environment.mainServiceURL}/api/orders/approve/` + id,
       {}
       , {headers: this.headers})
   }
 
-
+  getAllFuturesByUser(userId: number) {
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/futures/user/${userId}`,
+      {headers: this.headers})
+  }
+    
+  getAllMarginBalance(): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:8082/api/marginAccount`, {headers: this.headers})
+  }
+  
+  getMarginTransactions(): Observable<any> {
+    return this.httpClient.get<any>(`http://localhost:8082/api/marginTransaction`, {headers: this.headers})
+  }
 
 }
 

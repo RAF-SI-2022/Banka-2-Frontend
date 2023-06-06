@@ -31,4 +31,20 @@ export class EditUserTestComponents {
 
   }
 
+  editUserFail(id: number){
+
+    cy.get('#editBtn' + id).click()
+
+    cy.get('#email-input').clear().type("anesic3119rn+banka2backend+admin@raf.rs")
+    cy.wait(500)
+    cy.get('.edit-user-form > .p-ripple').click()
+    cy.get('.ng-trigger').should("have.length", 1);
+
+  }
+
+  closeDialog(){
+    cy.wait(2000)
+    cy.get('#toast-container > .ng-trigger').click()
+    cy.get('.p-dialog-header-close-icon').click()
+  }
 }

@@ -49,7 +49,21 @@ export class BuyStockComponent {
           // this.toastr.info("Uspesno postavljena kupovina akcije")
         },
         error: err => {
-          this.toastr.error(err.error)
+          console.log(err);
+          if(err.error.message !== undefined){
+            // alert("asdasdasd")
+            this.toastr.error(err.error.message)
+          }
+          else{
+            // alert("aaaaaaaaaaaaaaaaaaaaaa")
+            this.toastr.error(err.error)
+          }
+          // if(err.error.message !== null){
+          //   this.toastr.error(err.error.message)
+          // }
+          // else{
+          //   this.toastr.error(err.error)
+          // }
           this.buyStockVisible = false
         }
       });

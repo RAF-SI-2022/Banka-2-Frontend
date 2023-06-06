@@ -1,0 +1,51 @@
+<p-dialog [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
+          [(visible)]="editCompanyContactVisible" *ngIf="contact!=null" [modal]="true" (onHide)="resetForm()">
+  <ng-template pTemplate="header">
+    <h2 style="font-weight: bolder" class="mb-3">Izmeni kontakt</h2>
+
+  </ng-template>
+  <p-divider/>
+
+  <div class="account-form-container">
+    <form (submit)="submitEditCompanyContact()" [formGroup]="editCompanyContactForm"
+          class="account-form pt-4 pb-4 gap-4">
+
+      <span class="p-float-label">
+        <input pInputText  type="text" class="w-100" id="firstName-input" [formControlName]="'firstName'" >
+        <label for="firstName-input">Ime</label>
+      </span>
+
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="lastName" [formControlName]="'lastName'">
+        <label for="lastName">Prezime</label>
+      </span>
+
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="email" [formControlName]="'email'">
+        <label for="email">Email</label>
+      </span>
+
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="phone" [formControlName]="'phone'">
+        <label for="phone">Broj telefona</label>
+      </span>
+
+      <span class="p-float-label">
+        <input pInputTextarea class="w-100" id="phone" [formControlName]="'note'">
+        <label for="note">Note</label>
+      </span>
+
+      <span class="p-float-label">     
+        <p-dropdown [options]="jobs" [formControlName]="'selectedJob'" [(ngModel)]="selectedJob" optionLabel="name"
+                    placeholder="Pozicija"></p-dropdown>  
+                    
+      </span>
+      
+     <button type="submit" pButton pRipple label="Izmeni" [disabled]="false" class="w-100"></button>
+    </form>
+  </div>
+
+  
+</p-dialog>
+

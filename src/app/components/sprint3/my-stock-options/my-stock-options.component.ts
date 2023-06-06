@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MenuItem } from 'primeng/api';
 import { MyOption, Option, StockDetails } from 'src/app/models/stock-exchange.model';
@@ -31,8 +31,8 @@ export class MyStockOptionsComponent {
   loading: boolean = false;
 
 
-  constructor(private route: ActivatedRoute, 
-    private stockService: StockService, 
+  constructor(private route: ActivatedRoute,
+    private stockService: StockService,
     private toastr: ToastrService,
     private router: Router
     ) {
@@ -85,13 +85,13 @@ export class MyStockOptionsComponent {
     this.stockService.getMyStockOptions(this.stockSymbol).subscribe({
       next: value => {
         // console.log(value);
-        
+
         this.myOptionsCalls = value.filter((val: MyOption) => val.type === 'CALL');
         this.myOptionsPuts = value.filter((val: MyOption) => val.type === 'PUT');
 
         // if(this.myOptionsCalls.length === 0 ){
         //   this.myOptionsCalls = []
-        // } 
+        // }
         // if(this.myOptionsPuts.length === 0 ){
         //   this.myOptionsPuts = []
         // }
@@ -154,5 +154,15 @@ export class MyStockOptionsComponent {
           }
         }
       )
+  }
+
+  otcRedirect(stockOption: Option){
+    const navigationExtras: NavigationExtras = {
+      state: {
+        userStockOption: stockOption
+      }
+    };
+
+    this.router.navigate(['transaction', 'element'], navigationExtras);
   }
 }

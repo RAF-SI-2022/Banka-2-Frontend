@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #eff3f7 !important;
+}
+
 .toast-top-right {
   margin-top: 50px !important;
 }

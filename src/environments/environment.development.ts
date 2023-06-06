@@ -1,11 +1,14 @@
 export const environment = {
-  apiAuthServerUrl: 'http://localhost:8080/auth',
-  apiUserServerUrl: 'http://localhost:8080/api/users',
-  apiForgotPassUrl: 'http://localhost:8080/auth/reset-password',
-  apiPasswordRestoreUrl: 'http://localhost:8080/auth/change-user-password',
-  apiYahooFinanceUrl: 'https://query1.finance.yahoo.com/v11/finance/quoteSummary/',
-  apiStockDetails: 'http://localhost:8080/api/stock/',
-  apiStockGraph: `http://localhost:8080/api/stock/`,
-  apiForexUrl: 'http://localhost:8080/api/forex',
-  apiExchangeUrl: 'http://localhost:8080/api/exchange'
+  mainServiceURL: 'http://localhost:8080',
+  // mainURL: host+port
+  usersServiceURL: 'http://localhost:8081',
+  // usersURL: host+port
+  otcServiceURL: 'http://localhost:8082',
+  // otcURL: host+port
+
+
+
+  //utility putanje
+  csvPath: 'assets/csv/filtered_forex_pairs.csv'
+
 };

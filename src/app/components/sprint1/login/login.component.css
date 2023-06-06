@@ -75,6 +75,7 @@ form {
   max-width: 500px; /* opcionalno: ograničava širinu inputa */
   position: relative;
   border: none;
+  background: #eff3f7;
 }
 
 input,

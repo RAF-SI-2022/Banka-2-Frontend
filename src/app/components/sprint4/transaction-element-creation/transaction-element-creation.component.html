@@ -1,0 +1,64 @@
+<div class="body-container">
+
+  <div class="details-container">
+    <h5>{{title}}</h5>
+  </div>
+
+  <div class="details-container">
+
+    <form [formGroup]="elementForm" (submit)="submitElement()">
+
+      <div class="row  justify-content-center mt-3">
+        <div class="col-5 text-start">
+          <label style="font-weight: 500; margin-right: 10px;">Cena po komadu</label>
+          <input [formControlName]="'priceOfOneElement'" class="w-100" type="number" pInputText>
+        </div>
+        <div class="col-5 text-start">
+          <label style="font-weight: 500; margin-right: 10px;">Amount</label>
+          <input [formControlName]="'amount'" class="w-100" type="number" pInputText>
+        </div>
+      </div>
+
+
+      <div class="row justify-content-center mt-3">
+        <div class="col-5 text-start">
+          <label style="font-weight: 500; margin-right: 10px;">Valuta</label>
+          <p-dropdown [options]="currencies" [(ngModel)]="selectedCurrency" optionLabel="currencySymbol"
+                      [style]="{'width':'100%'}" id="currency" [formControlName]="'currency'"></p-dropdown>
+        </div>
+
+        <div class="col-5">
+          <label style="font-weight: 500; margin-right: 10px;">Ugovor</label>
+          <p-dropdown [options]="contracts" [formControlName]="'selectedContract'" [(ngModel)]="selectedContract"
+                      optionLabel="contractNumber" [style]="{'width':'100%'}" placeholder="Ugovor"></p-dropdown>
+        </div>
+
+      </div>
+
+<!--      <div class="row justify-content-center mt-5">-->
+<!--        <div class="justify-content-center" style="display: inline-flex; align-items: center; text-align: center;">-->
+<!--          <div class="flex align-items-center">-->
+<!--            <p-radioButton value="CASH" [formControlName]="'balance'" inputId="cash"></p-radioButton>-->
+<!--            <label class="ms-2">Cash</label>-->
+<!--          </div>-->
+
+<!--          <div class="flex align-items-center" style="margin-left: 10px;">-->
+<!--            <p-radioButton value="MARGIN" [formControlName]="'balance'" inputId="margin"></p-radioButton>-->
+<!--            <label class="ms-2">Margin</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
+      <div class="row  justify-content-center mt-5">
+        <div class="col-10 text-center">
+          <p-button [disabled]="!isFormValid" type="submit" label="Dodaj"></p-button>
+        </div>
+      </div>
+
+
+    </form>
+
+
+  </div>
+</div>

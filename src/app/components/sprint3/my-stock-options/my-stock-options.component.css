@@ -1,28 +1,86 @@
 ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
-    background: #ffffff;
-    color: #724bcb;
-    border-color: #8876b9;
-  }
-  
-  .table-container {
-    margin: 70px;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 20px;
-  }
-  
-  .body-container {
-    background-color: #eff3f7;
-    min-height: 100vh;
-  }
+  background: #ffffff;
+  color: #724bcb;
+  border-color: #8876b9;
+}
 
-  .legend-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    border-left-color: #e1f6e1;
-    border-left-width: 8px;
-  }
+.table-container {
+  margin: 70px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 20px;
+}
+
+
+.btn-i {
+  margin-left: 3px;
+  position: relative;
+  overflow: hidden;
+  background-color: #7768ae;
+  color: #44396a;
+  border: none;
+  width: 38px;
+  height: 38px;
+  padding: 12px;
+  -moz-transition: color 0.3s ease-in-out;
+  -o-transition: color 0.3s ease-in-out;
+  -webkit-transition: color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out;
+}
+
+.btn-i.btn-circle {
+  border-radius: 100%;
+}
+
+.btn-i.btn-square {
+  border-radius: 10%;
+}
+
+.btn-i span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.btn-i .wave {
+  background-color: #44396a;
+  position: absolute;
+  z-index: 0;
+  top: 110%;
+  height: 200%;
+  width: 200%;
+  border-radius: 40%;
+  left: -50%;
+  transform: rotate(360deg);
+  transition: all 1s ease;
+  animation: wave 30s linear infinite;
+}
+
+.btn-i:hover {
+  color: #fff;
+}
+
+.btn-i:hover .wave {
+  top: -10%;
+}
+
+.body-container {
+  background-color: #eff3f7;
+  min-height: 100vh;
+}
+
+.legend-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  border-left-color: #e1f6e1;
+  border-left-width: 8px;
+}

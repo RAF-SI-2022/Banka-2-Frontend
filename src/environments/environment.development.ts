@@ -19,16 +19,16 @@ export const environment = {
   // 81-users
   // 82-otc
 
-  //mainService postojece putanje
-  apiServiceUrl: 'http://localhost:8080/api',
-  apiAuthServerUrl: 'http://localhost:8080/auth',
-  apiUserServiceUrl: 'http://localhost:8080/api/users',
-  apiYahooFinanceUrl: 'https://query1.finance.yahoo.com/v11/finance/quoteSummary/',
-  apiStockServiceUrl: 'http://localhost:8080/api/stock',
-  apiForexServiceUrl: 'http://localhost:8080/api/forex',
-  apiExchangeServiceUrl: 'http://localhost:8080/api/exchange',
-  apiFutureServiceUrl: 'http://localhost:8080/api/futures',
-  apiOptionsServiceUrl: 'http://localhost:8080/api/options',
+  // //mainService postojece putanje
+  // apiServiceUrl: 'http://localhost:8080/api',
+  // apiAuthServerUrl: 'http://localhost:8080/auth',
+  // apiUserServiceUrl: 'http://localhost:8080/api/users',
+  // apiYahooFinanceUrl: 'https://query1.finance.yahoo.com/v11/finance/quoteSummary/',
+  // apiStockServiceUrl: 'http://localhost:8080/api/stock',
+  // apiForexServiceUrl: 'http://localhost:8080/api/forex',
+  // apiExchangeServiceUrl: 'http://localhost:8080/api/exchange',
+  // apiFutureServiceUrl: 'http://localhost:8080/api/futures',
+  // apiOptionsServiceUrl: 'http://localhost:8080/api/options',
 
   //usersService postojece putanje
 

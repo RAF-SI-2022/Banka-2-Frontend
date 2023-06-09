@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AddAccountComponent } from '../add-account/add-account.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-balance',
@@ -9,8 +10,14 @@ import { AddAccountComponent } from '../add-account/add-account.component';
 export class BalanceComponent {
 
   @ViewChild(AddAccountComponent, {static: true}) addAccountComponent: AddAccountComponent
+  
 
   accounts: any[] = [];
+
+
+  constructor(private router: Router){
+    
+  }
 
   addAccount() {
     this.accounts.push();
@@ -21,8 +28,12 @@ export class BalanceComponent {
     console.log(account)
   }
 
-  showAddAccount(){
+  showAddAccountTest(){
     this.addAccountComponent.addAccountVisible = true;
+  }
+
+  showAddAccount(){
+    this.router.navigate(['create-user-account']);
   }
 
   submitAddAccount(obj: any){

@@ -1,0 +1,38 @@
+.local-acc-form-container {
+  margin: 70px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 20px;
+  max-width: 600px;
+}
+
+.router-link {
+  color: blue;
+  cursor: pointer;
+}
+
+.router-link:hover {
+  text-decoration: underline;
+}
+
+::ng-deep .p-tabview-nav-container {
+  display: flex;
+  justify-content: center;
+}
+
+.currencies-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.base-currencies-container {
+  display:  flex;
+  flex-direction: column;
+}
+
+.additional-currencies-container {
+  display:  flex;
+  flex-direction: column;
+}
+

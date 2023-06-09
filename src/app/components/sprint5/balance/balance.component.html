@@ -1,14 +1,24 @@
 <div class="details-container">
     <div class="d-flex justify-content-end">
-        <p-button (click)="showAddAccount()" label="Kreiraj račun"></p-button>
+        <p-button (click)="showAddAccountTest()" label="Kreiraj račun (UI TEST BUTTON)"></p-button>
     </div>
 </div>
 
 <div class="details-container">
 
         <div class="right">
-            <div class="title">Računi</div>
-            <div class="description">Pregled vaših računa</div>
+
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="title">Računi</div>
+                    <div class="description">Pregled vaših računa</div>
+                </div>
+                <div></div>
+                <p-button (click)="showAddAccount()" label="Kreiraj račun"></p-button>
+            </div>
+
+
+            
     
             <div class="account-container"> 
                 <div *ngFor="let account of accounts" (click)="openLocalBalance(account)" class="graph">

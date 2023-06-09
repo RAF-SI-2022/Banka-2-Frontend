@@ -1,0 +1,46 @@
+<p-dialog [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
+          [(visible)]="addAccountVisible" *ngIf="true" [modal]="true" >
+  <ng-template pTemplate="header">
+    <h2 style="font-weight: bolder" class="mb-3">Kreiranje računa</h2>
+  </ng-template>
+  <p-divider/>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" >
+    <div class="container">
+        <div class="flex justify-content-center input-field">
+            <p><b>Izaberite glavnu valutu:</b></p>
+            <div class="flex flex-column gap-5">
+                <div *ngFor="let currency of currenciesMain; let i = index" class="field-checkbox" style="margin-top: 10px;">
+                    <p-radioButton formControlName="currencyMain" [inputId]="currency.key" name="currencyMain" [value]="currency"></p-radioButton>
+                    <label [for]="currency.key" class="ml-2">{{ currency.name }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-content-center input-field">
+            <p><b>Izaberite valute koje želite na računu:</b></p>
+            <div class="flex flex-column gap-5">
+                <div *ngFor="let currency of currenciesAll; let i = index" class="field-checkbox" style="margin-top: 10px;">
+                    <p-checkbox [formControlName]="currency.key" [inputId]="currency.key" name="currenciesAll" [binary]="true"></p-checkbox>
+                    <label style="margin-left: 10px;" [for]="currency.key">{{ currency.name }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-content-center input-field">
+            <p><b>Koja vrsta računa Vam je potrebna</b></p>
+            <div class="flex ">
+                <div *ngFor="let accountType of accountTypes" class="field-checkbox" style="margin-top: 10px;">
+                    <p-radioButton formControlName="accountType" [inputId]="accountType.key" name="accountType" [value]="accountType"></p-radioButton>
+                    <label [for]="accountType.key" class="ml-5" >{{ accountType.name }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <p-button type="submit" label="Submit"></p-button>
+    </div>
+  </form>
+</p-dialog>

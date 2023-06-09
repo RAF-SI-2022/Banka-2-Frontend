@@ -90,6 +90,8 @@ import { TransactionElementCreationComponent } from './components/sprint4/transa
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CreateForeignUserAccountComponent } from './components/create-foreign-user-account/create-foreign-user-account.component';
 import { CreateLocalUserAccountComponent } from './components/create-local-user-account/create-local-user-account.component';
+import { BalanceComponent } from './components/sprint5/balance/balance.component';
+import { AddAccountComponent } from './components/sprint5/add-account/add-account.component';
 
 
 
@@ -145,6 +147,8 @@ import { CreateLocalUserAccountComponent } from './components/create-local-user-
     TransactionElementCreationComponent,
     CreateForeignUserAccountComponent,
     CreateLocalUserAccountComponent,
+    BalanceComponent,
+    AddAccountComponent,
     // FutureContractComponent,
 
   ],

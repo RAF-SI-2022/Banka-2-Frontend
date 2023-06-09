@@ -34,6 +34,7 @@ import {
 import {
   CreateForeignUserAccountComponent
 } from "./components/create-foreign-user-account/create-foreign-user-account.component";
+import { BalanceComponent } from './components/sprint5/balance/balance.component';
 
 const routes: Routes = [
   {
@@ -155,6 +156,10 @@ const routes: Routes = [
   {
     path: 'transaction/element',
     component: TransactionElementCreationComponent,
+  },
+  {
+    path: 'balance',
+    component: BalanceComponent,
   },
   {
     path: 'create-local-user-account',

@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {StockService} from "../../../services/stock.service";
 import {CompanyAccount, CompanyContract} from "../../../models/stock-exchange.model";
-import { Job } from 'src/app/models/users.model';
+import {Job} from 'src/app/models/users.model';
 
 @Component({
   selector: 'app-create-company-contact',
@@ -35,36 +35,37 @@ export class CreateCompanyContactComponent {
       this.isFormValid = this.createCompanyContactForm.valid;
     });
 
-     this.jobs = [
-    {name: "ADMINISTRATOR", permissions: ["ADMIN_USER"]},
-    {name: "SUPERVISOR", permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
-    {name: "AGENT", permissions: ["READ_USERS"]}
-  ]
+    this.jobs = [
+      {name: "ADMINISTRATOR", permissions: ["ADMIN_USER"]},
+      {name: "SUPERVISOR", permissions: ["READ_USERS", "CREATE_USERS", "UPDATE_USERS", "DELETE_USERS"]},
+      {name: "AGENT", permissions: ["READ_USERS"]}
+    ]
   }
-
 
 
   ngOnInit() {
 
   }
+
   resetForm() {
 
   }
+
   // this.createCompanyContractForm.get("referenceNumber")?.value
-   submitCreateCompanyContact() {
+  submitCreateCompanyContact() {
 
     this.selectedJob = this.createCompanyContactForm.get("selectedJob")?.value
     //console.log(this.selectedJob)
-    let contact:any= {
+    let contact: any = {
       firstName: this.createCompanyContactForm.get("firstName")?.value,
       lastName: this.createCompanyContactForm.get("lastName")?.value,
       phone: this.createCompanyContactForm.get("phone")?.value,
-      email:this.createCompanyContactForm.get("email")?.value,
+      email: this.createCompanyContactForm.get("email")?.value,
       position: this.selectedJob.name,
       note: this.createCompanyContactForm.get("note")?.value,
     }
 
-   this.companyContactEmitter.emit(contact);
+    this.companyContactEmitter.emit(contact);
     this.createCompanyContactVisible = false;
   }
 }

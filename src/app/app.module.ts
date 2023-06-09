@@ -88,6 +88,8 @@ import { SingleContactComponent } from './components/sprint4/single-contact/sing
 import { RegisterComponent } from './components/newSpec/register/register.component';
 import { TransactionElementCreationComponent } from './components/sprint4/transaction-element-creation/transaction-element-creation.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { BalanceComponent } from './components/sprint4/balance/balance.component';
+import { AddAccountComponent } from './components/sprint4/add-account/add-account.component';
 
 
 @NgModule({
@@ -140,6 +142,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     SingleContactComponent,
     RegisterComponent,
     TransactionElementCreationComponent,
+    BalanceComponent,
+    AddAccountComponent,
     // FutureContractComponent,
 
   ],

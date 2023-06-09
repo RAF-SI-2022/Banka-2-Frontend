@@ -1,0 +1,290 @@
+
+body{
+    background-color: #003087;
+}
+
+.details-container {
+    margin: 30px 70px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-container{
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px 8px;
+}
+  
+  
+.center {
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 88vh;
+    max-width: 800px;
+    display: flex;
+}
+
+i {
+    color: #fff;
+}
+  
+
+.left {
+    flex: 0 0 150px;
+    width: 150px;
+    height: 100%;
+    background-color: white;
+    color: #848697;
+    border-radius: 3px 0 0 3px;
+}
+
+.logo {
+    position: relative;
+    top: 10px;
+    height: 100px;
+}
+
+.company {
+    text-align: center;
+}
+
+.company-name {
+font-weight: bold;
+color: #333;
+}
+
+.company-description {
+position: relative;
+margin: 10px auto;
+width: 100px;
+font-size: 10px;
+}
+
+.navigation {
+position: relative;
+display: block;
+margin-top: 50px;
+}
+
+li {
+padding: 0px 25px;
+margin: 10px 0;
+display: flex;
+align-items: center;
+cursor: pointer;
+}
+
+li i {
+font-size: 20px;
+}
+
+li span {
+padding-left: 15px;
+vertical-align: super;
+}
+
+.right {
+/* flex: 1 1 auto; */
+/* background-color: #f6f6fc; */
+padding: 30px;
+border-radius: 0 3px 3px 0;
+overflow-x: hidden;
+overflow-y: auto;
+}
+
+.title {
+font-size: 25px;
+font-weight: bold;
+}
+
+.description {
+margin-top: 5px;
+margin-bottom: 20px;
+color: gray;
+}
+
+.row {
+display: flex;
+margin: 10px 0 40px;
+}
+
+.row:last-child {
+/* margin: 10px 0 0; */
+}
+
+.column {
+flex-direction: column;
+}
+
+.graph {
+    display: inline-block;
+    width: 250px;
+    height: 150px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 22px -8px #808080;
+    cursor: pointer;
+}
+
+.graph .stock {
+margin: 0;
+margin-left: 20px;
+top: 5px;
+}
+
+.graph + .graph {
+/* margin-left: 10px; */
+}
+
+.asset-category {
+display: flex;
+}
+
+.category {
+flex: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.asset {
+position: relative;
+display: flex;
+flex-direction: row;
+margin: 10px 0;
+}
+
+.asset-logo {
+position: relative;
+display: flex;
+justify-content: center;
+flex: 0;
+}
+
+.asset-logo:before {
+content: '';
+width: 40px;
+height: 40px;
+background-color: #fff;
+transform: rotate(45deg);
+border-radius: 10px;
+}
+
+.asset-logo i {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
+.asset-name {
+color: gray;
+}
+
+.sub-title {
+margin-bottom: 10px;
+color: darkblue;
+}
+
+.half {
+flex: 1;
+}
+
+.stock {
+position: relative;
+display: flex;
+flex-direction: row;
+align-items: center;
+height: 40px;
+padding: 5px 0;
+margin: 8px 0;
+}
+
+.stock-logo {
+position: relative;
+display: flex;
+justify-content: center;
+flex: 0;
+margin-right: 10px;
+}
+
+.stock-logo:before {
+content: '';
+width: 30px;
+height: 30px;
+background-color: #555;
+transform: rotate(45deg);
+border-radius: 7px;
+}
+
+.stock-logo i {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
+.stock-info {
+margin-left: 5px;
+flex: 1;
+}
+
+.stock-name {
+color: darkblue;
+}
+
+.stock-fullname {
+color: gray;
+}
+
+.stock-value {
+flex: 1;
+font-weight: bold;
+color: gray;
+}
+
+.stock-logo.apple:before {
+background: gray;
+}
+
+.stock-logo.facebook:before {
+background: #3b5998;
+}
+
+.stock-logo.amazon:before {
+background: #ff9b24;
+}
+
+.stock-logo.twitter:before {
+background: #55acee;
+}
+
+.stock-logo.paypal:before {
+background: #003087;
+}
+
+.stock-logo.google:before {
+background: #d62d20;
+}
+
+.stock-logo.paperpillar:before {
+background: linear-gradient(to top right, rgb(120, 113, 255), rgb(111, 234, 255));
+}
+
+.stock-logo.dandruft:before {
+background: linear-gradient(to top right, rgb(248, 135, 129), rgb(247, 198, 130));
+}
+
+.stock-logo.kiwi:before {
+    background: linear-gradient(to top right, rgb(123, 220, 123),  rgb(50, 205, 50));
+}
+
+

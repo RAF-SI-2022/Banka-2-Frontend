@@ -28,6 +28,7 @@ import {CompanyDetailsComponent} from "./components/sprint4/company-details/comp
 import { SingleContractComponent } from './components/sprint4/single-contract/single-contract.component';
 import { RegisterComponent } from './components/newSpec/register/register.component';
 import { TransactionElementCreationComponent } from './components/sprint4/transaction-element-creation/transaction-element-creation.component';
+import { BalanceComponent } from './components/sprint5/balance/balance.component';
 
 const routes: Routes = [
   {
@@ -149,6 +150,10 @@ const routes: Routes = [
   {
     path: 'transaction/element',
     component: TransactionElementCreationComponent,
+  },
+  {
+    path: 'balance',
+    component: BalanceComponent,
   },
   {
     path: '**', redirectTo: '404-not-found'

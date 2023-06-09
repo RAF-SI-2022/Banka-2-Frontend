@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateLocalUserAccountComponent } from './create-local-user-account.component';
+import { CreateUserAccountComponent } from './create-user-account.component';
 
 describe('CreateLocalUserAccountComponent', () => {
-  let component: CreateLocalUserAccountComponent;
-  let fixture: ComponentFixture<CreateLocalUserAccountComponent>;
+  let component: CreateUserAccountComponent;
+  let fixture: ComponentFixture<CreateUserAccountComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateLocalUserAccountComponent ]
+      declarations: [ CreateUserAccountComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CreateLocalUserAccountComponent);
+    fixture = TestBed.createComponent(CreateUserAccountComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

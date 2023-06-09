@@ -47,7 +47,8 @@
             <div class="additional-currencies-container">
               <small>Izabrane valute</small>
               <div *ngFor="let currency of currencies" class="field-checkbox text-start">
-                <p-checkbox [name]="currency" [value]="currency" [(ngModel)]="selectedCurrencies" [formControlName]="'additionalCurrencies'"></p-checkbox>
+                <p-checkbox [name]="currency" [value]="currency" [(ngModel)]="selectedCurrencies"
+                            [formControlName]="'additionalCurrencies'"></p-checkbox>
                 <label [for]="currency" class="ms-3">{{ currency }}</label>
               </div>
             </div>

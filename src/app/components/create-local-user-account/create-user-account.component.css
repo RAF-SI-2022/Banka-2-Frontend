@@ -27,12 +27,12 @@
 }
 
 .base-currencies-container {
-  display:  flex;
+  display: flex;
   flex-direction: column;
 }
 
 .additional-currencies-container {
-  display:  flex;
+  display: flex;
   flex-direction: column;
 }
 

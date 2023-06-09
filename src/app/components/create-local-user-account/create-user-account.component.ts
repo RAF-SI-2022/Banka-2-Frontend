@@ -1,20 +1,21 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Permission, User} from "../../models/users.model";
+
 @Component({
   selector: 'app-create-local-user-account',
-  templateUrl: './create-local-user-account.component.html',
-  styleUrls: ['./create-local-user-account.component.css']
+  templateUrl: './create-user-account.component.html',
+  styleUrls: ['./create-user-account.component.css']
 })
-export class CreateLocalUserAccountComponent {
+export class CreateUserAccountComponent {
 
   breadcrumbItems: MenuItem[];
   createLocalAccountForm: FormGroup;
   createForeignAccountForm: FormGroup;
   isLocalFormValid: boolean = false;
   isForeignFormValid: boolean = false;
-  types: [{name: string}, {name: string}];
+  types: [{ name: string }, { name: string }];
   users: User[]
   currencies: string[]
   selectedCurrencies: any[] = []
@@ -72,6 +73,7 @@ export class CreateLocalUserAccountComponent {
 
     this.currencies = ['EUR', 'CHF', 'USD', 'GBP', 'JPY', 'CAD', 'AUD']
   }
+
   initBreadcrumbs() {
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},

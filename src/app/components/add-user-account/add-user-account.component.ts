@@ -4,13 +4,13 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../models/users.model";
 
 @Component({
-  selector: 'app-stepper-test',
-  templateUrl: './stepper-test.component.html',
-  styleUrls: ['./stepper-test.component.css']
+  selector: 'app-add-user-account',
+  templateUrl: './add-user-account.component.html',
+  styleUrls: ['./add-user-account.component.css']
 })
-export class StepperTestComponent {
+export class AddUserAccountComponent {
 
-  addAccountVisible: boolean = false;
+  visible: boolean = false;
   items: MenuItem[];
   activeIndex: number = 0;
   firstVisible: boolean = true;
@@ -60,7 +60,8 @@ export class StepperTestComponent {
           this.firstVisible = false;
           this.secondVisible = false;
           this.thirdVisible = true;
-        }
+        },
+        disabled: this.firstVisible
       },
     ];
 
@@ -130,6 +131,8 @@ export class StepperTestComponent {
       this.secondVisible = true;
       this.thirdVisible = false;
 
+      this.items[1].disabled = false;
+
 
     } else if(targetPage === 3) {
       this.firstVisible = false;
@@ -143,11 +146,11 @@ export class StepperTestComponent {
         this.selectedUser = this.createLocalAccountForm.get('user')?.value;
       }
 
-      console.log(this.selectedUser);
+      this.items[1].disabled = false;
+      this.items[2].disabled = false;
 
     }
 
-    this.items[1].disabled = false;
   }
 
   submitCreateLocalAccount() {

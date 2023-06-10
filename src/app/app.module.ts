@@ -91,6 +91,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CreateUserAccountComponent } from './components/create-local-user-account/create-user-account.component';
 import { BalanceComponent } from './components/sprint5/balance/balance.component';
 import { AddAccountComponent } from './components/sprint5/add-account/add-account.component';
+import { StepperTestComponent } from './components/stepper-test/stepper-test.component';
+import {StepsModule} from "primeng/steps";
+import {TagModule} from "primeng/tag";
 import { PaymentsComponent } from './components/sprint5/payments/payments.component';
 
 
@@ -149,6 +152,7 @@ import { PaymentsComponent } from './components/sprint5/payments/payments.compon
     BalanceComponent,
     AddAccountComponent,
     PaymentsComponent,
+    StepperTestComponent,
     // FutureContractComponent,
 
   ],
@@ -189,6 +193,8 @@ import { PaymentsComponent } from './components/sprint5/payments/payments.compon
     InputTextareaModule,
     ConfirmDialogModule,
     RadioButtonModule,
+    StepsModule,
+    TagModule,
   ],
   // exports: [
   //   ActivityPipe

@@ -94,6 +94,7 @@ import { AddAccountComponent } from './components/sprint5/add-account/add-accoun
 import { StepperTestComponent } from './components/stepper-test/stepper-test.component';
 import {StepsModule} from "primeng/steps";
 import {TagModule} from "primeng/tag";
+import { PaymentsComponent } from './components/sprint5/payments/payments.component';
 
 
 
@@ -150,6 +151,7 @@ import {TagModule} from "primeng/tag";
     CreateUserAccountComponent,
     BalanceComponent,
     AddAccountComponent,
+    PaymentsComponent,
     StepperTestComponent,
     // FutureContractComponent,
 

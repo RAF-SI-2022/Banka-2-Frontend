@@ -122,8 +122,9 @@ export class CapitalComponent  {
     this.transactionListComponent.visible=true;
   }
 
-  toggleMarginTransactionListDialog() {
+  toggleMarginTransactionListDialog(margin: any) {
     this.marginTransactionListComponent.visible=true;
+    this.marginTransactionListComponent.open(margin);
   }
 
   private getBalanceFromBack(): void {

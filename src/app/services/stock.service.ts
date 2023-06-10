@@ -276,8 +276,8 @@ export class StockService {
     return this.httpClient.get<any>(`${environment.otcServiceURL}/api/marginAccount`, {headers: this.headers})
   }
 
-  getMarginTransactions(): Observable<any> {
-    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/marginTransaction`, {headers: this.headers})
+  getMarginTransactions(group: string): Observable<any> {
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/marginTransaction/byGroup/${group}`, {headers: this.headers})
   }
 
 }

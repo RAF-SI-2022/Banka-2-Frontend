@@ -13,18 +13,21 @@ export class MarginTransactionListComponent {
 
   data:MarginTransaction[];
 
-  constructor(private toastr: ToastrService,private  stockService: StockService ) {
+  constructor(private toastr: ToastrService,private stockService: StockService ) {
 
   }
 
   ngOnInit(){
-    this.getMarginTransactions();
+
   }
 
+  open(type: string) {
+    this.getMarginTransactions(type);
+  }
 
-  private getMarginTransactions(): void {
+  private getMarginTransactions(type: string): void {
 
-    this.stockService.getMarginTransactions()
+    this.stockService.getMarginTransactions(type)
     .subscribe({
       next: val => {
         this.data = val;

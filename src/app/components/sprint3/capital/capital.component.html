@@ -206,7 +206,7 @@
           </ng-template>
 
           <ng-template pTemplate="body" let-m>
-            <tr (click)="toggleMarginTransactionListDialog()" class="rowHover" style="font-size: 12px;">
+            <tr (click)="toggleMarginTransactionListDialog(m.listingGroup)" class="rowHover" style="font-size: 12px;">
               <td>{{m.currencyCode}}</td>
               <td>{{m.investedResources}}</td>
               <td>{{m.loanedResources}}</td>

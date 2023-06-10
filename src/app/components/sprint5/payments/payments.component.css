@@ -109,3 +109,8 @@ h3{
     background-color: #2196F3;
   }
   
+
+  
+  ::ng-deep .p-dropdown {
+    width: 95% !important;
+  }

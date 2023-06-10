@@ -22,15 +22,22 @@ export class PaymentsComponent {
 
   createCompanyForm: FormGroup;
   moneyTransferForm: FormGroup;
+  addRecipientForm: FormGroup;
+  editRecipientForm: FormGroup;
 
   paymentAccounts: any[];
+
+  recipients: any[] = [];
 
   selectedFromPaymentAccount: any;
   selectedToPaymentAccount: any;
 
+  displayAddDialog = false;
+  displayEditDialog = false;
+
+  selectedRecipient: any;
+
   constructor(private formBuilder: FormBuilder) {
-
-
 
     this.createCompanyForm = this.formBuilder.group({
       recipientName: ['', Validators.required],
@@ -42,10 +49,20 @@ export class PaymentsComponent {
     });
 
     this.moneyTransferForm = this.formBuilder.group({
-      selectedFromPaymentAccount: [''], 
-      selectedToPaymentAccount: ['']
+      selectedFromPaymentAccount: ['', Validators.required], 
+      selectedToPaymentAccount: ['', Validators.required],
+      amount: ['', Validators.required]
     });
 
+    this.addRecipientForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      accountNumber: ['', Validators.required]
+    });
+
+    this.editRecipientForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      accountNumber: ['', Validators.required]
+    });
   }
 
   ngOnInit() {
@@ -58,9 +75,59 @@ export class PaymentsComponent {
     ];
   }
 
+  showAddRecipientDialog() {
+    this.displayAddDialog = true;
+  }
+
+  showEditRecipientDialog(recipient: any) {
+    this.displayEditDialog = true;
+    this.selectedRecipient = recipient;
+    this.editRecipientForm.patchValue({
+      name: recipient.name,
+      accountNumber: recipient.accountNumber
+    });
+  }
+
+  addRecipient() {
+    if (this.addRecipientForm.invalid) {
+      return;
+    }
+    
+    const newRecipient = {
+      name: this.addRecipientForm.get('name')?.value,
+      accountNumber: this.addRecipientForm.get('accountNumber')?.value,
+    };
+
+    this.recipients.push(newRecipient);
+
+    this.addRecipientForm.reset();
+    this.displayAddDialog = false;
+  }
+
+  editRecipient() {
+    if (this.editRecipientForm.invalid) {
+      return;
+    }
+
+    this.selectedRecipient.name = this.editRecipientForm.get('name')?.value;
+    this.selectedRecipient.accountNumber = this.editRecipientForm.get('accountNumber')?.value;
+
+    this.editRecipientForm.reset();
+    this.displayEditDialog = false;
+  }
+
+  deleteRecipient(recipient: any) {
+    const index = this.recipients.indexOf(recipient);
+    if (index > -1) {
+      this.recipients.splice(index, 1);
+    }
+  }
+  
+
 
   resetForm() {
     this.createCompanyForm.reset();
+    this.moneyTransferForm.reset();
   }
 
   onSubmit() {
@@ -77,6 +144,7 @@ export class PaymentsComponent {
       numberReference: this.createCompanyForm.get('numberReference')?.value
     };
 
+
     this.resetForm();
 
     console.log(newPayment);
@@ -84,6 +152,18 @@ export class PaymentsComponent {
   }
 
   submitMoneyTransfer(){
+    if (this.moneyTransferForm.invalid) {
+      return;
+    }
+
+    const newTransfer = {
+      selectedFromPaymentAccount: this.moneyTransferForm.get('selectedFromPaymentAccount')?.value,
+      selectedToPaymentAccount: this.moneyTransferForm.get('selectedToPaymentAccount')?.value,
+      amount: this.moneyTransferForm.get('amount')?.value
+    };
+
+
+    console.log(newTransfer)
 
   }
 

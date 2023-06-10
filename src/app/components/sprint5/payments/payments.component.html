@@ -65,12 +65,33 @@
                 </div>
     
             </form>
+            
+
         </div>
 
 
         <div *ngIf="selectedOption === Options.MONEY_TRANSFER">
-
+            
             <h3>Prenos</h3>
+
+            <form [formGroup]="moneyTransferForm" (ngSubmit)="submitMoneyTransfer()">
+                <div class="transfer-form-container">
+                    <div class="flex justify-content-center" style="margin-top: 30px;">
+                      <p-dropdown [options]="paymentAccounts" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="name"></p-dropdown>
+                    </div>
+                  
+                    <div class="flex justify-content-center" style="margin-top: 30px;">
+                      <p-dropdown [options]="paymentAccounts" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="name"></p-dropdown>
+                    </div>
+                  
+                    <div class="d-flex justify-content-end align-items-end mt-3">
+                      <button type="submit" class="button button-solid background-blue">Nastavi</button>
+                    </div>
+                  </div>
+            </form>
+
+           
+
 
         </div>
 

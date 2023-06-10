@@ -8,6 +8,8 @@ export enum Options {
   PAYMENT_OVERVIEW = 'PAYMENT_OVERVIEW',
 }
 
+
+
 @Component({
   selector: 'app-payments',
   templateUrl: './payments.component.html',
@@ -19,8 +21,17 @@ export class PaymentsComponent {
   selectedOption: Options;
 
   createCompanyForm: FormGroup;
+  moneyTransferForm: FormGroup;
+
+  paymentAccounts: any[];
+
+  selectedFromPaymentAccount: any;
+  selectedToPaymentAccount: any;
 
   constructor(private formBuilder: FormBuilder) {
+
+
+
     this.createCompanyForm = this.formBuilder.group({
       recipientName: ['', Validators.required],
       paymentCode: ['', Validators.required],
@@ -29,7 +40,24 @@ export class PaymentsComponent {
       amount: [null, Validators.required],
       numberReference: ['']
     });
+
+    this.moneyTransferForm = this.formBuilder.group({
+      selectedFromPaymentAccount: [''], 
+      selectedToPaymentAccount: ['']
+    });
+
   }
+
+  ngOnInit() {
+    this.selectedOption = Options.NEW_PAYMENT;
+
+    this.paymentAccounts = [
+      { name: '123123123123123123' },
+      { name: '123443211234432112'},
+      { name: '1122112211221122112'},
+    ];
+  }
+
 
   resetForm() {
     this.createCompanyForm.reset();
@@ -50,12 +78,14 @@ export class PaymentsComponent {
     };
 
     this.resetForm();
+
     console.log(newPayment);
 
-    // Dodajte dodatnu logiku ili pozovite API za slanje podataka itd.
   }
 
-  ngOnInit() {
-    this.selectedOption = Options.NEW_PAYMENT;
+  submitMoneyTransfer(){
+
   }
+
+
 }

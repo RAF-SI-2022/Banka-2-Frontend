@@ -238,7 +238,7 @@ export class CapitalComponent  {
     return Math.round(num * 10) / 10
     // Math.round((num + Number.EPSILON) * 100) / 100
   }
-  
+
   private getMarginBalanceFromBack(): void {
 
     this.stockService.getAllMarginBalance()
@@ -255,6 +255,5 @@ export class CapitalComponent  {
     })
 
   }
-
 }
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { StockService } from 'src/app/services/stock.service';
-import { MarginTransactions } from 'src/app/models/stock-exchange.model';
+import { MarginTransaction } from 'src/app/models/stock-exchange.model';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 export class MarginTransactionListComponent {
   visible: boolean = false;
 
-  data:MarginTransactions[];
+  data:MarginTransaction[];
 
   constructor(private toastr: ToastrService,private  stockService: StockService ) {
 
@@ -21,7 +21,7 @@ export class MarginTransactionListComponent {
     this.getMarginTransactions();
   }
 
-  
+
   private getMarginTransactions(): void {
 
     this.stockService.getMarginTransactions()

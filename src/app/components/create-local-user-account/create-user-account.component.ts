@@ -77,7 +77,8 @@ export class CreateUserAccountComponent {
   initBreadcrumbs() {
     this.breadcrumbItems = [
       {label: 'Početna', routerLink: ['/home']},
-      {label: 'Dodaj tekući račun', routerLink: ['/create-local-user-account']}
+      {label: 'Računi', routerLink: ['/balance']},
+      {label: 'Novi račun', routerLink: ['/create-user-account']}
     ];
   }
 
@@ -117,6 +118,7 @@ export class CreateUserAccountComponent {
     let user = this.createForeignAccountForm.get('user')?.value;
     let type = this.createForeignAccountForm.get('type')?.value;
     let baseCurrency = this.createForeignAccountForm.get('baseCurrency')?.value;
+
 
     console.log(user, type, baseCurrency, this.selectedCurrencies);
 

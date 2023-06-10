@@ -1,0 +1,148 @@
+<p-dialog class="add-account-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
+          [(visible)]="addAccountVisible" [modal]="true" [draggable]="false">
+
+
+  <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex"
+           (activeIndexChange)="onActiveIndexChange($event)"></p-steps>
+
+  <div *ngIf="firstVisible">
+    <h5 class="mt-5 mb-3">Izaberite vrstu računa:</h5>
+
+    <div class="account-type-radio">
+      <div class="flex align-items-center">
+        <p-radioButton name="local" value="Local" [(ngModel)]="type" (click)="incrementPage(2)"
+                       inputId="type1"></p-radioButton>
+        <label for="type1" class="ms-3">Tekući račun</label>
+      </div>
+
+      <div class="flex align-items-center">
+        <p-radioButton name="foreign" value="Foreign" [(ngModel)]="type" (click)="incrementPage(2)"
+                       inputId="type2"></p-radioButton>
+        <label for="type2" class="ms-3">Devizni račun</label>
+      </div>
+
+      <div class="flex align-items-center">
+        <p-radioButton name="business" value="Business" [(ngModel)]="type" (click)="incrementPage(2)"
+                       inputId="type3"></p-radioButton>
+        <label for="type3" class="ms-3">Poslovni račun</label>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="secondVisible">
+    <div class="text-center pt-5 mt-3" *ngIf="type === 'Foreign'">
+      <form class="d-flex flex-column gap-2" [formGroup]="createForeignAccountForm">
+
+        <p-dropdown [options]="users" [formControlName]="'user'" optionLabel="email"
+                    placeholder="Izaberi postojećeg korisnika"></p-dropdown>
+
+        <small [routerLink]="'/create-local-user-component'" class="mb-3 router-link">Kreiraj novog korisnika</small>
+
+        <div class="currencies-container mb-4">
+          <div class="base-currencies-container">
+            <small>Osnovna valuta</small>
+            <div *ngFor="let currency of currencies" class="field-checkbox text-start">
+              <p-radioButton [value]="currency" [formControlName]="'baseCurrency'"></p-radioButton>
+              <label [for]="currency" class="ms-3">{{ currency }}</label>
+            </div>
+          </div>
+
+          <div class="additional-currencies-container">
+            <small>Izabrane valute</small>
+            <div *ngFor="let currency of currencies" class="field-checkbox text-start">
+              <p-checkbox [name]="currency" [value]="currency" [(ngModel)]="selectedCurrencies"
+                          [formControlName]="'additionalCurrencies'"></p-checkbox>
+              <label [for]="currency" class="ms-3">{{ currency }}</label>
+            </div>
+          </div>
+        </div>
+
+        <!--<p-dropdown [options]="types" [formControlName]="'type'" optionLabel="name"
+                    placeholder="Izaberi vrstu računa"></p-dropdown>-->
+
+
+        <button (click)="incrementPage(3)" type="submit" pButton pRipple label="Naredni korak"
+                [disabled]="!isForeignFormValid"></button>
+
+      </form>
+    </div>
+
+    <div class="text-center pt-5 mt-3" *ngIf="type === 'Local'">
+      <form class="d-flex flex-column gap-2" [formGroup]="createLocalAccountForm">
+        <p-dropdown [options]="users" [formControlName]="'user'" optionLabel="email"
+                    placeholder="Izaberi postojećeg korisnika"></p-dropdown>
+
+        <small [routerLink]="'/create-local-user-component'" class="mb-3 router-link">Kreiraj novog korisnika</small>
+
+        <!-- <p-dropdown [options]="types" [formControlName]="'type'" optionLabel="name"
+                     placeholder="Izaberi vrstu računa"></p-dropdown>-->
+
+
+        <button (click)="incrementPage(3)" pButton pRipple label="Naredni korak"
+                [disabled]="!isLocalFormValid"></button>
+
+      </form>
+    </div>
+
+    <div *ngIf="type === 'Business'">
+
+    </div>
+  </div>
+
+  <div *ngIf="thirdVisible">
+
+    <h5 class="mt-5">Proverite podatke:</h5>
+
+    <div class="d-flex gap-1 flex-column pt-1 mt-1" *ngIf="type === 'Foreign'">
+
+      <label>Ime</label>
+      <input pInputText disabled [value]="this.selectedUser.firstName">
+
+      <label>Prezime</label>
+      <input pInputText disabled [value]="this.selectedUser.lastName">
+
+      <label>Email</label>
+      <input pInputText disabled [value]="this.selectedUser.email">
+
+      <p-divider></p-divider>
+
+      <div class="d-flex flex-row mb-2">
+        <label class="me-2">Osnovna valuta:</label>
+        <div class="d-flex flex-row">
+          <p-tag class="me-1" severity="info" [value]="this.baseCurrency"></p-tag>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row">
+        <label class="me-2">Izabrane valute:</label>
+        <div class="d-flex flex-row">
+          <p-tag class="me-1" *ngFor="let currency of this.selectedCurrencies" severity="info"
+                 [value]="currency"></p-tag>
+        </div>
+      </div>
+
+      <button class="mt-5" pButton pRipple label="Dodaj račun" [disabled]="!isForeignFormValid"></button>
+
+    </div>
+    <div class="d-flex gap-1 flex-column pt-1 mt-1" *ngIf="type === 'Local'">
+
+      <label>Ime</label>
+      <input pInputText disabled [value]="this.selectedUser.firstName">
+
+      <label>Prezime</label>
+      <input pInputText disabled [value]="this.selectedUser.lastName">
+
+      <label>Email</label>
+      <input pInputText disabled [value]="this.selectedUser.email">
+
+      <button class="mt-5" pButton pRipple label="Dodaj račun" [disabled]="!isLocalFormValid"></button>
+
+    </div>
+    <div class="text-center pt-5 mt-3" *ngIf="type === 'Business'">
+
+      In progress
+
+    </div>
+  </div>
+
+</p-dialog>

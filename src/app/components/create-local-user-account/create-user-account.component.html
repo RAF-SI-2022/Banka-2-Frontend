@@ -4,9 +4,9 @@
 
   <div class="local-acc-form-container text-center">
 
-    <p-tabView class="tab-container">
+    <p-tabView>
 
-      <p-tabPanel header="Kreiranje tekućeg računa">
+      <p-tabPanel header="Tekući račun">
 
         <form class="d-flex flex-column gap-2" (submit)="submitCreateLocalAccount()"
               [formGroup]="createLocalAccountForm">
@@ -25,7 +25,7 @@
 
       </p-tabPanel>
 
-      <p-tabPanel header="Kreiranje deviznog računa">
+      <p-tabPanel header="Devizni račun">
 
         <form class="d-flex flex-column gap-2" (submit)="submitCreateForeignAccount()"
               [formGroup]="createForeignAccountForm">
@@ -63,6 +63,11 @@
         </form>
 
       </p-tabPanel>
+
+      <p-tabPanel header="Poslovni račun">
+        In progress
+      </p-tabPanel>
+
     </p-tabView>
 
   </div>

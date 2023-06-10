@@ -32,6 +32,7 @@ import {
   CreateUserAccountComponent
 } from "./components/create-local-user-account/create-user-account.component";
 import { BalanceComponent } from './components/sprint5/balance/balance.component';
+import { PaymentsComponent } from './components/sprint5/payments/payments.component';
 
 const routes: Routes = [
   {
@@ -161,6 +162,10 @@ const routes: Routes = [
   {
     path: 'create-user-account',
     component: CreateUserAccountComponent
+  },
+  {
+    path: 'payments',
+    component: PaymentsComponent,
   },
   {
     path: '**', redirectTo: '404-not-found'

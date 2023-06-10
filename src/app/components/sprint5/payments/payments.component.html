@@ -1,0 +1,95 @@
+<div class="details-container">
+
+    <div class="leftbox">
+        <nav class="nav flex-column d-flex h-100">
+            <a id="profile" class="nav-link" (click)="selectedOption = Options.NEW_PAYMENT"><i class="pi pi-credit-card"></i></a>
+            <a id="payment" class="nav-link" (click)="selectedOption = Options.MONEY_TRANSFER"><i class="pi pi-arrow-right"></i></a>
+            <a id="subscription" class="nav-link" (click)="selectedOption = Options.PAYMENT_RECIPIENTS"><i class="pi pi-users"></i></a>
+            <a id="privacy" class="nav-link" (click)="selectedOption = Options.PAYMENT_OVERVIEW"><i class="pi pi-chart-line"></i></a>
+        </nav>
+    </div>
+
+    <div class="rightbox">
+
+
+        <div *ngIf="selectedOption === Options.NEW_PAYMENT">
+
+            <h3>Novo plaćanje</h3>
+            
+            <form [formGroup]="createCompanyForm" (ngSubmit)="onSubmit()">
+                <div class="payment-form">
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="w-100" id="recipientName" formControlName="recipientName">
+                            <label for="recipientName">Naziv primaoca</label>
+                          </span>
+                    </div>
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="w-100" id="paymentCode" formControlName="paymentCode">
+                            <label for="paymentCode">Šifra plaćanja</label>
+                          </span>
+                    </div>
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="w-100" id="recipientAccount" formControlName="recipientAccount">
+                            <label for="recipientAccount">Račun primaoca</label>
+                          </span>
+                    </div>
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="w-100" id="paymentPurpose" formControlName="paymentPurpose">
+                            <label for="paymentPurpose">Svrha plaćanja</label>
+                          </span>
+                    </div>
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="w-100" id="amount" formControlName="amount">
+                            <label for="amount">Iznos</label>
+                        </span>
+                    </div>
+    
+                    <div> </div>
+    
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="w-100" id="numberReference" formControlName="numberReference">
+                            <label for="numberReference">Poziv na broj</label>
+                        </span>
+                    </div>
+    
+                </div>
+    
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="button button-solid background-blue">Nastavi</button>
+                </div>
+    
+            </form>
+        </div>
+
+
+        <div *ngIf="selectedOption === Options.MONEY_TRANSFER">
+
+            <h3>Prenos</h3>
+
+        </div>
+
+
+        <div *ngIf="selectedOption === Options.PAYMENT_RECIPIENTS">
+
+            <h3>Primaoci plaćanja</h3>
+
+        </div>
+
+
+        <div *ngIf="selectedOption === Options.PAYMENT_OVERVIEW">
+
+            <h3>Pregled plaćanja</h3>
+
+        </div>
+
+    </div>
+
+    
+    
+</div>

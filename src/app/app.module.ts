@@ -91,6 +91,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CreateUserAccountComponent } from './components/create-local-user-account/create-user-account.component';
 import { BalanceComponent } from './components/sprint5/balance/balance.component';
 import { AddAccountComponent } from './components/sprint5/add-account/add-account.component';
+import { PaymentsComponent } from './components/sprint5/payments/payments.component';
 
 
 
@@ -147,6 +148,7 @@ import { AddAccountComponent } from './components/sprint5/add-account/add-accoun
     CreateUserAccountComponent,
     BalanceComponent,
     AddAccountComponent,
+    PaymentsComponent,
     // FutureContractComponent,
 
   ],

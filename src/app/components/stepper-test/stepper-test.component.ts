@@ -10,7 +10,7 @@ import {User} from "../../models/users.model";
 })
 export class StepperTestComponent {
 
-  addAccountVisible: boolean = true;
+  addAccountVisible: boolean = false;
   items: MenuItem[];
   activeIndex: number = 0;
   firstVisible: boolean = true;

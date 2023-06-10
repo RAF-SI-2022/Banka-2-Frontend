@@ -17,9 +17,6 @@
                 <p-button (click)="showAddAccount()" label="Kreiraj račun"></p-button>
             </div>
 
-
-
-
             <div class="account-container">
                 <div *ngFor="let account of accounts" (click)="openLocalBalance(account)" class="graph">
 
@@ -74,7 +71,8 @@
 </div>
 
 
-<app-stepper-test></app-stepper-test>
 
  <app-add-account (addAccountEmitter)="submitAddAccount($event)"></app-add-account>
+
+<app-add-user-account></app-add-user-account>
 

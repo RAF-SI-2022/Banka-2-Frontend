@@ -28,3 +28,12 @@
 ::ng-deep .p-steps .p-steps-item  {
   cursor: pointer;
 }
+
+.router-link {
+  color: blue;
+  cursor: pointer;
+}
+
+.router-link:hover {
+  text-decoration: underline;
+}

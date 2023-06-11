@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.httpClient.post<LoginResponse>(`${environment.mainServiceURL}/auth/login`, {
+    return this.httpClient.post<LoginResponse>(`${environment.usersServiceURL}/api/auth/login`, {
       email: email,
       password: password
     }, {observe: 'response'})

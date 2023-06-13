@@ -6,6 +6,7 @@ export const environment = {
   // usersURL: host+port
   otcServiceURL: 'https://banka-2.k8s.elab.rs/backend/otc',
   // otcURL: host+port
+  clientServiceURL: '',
 
   //utility putanje
   csvPath: 'assets/csv/filtered_forex_pairs.csv'

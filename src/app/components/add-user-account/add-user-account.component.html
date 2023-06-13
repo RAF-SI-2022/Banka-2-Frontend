@@ -1,5 +1,5 @@
 <p-dialog class="add-account-dialog" [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw'}"
-          [(visible)]="visible" [modal]="true" [draggable]="false" >
+          [(visible)]="visible" [modal]="true" [draggable]="false">
 
 
   <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex"
@@ -23,7 +23,7 @@
 
       <div class="flex align-items-center">
         <p-radioButton name="business" value="Business" [(ngModel)]="type" (click)="incrementPage(2)"
-                       inputId="type3"></p-radioButton>
+                       inputId="type2"></p-radioButton>
         <label for="type3" class="ms-3">Poslovni račun</label>
       </div>
     </div>
@@ -36,7 +36,7 @@
         <p-dropdown [options]="users" [formControlName]="'user'" optionLabel="email"
                     placeholder="Izaberi postojećeg korisnika"></p-dropdown>
 
-        <small [routerLink]="'/create-local-user-component'" class="mb-3 router-link">Kreiraj novog korisnika</small>
+<!--        <small [routerLink]="'/create-local-user-component'" class="mb-3 router-link">Kreiraj novog korisnika</small>-->
 
         <div class="currencies-container mb-4">
           <div class="base-currencies-container">
@@ -57,8 +57,8 @@
           </div>
         </div>
 
-        <!--<p-dropdown [options]="types" [formControlName]="'type'" optionLabel="name"
-                    placeholder="Izaberi vrstu računa"></p-dropdown>-->
+        <p-dropdown [options]="types" [formControlName]="'type'" optionLabel="name"
+                    placeholder="Izaberi vrstu računa"></p-dropdown>
 
 
         <button (click)="incrementPage(3)" type="submit" pButton pRipple label="Naredni korak" class="mt-5"
@@ -72,10 +72,10 @@
         <p-dropdown [options]="users" [formControlName]="'user'" optionLabel="email"
                     placeholder="Izaberi postojećeg korisnika"></p-dropdown>
 
-        <small [routerLink]="'/create-local-user-component'" class="mb-3 router-link">Kreiraj novog korisnika</small>
+<!--        <small [routerLink]="'/create-local-user-component'" class="mb-3 router-link">Kreiraj novog korisnika</small>-->
 
-        <!-- <p-dropdown [options]="types" [formControlName]="'type'" optionLabel="name"
-                     placeholder="Izaberi vrstu računa"></p-dropdown>-->
+         <p-dropdown [options]="types" [formControlName]="'type'" optionLabel="name"
+                     placeholder="Izaberi vrstu računa"></p-dropdown>
 
 
         <button (click)="incrementPage(3)" pButton pRipple label="Naredni korak" class="mt-5"
@@ -87,6 +87,7 @@
     <div *ngIf="type === 'Business'">
       In progress
     </div>
+
   </div>
 
   <div *ngIf="thirdVisible">
@@ -103,6 +104,9 @@
 
       <label>Email</label>
       <input pInputText disabled [value]="this.selectedUser.email">
+
+      <label>Tip računa</label>
+      <input pInputText disabled [value]="this.createForeignAccountForm.get('type')?.value.name">
 
       <p-divider></p-divider>
 
@@ -121,7 +125,7 @@
         </div>
       </div>
 
-      <button class="mt-5" pButton pRipple label="Dodaj račun" [disabled]="!isForeignFormValid" ></button>
+      <button class="mt-5" pButton pRipple label="Dodaj račun" [disabled]="!isForeignFormValid" (click)="submitCreateForeignAccount()"></button>
 
     </div>
     <div class="d-flex gap-1 flex-column pt-1" *ngIf="type === 'Local'">
@@ -135,12 +139,10 @@
       <label>Email</label>
       <input pInputText disabled [value]="this.selectedUser.email">
 
-      <button class="mt-5" pButton pRipple label="Dodaj račun" [disabled]="!isLocalFormValid"></button>
+      <label>Tip računa</label>
+      <input pInputText disabled [value]="this.createLocalAccountForm.get('type')?.value.name">
 
-    </div>
-    <div class="text-center pt-5" *ngIf="type === 'Business'">
-
-      In progress
+      <button class="mt-5" pButton pRipple label="Dodaj račun" [disabled]="!isLocalFormValid" (click)="submitCreateLocalAccount()"></button>
 
     </div>
   </div>

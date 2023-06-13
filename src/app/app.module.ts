@@ -88,7 +88,6 @@ import { SingleContactComponent } from './components/sprint4/single-contact/sing
 import { RegisterComponent } from './components/newSpec/register/register.component';
 import { TransactionElementCreationComponent } from './components/sprint4/transaction-element-creation/transaction-element-creation.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { CreateUserAccountComponent } from './components/create-local-user-account/create-user-account.component';
 import { BalanceComponent } from './components/sprint5/balance/balance.component';
 import { AddAccountComponent } from './components/sprint5/add-account/add-account.component';
 import { AddUserAccountComponent } from './components/add-user-account/add-user-account.component';
@@ -148,7 +147,6 @@ import { PaymentsComponent } from './components/sprint5/payments/payments.compon
     SingleContactComponent,
     RegisterComponent,
     TransactionElementCreationComponent,
-    CreateUserAccountComponent,
     BalanceComponent,
     AddAccountComponent,
     PaymentsComponent,

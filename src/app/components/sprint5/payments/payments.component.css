@@ -35,7 +35,7 @@ nav a {
   align-items: center;
   justify-content: center;
   color: #fff;
-  
+
 }
 
 nav a:hover {
@@ -91,7 +91,7 @@ h3{
   cursor: pointer;
   border-radius: 3px;
   display: inline-block;
-  
+
   border: 1px solid black;
   transition: all .25s;
 }
@@ -157,7 +157,7 @@ margin-bottom: 10px;
 }
 
 .p-dialog .p-button {
-margin: 0 15px 0 0; 
+margin: 0 15px 0 0;
 }
 
 .button-container {
@@ -212,4 +212,8 @@ background-color: #004085;
 #otpDialog form button:disabled {
 background-color: #6C757D;
 cursor: not-allowed;
+}
+
+.active {
+  color: #2c174f;
 }

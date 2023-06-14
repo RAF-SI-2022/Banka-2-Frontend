@@ -123,5 +123,22 @@ export class AppComponent implements OnInit {
   }
 
 
+  checkIfUserIsClient(){
+
+    if(localStorage.getItem("permissions") === null && sessionStorage.getItem("permissions") === null ){
+      return false // false je kada je client
+    }
+    return true
+
+    // if(localStorage.getItem("permissions") !== null ){
+    //   return false
+    // }
+    // if(sessionStorage.getItem("permissions") !== null ){
+    //   return false
+    // }
+    // return true
+  }
+
+
   title = 'Banka2_front';
 }

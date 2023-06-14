@@ -6,7 +6,7 @@
   </div>
   <div class="navbar-nav">
     <li class="nav-item sidebar-nav-item mb-3">
-      <a class="nav-link " [routerLink]="'/profile'" (click)="hideSidebar()">
+      <a *ngIf="checkIfUserIsClient()" class="nav-link " [routerLink]="'/profile'" (click)="hideSidebar()">
         <img style="width: 48px" src="assets/icons/person-circle1.svg" alt="My Happy SVG" class="mb-2 me-2"/>
         <span style="font-size: x-large">
           {{user.firstName}} {{user.lastName}}
@@ -27,30 +27,30 @@
     <hr class="solid">
 
     <li class="nav-item mb-1 sidebar-nav-item">
-      <a  [routerLink]="'/stocks'" id="stockBtn" class="nav-link" aria-current="page"
+      <a *ngIf="checkIfUserIsClient()" [routerLink]="'/stocks'" id="stockBtn" class="nav-link" aria-current="page"
          (click)="hideSidebar()" [routerLinkActive]="['active']">Akcije</a>
     </li>
     <li class="nav-item mb-1 sidebar-nav-item">
-      <a  [routerLink]="'/forex'" id="forexBtn" class="nav-link" aria-current="page"
+      <a  *ngIf="checkIfUserIsClient()" [routerLink]="'/forex'" id="forexBtn" class="nav-link" aria-current="page"
          (click)="hideSidebar()" [routerLinkActive]="['active']">Forex</a>
     </li>
     <li class="nav-item mb-1 sidebar-nav-item">
-      <a  [routerLink]="'/futures'" id="futureBtn" class="nav-link" aria-current="page"
+      <a *ngIf="checkIfUserIsClient()" [routerLink]="'/futures'" id="futureBtn" class="nav-link" aria-current="page"
          (click)="hideSidebar()" [routerLinkActive]="['active']">Terminski ugovori</a>
     </li>
 
     <hr class="solid">
 
     <li class="nav-item mb-1 sidebar-nav-item">
-      <a  [routerLink]="'/purchases'" id="orderBtn" class="nav-link" aria-current="page"
+      <a *ngIf="checkIfUserIsClient()" [routerLink]="'/purchases'" id="orderBtn" class="nav-link" aria-current="page"
          (click)="hideSidebar()" [routerLinkActive]="['active']">Porudžbine</a>
     </li>
     <li class="nav-item mb-1 sidebar-nav-item">
-      <a  [routerLink]="'/capital'" id="capitalBtn" class="nav-link" aria-current="page"
+      <a *ngIf="checkIfUserIsClient()" [routerLink]="'/capital'" id="capitalBtn" class="nav-link" aria-current="page"
          (click)="hideSidebar()" [routerLinkActive]="['active']">Kapital</a>
     </li>
     <li  class="nav-item mb-1 sidebar-nav-item">
-      <a  [routerLink]="'/companies'" id="companiesBtn" class="nav-link" aria-current="page"
+      <a *ngIf="checkIfUserIsClient()" [routerLink]="'/companies'" id="companiesBtn" class="nav-link" aria-current="page"
           (click)="hideSidebar()" [routerLinkActive]="['active']">Kompanije</a>
     </li>
 
@@ -111,29 +111,29 @@
                [routerLinkActive]="['active']">Agenti</a>
           </li>
           <li class="nav-item">
-            <a  id="stockButton" [routerLink]="'/stocks'" class="nav-link" aria-current="page"
+            <a *ngIf="checkIfUserIsClient()" id="stockButton" [routerLink]="'/stocks'" class="nav-link" aria-current="page"
                [routerLinkActive]="['active']">Akcije</a>
           </li>
 
           <li class="nav-item">
-            <a  id="forexButton" [routerLink]="'/forex'" class="nav-link" aria-current="page"
+            <a *ngIf="checkIfUserIsClient()" id="forexButton" [routerLink]="'/forex'" class="nav-link" aria-current="page"
                [routerLinkActive]="['active']">Forex</a>
           </li>
           <li class="nav-item">
-            <a  id="futuresButton" [routerLink]="'/futures'" class="nav-link" aria-current="page"
+            <a *ngIf="checkIfUserIsClient()" id="futuresButton" [routerLink]="'/futures'" class="nav-link" aria-current="page"
                [routerLinkActive]="['active']">Terminski ugovori</a>
           </li>
           <li class="nav-item">
-            <a  id="capitalButton" [routerLink]="'/capital'" class="nav-link" aria-current="page"
+            <a *ngIf="checkIfUserIsClient()" id="capitalButton" [routerLink]="'/capital'" class="nav-link" aria-current="page"
                [routerLinkActive]="['active']">Kapital</a>
           </li>
           <li class="nav-item">
-            <a  id="purchasesButton" [routerLink]="'/purchases'" class="nav-link"
+            <a *ngIf="checkIfUserIsClient()" id="purchasesButton" [routerLink]="'/purchases'" class="nav-link"
                aria-current="page"
                [routerLinkActive]="['active']">Porudžbine</a>
           </li>
           <li class="nav-item">
-            <a  id="companiesButton" [routerLink]="'/companies'" class="nav-link"
+            <a *ngIf="checkIfUserIsClient()" id="companiesButton" [routerLink]="'/companies'" class="nav-link"
                aria-current="page"
                [routerLinkActive]="['active']">Kompanije</a>
           </li>
@@ -143,7 +143,7 @@
               [routerLinkActive]="['active']">Račun</a>
           </li>
           <li class="nav-item">
-            <a  id="paymentsButton" [routerLink]="'/payments'" class="nav-link"
+            <a *ngIf="!checkIfUserIsClient()" id="paymentsButton" [routerLink]="'/payments'" class="nav-link"
               aria-current="page"
               [routerLinkActive]="['active']">Plaćanje</a>
           </li>

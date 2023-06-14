@@ -100,6 +100,9 @@
             "prod": {
               "browserTarget": "Banka2_front:build:prod"
             },
+            "dev": {
+              "browserTarget": "Banka2_front:build:dev"
+            },
             "local": {
               "browserTarget": "Banka2_front:build:local"
             }

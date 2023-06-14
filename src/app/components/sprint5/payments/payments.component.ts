@@ -38,7 +38,7 @@ export class PaymentsComponent {
 
   selectedFromPaymentAccount: any;
   selectedToPaymentAccount: any;
-  
+
 
   displayAddDialog = false;
   displayEditDialog = false;
@@ -49,7 +49,7 @@ export class PaymentsComponent {
   constructor(private formBuilder: FormBuilder, private clientService: ClientService, private userService: UserService) {
 
     this.initForms()
-  
+
   }
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class PaymentsComponent {
 
     this.getClientData()
 
-  
+
     }
 
   showAddRecipientDialog() {
@@ -77,7 +77,7 @@ export class PaymentsComponent {
     if (this.addRecipientForm.invalid) {
       return;
     }
-    
+
     const newRecipient = {
       name: this.addRecipientForm.get('name')?.value,
       accountNumber: this.addRecipientForm.get('accountNumber')?.value,
@@ -113,7 +113,7 @@ export class PaymentsComponent {
       this.recipients.splice(index, 1);
     }
   }
-  
+
 
 
   resetForm() {
@@ -130,7 +130,7 @@ export class PaymentsComponent {
     this.sendTokenToEmail()
   }
 
-  
+
   sendTokenToEmail(){
     this.userService.sendTokenToEmail(this.clientData).subscribe({
       next: val => {
@@ -179,7 +179,7 @@ export class PaymentsComponent {
   sendPayment(paymentInfo: any){
 
 
-   
+
     const paymentData: PaymentInfo = {
       receiverName: paymentInfo.recipientName,
       fromBalanceRegNum: paymentInfo.myAccount,
@@ -189,8 +189,10 @@ export class PaymentsComponent {
       paymentNumber: paymentInfo.paymentCode,
       paymentDescription: paymentInfo.paymentPurpose,
     }
-  
-    
+
+    console.log(paymentData)
+
+
 
     this.clientService.sendPayment(paymentData).subscribe({
       next: val => {
@@ -200,7 +202,7 @@ export class PaymentsComponent {
         console.log(err);
       }
     })
-    
+
   }
 
 
@@ -214,7 +216,7 @@ export class PaymentsComponent {
       paymentPurpose: this.createPaymentForm.get('paymentPurpose')?.value,
       amount: this.createPaymentForm.get('amount')?.value,
       numberReference: this.createPaymentForm.get('numberReference')?.value,
-      myAccount: this.selectedFromPaymentAccount.registrationNumber
+      myAccount: this.createPaymentForm.get('myAccount')?.value.registrationNumber
     };
 
     return newPayment;
@@ -237,18 +239,18 @@ export class PaymentsComponent {
       paymentPurpose: ['', Validators.required],
       amount: [null, Validators.required],
       numberReference: [''],
-      myAccount: ['', Validators.required] 
+      myAccount: ['', Validators.required]
     });
   }
 
   initMoneyTransferForm(){
     this.moneyTransferForm = this.formBuilder.group({
-      selectedFromPaymentAccount: ['', Validators.required], 
+      selectedFromPaymentAccount: ['', Validators.required],
       selectedToPaymentAccount: ['', Validators.required],
       amount: ['', Validators.required]
     });
   }
-  
+
   initAddRecipientForm(){
     this.addRecipientForm = this.formBuilder.group({
       name: ['', Validators.required],

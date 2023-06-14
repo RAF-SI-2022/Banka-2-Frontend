@@ -37,3 +37,7 @@
 .router-link:hover {
   text-decoration: underline;
 }
+
+::ng-deep .p-steps .p-steps-item .p-menuitem-link:not(.p-disabled):focus {
+  box-shadow: none;
+}

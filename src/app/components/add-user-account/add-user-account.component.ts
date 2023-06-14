@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../models/users.model";
-import {ForeignAccount, LocalAccount} from "../../models/client.model";
+import {BusinessAccount, Client, ForeignAccount, LocalAccount} from "../../models/client.model";
 import {UserService} from "../../services/user-service.service";
 import {ToastrService} from "ngx-toastr";
 import {CompanyService} from "../../services/company.service";
@@ -16,6 +16,8 @@ import {error} from "cypress/types/jquery";
 })
 export class AddUserAccountComponent {
 
+  @Output() addAccountEmitter = new EventEmitter<any>();
+
   visible: boolean = false;
   items: MenuItem[];
   activeIndex: number = 0;
@@ -23,23 +25,30 @@ export class AddUserAccountComponent {
   secondVisible: boolean = false;
   thirdVisible: boolean = false;
   type: string;
+
   types: [
     { name: string, value: string },
     { name: string, value: string },
     { name: string, value: string },
     { name: string, value: string }
   ];
+  businessAcountTypes: [
+    { name: string; value: string },
+    { name: string; vlaue: string }
+  ]
+
   isLocalFormValid: boolean = false;
   isForeignFormValid: boolean = false;
-  users: User[];
+  clients: User[];
   currencies: string[];
   selectedCurrencies: any[] = [];
   baseCurrency: any
-  selectedUser: User
+  selectedClient: Client
   loggedInAgent: User
 
   createLocalAccountForm: FormGroup;
   createForeignAccountForm: FormGroup;
+  createBusinessAccountForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService,
               private toastr: ToastrService, private clientService: ClientService) {
@@ -57,6 +66,11 @@ export class AddUserAccountComponent {
       {name: 'Penzionerski', value: 'PENZIONERSKI'},
       {name: 'Isplata plata', value: 'ISPLATA_PLATA'}
     ];
+
+    this.businessAcountTypes = [
+      {name: 'Kupovni', value: 'KUPOVNI'},
+      {name: 'Potrošni', vlaue: 'POTROSNI'}
+    ]
     this.initSteps();
     this.initForms();
     this.initData();
@@ -64,6 +78,11 @@ export class AddUserAccountComponent {
 
   initForms() {
     this.createLocalAccountForm = this.formBuilder.group({
+      user: ['', Validators.required],
+      type: ['', Validators.required]
+    });
+
+    this.createBusinessAccountForm = this.formBuilder.group({
       user: ['', Validators.required],
       type: ['', Validators.required]
     });
@@ -77,6 +96,10 @@ export class AddUserAccountComponent {
 
     this.createLocalAccountForm.valueChanges.subscribe(() => {
       this.isLocalFormValid = this.createLocalAccountForm.valid;
+    });
+
+    this.createBusinessAccountForm.valueChanges.subscribe(() => {
+      this.isLocalFormValid = this.createBusinessAccountForm.valid;
     });
 
     this.createForeignAccountForm.valueChanges.subscribe(() => {
@@ -116,36 +139,6 @@ export class AddUserAccountComponent {
   }
 
   initData() {
-    this.users = [
-      {
-        id: 1,
-        email: "email@gmail.com",
-        firstName: "First",
-        lastName: "last",
-        password: "pass",
-        jmbg: "111111111111",
-        phone: "12142",
-        jobPosition: "pos",
-        active: true,
-        dailyLimit: 100,
-        defaultDailyLimit: 100,
-        permissions: []
-      },
-      {
-        id: 1,
-        email: "email@gmail.com",
-        firstName: "Second",
-        lastName: "last",
-        password: "pass",
-        jmbg: "111111111111",
-        phone: "12142",
-        jobPosition: "pos",
-        active: true,
-        dailyLimit: 100,
-        defaultDailyLimit: 100,
-        permissions: []
-      }
-    ];
 
     this.currencies = ['EUR', 'CHF', 'USD', 'GBP', 'JPY', 'CAD', 'AUD']
 
@@ -156,6 +149,16 @@ export class AddUserAccountComponent {
         },
         error: err => {
           this.toastr.error(err.error)
+        }
+      })
+
+    this.clientService.getAllClients()
+      .subscribe({
+        next: value => {
+          this.clients = value;
+        },
+        error: err => {
+          console.log(err);
         }
       })
 
@@ -177,10 +180,12 @@ export class AddUserAccountComponent {
       this.thirdVisible = true;
 
       if (this.createForeignAccountForm.get('user')?.value !== "") {
-        this.selectedUser = this.createForeignAccountForm.get('user')?.value;
+        this.selectedClient = this.createForeignAccountForm.get('user')?.value;
         this.baseCurrency = this.createForeignAccountForm.get('baseCurrency')?.value;
+      } else if (this.createBusinessAccountForm.get('user')?.value !== "") {
+        this.selectedClient = this.createBusinessAccountForm.get('user')?.value
       } else {
-        this.selectedUser = this.createLocalAccountForm.get('user')?.value;
+        this.selectedClient = this.createLocalAccountForm.get('user')?.value;
       }
 
       this.items[1].disabled = false;
@@ -197,12 +202,12 @@ export class AddUserAccountComponent {
     const localAccount: LocalAccount = {
       id: "1",
       registrationNumber: "",
-      // ownerId: this.selectedUser.id.toString(),
-      ownerId: "",
+      ownerId: this.selectedClient.id.toString(),
       balance: 0,
       availableBalance: 0,
       assignedAgentId: this.loggedInAgent.id,
       creationDate: 1,
+      type: "LOCAL",
       expirationDate: "",
       currency: "RSD",
       balanceStatus: "",
@@ -211,17 +216,7 @@ export class AddUserAccountComponent {
       accountMaintenance: 1
     }
 
-    // TODO: srediti da ispisuje uspesno dodat
-    this.clientService.openLocalAccount(localAccount).subscribe({
-        next: value => {
-          this.toastr.success(value);
-        },
-        error: err => {
-          console.error(err);
-        }
-      }
-    )
-
+    this.addAccountEmitter.emit({value: localAccount, type: 'Local', client: this.selectedClient})
   }
 
   submitCreateForeignAccount() {
@@ -229,12 +224,13 @@ export class AddUserAccountComponent {
     const foreignAccount: ForeignAccount = {
       id: "1",
       registrationNumber: "",
-      // ownerId: this.selectedUser.id.toString(),
-      ownerId: "",
+      ownerId: this.selectedClient.id.toString(),
+      // ownerId: "",
       balance: 0,
       availableBalance: 0,
       assignedAgentId: this.loggedInAgent.id,
       creationDate: 1,
+      type: "FOREIGN",
       expirationDate: "",
       currency: this.baseCurrency,
       balanceStatus: "",
@@ -245,16 +241,40 @@ export class AddUserAccountComponent {
       allowedCurrencies: this.selectedCurrencies
     }
 
-    this.clientService.openForeignAccount(foreignAccount).subscribe({
-        next: value => {
-          this.toastr.success(value);
-        },
-        error: err => {
-          console.error(err);
-        }
-      }
-    )
+    this.addAccountEmitter.emit({value: foreignAccount, type: 'Foreign', client: this.selectedClient})
+  }
 
+  submitCreateBusinessAccount() {
+    const businessAccount: BusinessAccount = {
+      id: "1",
+      registrationNumber: "",
+      ownerId: this.selectedClient.id.toString(),
+      // ownerId: "",
+      balance: 0,
+      availableBalance: 0,
+      assignedAgentId: this.loggedInAgent.id,
+      creationDate: 1,
+      type: "BUSINESS",
+      expirationDate: "",
+      currency: "RSD",
+      balanceStatus: "",
+      businessAccountType: this.createBusinessAccountForm.get('type')?.value
+    }
 
+    this.addAccountEmitter.emit({value: businessAccount, type: 'Business', client: this.selectedClient});
+  }
+
+  close() {
+    this.activeIndex = 0;
+    this.firstVisible = true;
+    this.secondVisible = false;
+    this.thirdVisible = false;
+
+    this.items[1].disabled = true;
+    this.items[2].disabled = true;
+
+    this.initForms();
+
+    this.visible = false;
   }
 }

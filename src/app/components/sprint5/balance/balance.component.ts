@@ -28,14 +28,45 @@ export class BalanceComponent {
   }
 
   ngOnInit() {
-    this.clientService.getAllClients().subscribe({
-      next: value => {
-        this.users = value;
-      },
-      error: error => {
-        console.log(error);
-      }
-    })
+
+
+    if(!this.checkIfUserIsClient()) {
+
+      // let jwt = ""
+      //
+      // if(localStorage.getItem('token') !== null) {
+      //   console.log(localStorage.getItem('token')!)
+      //   jwt = localStorage.getItem('token')!
+      // } else {
+      //   console.log(sessionStorage.getItem('token')!)
+      //   jwt = sessionStorage.getItem('token')!
+      // }
+      //
+      // console.log(this.parseJwt(jwt));
+
+      this.clientService.getClientData().subscribe(
+        {
+          next: value => {
+            console.log('here')
+            console.log(value);
+          },
+          error: err => {
+            console.log(err);
+          }
+        }
+      )
+    }
+    else {
+      this.clientService.getAllClients().subscribe({
+        next: value => {
+          this.users = value;
+        },
+        error: error => {
+          console.log(error);
+        }
+      })
+    }
+
   }
 
   addAccount() {
@@ -111,6 +142,23 @@ export class BalanceComponent {
         }
       );
     }
+  }
+
+  checkIfUserIsClient(){
+    if(localStorage.getItem("permissions") === null && sessionStorage.getItem("permissions") === null ){
+      return false // false je kada je client
+    }
+    return true
+  }
+
+  parseJwt (token: string) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
   }
 
 }

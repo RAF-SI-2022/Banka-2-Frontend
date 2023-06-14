@@ -14,7 +14,7 @@
 
 
 
-        
+
         <div *ngIf="selectedOption === Options.NEW_PAYMENT">
             <h3>Novo plaćanje</h3>
             <form [formGroup]="createCompanyForm" (ngSubmit)="onSubmit()">
@@ -49,18 +49,18 @@
                             <label for="amount">Iznos</label>
                         </span>
                     </div>
-    
+
                     <div> </div>
-    
+
                     <div>
                         <span class="p-float-label">
                             <input pInputText class="w-100" id="numberReference" formControlName="numberReference">
                             <label for="numberReference">Poziv na broj</label>
                         </span>
                     </div>
-    
+
                 </div>
-    
+
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="button button-solid background-blue">Nastavi</button>
                 </div>
@@ -76,7 +76,7 @@
 
 
         <div *ngIf="selectedOption === Options.MONEY_TRANSFER">
-            
+
             <h3>Prenos</h3>
 
             <form [formGroup]="moneyTransferForm" (ngSubmit)="submitMoneyTransfer()">
@@ -85,7 +85,7 @@
                     <div class="flex justify-content-center w-100">
                       <p-dropdown [options]="paymentAccounts" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="name"></p-dropdown>
                     </div>
-                  
+
                     <div class="flex justify-content-center w-100" >
                       <p-dropdown class="w-100" [options]="paymentAccounts" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="name"></p-dropdown>
                     </div>
@@ -97,8 +97,8 @@
                         </span>
                     </div>
 
-                 
-                  
+
+
                     <div class="d-flex justify-content-end align-items-end mt-3" style="width: 95%;">
                       <button type="submit" class="button button-solid background-blue">Nastavi</button>
                     </div>
@@ -125,7 +125,7 @@
                 </div>
               </div>
 
-            
+
             <p-table [value]="recipients">
                <ng-template pTemplate="header">
                   <tr>
@@ -164,7 +164,7 @@
                 </form>
                </div>
             </p-dialog>
-            
+
 
             <p-dialog header="Izmeni primaoca" [(visible)]="displayEditDialog" [modal]="true" [style]="{width: '50vw', height: '40vh'}">
                 <div style="margin-top: 20px;">
@@ -184,10 +184,10 @@
                     </form>
                 </div>
             </p-dialog>
-            
+
 
         </div>
-         
+
 
 
 
@@ -205,6 +205,6 @@
 
     </div>
 
-    
-    
+
+
 </div>

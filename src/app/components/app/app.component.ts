@@ -33,44 +33,44 @@ export class AppComponent implements OnInit {
     this.primengConfig.ripple = true;
 
 
-    // u slucaju refresha da se povuku podaci o useru
-    if (this.userService.getToken()) {
-      // console.log("imam token")
-      this.userService.getUserData()
-        .subscribe({
-          next: val => {
-            // console.log(val)
-            this.user = val
-          },
-          error: err => {
-            // console.log(err)
-            this.toastr.error(err.error)
-          }
-        })
-    }
-
-    // na login da se ponovo povuku podaci o useru
-    this.authService.loginEvent()
-      .subscribe(() => {
-        // console.log("uso sam")
+    if(this.checkIfUserIsClient()) {
+      // u slucaju refresha da se povuku podaci o useru
+      if (this.userService.getToken()) {
+        // console.log("imam token")
         this.userService.getUserData()
-
           .subscribe({
             next: val => {
               // console.log(val)
-              // console.log("posle eventa")
               this.user = val
             },
             error: err => {
               // console.log(err)
               this.toastr.error(err.error)
-
-              // console.log("posle eventa ERR")
             }
           })
-      })
+      }
 
+      // na login da se ponovo povuku podaci o useru
+      this.authService.loginEvent()
+        .subscribe(() => {
+          // console.log("uso sam")
+          this.userService.getUserData()
 
+            .subscribe({
+              next: val => {
+                // console.log(val)
+                // console.log("posle eventa")
+                this.user = val
+              },
+              error: err => {
+                // console.log(err)
+                this.toastr.error(err.error)
+
+                // console.log("posle eventa ERR")
+              }
+            })
+        })
+    }
   }
 
   checkIsLoggedIn() {

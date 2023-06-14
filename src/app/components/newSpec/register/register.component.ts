@@ -130,10 +130,18 @@ export class RegisterComponent implements OnInit {
       .subscribe({
         next: value => {
 
-          if(remember) {
 
+          let res = JSON.parse(value);
+          console.log(JSON.parse(value))
+          if(remember) {
+            localStorage.setItem("token", res.token)
+            this.userService.setToken(res.token)
+          } else {
+            sessionStorage.setItem("token", res.token)
+            this.userService.setToken(res.token)
           }
 
+          this.router.navigate(['home'])
           this.toastr.success('Uspešno ste se ulogovali.')
         },
         error: err => {

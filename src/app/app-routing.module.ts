@@ -30,11 +30,13 @@ import { RegisterComponent } from './components/newSpec/register/register.compon
 import { TransactionElementCreationComponent } from './components/sprint4/transaction-element-creation/transaction-element-creation.component';
 import { BalanceComponent } from './components/sprint5/balance/balance.component';
 import { PaymentsComponent } from './components/sprint5/payments/payments.component';
+import { ClientGuard} from "./guards/client.guard";
+import {ClientOnlyGuard} from "./guards/client-only.guard";
 
 const routes: Routes = [
   {
     path: "",
-    component: LoginComponent,
+    component: RegisterComponent,
     canActivate: [LoginGuard]
   },
   {
@@ -43,12 +45,12 @@ const routes: Routes = [
   {
     path: "profile",
     component: ProfileComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "users",
     component: UsersComponent,
-    canActivate: [AuthGuard, NotAuthorisedGuard]
+    canActivate: [AuthGuard, NotAuthorisedGuard, ClientGuard]
   },
   {
     path: "home",
@@ -58,7 +60,7 @@ const routes: Routes = [
   {
     path: "forgot-password",
     component: ForgotPasswordComponent,
-    canActivate: [LoginGuard]
+    canActivate: [LoginGuard, ClientGuard]
   },
   {
     path: "403-forbiden",
@@ -70,95 +72,103 @@ const routes: Routes = [
   },
   {
     path: 'auth/change-password',
-    component: ChangePasswordComponent
+    component: ChangePasswordComponent,
+    canActivate: [ClientGuard]
   },
   {
     path: 'stocks',
     component: StocksComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: 'forex',
     component: ForexComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "buysell",
     component: BuysellComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "purchases",
     component: PurchasesComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "stock-options/:name",
     component: StockOptionsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "my-stock-options/:name",
     component:MyStockOptionsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "stocks-table/sell",
     component: StockSellTableComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "futures",
     component: FuturesComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "future/:name",
     component: SingleFutureTableComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "capital",
     component: CapitalComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "future-contract",
     component: FutureContractComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "agents",
     component: AgentsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "companies",
     component: CompaniesComponent,
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: "company/:id",
-    component: CompanyDetailsComponent
+    component: CompanyDetailsComponent,
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
-    path: "register",
-    component: RegisterComponent,
+    path: "login-admin",
+    component: LoginComponent,
+    canActivate: [LoginGuard]
   },
   {
     path: 'company/:companyId/contract/:contractId',
     component: SingleContractComponent,
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: 'transaction/element',
     component: TransactionElementCreationComponent,
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: 'balance',
     component: BalanceComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'payments',
     component: PaymentsComponent,
+    canActivate: [AuthGuard, ClientOnlyGuard]
   },
   {
     path: '**', redirectTo: '404-not-found'

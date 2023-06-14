@@ -39,8 +39,6 @@ export class UserService {
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${token}`)
-
-
   }
 
   getToken() {

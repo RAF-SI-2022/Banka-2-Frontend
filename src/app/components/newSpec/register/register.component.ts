@@ -131,9 +131,14 @@ export class RegisterComponent implements OnInit {
         next: value => {
 
           if(remember) {
-
+            localStorage.setItem("token", <string>value.body?.token)
+            this.userService.setToken(<string>value.body?.token)
+          } else {
+            sessionStorage.setItem("token", <string>value.body?.token)
+            this.userService.setToken(<string>value.body?.token)
           }
 
+          this.router.navigate(['home'])
           this.toastr.success('Uspešno ste se ulogovali.')
         },
         error: err => {

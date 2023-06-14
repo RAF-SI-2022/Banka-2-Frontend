@@ -32,6 +32,7 @@ import { BalanceComponent } from './components/sprint5/balance/balance.component
 import { PaymentsComponent } from './components/sprint5/payments/payments.component';
 import { ClientGuard} from "./guards/client.guard";
 import {ClientOnlyGuard} from "./guards/client-only.guard";
+import {UserBalanceComponent} from "./components/sprint5/user-balance/user-balance.component";
 
 const routes: Routes = [
   {
@@ -169,6 +170,11 @@ const routes: Routes = [
     path: 'payments',
     component: PaymentsComponent,
     canActivate: [AuthGuard, ClientOnlyGuard]
+  },
+  {
+    path: 'user-balance',
+    component: UserBalanceComponent,
+    canActivate: [ClientOnlyGuard]
   },
   {
     path: '**', redirectTo: '404-not-found'

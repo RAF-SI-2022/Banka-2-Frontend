@@ -26,6 +26,19 @@ export class ClientService {
       .set('Authorization', `Bearer ${this.token}`)
   }
 
+  resetToken() {
+    this.token = ''
+  }
+
+  setToken(token: string) {
+    this.token = token
+    this.headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Authorization', `Bearer ${token}`)
+
+  }
+
   // LOGIN CLIENT
 
   loginClient(email: string, password: string) {
@@ -51,7 +64,10 @@ export class ClientService {
 
   getClientData() {
     return this.httpClient.get<any>(`${environment.clientServiceURL}/api/client/mailFromToken`,
-      {headers: this.headers})
+      {
+        headers: this.headers,
+        responseType: 'text' as 'json'
+      })
   }
 
   getAllClients() {

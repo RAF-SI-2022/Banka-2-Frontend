@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {User} from "../../models/users.model";
-import {BusinessAccount, Client, ForeignAccount, LocalAccount} from "../../models/client.model";
-import {UserService} from "../../services/user-service.service";
+import {User} from "../../../models/users.model";
+import {BusinessAccount, Client, ForeignAccount, LocalAccount} from "../../../models/client.model";
+import {UserService} from "../../../services/user-service.service";
 import {ToastrService} from "ngx-toastr";
-import {CompanyService} from "../../services/company.service";
-import {ClientService} from "../../services/client.service";
+import {CompanyService} from "../../../services/company.service";
+import {ClientService} from "../../../services/client.service";
 import {error} from "cypress/types/jquery";
 
 @Component({

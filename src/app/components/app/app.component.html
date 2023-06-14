@@ -56,8 +56,13 @@
 
     <hr *ngIf="checkIfUserIsClient()" class="solid">
 
-    <li class="nav-item mb-1 sidebar-nav-item">
+    <li *ngIf="!checkIfUserIsClient()" class="nav-item mb-1 sidebar-nav-item">
       <a [routerLink]="'/balance'" id="balanceBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Računi</a>
+    </li>
+
+    <li *ngIf="checkIfUserIsClient()" class="nav-item mb-1 sidebar-nav-item">
+      <a [routerLink]="'/user-balance'" id="balanceUserBtn" class="nav-link" aria-current="page"
          (click)="hideSidebar()" [routerLinkActive]="['active']">Računi</a>
     </li>
 
@@ -149,10 +154,15 @@
                aria-current="page"
                [routerLinkActive]="['active']">Kompanije</a>
           </li>
-          <li class="nav-item">
+          <li *ngIf="checkIfUserIsClient()" class="nav-item">
             <a  id="balanceButton" [routerLink]="'/balance'" class="nav-link"
               aria-current="page"
               [routerLinkActive]="['active']">Račun</a>
+          </li>
+          <li *ngIf="!checkIfUserIsClient()" class="nav-item">
+            <a  id="balanceUserButton" [routerLink]="'/user-balance'" class="nav-link"
+                aria-current="page"
+                [routerLinkActive]="['active']">Račun</a>
           </li>
           <li class="nav-item">
             <a *ngIf="!checkIfUserIsClient()" id="paymentsButton" [routerLink]="'/payments'" class="nav-link"

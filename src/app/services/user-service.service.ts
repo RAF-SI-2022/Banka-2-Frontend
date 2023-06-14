@@ -152,6 +152,22 @@ export class UserService {
     return this.httpClient.get(`${environment.mainServiceURL}/api/users/permissions` + id, {headers: this.headers})
   }
 
+  sendTokenToEmail(email: string) {
+    return this.httpClient.post<any>(`${environment.usersServiceURL}/api/auth/sendToken/${email}`,
+      {}, {
+        headers: this.headers,
+        responseType: 'text' as 'json'
+      });
+  }
+
+  checkToken(token: string) {
+    return this.httpClient.get<any>(`${environment.usersServiceURL}/api/auth/checkToken/${token}`,
+       {
+        headers: this.headers,
+        responseType: 'text' as 'json'
+      });
+  }
+
   resetUserLimit(id: number): Observable<any> {
     return this.httpClient.patch(`${environment.mainServiceURL}/api/users/reset-limit/${id}`, {}, {headers: this.headers})
   }

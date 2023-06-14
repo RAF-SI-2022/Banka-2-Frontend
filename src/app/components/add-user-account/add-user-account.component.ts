@@ -173,7 +173,6 @@ export class AddUserAccountComponent {
 
       this.items[1].disabled = false;
 
-
     } else if (targetPage === 3) {
       this.firstVisible = false;
       this.secondVisible = false;

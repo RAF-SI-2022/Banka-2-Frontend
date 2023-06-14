@@ -1,8 +1,12 @@
-import { Component, OnInit  } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { MenuItem } from 'primeng/api';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {MenuItem} from 'primeng/api';
+import {Client} from "../../../models/client.model";
+import {ClientService} from "../../../services/client.service";
+import {cli} from "cypress";
+import {UserService} from "../../../services/user-service.service";
 
 interface Gender {
   name: string;
@@ -15,7 +19,6 @@ interface Gender {
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
 
 
   signUpButton: HTMLElement;
@@ -37,7 +40,6 @@ export class RegisterComponent implements OnInit {
   isPasswordFormValid: boolean = false
 
 
-
   items: MenuItem[]
   firstVisible = true;
   secondVisible = false;
@@ -45,92 +47,98 @@ export class RegisterComponent implements OnInit {
   activeIndex: number = 0;
 
 
+  constructor(private formBuilder: FormBuilder, private clientService: ClientService,
+              private toastr: ToastrService, private router: Router, private userService: UserService) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      remember: false
+    });
 
-  constructor(private formBuilder: FormBuilder, private toastr: 
-    ToastrService, private router: Router){
-      this.loginForm = this.formBuilder.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required],
-        remember: false
-      });
+    this.registerForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      address: ['', [Validators.required]],
+      dateOfBirth: ['', [Validators.required]],
+      selectedGender: new FormControl<Gender | null>(null),
+    });
 
-      this.registerForm = this.formBuilder.group({
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        phone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-        address: ['', [Validators.required]],
-        dateOfBirth: ['', [Validators.required]],
-        selectedGender: new FormControl<Gender | null>(null),
-      });
+    this.validationForm = this.formBuilder.group({
+      code: ['', Validators.required],
+    });
 
-      this.validationForm = this.formBuilder.group({
-        code: ['', Validators.required],
-      });
+    this.passwordForm = this.formBuilder.group({
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+    });
 
-      this.passwordForm = this.formBuilder.group({
-        password: ['', Validators.required],
-        confirmPassword: ['', Validators.required],
-      });
-
-      this.passwordForm.valueChanges.subscribe(()=>{
-        if(this.passwordForm.valid){
-          if(this.passwordForm.get('password')?.value === this.passwordForm.get('confirmPassword')?.value){
-            this.isPasswordFormValid = true;
-          }
-          else{
-            this.isPasswordFormValid = false;
-          }
+    this.passwordForm.valueChanges.subscribe(() => {
+      if (this.passwordForm.valid) {
+        if (this.passwordForm.get('password')?.value === this.passwordForm.get('confirmPassword')?.value) {
+          this.isPasswordFormValid = true;
+        } else {
+          this.isPasswordFormValid = false;
         }
-        else{
-          this.isPasswordFormValid = false
-        }
-      })
+      } else {
+        this.isPasswordFormValid = false
+      }
+    })
 
-      this.validationForm.valueChanges.subscribe(()=>{
-        this.isValidationFormValid = this.validationForm.valid
-      })
+    this.validationForm.valueChanges.subscribe(() => {
+      this.isValidationFormValid = this.validationForm.valid
+    })
 
-      this.loginForm.valueChanges.subscribe(() => {
-        this.isLoginFormValid = this.loginForm.valid;
-      });
+    this.loginForm.valueChanges.subscribe(() => {
+      this.isLoginFormValid = this.loginForm.valid;
+    });
 
-      this.registerForm.valueChanges.subscribe(() => {
-        this.isRegisterFormValid = this.registerForm.valid;
-      });
+    this.registerForm.valueChanges.subscribe(() => {
+      this.isRegisterFormValid = this.registerForm.valid;
+    });
 
-      this.genders = [
-        { name: 'Musko', code: 'Male' },
-        { name: 'Zensko', code: 'Female' },
-        { name: 'Helikopter 🚁', code: 'Helicopter' },
-        { name: 'Radije ne bih reko :)', code: 'None' } 
+    this.genders = [
+      {name: 'Muško', code: 'Male'},
+      {name: 'Žensko', code: 'Female'},
+      {name: 'Helikopter 🚁', code: 'Helicopter'},
+      {name: 'Radije ne bih reko :)', code: 'None'}
     ];
 
 
-      this.initSteps()
+    this.initSteps()
 
   }
 
   ngOnInit() {
     this.container = document.getElementById('container')!;
   }
-  changeSignUp(){
+
+  changeSignUp() {
     this.container.classList.add("right-panel-active");
   }
-  
-  changeSignIn(){
+
+  changeSignIn() {
     this.container.classList.remove("right-panel-active");
   }
 
-  login(){
+  login() {
     console.log(this.loginForm);
-    
+    this.clientService.loginClient(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
+      .subscribe({
+        next: value => {
+          this.toastr.success('Uspešno ste se ulogovali.')
+        },
+        error: err => {
+
+        }
+      })
   }
 
   initSteps() {
     this.items = [
       {
-        label: 'Osnovni podaci',
+        label: 'Podaci',
         command: (event: any) => {
           this.firstVisible = true;
           this.secondVisible = false;
@@ -138,7 +146,7 @@ export class RegisterComponent implements OnInit {
         }
       },
       {
-        label: 'Validacija email-a',
+        label: 'Validacija',
         command: (event: any) => {
           this.firstVisible = false;
           this.secondVisible = true;
@@ -147,7 +155,7 @@ export class RegisterComponent implements OnInit {
         disabled: this.firstVisible
       },
       {
-        label: 'Kreiranje sifre',
+        label: 'Šifra',
         command: (event: any) => {
           this.firstVisible = false;
           this.secondVisible = false;
@@ -157,79 +165,84 @@ export class RegisterComponent implements OnInit {
       },
     ];
   }
+
   onActiveIndexChange(event: any) {
     this.activeIndex = event;
   }
 
-  registerPart1()
-  {
-    // console.log(this.registerForm);  
+  registerPart1() {
+    // console.log(this.registerForm);
     // console.log(this.registerForm.get('selectedGender')?.value.code);
     // console.log(this.registerForm.get('email')?.value);
-    this.firstVisible = false;
-    this.secondVisible = true;
-    this.activeIndex++
-    this.items[1].disabled = false
-    this.items[0].disabled = true
 
-  //  this.servis?.sendEmailVerification(this.registerForm.get('email')?.value).subscribe({
-  //     next: val =>{
-  //       this.toastr.info("Poslat vam je kod na email")
-  //       // todo prebaciti na 2. korak
-  //     },
-  //     error: err=>{
-  //       this.toastr.error("Doslo je do greske pri slanju verifikacionog koda")
-  //     }
-  //   })
+
+    this.userService.sendTokenToEmail(this.registerForm.get('email')?.value).subscribe({
+      next: val => {
+        this.toastr.info("Poslat vam je kod na email")
+        this.firstVisible = false;
+        this.secondVisible = true;
+        this.activeIndex++
+        this.items[1].disabled = false
+        this.items[0].disabled = true
+      },
+      error: err => {
+        console.log(err);
+        this.toastr.error("Doslo je do greske pri slanju verifikacionog koda")
+      }
+    })
   }
 
-  registerPart2()
-  {
+  registerPart2() {
     console.log(this.registerForm.get('email')?.value);
     console.log(this.validationForm.get('code')?.value);
-    this.secondVisible = false;
-    this.thirdVisible = true;
-    this.activeIndex++
-    this.items[0].disabled = true
-    this.items[1].disabled = true
-    this.items[2].disabled = false
 
-  //  this.servis?.sendVerificationCode(
-  // this.registerForm.get('email')?.value, 
-  // this.validationForm.get('code')?.value
-  // ).subscribe({
-  //     next: val =>{
-  //       this.toastr.info("Uspesno ste validirali email")
-  //       // todo prebaciti na 2. korak
-  //     },
-  //     error: err=>{
-  //       this.toastr.error("Kod nije ispravan")
-  //     }
-  //   })
+
+    this.userService.checkToken(
+      this.validationForm.get('code')?.value
+    ).subscribe({
+      next: val => {
+        this.toastr.info("Uspesno ste validirali email")
+        this.secondVisible = false;
+        this.thirdVisible = true;
+        this.activeIndex++
+        this.items[0].disabled = true
+        this.items[1].disabled = true
+        this.items[2].disabled = false
+      },
+      error: err => {
+        console.log(err);
+        this.toastr.error("Kod nije ispravan")
+      }
+    })
   }
-  registerPart3(){
-    console.log(this.passwordForm.get('password')?.value);
-    console.log(this.registerForm);  
 
-    // this.servis?.sendVerificationCode(
-    //   this.registerForm.get('firstName')?.value,
-    //   this.registerForm.get('lastName')?.value,
-    //   this.registerForm.get('dateOfBirth')?.value,
-    //   this.registerForm.get('selectedGender')?.value.code,
-    //   this.registerForm.get('email')?.value,
-    //   this.registerForm.get('phone')?.value,
-    //   this.registerForm.get('address')?.value,
-    //   this.registerForm.get('password')?.value
-    // ).subscribe({
-    //     next: val =>{
-    //       this.toastr.info("Uspesno ste kreirali nalog")
-    //       // todo mozda refresh i da mu kazemo da se sad loginuje?
-    //     },
-    //     error: err=>{
-    //       this.toastr.error("Doslo je do greske pri kreiranju naloga")
-    //     }
-    //   })
-    
+  registerPart3() {
+
+    let client: Client = {
+      id: "",
+      name: this.registerForm.get('firstName')?.value,
+      lastname: this.registerForm.get('lastName')?.value,
+      dateOfBirth: this.registerForm.get('dateOfBirth')?.value,
+      gender: this.registerForm.get('selectedGender')?.value.code,
+      email: this.registerForm.get('email')?.value,
+      telephone: this.registerForm.get('phone')?.value,
+      address: this.registerForm.get('address')?.value,
+      password: this.passwordForm.get('password')?.value
+    }
+
+    this.clientService.registerClient(
+      client
+    ).subscribe({
+      next: val => {
+        this.toastr.info("Uspesno ste kreirali nalog")
+        window.location.reload();
+      },
+      error: err => {
+        this.toastr.error("Doslo je do greske pri kreiranju naloga")
+        console.log(err);
+      }
+    })
+
   }
 
 }

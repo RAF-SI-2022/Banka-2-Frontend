@@ -26,6 +26,27 @@ export class ClientService {
       .set('Authorization', `Bearer ${this.token}`)
   }
 
+  // LOGIN CLIENT
+
+  loginClient(email: string, password: string) {
+    return this.httpClient.post<any>(`${environment.clientServiceURL}/api/client/login`,
+      {email: email, password: password}, {
+        headers: this.headers,
+        responseType: 'text' as 'json'
+      })
+  }
+
+  // CREATE CLIENT:
+
+  registerClient(client: Client) {
+    return this.httpClient.post<any>(`${environment.clientServiceURL}/api/client/createClient`,
+      client, {
+        headers: this.headers,
+        responseType: 'text' as 'json'
+      })
+  }
+
+
   // GET CLIENT:
 
   getAllClients() {

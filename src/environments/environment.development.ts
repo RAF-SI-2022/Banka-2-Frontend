@@ -5,7 +5,6 @@ export const environment = {
   // usersURL: host+port
   otcServiceURL: 'http://localhost:8082',
   // otcURL: host+port
-
   clientServiceURL: 'http://localhost:8083',
 
 

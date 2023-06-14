@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
     // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS"));
     // console.log(!sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
     // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
-    
+
     if (localStorage.getItem("remember") !== null) {
       if (localStorage.getItem("permissions")?.includes("UPDATE_USERS") && !localStorage.getItem("permissions")?.includes("ADMIN_USER"))
         return true

@@ -123,14 +123,21 @@ export class RegisterComponent implements OnInit {
   }
 
   login() {
-    console.log(this.loginForm);
+
+    let remember = this.loginForm.get('rembember')?.value
+
     this.clientService.loginClient(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
       .subscribe({
         next: value => {
+
+          if(remember) {
+
+          }
+
           this.toastr.success('Uspešno ste se ulogovali.')
         },
         error: err => {
-
+          this.toastr.error('Pogrešni kredencijali')
         }
       })
   }

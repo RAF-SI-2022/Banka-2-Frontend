@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {ClientService} from "../../../services/client.service";
+import { UserService } from 'src/app/services/user-service.service';
+import { PaymentInfo } from '../../../models/client.model';
 
 export enum Options {
   NEW_PAYMENT = 'NEW_PAYMENT',
@@ -20,60 +23,42 @@ export class PaymentsComponent {
   Options = Options;
   selectedOption: Options;
 
-  createCompanyForm: FormGroup;
+  createPaymentForm: FormGroup;
   moneyTransferForm: FormGroup;
   addRecipientForm: FormGroup;
   editRecipientForm: FormGroup;
+  oneTimePasswordForm: FormGroup;
 
   paymentAccounts: any[];
+  newPayment: any[];
 
   recipients: any[] = [];
 
+  clientData: string;
+
   selectedFromPaymentAccount: any;
   selectedToPaymentAccount: any;
+  
 
   displayAddDialog = false;
   displayEditDialog = false;
+  displayOTPDialog: boolean = false;
 
   selectedRecipient: any;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private clientService: ClientService, private userService: UserService) {
 
-    this.createCompanyForm = this.formBuilder.group({
-      recipientName: ['', Validators.required],
-      paymentCode: ['', Validators.required],
-      recipientAccount: ['', Validators.required],
-      paymentPurpose: ['', Validators.required],
-      amount: [null, Validators.required],
-      numberReference: ['']
-    });
-
-    this.moneyTransferForm = this.formBuilder.group({
-      selectedFromPaymentAccount: ['', Validators.required], 
-      selectedToPaymentAccount: ['', Validators.required],
-      amount: ['', Validators.required]
-    });
-
-    this.addRecipientForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      accountNumber: ['', Validators.required]
-    });
-
-    this.editRecipientForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      accountNumber: ['', Validators.required]
-    });
+    this.initForms()
+  
   }
 
   ngOnInit() {
     this.selectedOption = Options.NEW_PAYMENT;
 
-    this.paymentAccounts = [
-      { name: '123123123123123123' },
-      { name: '123443211234432112'},
-      { name: '1122112211221122112'},
-    ];
-  }
+    this.getClientData()
+
+  
+    }
 
   showAddRecipientDialog() {
     this.displayAddDialog = true;
@@ -100,6 +85,8 @@ export class PaymentsComponent {
 
     this.recipients.push(newRecipient);
 
+    console.log(newRecipient)
+
     this.addRecipientForm.reset();
     this.displayAddDialog = false;
   }
@@ -109,8 +96,12 @@ export class PaymentsComponent {
       return;
     }
 
-    this.selectedRecipient.name = this.editRecipientForm.get('name')?.value;
-    this.selectedRecipient.accountNumber = this.editRecipientForm.get('accountNumber')?.value;
+    const recipient = {
+      recipientName: this.editRecipientForm.get('name')?.value,
+      accountNumber: this.editRecipientForm.get('accountNumber')?.value,
+    }
+
+    console.log(recipient)
 
     this.editRecipientForm.reset();
     this.displayEditDialog = false;
@@ -126,29 +117,29 @@ export class PaymentsComponent {
 
 
   resetForm() {
-    this.createCompanyForm.reset();
+    this.createPaymentForm.reset();
     this.moneyTransferForm.reset();
   }
 
-  onSubmit() {
-    if (this.createCompanyForm.invalid) {
+
+  onSubmitNewPayment() {
+    if (this.createPaymentForm.invalid) {
       return;
     }
+    this.displayOTPDialog = true;
+    this.sendTokenToEmail()
+  }
 
-    const newPayment = {
-      recipientName: this.createCompanyForm.get('recipientName')?.value,
-      paymentCode: this.createCompanyForm.get('paymentCode')?.value,
-      recipientAccount: this.createCompanyForm.get('recipientAccount')?.value,
-      paymentPurpose: this.createCompanyForm.get('paymentPurpose')?.value,
-      amount: this.createCompanyForm.get('amount')?.value,
-      numberReference: this.createCompanyForm.get('numberReference')?.value
-    };
-
-
-    this.resetForm();
-
-    console.log(newPayment);
-
+  
+  sendTokenToEmail(){
+    this.userService.sendTokenToEmail(this.clientData).subscribe({
+      next: val => {
+        "Poslat token"
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
   }
 
   submitMoneyTransfer(){
@@ -165,6 +156,142 @@ export class PaymentsComponent {
 
     console.log(newTransfer)
 
+  }
+
+
+  onSubmitOTP(){
+    const newPayment = this.getPaymentFormData();
+    this.resetForm();
+
+    this.userService.checkToken(
+      this.oneTimePasswordForm.get('paymentOTP')?.value
+    ).subscribe({
+      next: val => {
+        this.sendPayment(newPayment)
+      },
+      error: err => {
+        console.log("neuspesno")
+      }
+    })
+  }
+
+
+  sendPayment(paymentInfo: any){
+
+
+   
+    const paymentData: PaymentInfo = {
+      receiverName: paymentInfo.recipientName,
+      fromBalanceRegNum: paymentInfo.myAccount,
+      toBalanceRegNum: paymentInfo.recipientAccount,
+      amount: paymentInfo.amount,
+      referenceNumber: paymentInfo.numberReference,
+      paymentNumber: paymentInfo.paymentCode,
+      paymentDescription: paymentInfo.paymentPurpose,
+    }
+  
+    
+
+    this.clientService.sendPayment(paymentData).subscribe({
+      next: val => {
+        console.log(val)
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+    
+  }
+
+
+
+  getPaymentFormData(){
+
+    const newPayment = {
+      recipientName: this.createPaymentForm.get('recipientName')?.value,
+      paymentCode: this.createPaymentForm.get('paymentCode')?.value,
+      recipientAccount: this.createPaymentForm.get('recipientAccount')?.value,
+      paymentPurpose: this.createPaymentForm.get('paymentPurpose')?.value,
+      amount: this.createPaymentForm.get('amount')?.value,
+      numberReference: this.createPaymentForm.get('numberReference')?.value,
+      myAccount: this.selectedFromPaymentAccount.registrationNumber
+    };
+
+    return newPayment;
+  }
+
+
+  initForms(){
+    this.initCreatePaymentForm();
+    this.initMoneyTransferForm();
+    this.initAddRecipientForm();
+    this.initEditRecipientForm();
+    this.initOTPForm();
+  }
+
+  initCreatePaymentForm(){
+    this.createPaymentForm = this.formBuilder.group({
+      recipientName: ['', Validators.required],
+      paymentCode: ['', Validators.required],
+      recipientAccount: ['', Validators.required],
+      paymentPurpose: ['', Validators.required],
+      amount: [null, Validators.required],
+      numberReference: [''],
+      myAccount: ['', Validators.required] 
+    });
+  }
+
+  initMoneyTransferForm(){
+    this.moneyTransferForm = this.formBuilder.group({
+      selectedFromPaymentAccount: ['', Validators.required], 
+      selectedToPaymentAccount: ['', Validators.required],
+      amount: ['', Validators.required]
+    });
+  }
+  
+  initAddRecipientForm(){
+    this.addRecipientForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      accountNumber: ['', Validators.required]
+    });
+  }
+
+  initEditRecipientForm(){
+    this.editRecipientForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      accountNumber: ['', Validators.required]
+    });
+  }
+
+  initOTPForm(){
+    this.oneTimePasswordForm = new FormGroup({
+      paymentOTP: new FormControl('', Validators.required)
+    });
+  }
+
+  getClientData(){
+    this.clientService.getClientData().subscribe({
+      next: value => {
+        this.clientData = value
+        this.getMyAccounts()
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+  }
+
+  getMyAccounts(){
+    this.clientService.getAccountsByClientEmail(this.clientData).subscribe({
+      next: (value: any[]) => {
+        this.paymentAccounts = value.map(account => ({
+          registrationNumber: account.registrationNumber
+        }));
+      },
+      error: err => {
+        console.log(err)
+      }
+    });
   }
 
 

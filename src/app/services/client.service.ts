@@ -42,6 +42,10 @@ export class ClientService {
     )
   }
 
+  getAccountsByClientEmail(email: string) {
+    return this.httpClient.get<any>(`${environment.clientServiceURL}/api/balance/forClient/${email}`, {headers: this.headers})
+  }
+
   //GET ALL ACCOUNTS:
 
   getAllLocalAccounts() {

@@ -1,15 +1,24 @@
 <div class="details-container">
 
-    <div class="leftbox">
-        <nav class="nav flex-column d-flex h-100">
-            <a id="profile" class="nav-link" (click)="selectedOption = Options.NEW_PAYMENT"><i class="pi pi-credit-card"></i></a>
-            <a id="payment" class="nav-link" (click)="selectedOption = Options.MONEY_TRANSFER"><i class="pi pi-arrow-right"></i></a>
-            <a id="subscription" class="nav-link" (click)="selectedOption = Options.PAYMENT_RECIPIENTS"><i class="pi pi-users"></i></a>
-            <a id="privacy" class="nav-link" (click)="selectedOption = Options.PAYMENT_OVERVIEW"><i class="pi pi-chart-line"></i></a>
-        </nav>
-    </div>
+  <div class="leftbox">
+    <nav class="nav flex-column d-flex h-100">
+      <a id="profile" class="nav-link" (click)="selectedOption = Options.NEW_PAYMENT">
+        <i [ngClass]="{'active': selectedOption === Options.NEW_PAYMENT}" style="font-size: 1.3rem" class="pi pi-credit-card"></i>
+      </a>
+      <a id="payment" class="nav-link" (click)="selectedOption = Options.MONEY_TRANSFER">
+        <i [ngClass]="{'active': selectedOption === Options.MONEY_TRANSFER}" style="font-size: 1.3rem" class="pi pi-arrow-right"></i>
+      </a>
+      <a id="subscription" class="nav-link" (click)="selectedOption = Options.PAYMENT_RECIPIENTS">
+        <i [ngClass]="{'active': selectedOption === Options.PAYMENT_RECIPIENTS}" style="font-size: 1.3rem" class="pi pi-users"></i>
+      </a>
+      <a id="privacy" class="nav-link"  (click)="selectedOption = Options.PAYMENT_OVERVIEW">
+        <i [ngClass]="{'active': selectedOption === Options.PAYMENT_OVERVIEW}" style="font-size: 1.3rem" class="pi pi-chart-line"></i>
+      </a>
+    </nav>
+  </div>
 
-    <div class="rightbox">
+
+  <div class="rightbox">
 
 
 

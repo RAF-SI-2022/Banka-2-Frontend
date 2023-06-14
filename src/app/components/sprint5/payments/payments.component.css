@@ -35,9 +35,9 @@ nav a {
     align-items: center;
     justify-content: center;
     color: #fff;
-    
+
 }
-  
+
 nav a:hover {
     color: #4c2272;
     transform: scale(1.2);
@@ -82,35 +82,35 @@ h3{
     font-size: 16px;
     padding: 10px 16px;
     margin: 0;
-  
+
     background: none;
     cursor: pointer;
     border-radius: 3px;
     display: inline-block;
-    
+
     border: 1px solid black;
     transition: all .25s;
   }
-  
+
   .button:focus {
     outline: 0;
   }
-  
+
   .button:hover {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23),inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
   }
-  
+
   .button-solid {
     color: #ffffff;
     border: 0;
   }
-  
+
   .background-blue {
     background-color: #2196F3;
   }
-  
 
-  
+
+
   ::ng-deep .p-dropdown {
     width: 95% !important;
   }
@@ -122,15 +122,15 @@ h3{
     align-items: flex-start;
     justify-content: flex-start;
   }
-  
+
   .transfer-form .flex.justify-content-center {
     margin-top: 30px;
   }
-  
+
   .transfer-form .d-flex.justify-content-end.align-items-end {
     width: 100%;
   }
-  
+
   .transfer-form button {
     margin-top: 30px;
     align-self: flex-end;
@@ -165,4 +165,8 @@ h3{
 
 .p-dialog {
   height: 100vh; /* set the height of the dialog */
+}
+
+.active {
+  color: #2c174f;
 }

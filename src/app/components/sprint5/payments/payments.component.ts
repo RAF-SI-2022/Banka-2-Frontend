@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import {ClientService} from "../../../services/client.service";
 import { UserService } from 'src/app/services/user-service.service';
 import { PaymentInfo } from '../../../models/client.model';
+import { ToastrService } from 'ngx-toastr';
 
 export enum Options {
   NEW_PAYMENT = 'NEW_PAYMENT',
@@ -46,7 +47,11 @@ export class PaymentsComponent {
 
   selectedRecipient: any;
 
-  constructor(private formBuilder: FormBuilder, private clientService: ClientService, private userService: UserService) {
+  constructor(
+    private formBuilder: FormBuilder, 
+    private clientService: ClientService, 
+    private userService: UserService,
+    private toastr: ToastrService) {
 
     this.initForms()
   
@@ -54,11 +59,8 @@ export class PaymentsComponent {
 
   ngOnInit() {
     this.selectedOption = Options.NEW_PAYMENT;
-
     this.getClientData()
-
-  
-    }
+  }
 
   showAddRecipientDialog() {
     this.displayAddDialog = true;
@@ -178,8 +180,6 @@ export class PaymentsComponent {
 
   sendPayment(paymentInfo: any){
 
-
-   
     const paymentData: PaymentInfo = {
       receiverName: paymentInfo.recipientName,
       fromBalanceRegNum: paymentInfo.myAccount,
@@ -190,13 +190,15 @@ export class PaymentsComponent {
       paymentDescription: paymentInfo.paymentPurpose,
     }
   
-    
+    this.displayOTPDialog = false;
 
     this.clientService.sendPayment(paymentData).subscribe({
       next: val => {
+        this.toastr.success('Uspešno slanje');
         console.log(val)
       },
       error: err => {
+        this.toastr.error('Neuspešno slanje');
         console.log(err);
       }
     })
@@ -287,6 +289,9 @@ export class PaymentsComponent {
         this.paymentAccounts = value.map(account => ({
           registrationNumber: account.registrationNumber
         }));
+
+        this.selectedFromPaymentAccount = this.paymentAccounts.length > 0 ? this.paymentAccounts[0] : null;
+
       },
       error: err => {
         console.log(err)

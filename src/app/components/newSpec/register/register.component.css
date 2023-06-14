@@ -73,11 +73,11 @@ button {
 	transition: transform 80ms ease-in;
 }
 
-button:active {
+button.ghost:active {
 	transform: scale(0.95);
 }
 
-button:focus {
+button.ghost:focus {
 	outline: none;
 }
 
@@ -87,7 +87,7 @@ button.ghost {
 }
 
 form {
-	background-color: #FFFFFF;
+	background-color: #eff3f7;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -98,15 +98,27 @@ form {
 }
 
 input {
-	background-color: #eee;
-	border: none;
-	padding: 12px 15px;
-	margin: 8px 0;
 	width: 100%;
-}
+	background: #e6e6e6;
+	color: #333;
+	letter-spacing: 0.5px;
+	padding: 14px 64px;
+  }
+  
+  input ~ i {
+	position: absolute;
+	left: 32px;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: color 0.4s;
+  }
+  
+  input:focus ~ i {
+	color: #843bc7;
+  }
 
 .container {
-	background-color: #fff;
+	background-color: #eff3f7;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
 			0 10px 10px rgba(0,0,0,0.22);
@@ -123,6 +135,7 @@ input {
 	height: 100%;
 	transition: all 0.6s ease-in-out;
 }
+
 
 .sign-in-container {
 	left: 0;
@@ -268,3 +281,59 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
+
+.title {
+	line-height: 1.5;
+	text-transform: uppercase;
+	font-size: 3em;
+	font-weight: bold;
+	text-align: center;
+	letter-spacing: 1px;
+}
+
+.separator {
+	width: 150px;
+	height: 4px;
+	background-color: #843bc7;
+	margin: 24px;
+}
+.welcome-message {
+	text-align: center;
+	font-size: 1.1em;
+	line-height: 28px;
+	margin-bottom: 30px;
+	color: #696969;
+}
+.form-control {
+	width: 100%;
+	max-width: 500px; /* opcionalno: ograničava širinu inputa */
+	position: relative;
+	border: none;
+	background: #eff3f7;
+}
+.pointer {
+	cursor: pointer
+  }
+  input,
+button.submit {
+  border: none;
+  outline: none;
+  border-radius: 30px;
+  font-size: 1.1em;
+}
+
+  button.submit {
+	color: #fff;
+	padding: 14px 64px;
+	margin: 32px auto;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-weight: bold;
+	background-image: linear-gradient(to right, #8b33c5, #15a0e1);
+	cursor: pointer;
+	transition: opacity 0.4s;
+  }
+  
+  button.submit:hover {
+	opacity: 0.9;
+  }

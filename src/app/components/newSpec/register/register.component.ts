@@ -190,6 +190,7 @@ export class RegisterComponent implements OnInit {
     // console.log(this.registerForm.get('selectedGender')?.value.code);
     // console.log(this.registerForm.get('email')?.value);
 
+    this.registerForm.disable()
 
     this.userService.sendTokenToEmail(this.registerForm.get('email')?.value).subscribe({
       next: val => {
@@ -203,6 +204,7 @@ export class RegisterComponent implements OnInit {
       error: err => {
         console.log(err);
         this.toastr.error("Doslo je do greske pri slanju verifikacionog koda")
+        this.registerForm.enable()
       }
     })
   }

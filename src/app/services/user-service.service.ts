@@ -162,7 +162,7 @@ export class UserService {
   }
 
   sendTokenToEmail(email: string) {
-    return this.httpClient.post<any>(`${environment.usersServiceURL}/api/auth/sendToken/${email}`,
+    return this.httpClient.post<any>(`${environment.clientServiceURL}/api/client/sendToken/${email}`,
       {}, {
         headers: this.headers,
         responseType: 'text' as 'json'
@@ -170,7 +170,7 @@ export class UserService {
   }
 
   checkToken(token: string) {
-    return this.httpClient.get<any>(`${environment.usersServiceURL}/api/auth/checkToken/${token}`,
+    return this.httpClient.get<any>(`${environment.clientServiceURL}/api/client/checkToken/${token}`,
        {
         headers: this.headers,
         responseType: 'text' as 'json'

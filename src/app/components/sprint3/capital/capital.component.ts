@@ -122,8 +122,9 @@ export class CapitalComponent  {
     this.transactionListComponent.visible=true;
   }
 
-  toggleMarginTransactionListDialog() {
+  toggleMarginTransactionListDialog(margin: any) {
     this.marginTransactionListComponent.visible=true;
+    this.marginTransactionListComponent.open(margin);
   }
 
   private getBalanceFromBack(): void {
@@ -238,7 +239,7 @@ export class CapitalComponent  {
     return Math.round(num * 10) / 10
     // Math.round((num + Number.EPSILON) * 100) / 100
   }
-  
+
   private getMarginBalanceFromBack(): void {
 
     this.stockService.getAllMarginBalance()
@@ -255,6 +256,5 @@ export class CapitalComponent  {
     })
 
   }
-
 }
 

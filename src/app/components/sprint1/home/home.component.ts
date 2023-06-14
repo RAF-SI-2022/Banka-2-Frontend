@@ -8,4 +8,14 @@ import {PrimeNGConfig} from 'primeng/api';
 })
 export class HomeComponent {
 
+  constructor() {
+  }
+
+  checkIfUserIsClient(){
+    if(localStorage.getItem("permissions") === null && sessionStorage.getItem("permissions") === null ){
+      return false // false je kada je client
+    }
+    return true
+  }
+
 }

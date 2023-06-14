@@ -4,6 +4,9 @@ import {Observable} from 'rxjs';
 import {environment} from "../../environments/environment";
 import {UserCreateDTO, User} from "../models/users.model";
 import {StockService} from './stock.service';
+import {ClientService} from "./client.service";
+import {CompanyService} from "./company.service";
+import {OtcService} from "./otc.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,9 @@ export class UserService {
   private headers
   private token: string
 
-  constructor(private httpClient: HttpClient, private stockService: StockService) {
+  constructor(private httpClient: HttpClient, private stockService: StockService,
+              private clientService: ClientService, private companyService: CompanyService,
+              private otcService: OtcService) {
 
     if (localStorage.getItem("token") !== null) {
       this.token = localStorage.getItem("token")!
@@ -30,17 +35,21 @@ export class UserService {
   resetToken() {
     this.token = ''
     this.stockService.resetToken();
+    this.clientService.resetToken();
+    this.companyService.resetToken();
+    this.otcService.resetToken();
   }
 
   setToken(token: string) {
     this.token = token
     this.stockService.setToken(this.token);
+    this.clientService.setToken(this.token);
+    this.companyService.setToken(this.token);
+    this.otcService.setToken(this.token);
     this.headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${token}`)
-
-
   }
 
   getToken() {
@@ -150,6 +159,22 @@ export class UserService {
 
   getUserPermissions(id: number): Observable<any> {
     return this.httpClient.get(`${environment.mainServiceURL}/api/users/permissions` + id, {headers: this.headers})
+  }
+
+  sendTokenToEmail(email: string) {
+    return this.httpClient.post<any>(`${environment.usersServiceURL}/api/auth/sendToken/${email}`,
+      {}, {
+        headers: this.headers,
+        responseType: 'text' as 'json'
+      });
+  }
+
+  checkToken(token: string) {
+    return this.httpClient.get<any>(`${environment.usersServiceURL}/api/auth/checkToken/${token}`,
+       {
+        headers: this.headers,
+        responseType: 'text' as 'json'
+      });
   }
 
   resetUserLimit(id: number): Observable<any> {

@@ -271,13 +271,13 @@ export class StockService {
     return this.httpClient.get<any>(`${environment.mainServiceURL}/api/futures/user/${userId}`,
       {headers: this.headers})
   }
-    
+
   getAllMarginBalance(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/marginAccount`, {headers: this.headers})
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/marginAccount`, {headers: this.headers})
   }
-  
-  getMarginTransactions(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/marginTransaction`, {headers: this.headers})
+
+  getMarginTransactions(group: string): Observable<any> {
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/marginTransaction/byGroup/${group}`, {headers: this.headers})
   }
 
 }

@@ -1,27 +1,22 @@
 <div class="details-container">
-    <div class="d-flex justify-content-end">
-        <p-button (click)="showAddAccountTest()" label="Kreiraj račun (UI TEST BUTTON)"></p-button>
-    </div>
-</div>
-
-<div class="details-container">
 
         <div class="right">
 
             <div class="d-flex justify-content-between">
-                <div>
+                <div class="mb-5">
                     <div class="title">Računi</div>
-                    <div class="description">Pregled vaših računa</div>
+                    <div class="description">Pregled računa korisnika</div>
+                    <p-dropdown [options]="users" optionLabel="email" [(ngModel)]="selectedClient"
+                                (onChange)="getAllAccounts(selectedClient.email)"
+                                placeholder="Izaberite korisnika" appendTo="body"></p-dropdown>
                 </div>
-                <div></div>
                 <p-button (click)="showAddAccount()" label="Kreiraj račun"></p-button>
             </div>
 
-            <div class="account-container">
+            <div class="account-container row">
                 <div *ngFor="let account of accounts" (click)="openLocalBalance(account)" class="graph">
 
-
-                    <svg *ngIf="account.accountType.key === 'tekuci'" viewBox="0 0 250 60" width="250" height="90">
+                    <svg *ngIf="account.type === 'TEKUCI'" viewBox="0 0 250 60" width="250" height="90">
                     <path d="M 209.328 17.34 C 221.956 17.588 235.264 32.599 250 22.328" fill="none" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(243,243,250)" stroke-linejoin="miter" stroke-linecap="round" stroke-miterlimit="3"></path>
                     <linearGradient id="_lgradient_1" x1="0%" y1="50%" x2="100%" y2="50%">
                         <stop offset="0%" stop-opacity="1" style="stop-color:rgb(120,113,255)"></stop>
@@ -31,7 +26,7 @@
                     <path d="M 206.649 17.218 C 206.649 15.739 207.85 14.538 209.328 14.538 C 210.807 14.538 212.008 15.739 212.008 17.218 C 212.008 18.696 210.807 19.897 209.328 19.897 C 207.85 19.897 206.649 18.696 206.649 17.218 Z" fill="rgb(111,232,255)"></path>
                     </svg>
 
-                    <svg *ngIf="account.accountType.key === 'devizni'" viewBox="0 0 250 60" width="250" height="90">
+                    <svg *ngIf="account.type === 'DEVIZNI'" viewBox="0 0 250 60" width="250" height="90">
                         <path d="M 209.328 17.34 C 221.956 17.588 235.264 32.599 250 22.328" fill="none" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(243,243,250)" stroke-linejoin="miter" stroke-linecap="round" stroke-miterlimit="3"></path>
                         <linearGradient id="_lgradient_2" x1="0%" y1="50%" x2="100%" y2="50%">
                         <stop offset="0%" stop-opacity="1" style="stop-color:rgb(248, 135, 129)"></stop>
@@ -41,7 +36,7 @@
                         <path d="M 206.649 17.218 C 206.649 15.739 207.85 14.538 209.328 14.538 C 210.807 14.538 212.008 15.739 212.008 17.218 C 212.008 18.696 210.807 19.897 209.328 19.897 C 207.85 19.897 206.649 18.696 206.649 17.218 Z" fill="rgb(247, 198, 130)"></path>
                     </svg>
 
-                    <svg *ngIf="account.accountType.key === 'poslovni'" viewBox="0 0 250 60" width="250" height="90">
+                    <svg *ngIf="account.type === 'POSLOVNI'" viewBox="0 0 250 60" width="250" height="90">
                         <path d="M 209.328 17.34 C 221.956 17.588 235.264 32.599 250 22.328" fill="none" vector-effect="non-scaling-stroke" stroke-width="2" stroke="rgb(243,243,250)" stroke-linejoin="miter" stroke-linecap="round" stroke-miterlimit="3"></path>
                         <linearGradient id="_lgradient_3" x1="0%" y1="50%" x2="100%" y2="50%">
                         <stop offset="0%" stop-opacity="1" style="stop-color:rgb(123, 220, 123)"></stop>
@@ -52,14 +47,13 @@
                     </svg>
 
                     <div class="stock">
-                        <!-- treba ikonice da se prilagode -->
-                        <div *ngIf="account.accountType.key === 'tekuci'" class="stock-logo paperpillar"><i class="pi pi-angle-double-up"></i></div>
-                        <div *ngIf="account.accountType.key === 'devizni'" class="stock-logo dandruft"><i class="pi pi-dollar"></i></div>
-                        <div *ngIf="account.accountType.key === 'poslovni'" class="stock-logo kiwi"><i class="pi pi-euro"></i></div>
+                        <div *ngIf="account.type === 'TEKUCI'" class="stock-logo paperpillar"><i class="pi pi-home"></i></div>
+                        <div *ngIf="account.type === 'DEVIZNI'" class="stock-logo dandruft"><i class="pi pi-globe"></i></div>
+                        <div *ngIf="account.type === 'POSLOVNI'" class="stock-logo kiwi"><i class="pi pi-briefcase"></i></div>
 
                         <div class="stock-info">
-                        <div class="stock-name">{{ account.currency.name }}</div>
-                        <div class="stock-fullname">{{ account.accountType.name }}</div>
+                        <div class="stock-name">{{ account.currency }}</div>
+                        <div class="stock-fullname">{{ selectedClient.name }} {{selectedClient.lastname}}</div>
                         </div>
                     </div>
                 </div>
@@ -70,9 +64,5 @@
 
 </div>
 
-
-
- <app-add-account (addAccountEmitter)="submitAddAccount($event)"></app-add-account>
-
-<app-add-user-account></app-add-user-account>
+<app-add-user-account (addAccountEmitter)="submitAddAccount($event)"></app-add-user-account>
 

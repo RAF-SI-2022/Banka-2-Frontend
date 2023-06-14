@@ -1,14 +1,7 @@
 import { Component } from '@angular/core';
-
-/* Model za privremene podatke */
-export interface TableMgTrData {
-  datum: Date;
-  tipKapitala: string;
-  iznos: number;
-  kredit: number;
-  margin: number;
-  opis: string;
-}
+import { StockService } from 'src/app/services/stock.service';
+import { MarginTransaction } from 'src/app/models/stock-exchange.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-margin-transaction-list',
@@ -18,11 +11,31 @@ export interface TableMgTrData {
 export class MarginTransactionListComponent {
   visible: boolean = false;
 
-  dataset: TableMgTrData[] = [
-    {datum: new Date("01/01/2001"), tipKapitala: "MARGIN", iznos: 4156.00, kredit: 0,margin: 0, opis: "uplata/isplata"},
-    {datum: new Date("01/02/2002"), tipKapitala: "MARGIN", iznos: 4456.00, kredit: 0,margin: 0, opis: "uplata/isplata"},
-    {datum: new Date("01/02/2001"), tipKapitala: "MARGIN", iznos: 7556.00, kredit: 0,margin: 0, opis: "uplata/isplata"},
+  data:MarginTransaction[];
 
-  ];
+  constructor(private toastr: ToastrService,private stockService: StockService ) {
 
+  }
+
+  ngOnInit(){
+
+  }
+
+  open(type: string) {
+    this.getMarginTransactions(type);
+  }
+
+  private getMarginTransactions(type: string): void {
+
+    this.stockService.getMarginTransactions(type)
+    .subscribe({
+      next: val => {
+        this.data = val;
+      },
+      error: err =>{
+        this.toastr.error(err.error)
+      }
+    })
+
+  }
 }

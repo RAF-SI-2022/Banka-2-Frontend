@@ -88,6 +88,12 @@ import { SingleContactComponent } from './components/sprint4/single-contact/sing
 import { RegisterComponent } from './components/newSpec/register/register.component';
 import { TransactionElementCreationComponent } from './components/sprint4/transaction-element-creation/transaction-element-creation.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { BalanceComponent } from './components/sprint5/balance/balance.component';
+import { AddAccountComponent } from './components/sprint5/add-account/add-account.component';
+import { AddUserAccountComponent } from './components/add-user-account/add-user-account.component';
+import {StepsModule} from "primeng/steps";
+import {TagModule} from "primeng/tag";
+import { PaymentsComponent } from './components/sprint5/payments/payments.component';
 
 
 
@@ -141,6 +147,10 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     SingleContactComponent,
     RegisterComponent,
     TransactionElementCreationComponent,
+    BalanceComponent,
+    AddAccountComponent,
+    PaymentsComponent,
+    AddUserAccountComponent,
     // FutureContractComponent,
 
   ],
@@ -181,6 +191,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     InputTextareaModule,
     ConfirmDialogModule,
     RadioButtonModule,
+    StepsModule,
+    TagModule,
   ],
   // exports: [
   //   ActivityPipe

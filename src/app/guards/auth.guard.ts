@@ -24,6 +24,7 @@ export class AuthGuard {
     | boolean
     | UrlTree {
 
+
     if (localStorage.getItem('token') || sessionStorage.getItem('token') !== null) {
       return true;
     } else {

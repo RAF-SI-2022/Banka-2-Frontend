@@ -35,24 +35,24 @@
 
       </div>
 
-      <div class="row justify-content-center mt-5">
-        <div class="justify-content-center" style="display: inline-flex; align-items: center; text-align: center;">
-          <div class="flex align-items-center">
-            <p-radioButton value="CASH" [formControlName]="'balance'" inputId="cash"></p-radioButton>
-            <label class="ms-2">Cash</label>
-          </div>
+<!--      <div class="row justify-content-center mt-5">-->
+<!--        <div class="justify-content-center" style="display: inline-flex; align-items: center; text-align: center;">-->
+<!--          <div class="flex align-items-center">-->
+<!--            <p-radioButton value="CASH" [formControlName]="'balance'" inputId="cash"></p-radioButton>-->
+<!--            <label class="ms-2">Cash</label>-->
+<!--          </div>-->
 
-          <div class="flex align-items-center" style="margin-left: 10px;">
-            <p-radioButton value="MARGIN" [formControlName]="'balance'" inputId="margin"></p-radioButton>
-            <label class="ms-2">Margin</label>
-          </div>
-        </div>
-      </div>
+<!--          <div class="flex align-items-center" style="margin-left: 10px;">-->
+<!--            <p-radioButton value="MARGIN" [formControlName]="'balance'" inputId="margin"></p-radioButton>-->
+<!--            <label class="ms-2">Margin</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 
 
       <div class="row  justify-content-center mt-5">
         <div class="col-10 text-center">
-          <p-button type="submit" label="Dodaj"></p-button>
+          <p-button [disabled]="!isFormValid" type="submit" label="Dodaj"></p-button>
         </div>
       </div>
 

@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {CompanyContract} from "../models/stock-exchange.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {OtcService} from "./otc.service";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
@@ -39,12 +40,12 @@ export class CompanyService {
   }
 
   getAllCompanies(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/company`
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/company`
       , {headers: this.headers})
   }
 
   getCompanyById(id: string): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/company/${id}`
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/company/${id}`
       , {headers: this.headers})
   }
 
@@ -56,7 +57,7 @@ export class CompanyService {
     activityCode: string,
     address: string
   ): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8082/api/company/edit`,
+    return this.httpClient.post<any>(`${environment.otcServiceURL}/api/company/edit`,
       {
         id: id,
         name: name,
@@ -79,7 +80,7 @@ export class CompanyService {
     console.log("headeri")
     console.log(this.headers)
 
-    return this.httpClient.post<any>(`http://localhost:8082/api/company/create`,
+    return this.httpClient.post<any>(`${environment.otcServiceURL}/api/company/create`,
       {
         name: name,
         registrationNumber: registrationNumber,
@@ -97,7 +98,7 @@ export class CompanyService {
     currency: string,
     bankName: string
   ): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8082/api/bankaccount/${companyId}`,
+    return this.httpClient.post<any>(`${environment.otcServiceURL}/api/bankaccount/${companyId}`,
       {
         id: "1",
         accountNumber: accountNumber,
@@ -109,7 +110,7 @@ export class CompanyService {
   }
 
   getAllCompanyBankAccounts(companyId: string): Observable<any> {
-    return this.httpClient.get(`http://localhost:8082/api/bankaccount/company/${companyId}`,
+    return this.httpClient.get(`${environment.otcServiceURL}/api/bankaccount/company/${companyId}`,
       {headers: this.headers});
   }
 
@@ -119,7 +120,7 @@ export class CompanyService {
     currency: string,
     bankName: string
   ): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8082/api/bankaccount/edit`,
+    return this.httpClient.post<any>(`${environment.otcServiceURL}/api/bankaccount/edit`,
       {
         id: id,
         accountNumber: accountNumber,
@@ -131,7 +132,7 @@ export class CompanyService {
   }
 
   deleteCompanyBankAccount(id: string): Observable<any> {
-    return this.httpClient.delete<any>(`http://localhost:8082/api/bankaccount/delete/${id}`,
+    return this.httpClient.delete<any>(`${environment.otcServiceURL}/api/bankaccount/delete/${id}`,
       {headers: this.headers})
   }
 

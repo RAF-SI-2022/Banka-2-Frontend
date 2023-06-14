@@ -20,7 +20,7 @@
     <li class="nav-item mb-1 sidebar-nav-item">
       <a *ngIf="getPermission()" [routerLink]="'/users'" id="usersBtn" class="nav-link" aria-current="page"
          (click)="hideSidebar()" [routerLinkActive]="['active']">Korisnici</a>
-      <a *ngIf="getAgentPerm()" [routerLink]="'/agents'" id="usersBtn" class="nav-link" aria-current="page"
+      <a *ngIf="getAgentPerm()" [routerLink]="'/agents'" id="usersAgentBtn" class="nav-link" aria-current="page"
          (click)="hideSidebar()" [routerLinkActive]="['active']">Agenti</a>
     </li>
 
@@ -48,6 +48,10 @@
     <li class="nav-item mb-1 sidebar-nav-item">
       <a  [routerLink]="'/capital'" id="capitalBtn" class="nav-link" aria-current="page"
          (click)="hideSidebar()" [routerLinkActive]="['active']">Kapital</a>
+    </li>
+    <li  class="nav-item mb-1 sidebar-nav-item">
+      <a  [routerLink]="'/companies'" id="companiesBtn" class="nav-link" aria-current="page"
+          (click)="hideSidebar()" [routerLinkActive]="['active']">Kompanije</a>
     </li>
 
     <hr class="solid">
@@ -103,7 +107,7 @@
           <li class="nav-item">
             <a *ngIf="getPermission()" id="usersButton" [routerLink]="'/users'" class="nav-link" aria-current="page"
                [routerLinkActive]="['active']">Korisnici</a>
-            <a *ngIf="getAgentPerm()" id="usersButton" [routerLink]="'/agents'" class="nav-link" aria-current="page"
+            <a *ngIf="getAgentPerm()" id="usersAgentButton" [routerLink]="'/agents'" class="nav-link" aria-current="page"
                [routerLinkActive]="['active']">Agenti</a>
           </li>
           <li class="nav-item">
@@ -132,6 +136,16 @@
             <a  id="companiesButton" [routerLink]="'/companies'" class="nav-link"
                aria-current="page"
                [routerLinkActive]="['active']">Kompanije</a>
+          </li>
+          <li class="nav-item">
+            <a  id="balanceButton" [routerLink]="'/balance'" class="nav-link"
+              aria-current="page"
+              [routerLinkActive]="['active']">Račun</a>
+          </li>
+          <li class="nav-item">
+            <a  id="paymentsButton" [routerLink]="'/payments'" class="nav-link"
+              aria-current="page"
+              [routerLinkActive]="['active']">Plaćanje</a>
           </li>
 
         </ul>

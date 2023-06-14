@@ -1,12 +1,13 @@
 export const environment = {
-  apiAuthServerUrl: 'http://localhost:8080/auth',
-  apiUserServerUrl: 'http://localhost:8080/api/users',
-  apiForgotPassUrl: 'http://localhost:8080/auth/reset-password',
-  apiPasswordRestoreUrl: 'http://localhost:8080/api/users/change-user-password',
-  apiForexUrl: 'http://localhost:8080/api/forex',
-  apiYahooFinanceUrl: 'https://query1.finance.yahoo.com/v11/finance/quoteSummary/',
-  apiStockDetails: 'http://localhost:8080/api/stock/',
-  apiStockGraph: `http://localhost:8080/api/stock/`,
-  apiExchangeUrl: 'http://localhost:8080/api/exchange'
-};
 
+  usersServiceURL: 'https://banka-2.k8s.elab.rs/backend/users',
+  // mainURL: host+port
+  mainServiceURL: 'https://banka-2.k8s.elab.rs/backend/main',
+  // usersURL: host+port
+  otcServiceURL: 'https://banka-2.k8s.elab.rs/backend/otc',
+  // otcURL: host+port
+  clientServiceURL: '',
+
+  //utility putanje
+  csvPath: 'assets/csv/filtered_forex_pairs.csv'
+};

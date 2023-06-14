@@ -2,6 +2,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {CompanyContract, TransactionElement} from "../models/stock-exchange.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
@@ -40,22 +41,22 @@ export class OtcService {
   }
 
   getAllCompanyContracts(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/otc`
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/otc`
       , {headers: this.headers})
   }
 
   getAllCompanyContacts(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/contact`
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/contact`
       , {headers: this.headers})
   }
 
   getAllCompanyMyContracts(id:string): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/otc/byCompany/${id}`
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/otc/byCompany/${id}`
       , {headers: this.headers})
   }
 
   getCompanyContractById(id: string): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/otc/${id}`
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/otc/${id}`
       , {headers: this.headers})
   }
 
@@ -67,7 +68,7 @@ export class OtcService {
     position: string,
     note: string
   ): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8082/api/contact`,
+    return this.httpClient.post<any>(`${environment.otcServiceURL}/api/contact`,
       {
         firstName: firstName,
         lastName: lastName,
@@ -86,7 +87,7 @@ export class OtcService {
     contractNumber: string,
     description: string
   ): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8082/api/otc/open`,
+    return this.httpClient.post<any>(`${environment.otcServiceURL}/api/otc/open`,
       {
         companyId: companyId,
         contractStatus: contractStatus,
@@ -103,7 +104,7 @@ export class OtcService {
     contractNumber: string,
     description: string
   ): Observable<any> {
-    return this.httpClient.patch<any>(`http://localhost:8082/api/otc/edit`,
+    return this.httpClient.patch<any>(`${environment.otcServiceURL}/api/otc/edit`,
       {
         companyId: companyId,
         contractStatus: contractStatus,
@@ -122,7 +123,7 @@ export class OtcService {
     position: string,
     note: string
   ): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8082/api/contact/edit`,
+    return this.httpClient.post<any>(`${environment.otcServiceURL}/api/contact/edit`,
       {
         id: id,
         firstName: firstName,
@@ -136,7 +137,7 @@ export class OtcService {
   }
 
   finalizeCompanyContract(id: string): Observable<any> {
-    return this.httpClient.patch<any>(`http://localhost:8082/api/otc/finalize/${id}`,
+    return this.httpClient.patch<any>(`${environment.otcServiceURL}/api/otc/finalize/${id}`,
       {
 
       },
@@ -145,32 +146,32 @@ export class OtcService {
   }
 
   deleteCompanyContract(id: string): Observable<any> {
-    return this.httpClient.delete<any>(`http://localhost:8082/api/otc/delete/${id}`
+    return this.httpClient.delete<any>(`${environment.otcServiceURL}/api/otc/delete/${id}`
       , {headers: this.headers})
   }
 
   getAllElements(): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/otc/elements`
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/otc/elements`
       , {headers: this.headers})
   }
 
   getElementById(id: number): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/otc/element/${id}`
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/otc/element/${id}`
       , {headers: this.headers})
   }
 
   getAllContractElements(contractId: string): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/otc/contract_elements/${contractId}`
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/otc/contract_elements/${contractId}`
       , {headers: this.headers})
   }
 
   getElementByContractId(id: string): Observable<any> {
-    return this.httpClient.get<any>(`http://localhost:8082/api/otc/contract_element/${id}`
+    return this.httpClient.get<any>(`${environment.otcServiceURL}/api/otc/contract_element/${id}`
       , {headers: this.headers})
   }
 
   createElement(element: TransactionElement): Observable<any> {
-    return this.httpClient.post<any>(`http://localhost:8082/api/otc/add_element`,
+    return this.httpClient.post<any>(`${environment.otcServiceURL}/api/otc/add_element`,
       {
         contractId: element.contractId,
         elementId: element.elementId,
@@ -197,7 +198,7 @@ export class OtcService {
     amount: number,
     priceOfOneElement: number
   ): Observable<any> {
-    return this.httpClient.patch<any>(`http://localhost:8082/api/otc/edit_element`,
+    return this.httpClient.patch<any>(`${environment.otcServiceURL}/api/otc/edit_element`,
       {
         contractId: contractId,
         elementId: elementId,
@@ -212,7 +213,7 @@ export class OtcService {
   }
 
   deleteElement(contractId: string, elementId: string): Observable<any> {
-    return this.httpClient.delete<any>(`http://localhost:8082/api/otc/remove_element/${contractId}/${elementId}`
+    return this.httpClient.delete<any>(`${environment.otcServiceURL}/api/otc/remove_element/${contractId}/${elementId}`
       , {headers: this.headers})
   }
 

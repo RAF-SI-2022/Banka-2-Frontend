@@ -1,5 +1,5 @@
 <!--SIDEBAR KOD:-->
-<p-sidebar [(visible)]="display" *ngIf="user != undefined">
+<p-sidebar [(visible)]="display" *ngIf="user != undefined || !checkIfUserIsClient()">
   <div class="mb-3 ms-1">
     <img width="80" height="80" src="assets/icons/blogo.png" alt="My Happy SVG" class="mb-3 me-3 "/>
     <h1 class="mb-5" style="display: inline-block">Banka2</h1>
@@ -24,7 +24,7 @@
          (click)="hideSidebar()" [routerLinkActive]="['active']">Agenti</a>
     </li>
 
-    <hr class="solid">
+    <hr *ngIf="checkIfUserIsClient()" class="solid">
 
     <li class="nav-item mb-1 sidebar-nav-item">
       <a *ngIf="checkIfUserIsClient()" [routerLink]="'/stocks'" id="stockBtn" class="nav-link" aria-current="page"
@@ -39,7 +39,7 @@
          (click)="hideSidebar()" [routerLinkActive]="['active']">Terminski ugovori</a>
     </li>
 
-    <hr class="solid">
+    <hr *ngIf="checkIfUserIsClient()" class="solid">
 
     <li class="nav-item mb-1 sidebar-nav-item">
       <a *ngIf="checkIfUserIsClient()" [routerLink]="'/purchases'" id="orderBtn" class="nav-link" aria-current="page"
@@ -52,6 +52,18 @@
     <li  class="nav-item mb-1 sidebar-nav-item">
       <a *ngIf="checkIfUserIsClient()" [routerLink]="'/companies'" id="companiesBtn" class="nav-link" aria-current="page"
           (click)="hideSidebar()" [routerLinkActive]="['active']">Kompanije</a>
+    </li>
+
+    <hr *ngIf="checkIfUserIsClient()" class="solid">
+
+    <li class="nav-item mb-1 sidebar-nav-item">
+      <a [routerLink]="'/balance'" id="balanceBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Računi</a>
+    </li>
+
+    <li class="nav-item mb-1 sidebar-nav-item">
+      <a *ngIf="!checkIfUserIsClient()" [routerLink]="'/payments'" id="paymentBtn" class="nav-link" aria-current="page"
+         (click)="hideSidebar()" [routerLinkActive]="['active']">Plaćanja</a>
     </li>
 
     <hr class="solid">
@@ -164,7 +176,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu -dark dropdown-menu-end"
                 aria-labelledby="navbarDarkDropdownMenuLink">
-              <li><a class="dropdown-item" [routerLink]="'/profile'">Profil</a></li>
+              <li *ngIf="!checkIfUserIsClient"><a class="dropdown-item" [routerLink]="'/profile'">Profil</a></li>
               <li><a class="dropdown-item" (click)="logOut()">Logout</a></li>
             </ul>
           </li>

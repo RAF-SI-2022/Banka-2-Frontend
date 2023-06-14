@@ -49,6 +49,11 @@ export class ClientService {
 
   // GET CLIENT:
 
+  getClientData() {
+    return this.httpClient.get<any>(`${environment.clientServiceURL}/api/client/mailFromToken`,
+      {headers: this.headers})
+  }
+
   getAllClients() {
     return this.httpClient.get<any>(`${environment.clientServiceURL}/api/client`, {headers: this.headers})
   }

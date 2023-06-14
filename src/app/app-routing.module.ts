@@ -30,13 +30,13 @@ import { RegisterComponent } from './components/newSpec/register/register.compon
 import { TransactionElementCreationComponent } from './components/sprint4/transaction-element-creation/transaction-element-creation.component';
 import { BalanceComponent } from './components/sprint5/balance/balance.component';
 import { PaymentsComponent } from './components/sprint5/payments/payments.component';
-import {ClientGuard} from "./guards/client.guard";
+import { ClientGuard} from "./guards/client.guard";
 import {ClientOnlyGuard} from "./guards/client-only.guard";
 
 const routes: Routes = [
   {
     path: "",
-    component: LoginComponent,
+    component: RegisterComponent,
     canActivate: [LoginGuard]
   },
   {
@@ -146,8 +146,8 @@ const routes: Routes = [
     canActivate: [AuthGuard, ClientGuard]
   },
   {
-    path: "register",
-    component: RegisterComponent,
+    path: "login-admin",
+    component: LoginComponent,
     canActivate: [LoginGuard]
   },
   {

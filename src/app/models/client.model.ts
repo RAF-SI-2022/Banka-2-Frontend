@@ -72,3 +72,10 @@ export interface PaymentInfo{
   paymentDescription: string
 }
 
+export interface TransactionInfo{
+  fromBalanceRegNum: string,
+  toBalanceRegNum: string,
+  currency: string,
+  amount: number,
+}
+

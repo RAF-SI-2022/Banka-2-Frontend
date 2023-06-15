@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {ClientService} from "../../../services/client.service";
 import { UserService } from 'src/app/services/user-service.service';
-import { PaymentInfo } from '../../../models/client.model';
+import { PaymentInfo, TransactionInfo } from '../../../models/client.model';
+import { ToastrService } from 'ngx-toastr';
 
 export enum Options {
   NEW_PAYMENT = 'NEW_PAYMENT',
@@ -39,6 +40,8 @@ export class PaymentsComponent {
   selectedFromPaymentAccount: any;
   selectedToPaymentAccount: any;
 
+  transactionFromAccount: any[];
+  transactionToAccount: any[];
 
   displayAddDialog = false;
   displayEditDialog = false;
@@ -46,7 +49,11 @@ export class PaymentsComponent {
 
   selectedRecipient: any;
 
-  constructor(private formBuilder: FormBuilder, private clientService: ClientService, private userService: UserService) {
+  constructor(
+    private formBuilder: FormBuilder, 
+    private clientService: ClientService, 
+    private userService: UserService,
+    private toastr: ToastrService) {
 
     this.initForms()
 
@@ -54,7 +61,6 @@ export class PaymentsComponent {
 
   ngOnInit() {
     this.selectedOption = Options.NEW_PAYMENT;
-
     this.getClientData()
 
 
@@ -143,42 +149,56 @@ export class PaymentsComponent {
   }
 
   submitMoneyTransfer(){
+
     if (this.moneyTransferForm.invalid) {
       return;
     }
 
-    const newTransfer = {
-      selectedFromPaymentAccount: this.moneyTransferForm.get('selectedFromPaymentAccount')?.value,
-      selectedToPaymentAccount: this.moneyTransferForm.get('selectedToPaymentAccount')?.value,
-      amount: this.moneyTransferForm.get('amount')?.value
-    };
-
-
-    console.log(newTransfer)
+    this.displayOTPDialog = true;
+    this.sendTokenToEmail()
 
   }
 
 
-  onSubmitOTP(){
-    const newPayment = this.getPaymentFormData();
-    this.resetForm();
+  onSelectedFromPaymentAccountChange(selectedAccount: any) {
+    if (selectedAccount) {
+      const selectedCurrency = selectedAccount.currency;
+  
+      this.transactionToAccount = this.transactionFromAccount.filter(account => account.currency === selectedCurrency && account !== selectedAccount);
+    } else {
+      this.transactionToAccount = [];
+    }
+  }
+  
 
+
+  onSubmitOTP(){
+   
     this.userService.checkToken(
       this.oneTimePasswordForm.get('paymentOTP')?.value
     ).subscribe({
       next: val => {
-        this.sendPayment(newPayment)
+        if(this.selectedOption == Options.MONEY_TRANSFER){
+          let newTransaction = this.getTransactionFormData();
+          this.sendTransaction(newTransaction)
+          this.resetForm();
+        }
+        if(this.selectedOption == Options.NEW_PAYMENT){          
+          let newPayment = this.getPaymentFormData();
+          this.sendPayment(newPayment)
+          this.resetForm();
+       }
       },
       error: err => {
         console.log("neuspesno")
+        this.resetForm();
       }
     })
-  }
+}
+
 
 
   sendPayment(paymentInfo: any){
-
-
 
     const paymentData: PaymentInfo = {
       receiverName: paymentInfo.recipientName,
@@ -189,20 +209,37 @@ export class PaymentsComponent {
       paymentNumber: paymentInfo.paymentCode,
       paymentDescription: paymentInfo.paymentPurpose,
     }
-
-    console.log(paymentData)
-
-
+  
+    this.displayOTPDialog = false;
 
     this.clientService.sendPayment(paymentData).subscribe({
       next: val => {
+        this.toastr.success('Uspešno slanje');
         console.log(val)
       },
       error: err => {
+        this.toastr.error('Neuspešno slanje');
         console.log(err);
       }
     })
 
+  }
+
+
+  sendTransaction(transactionInfo: TransactionInfo){
+
+    this.displayOTPDialog = false;
+
+    this.clientService.sendTransaction(transactionInfo).subscribe({
+      next: val => {
+        this.toastr.success('Uspešna transakcija');
+        console.log(val)
+      },
+      error: err => {
+        this.toastr.error('Neuspešna transakcija');
+        console.log(err);
+      }
+    })
   }
 
 
@@ -221,6 +258,22 @@ export class PaymentsComponent {
 
     return newPayment;
   }
+
+  getTransactionFormData(){
+
+    
+
+    const transactionInfo: TransactionInfo = {
+      fromBalanceRegNum: this.moneyTransferForm.get('selectedFromPaymentAccount')?.value.registrationNumber,
+      toBalanceRegNum: this.moneyTransferForm.get('selectedToPaymentAccount')?.value.registrationNumber,
+      currency: this.moneyTransferForm.get('selectedFromPaymentAccount')?.value.currency,
+      amount: this.moneyTransferForm.get('amount')?.value,
+    };
+
+    console.log(transactionInfo)
+    return transactionInfo;
+  }
+
 
 
   initForms(){
@@ -286,9 +339,19 @@ export class PaymentsComponent {
   getMyAccounts(){
     this.clientService.getAccountsByClientEmail(this.clientData).subscribe({
       next: (value: any[]) => {
+
         this.paymentAccounts = value.map(account => ({
           registrationNumber: account.registrationNumber
         }));
+
+        
+        this.transactionFromAccount = value.map(account => ({
+          currency: account.currency,
+          registrationNumber: account.registrationNumber
+        }));
+
+
+
       },
       error: err => {
         console.log(err)

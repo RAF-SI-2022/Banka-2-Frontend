@@ -40,7 +40,7 @@
                         <span class="p-float-label">
                             <p-dropdown [options]="paymentAccounts" optionLabel="registrationNumber" formControlName="myAccount"></p-dropdown>
                             <label for="myAccount">Vaš račun</label>
-                          </span>
+                        </span>
                     </div>
 
                     <div>
@@ -118,12 +118,18 @@
             <form [formGroup]="moneyTransferForm" (ngSubmit)="submitMoneyTransfer()">
                 <div class="transfer-form">
 
+                    <!-- <span class="p-float-label">
+                        <p-dropdown [options]="paymentAccounts" optionLabel="registrationNumber" formControlName="myAccount"></p-dropdown>
+                        <label for="myAccount">Vaš račun</label>
+                    </span> -->
+
                     <div class="flex justify-content-center w-100">
-                      <p-dropdown [options]="paymentAccounts" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="name"></p-dropdown>
-                    </div>
+                        <p-dropdown [options]="transactionFromAccount" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="registrationNumber" (onChange)="onSelectedFromPaymentAccountChange($event.value)"></p-dropdown>
+                      </div>                      
+                      
 
                     <div class="flex justify-content-center w-100" >
-                      <p-dropdown class="w-100" [options]="paymentAccounts" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="name"></p-dropdown>
+                      <p-dropdown class="w-100" [options]="transactionToAccount" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="registrationNumber"></p-dropdown>
                     </div>
 
                     <div class="flex justify-content-center" style="margin-top: 30px; width: 100%;">

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {ClientService} from "../../../services/client.service";
 import { UserService } from 'src/app/services/user-service.service';
-import { PaymentInfo } from '../../../models/client.model';
+import { PaymentInfo, TransactionInfo } from '../../../models/client.model';
 import { ToastrService } from 'ngx-toastr';
 
 export enum Options {
@@ -39,7 +39,9 @@ export class PaymentsComponent {
 
   selectedFromPaymentAccount: any;
   selectedToPaymentAccount: any;
-  
+
+  transactionFromAccount: any[];
+  transactionToAccount: any[];
 
   displayAddDialog = false;
   displayEditDialog = false;
@@ -54,13 +56,15 @@ export class PaymentsComponent {
     private toastr: ToastrService) {
 
     this.initForms()
-  
+
   }
 
   ngOnInit() {
     this.selectedOption = Options.NEW_PAYMENT;
     this.getClientData()
-  }
+
+
+    }
 
   showAddRecipientDialog() {
     this.displayAddDialog = true;
@@ -79,7 +83,7 @@ export class PaymentsComponent {
     if (this.addRecipientForm.invalid) {
       return;
     }
-    
+
     const newRecipient = {
       name: this.addRecipientForm.get('name')?.value,
       accountNumber: this.addRecipientForm.get('accountNumber')?.value,
@@ -115,7 +119,7 @@ export class PaymentsComponent {
       this.recipients.splice(index, 1);
     }
   }
-  
+
 
 
   resetForm() {
@@ -132,7 +136,7 @@ export class PaymentsComponent {
     this.sendTokenToEmail()
   }
 
-  
+
   sendTokenToEmail(){
     this.userService.sendTokenToEmail(this.clientData).subscribe({
       next: val => {
@@ -145,37 +149,53 @@ export class PaymentsComponent {
   }
 
   submitMoneyTransfer(){
+
     if (this.moneyTransferForm.invalid) {
       return;
     }
 
-    const newTransfer = {
-      selectedFromPaymentAccount: this.moneyTransferForm.get('selectedFromPaymentAccount')?.value,
-      selectedToPaymentAccount: this.moneyTransferForm.get('selectedToPaymentAccount')?.value,
-      amount: this.moneyTransferForm.get('amount')?.value
-    };
-
-
-    console.log(newTransfer)
+    this.displayOTPDialog = true;
+    this.sendTokenToEmail()
 
   }
 
 
-  onSubmitOTP(){
-    const newPayment = this.getPaymentFormData();
-    this.resetForm();
+  onSelectedFromPaymentAccountChange(selectedAccount: any) {
+    if (selectedAccount) {
+      const selectedCurrency = selectedAccount.currency;
+  
+      this.transactionToAccount = this.transactionFromAccount.filter(account => account.currency === selectedCurrency && account !== selectedAccount);
+    } else {
+      this.transactionToAccount = [];
+    }
+  }
+  
 
+
+  onSubmitOTP(){
+   
     this.userService.checkToken(
       this.oneTimePasswordForm.get('paymentOTP')?.value
     ).subscribe({
       next: val => {
-        this.sendPayment(newPayment)
+        if(this.selectedOption == Options.MONEY_TRANSFER){
+          let newTransaction = this.getTransactionFormData();
+          this.sendTransaction(newTransaction)
+          this.resetForm();
+        }
+        if(this.selectedOption == Options.NEW_PAYMENT){          
+          let newPayment = this.getPaymentFormData();
+          this.sendPayment(newPayment)
+          this.resetForm();
+       }
       },
       error: err => {
         console.log("neuspesno")
+        this.resetForm();
       }
     })
-  }
+}
+
 
 
   sendPayment(paymentInfo: any){
@@ -202,7 +222,24 @@ export class PaymentsComponent {
         console.log(err);
       }
     })
-    
+
+  }
+
+
+  sendTransaction(transactionInfo: TransactionInfo){
+
+    this.displayOTPDialog = false;
+
+    this.clientService.sendTransaction(transactionInfo).subscribe({
+      next: val => {
+        this.toastr.success('Uspešna transakcija');
+        console.log(val)
+      },
+      error: err => {
+        this.toastr.error('Neuspešna transakcija');
+        console.log(err);
+      }
+    })
   }
 
 
@@ -216,11 +253,27 @@ export class PaymentsComponent {
       paymentPurpose: this.createPaymentForm.get('paymentPurpose')?.value,
       amount: this.createPaymentForm.get('amount')?.value,
       numberReference: this.createPaymentForm.get('numberReference')?.value,
-      myAccount: this.selectedFromPaymentAccount.registrationNumber
+      myAccount: this.createPaymentForm.get('myAccount')?.value.registrationNumber
     };
 
     return newPayment;
   }
+
+  getTransactionFormData(){
+
+    
+
+    const transactionInfo: TransactionInfo = {
+      fromBalanceRegNum: this.moneyTransferForm.get('selectedFromPaymentAccount')?.value.registrationNumber,
+      toBalanceRegNum: this.moneyTransferForm.get('selectedToPaymentAccount')?.value.registrationNumber,
+      currency: this.moneyTransferForm.get('selectedFromPaymentAccount')?.value.currency,
+      amount: this.moneyTransferForm.get('amount')?.value,
+    };
+
+    console.log(transactionInfo)
+    return transactionInfo;
+  }
+
 
 
   initForms(){
@@ -239,18 +292,18 @@ export class PaymentsComponent {
       paymentPurpose: ['', Validators.required],
       amount: [null, Validators.required],
       numberReference: [''],
-      myAccount: ['', Validators.required] 
+      myAccount: ['', Validators.required]
     });
   }
 
   initMoneyTransferForm(){
     this.moneyTransferForm = this.formBuilder.group({
-      selectedFromPaymentAccount: ['', Validators.required], 
+      selectedFromPaymentAccount: ['', Validators.required],
       selectedToPaymentAccount: ['', Validators.required],
       amount: ['', Validators.required]
     });
   }
-  
+
   initAddRecipientForm(){
     this.addRecipientForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -286,11 +339,18 @@ export class PaymentsComponent {
   getMyAccounts(){
     this.clientService.getAccountsByClientEmail(this.clientData).subscribe({
       next: (value: any[]) => {
+
         this.paymentAccounts = value.map(account => ({
           registrationNumber: account.registrationNumber
         }));
 
-        this.selectedFromPaymentAccount = this.paymentAccounts.length > 0 ? this.paymentAccounts[0] : null;
+        
+        this.transactionFromAccount = value.map(account => ({
+          currency: account.currency,
+          registrationNumber: account.registrationNumber
+        }));
+
+
 
       },
       error: err => {

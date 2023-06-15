@@ -1,20 +1,29 @@
 <div class="details-container">
 
-    <div class="leftbox">
-        <nav class="nav flex-column d-flex h-100">
-            <a id="profile" class="nav-link" (click)="selectedOption = Options.NEW_PAYMENT"><i class="pi pi-credit-card"></i></a>
-            <a id="payment" class="nav-link" (click)="selectedOption = Options.MONEY_TRANSFER"><i class="pi pi-arrow-right"></i></a>
-            <a id="subscription" class="nav-link" (click)="selectedOption = Options.PAYMENT_RECIPIENTS"><i class="pi pi-users"></i></a>
-            <a id="privacy" class="nav-link" (click)="selectedOption = Options.PAYMENT_OVERVIEW"><i class="pi pi-chart-line"></i></a>
-        </nav>
-    </div>
+  <div class="leftbox">
+    <nav class="nav flex-column d-flex h-100">
+      <a id="profile" class="nav-link" (click)="selectedOption = Options.NEW_PAYMENT">
+        <i [ngClass]="{'active': selectedOption === Options.NEW_PAYMENT}" style="font-size: 1.3rem" class="pi pi-credit-card"></i>
+      </a>
+      <a id="payment" class="nav-link" (click)="selectedOption = Options.MONEY_TRANSFER">
+        <i [ngClass]="{'active': selectedOption === Options.MONEY_TRANSFER}" style="font-size: 1.3rem" class="pi pi-arrow-right"></i>
+      </a>
+      <a id="subscription" class="nav-link" (click)="selectedOption = Options.PAYMENT_RECIPIENTS">
+        <i [ngClass]="{'active': selectedOption === Options.PAYMENT_RECIPIENTS}" style="font-size: 1.3rem" class="pi pi-users"></i>
+      </a>
+      <a id="privacy" class="nav-link"  (click)="selectedOption = Options.PAYMENT_OVERVIEW">
+        <i [ngClass]="{'active': selectedOption === Options.PAYMENT_OVERVIEW}" style="font-size: 1.3rem" class="pi pi-chart-line"></i>
+      </a>
+    </nav>
+  </div>
 
-    <div class="rightbox">
+
+  <div class="rightbox">
 
 
 
 
-        
+
         <div *ngIf="selectedOption === Options.NEW_PAYMENT">
             <h3>Novo plaćanje</h3>
             <form [formGroup]="createPaymentForm" (ngSubmit)="onSubmitNewPayment()">
@@ -29,18 +38,18 @@
 
                     <div>
                         <span class="p-float-label">
-                            <p-dropdown [options]="paymentAccounts" [(ngModel)]="selectedFromPaymentAccount" optionLabel="registrationNumber" placeholder="" formControlName="myAccount"></p-dropdown>
+                            <p-dropdown [options]="paymentAccounts" optionLabel="registrationNumber" formControlName="myAccount"></p-dropdown>
                             <label for="myAccount">Vaš račun</label>
                         </span>
                     </div>
-                    
+
                     <div>
                         <span class="p-float-label">
                             <input pInputText class="payment-input" id="recipientAccount" type="text" formControlName="recipientAccount">
                             <label for="recipientAccount">Račun primaoca</label>
                           </span>
-                    </div>                
-                    
+                    </div>
+
                     <div>
                         <span class="p-float-label">
                             <input pInputText class="payment-input" id="numberReference" type="text" formControlName="numberReference">
@@ -68,9 +77,9 @@
                             <label for="paymentPurpose">Svrha plaćanja</label>
                           </span>
                     </div>
-    
+
                 </div>
-    
+
                 <div class="d-flex justify-content-end" style="width: 95%;">
                     <button type="submit" class="button button-solid background-blue">Nastavi</button>
                 </div>
@@ -87,34 +96,40 @@
                         <label for="paymentOTP">Unesite jednokratnu šifru</label>
                     </span>
                 </div>
-                
+
 
                 <div class="d-flex justify-content-center" style="width: 100%;">
                     <button type="submit" class="button button-solid background-blue">Nastavi</button>
                 </div>
-        
-                
+
+
             </form>
         </p-dialog>
 
 
 
 
-        
+
 
         <div *ngIf="selectedOption === Options.MONEY_TRANSFER">
-            
+
             <h3>Prenos</h3>
 
             <form [formGroup]="moneyTransferForm" (ngSubmit)="submitMoneyTransfer()">
                 <div class="transfer-form">
 
+                    <!-- <span class="p-float-label">
+                        <p-dropdown [options]="paymentAccounts" optionLabel="registrationNumber" formControlName="myAccount"></p-dropdown>
+                        <label for="myAccount">Vaš račun</label>
+                    </span> -->
+
                     <div class="flex justify-content-center w-100">
-                      <p-dropdown [options]="paymentAccounts" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="name"></p-dropdown>
-                    </div>
-                  
+                        <p-dropdown [options]="transactionFromAccount" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="registrationNumber" (onChange)="onSelectedFromPaymentAccountChange($event.value)"></p-dropdown>
+                      </div>                      
+                      
+
                     <div class="flex justify-content-center w-100" >
-                      <p-dropdown class="w-100" [options]="paymentAccounts" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="name"></p-dropdown>
+                      <p-dropdown class="w-100" [options]="transactionToAccount" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="registrationNumber"></p-dropdown>
                     </div>
 
                     <div class="flex justify-content-center" style="margin-top: 30px; width: 100%;">
@@ -124,8 +139,8 @@
                         </span>
                     </div>
 
-                 
-                  
+
+
                     <div class="d-flex justify-content-end align-items-end mt-3" style="width: 95%;">
                       <button type="submit" class="button button-solid background-blue">Nastavi</button>
                     </div>
@@ -150,7 +165,7 @@
                 </div>
               </div>
 
-            
+
             <p-table [value]="recipients">
                <ng-template pTemplate="header">
                   <tr>
@@ -189,7 +204,7 @@
                 </form>
                </div>
             </p-dialog>
-            
+
 
             <p-dialog header="Izmeni primaoca" [(visible)]="displayEditDialog" [modal]="true" [style]="{width: '50vw', height: '40vh'}">
                 <div style="margin-top: 20px;">
@@ -209,10 +224,10 @@
                     </form>
                 </div>
             </p-dialog>
-            
+
 
         </div>
-         
+
 
 
 
@@ -230,6 +245,6 @@
 
     </div>
 
-    
-    
+
+
 </div>

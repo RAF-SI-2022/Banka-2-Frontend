@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {ClientService} from "../../../services/client.service";
 import { UserService } from 'src/app/services/user-service.service';
-import { PaymentInfo, TransactionInfo } from '../../../models/client.model';
+import { PaymentInfo, Recipient, TransactionInfo } from '../../../models/client.model';
 import { ToastrService } from 'ngx-toastr';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 export enum Options {
   NEW_PAYMENT = 'NEW_PAYMENT',
@@ -20,6 +21,9 @@ export enum Options {
   styleUrls: ['./payments.component.css']
 })
 export class PaymentsComponent {
+
+  @ViewChild('op') op: OverlayPanel;
+
 
   Options = Options;
   selectedOption: Options;
@@ -61,9 +65,12 @@ export class PaymentsComponent {
 
   ngOnInit() {
     this.selectedOption = Options.NEW_PAYMENT;
-    this.getClientData()
+    this.init()
+    }
 
-
+    init(){
+      this.getClientData()
+      this.getRecipients()
     }
 
   showAddRecipientDialog() {
@@ -84,17 +91,12 @@ export class PaymentsComponent {
       return;
     }
 
-    const newRecipient = {
-      name: this.addRecipientForm.get('name')?.value,
-      accountNumber: this.addRecipientForm.get('accountNumber')?.value,
-    };
-
-    this.recipients.push(newRecipient);
-
-    console.log(newRecipient)
-
-    this.addRecipientForm.reset();
+    const newRecipient = this.getNewRecipient() 
     this.displayAddDialog = false;
+
+    this.sendRecipient(newRecipient);
+
+    
   }
 
   editRecipient() {
@@ -115,9 +117,19 @@ export class PaymentsComponent {
 
   deleteRecipient(recipient: any) {
     const index = this.recipients.indexOf(recipient);
+
+    console.log(recipient)
+  
     if (index > -1) {
       this.recipients.splice(index, 1);
     }
+  }
+
+  onRecipientSelect(recipient: Recipient) {
+    this.createPaymentForm.patchValue({
+      recipientName: recipient.name,
+      recipientAccount: recipient.balanceRegistrationNumber
+    });
   }
 
 
@@ -125,6 +137,7 @@ export class PaymentsComponent {
   resetForm() {
     this.createPaymentForm.reset();
     this.moneyTransferForm.reset();
+    this.addRecipientForm.reset();
   }
 
 
@@ -140,7 +153,7 @@ export class PaymentsComponent {
   sendTokenToEmail(){
     this.userService.sendTokenToEmail(this.clientData).subscribe({
       next: val => {
-        "Poslat token"
+        this.toastr.info(`Poslat vam je token na ${this.clientData}`);
       },
       error: err => {
         console.log(err);
@@ -197,6 +210,19 @@ export class PaymentsComponent {
 }
 
 
+  sendRecipient(recipient: Recipient){
+    this.clientService.addRecipient(recipient).subscribe({
+      next: val => {
+        this.toastr.success('Uspešno dodat korisnik');
+        this.recipients.push(recipient)
+      },
+      error: err => {
+        this.toastr.error('Neuspešno dodavanje');
+        console.log(err);
+      }
+    })
+  }
+  
 
   sendPayment(paymentInfo: any){
 
@@ -260,9 +286,6 @@ export class PaymentsComponent {
   }
 
   getTransactionFormData(){
-
-    
-
     const transactionInfo: TransactionInfo = {
       fromBalanceRegNum: this.moneyTransferForm.get('selectedFromPaymentAccount')?.value.registrationNumber,
       toBalanceRegNum: this.moneyTransferForm.get('selectedToPaymentAccount')?.value.registrationNumber,
@@ -272,6 +295,16 @@ export class PaymentsComponent {
 
     console.log(transactionInfo)
     return transactionInfo;
+  }
+
+  getNewRecipient(){
+    const newRecipient: Recipient = {
+      name: this.addRecipientForm.get('name')?.value,
+      balanceRegistrationNumber: this.addRecipientForm.get('accountNumber')?.value,
+      savedByClientId: this.clientData,
+    };
+
+    return newRecipient;
   }
 
 
@@ -329,6 +362,17 @@ export class PaymentsComponent {
       next: value => {
         this.clientData = value
         this.getMyAccounts()
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+  }
+
+  getRecipients(){
+    this.clientService.getRecipients(this.clientData).subscribe({
+      next: value => {
+        this.recipients = value
       },
       error: err => {
         console.log(err);

@@ -189,5 +189,9 @@ export class ClientService {
     return this.httpClient.get<any>(`${environment.clientServiceURL}/api/payment/getReceivers/${email}`, {headers: this.headers})
   }
 
+  updateRecipient(recipient: Recipient){
+    return this.httpClient.put<any>(`${environment.clientServiceURL}/api/payment`, recipient, {headers: this.headers})
+  }
+
 
 }

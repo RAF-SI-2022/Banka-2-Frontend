@@ -63,15 +63,15 @@ export class PaymentsComponent {
 
   }
 
-  ngOnInit() {
-    this.selectedOption = Options.NEW_PAYMENT;
-    this.init()
-    }
+ngOnInit() {
+  this.selectedOption = Options.NEW_PAYMENT;
+  this.init()
+  }
 
-    init(){
-      this.getClientData()
-      this.getRecipients()
-    }
+  init(){
+    this.getClientData()
+    this.getRecipients()
+  }
 
   showAddRecipientDialog() {
     this.displayAddDialog = true;
@@ -80,9 +80,10 @@ export class PaymentsComponent {
   showEditRecipientDialog(recipient: any) {
     this.displayEditDialog = true;
     this.selectedRecipient = recipient;
+    
     this.editRecipientForm.patchValue({
       name: recipient.name,
-      accountNumber: recipient.accountNumber
+      accountNumber: recipient.balanceRegistrationNumber
     });
   }
 
@@ -95,8 +96,6 @@ export class PaymentsComponent {
     this.displayAddDialog = false;
 
     this.sendRecipient(newRecipient);
-
-    
   }
 
   editRecipient() {
@@ -104,13 +103,20 @@ export class PaymentsComponent {
       return;
     }
 
-    const recipient = {
-      recipientName: this.editRecipientForm.get('name')?.value,
-      accountNumber: this.editRecipientForm.get('accountNumber')?.value,
+    this.selectedRecipient.name = this.editRecipientForm.get('name')?.value;
+    this.selectedRecipient.balanceRegistrationNumber = this.editRecipientForm.get('accountNumber')?.value;
+
+
+    const newRecipient: Recipient = {
+      name: this.editRecipientForm.get('name')?.value,
+      balanceRegistrationNumber:  this.editRecipientForm.get('accountNumber')?.value,
+      savedByClientId: this.clientData
     }
 
-    console.log(recipient)
+    this.toastr.success("Uspesno izmenjen primalac")
 
+    // this.updateRecipient(newRecipient)
+    
     this.editRecipientForm.reset();
     this.displayEditDialog = false;
   }
@@ -132,13 +138,6 @@ export class PaymentsComponent {
     });
   }
 
-
-
-  resetForm() {
-    this.createPaymentForm.reset();
-    this.moneyTransferForm.reset();
-    this.addRecipientForm.reset();
-  }
 
 
   onSubmitNewPayment() {
@@ -218,6 +217,18 @@ export class PaymentsComponent {
       },
       error: err => {
         this.toastr.error('Neuspešno dodavanje');
+        console.log(err);
+      }
+    })
+  }
+
+  updateRecipient(recipient: Recipient){
+    this.clientService.updateRecipient(recipient).subscribe({
+      next: val => {
+        this.toastr.success("Uspešno izmenjen primalac")
+      },
+      error: err => {
+        this.toastr.error("Izmena nije uspela")
         console.log(err);
       }
     })
@@ -340,14 +351,14 @@ export class PaymentsComponent {
   initAddRecipientForm(){
     this.addRecipientForm = this.formBuilder.group({
       name: ['', Validators.required],
-      accountNumber: ['', Validators.required]
+      accountNumber: [null, [Validators.required, Validators.pattern(/^\d{10}$/)]]
     });
   }
 
-  initEditRecipientForm(){
+  initEditRecipientForm() {
     this.editRecipientForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      accountNumber: ['', Validators.required]
+      name: [this.selectedRecipient?.name || '', Validators.required],
+      accountNumber: [this.selectedRecipient?.accountNumber.toString() || null, [Validators.required, Validators.pattern(/^\d{10}$/)]]
     });
   }
 
@@ -401,6 +412,12 @@ export class PaymentsComponent {
         console.log(err)
       }
     });
+  }
+
+  resetForm() {
+    this.createPaymentForm.reset();
+    this.moneyTransferForm.reset();
+    this.addRecipientForm.reset();
   }
 
 

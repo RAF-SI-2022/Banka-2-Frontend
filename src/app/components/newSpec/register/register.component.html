@@ -93,7 +93,10 @@
 				<button pButton pRipple label="LOGIN" class="submit" loadingIcon="pi pi-spinner " [disabled]="!isLoginFormValid"
 						[loading]="isLoading"></button>
 
-				<div class="row mt-2 w-100" style="max-width: 320px;">
+        <button  [routerLink]="'/login-admin'">Go to admin login</button>
+
+
+        <div class="row mt-2 w-100" style="max-width: 320px;">
 					<div class="col-6">
 					<div class="d-flex align-items-center remember-me">
 						<p-checkbox [formControlName]="'remember'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>

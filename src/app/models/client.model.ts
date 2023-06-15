@@ -61,3 +61,26 @@ export interface Client {
   password: string
 }
 
+
+export interface PaymentInfo{
+  receiverName: string;
+  fromBalanceRegNum: string,
+  toBalanceRegNum: string,
+  amount: number,
+  referenceNumber: string,
+  paymentNumber: string
+  paymentDescription: string
+}
+
+export interface TransactionInfo{
+  fromBalanceRegNum: string,
+  toBalanceRegNum: string,
+  currency: string,
+  amount: number,
+}
+
+export interface Recipient{
+  name: string,
+  balanceRegistrationNumber: string,
+  savedByClientId: string
+}

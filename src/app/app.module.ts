@@ -61,6 +61,8 @@ import {SellFutureWithLimitComponent} from './components/sprint2/futures/sell-fu
 import {BuyFutureWithLimitComponent} from './components/sprint2/futures/buy-future-with-limit/buy-future-with-limit.component';
 import { TabViewModule } from 'primeng/tabview';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 
 import {AllowNumbersOnlyDirective} from 'src/app/directives/allow-numbers-only.directive';
@@ -195,6 +197,8 @@ import { UserBalanceComponent } from './components/sprint5/user-balance/user-bal
     RadioButtonModule,
     StepsModule,
     TagModule,
+    AutoCompleteModule,
+    OverlayPanelModule
   ],
   // exports: [
   //   ActivityPipe

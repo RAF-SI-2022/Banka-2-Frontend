@@ -32,9 +32,22 @@
                     <div>
                         <span class="p-float-label">
                             <input pInputText class="payment-input" id="recipientName" type="text" formControlName="recipientName">
+                            <div class="input-with-icon">
+                                <button pButton type="button" class="p-button-rounded p-button-outlined icon-button" icon="pi pi-user-plus" (click)="op.toggle($event)"></button>
+                            </div>
                             <label for="recipientName">Naziv primaoca</label>
-                          </span>
+                        </span>
+        
+                        <p-overlayPanel #op styleClass="overlay-panel" [showCloseIcon]="true" [dismissable]="false">
+                            <ul>
+                                <li *ngFor="let recipient of recipients" (click)="onRecipientSelect(recipient); op.hide()">
+                                    {{recipient.name}}
+                                </li>
+                            </ul>
+                        </p-overlayPanel>
+        
                     </div>
+                   
 
                     <div>
                         <span class="p-float-label">
@@ -177,7 +190,7 @@
                <ng-template pTemplate="body" let-recipient>
                   <tr>
                      <td>{{recipient.name}}</td>
-                     <td>{{recipient.accountNumber}}</td>
+                     <td>{{recipient.balanceRegistrationNumber}}</td>
                      <td style="text-align: right;">
                         <button pButton type="button" icon="pi pi-pencil" (click)="showEditRecipientDialog(recipient)"></button>
                         <button pButton type="button" icon="pi pi-trash" (click)="deleteRecipient(recipient)" style="margin-left: 10px;"></button>

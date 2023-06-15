@@ -79,3 +79,8 @@ export interface TransactionInfo{
   amount: number,
 }
 
+export interface Recipient{
+  name: string,
+  balanceRegistrationNumber: string,
+  savedByClientId: string
+}

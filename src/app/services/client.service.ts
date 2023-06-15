@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {BusinessAccount, Client, ForeignAccount, LocalAccount, TransactionInfo} from "../models/client.model";
+import {BusinessAccount, Client, ForeignAccount, LocalAccount, Recipient, TransactionInfo} from "../models/client.model";
 import {cli} from "cypress";
 
 @Injectable({
@@ -178,6 +178,15 @@ export class ClientService {
   sendTransaction(transactionInfo: TransactionInfo){
     return this.httpClient.post<any>(`${environment.clientServiceURL}/api/payment/transferMoney`,
     transactionInfo, { headers: this.headers, responseType: 'text' as 'json'})
+  }
+
+  addRecipient(recipient: Recipient){
+    return this.httpClient.post<any>(`${environment.clientServiceURL}/api/payment/addReceiver`,
+    recipient, { headers: this.headers, responseType: 'text' as 'json'})
+  }
+
+  getRecipients(email: string){
+    return this.httpClient.get<any>(`${environment.clientServiceURL}/api/payment/getReceivers/${email}`, {headers: this.headers})
   }
 
 

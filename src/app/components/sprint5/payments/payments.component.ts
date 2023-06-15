@@ -96,6 +96,7 @@ ngOnInit() {
     this.displayAddDialog = false;
 
     this.sendRecipient(newRecipient);
+    this.resetForm()
   }
 
   editRecipient() {

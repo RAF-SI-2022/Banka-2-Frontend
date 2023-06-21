@@ -1,0 +1,43 @@
+::ng-deep .p-steps {
+  margin-top: 12px;
+}
+
+.account-type-radio {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+.currencies-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.base-currencies-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.additional-currencies-container {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep .p-steps .p-steps-item  {
+  cursor: pointer;
+}
+
+.router-link {
+  color: blue;
+  cursor: pointer;
+}
+
+.router-link:hover {
+  text-decoration: underline;
+}
+
+::ng-deep .p-steps .p-steps-item .p-menuitem-link:not(.p-disabled):focus {
+  box-shadow: none;
+}

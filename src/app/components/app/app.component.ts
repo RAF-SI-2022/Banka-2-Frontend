@@ -33,44 +33,44 @@ export class AppComponent implements OnInit {
     this.primengConfig.ripple = true;
 
 
-    // u slucaju refresha da se povuku podaci o useru
-    if (this.userService.getToken()) {
-      // console.log("imam token")
-      this.userService.getUserData()
-        .subscribe({
-          next: val => {
-            // console.log(val)
-            this.user = val
-          },
-          error: err => {
-            // console.log(err)
-            this.toastr.error(err.error)
-          }
-        })
-    }
-
-    // na login da se ponovo povuku podaci o useru
-    this.authService.loginEvent()
-      .subscribe(() => {
-        // console.log("uso sam")
+    if(this.checkIfUserIsClient()) {
+      // u slucaju refresha da se povuku podaci o useru
+      if (this.userService.getToken()) {
+        // console.log("imam token")
         this.userService.getUserData()
-
           .subscribe({
             next: val => {
               // console.log(val)
-              // console.log("posle eventa")
               this.user = val
             },
             error: err => {
               // console.log(err)
               this.toastr.error(err.error)
-
-              // console.log("posle eventa ERR")
             }
           })
-      })
+      }
 
+      // na login da se ponovo povuku podaci o useru
+      this.authService.loginEvent()
+        .subscribe(() => {
+          // console.log("uso sam")
+          this.userService.getUserData()
 
+            .subscribe({
+              next: val => {
+                // console.log(val)
+                // console.log("posle eventa")
+                this.user = val
+              },
+              error: err => {
+                // console.log(err)
+                this.toastr.error(err.error)
+
+                // console.log("posle eventa ERR")
+              }
+            })
+        })
+    }
   }
 
   checkIsLoggedIn() {
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
     // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS"));
     // console.log(!sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
     // console.log(sessionStorage.getItem("permissions")?.includes("READ_USERS") && !sessionStorage.getItem("permissions")?.includes("ADMIN_USER"));
-    
+
     if (localStorage.getItem("remember") !== null) {
       if (localStorage.getItem("permissions")?.includes("UPDATE_USERS") && !localStorage.getItem("permissions")?.includes("ADMIN_USER"))
         return true
@@ -120,6 +120,23 @@ export class AppComponent implements OnInit {
     this.userService.resetToken()
     this.display = false;
     this.router.navigate(['/login']);
+  }
+
+
+  checkIfUserIsClient(){
+
+    if(localStorage.getItem("permissions") === null && sessionStorage.getItem("permissions") === null ){
+      return false // false je kada je client
+    }
+    return true
+
+    // if(localStorage.getItem("permissions") !== null ){
+    //   return false
+    // }
+    // if(sessionStorage.getItem("permissions") !== null ){
+    //   return false
+    // }
+    // return true
   }
 
 

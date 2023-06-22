@@ -63,6 +63,7 @@ export interface Client {
 
 
 export interface PaymentInfo{
+  senderEmail: string,
   receiverName: string;
   fromBalanceRegNum: string,
   toBalanceRegNum: string,

@@ -39,6 +39,7 @@ export class PaymentsComponent {
   userPayments: any[];
 
   recipients: Recipient[] = [];
+  transactions: any[] = [];
 
   clientData: string;
 
@@ -119,7 +120,6 @@ ngOnInit() {
       paymentDescription: this.editRecipientForm.get('editPaymentPurpose')?.value,
     };
 
-   
     this.updateRecipient(newRecipient, this.selectedRecipient.id)
     
     this.editRecipientForm.reset();
@@ -127,8 +127,6 @@ ngOnInit() {
   }
 
   deleteRecipient(recipient: any) {
-
-    
     this.clientService.deleteRecipient(recipient.id).subscribe({
       next: (response) => {
         this.toastr.success("Uspešno obrisan primalac");
@@ -137,9 +135,7 @@ ngOnInit() {
         this.toastr.error("Greška pri brisanju");
       }
     });
-    
   
-
     const index = this.recipients.indexOf(recipient);
     if (index > -1) {
       this.recipients.splice(index, 1);
@@ -166,7 +162,6 @@ ngOnInit() {
     this.displayOTPDialog = true;
     this.sendTokenToEmail()
   }
-
 
   sendTokenToEmail(){
     this.userService.sendTokenToEmail(this.clientData).subscribe({
@@ -270,6 +265,7 @@ ngOnInit() {
   sendPayment(paymentInfo: any){
 
     const paymentData: PaymentInfo = {
+      senderEmail: this.clientData,
       receiverName: paymentInfo.recipientName,
       fromBalanceRegNum: paymentInfo.myAccount,
       toBalanceRegNum: paymentInfo.recipientAccount,
@@ -284,7 +280,7 @@ ngOnInit() {
     this.clientService.sendPayment(paymentData).subscribe({
       next: val => {
         this.toastr.success('Uspešno slanje');
-        console.log(val)
+        this.getUserPayments()
       },
       error: err => {
         this.toastr.error('Neuspešno slanje');
@@ -302,7 +298,7 @@ ngOnInit() {
     this.clientService.sendTransaction(transactionInfo).subscribe({
       next: val => {
         this.toastr.success('Uspešna transakcija');
-        console.log(val)
+        this.getUserPayments()
       },
       error: err => {
         this.toastr.error('Neuspešna transakcija');
@@ -427,7 +423,10 @@ ngOnInit() {
   getUserPayments(){
     this.clientService.getUserPayments(this.clientData).subscribe({
       next: val => {
-        console.log(val)
+        this.transactions = []
+        if (Array.isArray(val)) {
+          this.transactions.push(...val);
+        }
       },
       error: err => {
         console.log(err);

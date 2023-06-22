@@ -45,10 +45,8 @@
                                 </li>
                             </ul>
                         </p-overlayPanel>
-        
                     </div>
                    
-
                     <div>
                         <span class="p-float-label">
                             <p-dropdown [options]="paymentAccounts" optionLabel="registrationNumber" formControlName="myAccount"></p-dropdown>
@@ -148,7 +146,6 @@
                     </div>
 
 
-
                     <div class="d-flex justify-content-between align-items-end mt-3" style="width: 95%;">
                         <p style="color: #808080;">Valuta: <b>{{transactionCurrency}}</b></p>
                         <button type="submit" class="button button-solid background-blue">Nastavi</button>
@@ -157,10 +154,6 @@
             </form>
 
         </div>
-
-
-
-
 
 
         <div *ngIf="selectedOption === Options.PAYMENT_RECIPIENTS">
@@ -295,15 +288,28 @@
 
 
 
-
-
-
-
-
-
         <div *ngIf="selectedOption === Options.PAYMENT_OVERVIEW">
 
             <h3>Pregled plaćanja</h3>
+
+            <p-table [value]="transactions">
+                <ng-template pTemplate="header">
+                   <tr>
+                      <th>Primalac</th>
+                      <th>Sa računa</th>
+                      <th>Na račun</th>
+                      <th>Količina</th>
+                   </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-transaction>
+                   <tr>
+                      <td>{{transaction.receiverName}}</td>
+                      <td>{{transaction.balanceRegistrationNumber}}</td>
+                      <td>{{transaction.toBalanceRegistrationNumber}}</td>
+                      <td>{{transaction.amount}}</td>
+                   </tr>
+                </ng-template>
+             </p-table>
 
         </div>
 

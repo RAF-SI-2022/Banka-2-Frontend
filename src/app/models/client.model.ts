@@ -80,7 +80,11 @@ export interface TransactionInfo{
 }
 
 export interface Recipient{
-  name: string,
+  id: string,
+  savedByClientEmail: string,
+  receiverName: string,
   balanceRegistrationNumber: string,
-  savedByClientId: string
+  referenceNumber: string,
+  paymentNumber: string,
+  paymentDescription: string
 }

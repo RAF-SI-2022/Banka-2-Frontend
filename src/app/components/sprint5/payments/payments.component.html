@@ -41,7 +41,7 @@
                         <p-overlayPanel #op styleClass="overlay-panel" [showCloseIcon]="true" [dismissable]="false">
                             <ul>
                                 <li *ngFor="let recipient of recipients" (click)="onRecipientSelect(recipient); op.hide()">
-                                    {{recipient.name}}
+                                    {{recipient.receiverName}}
                                 </li>
                             </ul>
                         </p-overlayPanel>
@@ -131,14 +131,9 @@
             <form [formGroup]="moneyTransferForm" (ngSubmit)="submitMoneyTransfer()">
                 <div class="transfer-form">
 
-                    <!-- <span class="p-float-label">
-                        <p-dropdown [options]="paymentAccounts" optionLabel="registrationNumber" formControlName="myAccount"></p-dropdown>
-                        <label for="myAccount">Vaš račun</label>
-                    </span> -->
-
                     <div class="flex justify-content-center w-100">
                         <p-dropdown [options]="transactionFromAccount" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="registrationNumber" (onChange)="onSelectedFromPaymentAccountChange($event.value)"></p-dropdown>
-                      </div>                      
+                    </div>                      
                       
 
                     <div class="flex justify-content-center w-100" >
@@ -154,8 +149,9 @@
 
 
 
-                    <div class="d-flex justify-content-end align-items-end mt-3" style="width: 95%;">
-                      <button type="submit" class="button button-solid background-blue">Nastavi</button>
+                    <div class="d-flex justify-content-between align-items-end mt-3" style="width: 95%;">
+                        <p style="color: #808080;">Valuta: <b>{{transactionCurrency}}</b></p>
+                        <button type="submit" class="button button-solid background-blue">Nastavi</button>
                     </div>
                   </div>
             </form>
@@ -189,7 +185,7 @@
                </ng-template>
                <ng-template pTemplate="body" let-recipient>
                   <tr>
-                     <td>{{recipient.name}}</td>
+                     <td>{{recipient.receiverName}}</td>
                      <td>{{recipient.balanceRegistrationNumber}}</td>
                      <td style="text-align: right;">
                         <button pButton type="button" icon="pi pi-pencil" (click)="showEditRecipientDialog(recipient)"></button>
@@ -199,17 +195,44 @@
                </ng-template>
             </p-table>
 
-            <p-dialog header="Dodaj primaoca" [(visible)]="displayAddDialog" [modal]="true" [style]="{width: '50vw', height: '40vh'}">
+            <p-dialog header="Dodaj primaoca" [(visible)]="displayAddDialog" [modal]="true" [style]="{width: '50vw', height: '51vh'}">
                <div style="margin-top: 20px;">
                 <form [formGroup]="addRecipientForm" (ngSubmit)="addRecipient()">
-                    <div class="p-float-label">
-                        <input id="name" type="text" pInputText formControlName="name">
-                        <label for="name">Naziv</label>
-                    </div>
+                    <div class="add-recipient-form">
+
+                        <div class="p-float-label">
+                            <input id="name" style="width: 100%;" type="text" pInputText formControlName="name">
+                            <label for="name">Naziv</label>
+                        </div>
+                        
+                        
+                        <div>
+                            <span class="p-float-label">
+                                <input pInputText class="payment-input" style="width: 100%;" id="numberReference" type="text" formControlName="numberReference">
+                                <label for="numberReference">Poziv na broj</label>
+                            </span>
+                        </div>
+    
+                        <div>
+                            <span class="p-float-label">
+                                <input pInputText class="payment-input" style="width: 100%;" id="paymentCode" type="text" formControlName="paymentCode">
+                                <label for="paymentCode">Šifra plaćanja</label>
+                              </span>
+                        </div>
+    
+                        <div>
+                            <span class="p-float-label">
+                                <input pInputText class="payment-input" style="width: 100%;" id="paymentPurpose" type="text" formControlName="paymentPurpose">
+                                <label for="paymentPurpose">Svrha plaćanja</label>
+                              </span>
+                        </div>
+                    </div>  
+
                     <div class="p-float-label">
                         <input id="accountNumber" style="width: 100%;" type="number" pInputText formControlName="accountNumber">
                         <label for="accountNumber">Broj računa</label>
                     </div>
+                    
                     <div class="button-container">
                         <button type="submit" pButton label="Potvrdi"></button>
                         <button type="button" pButton label="Poništi" (click)="displayAddDialog=false" style="margin-left: 10px;"></button>
@@ -219,21 +242,49 @@
             </p-dialog>
 
 
-            <p-dialog header="Izmeni primaoca" [(visible)]="displayEditDialog" [modal]="true" [style]="{width: '50vw', height: '40vh'}">
+            <p-dialog header="Izmeni primaoca" [(visible)]="displayEditDialog" [modal]="true" [style]="{width: '50vw', height: '51vh'}">
                 <div style="margin-top: 20px;">
                     <form [formGroup]="editRecipientForm" (ngSubmit)="editRecipient()">
+                        <div class="add-recipient-form">
+
+                            <div class="p-float-label">
+                                <input id="editName" type="text" pInputText formControlName="editName">
+                                <label for="editName">Naziv</label>
+                            </div>
+                            
+                            
+                            <div>
+                                <span class="p-float-label">
+                                    <input pInputText class="payment-input" style="width: 100%;" id="editNumberReference" type="text" formControlName="editNumberReference">
+                                    <label for="editNumberReference">Poziv na broj</label>
+                                </span>
+                            </div>
+        
+                            <div>
+                                <span class="p-float-label">
+                                    <input pInputText class="payment-input" style="width: 100%;" id="editPaymentCode" type="text" formControlName="editPaymentCode">
+                                    <label for="editPaymentCode">Šifra plaćanja</label>
+                                  </span>
+                            </div>
+        
+                            <div>
+                                <span class="p-float-label">
+                                    <input pInputText class="payment-input" style="width: 100%;" id="editPaymentPurpose" type="text" formControlName="editPaymentPurpose">
+                                    <label for="editPaymentPurpose">Svrha plaćanja</label>
+                                  </span>
+                            </div>
+                        </div>  
+    
                         <div class="p-float-label">
-                            <input id="editName" type="text" pInputText formControlName="name">
-                            <label for="editName">Naziv</label>
-                        </div>
-                        <div class="p-float-label">
-                            <input id="editAccountNumber" style="width: 100%;" type="number" pInputText formControlName="accountNumber">
+                            <input id="editAccountNumber" style="width: 100%;" type="number" pInputText formControlName="editAccountNumber">
                             <label for="editAccountNumber">Broj računa</label>
                         </div>
+                        
                         <div class="button-container">
                             <button type="submit" pButton label="Potvrdi"></button>
                             <button type="button" pButton label="Poništi" (click)="displayEditDialog=false" style="margin-left: 10px;"></button>
                         </div>
+
                     </form>
                 </div>
             </p-dialog>

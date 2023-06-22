@@ -182,16 +182,29 @@ export class ClientService {
 
   addRecipient(recipient: Recipient){
     return this.httpClient.post<any>(`${environment.clientServiceURL}/api/payment/addReceiver`,
-    recipient, { headers: this.headers, responseType: 'text' as 'json'})
+    recipient, { headers: this.headers, responseType: 'json' })
   }
 
   getRecipients(email: string){
+    console.log(email)
     return this.httpClient.get<any>(`${environment.clientServiceURL}/api/payment/getReceivers/${email}`, {headers: this.headers})
   }
 
-  updateRecipient(recipient: Recipient){
-    return this.httpClient.put<any>(`${environment.clientServiceURL}/api/payment`, recipient, {headers: this.headers})
+  updateRecipient(recipient: Recipient, receiverId: string){
+    return this.httpClient.patch<any>(`${environment.clientServiceURL}/api/payment/editReceiver/${receiverId}`, recipient, {headers: this.headers})
   }
+
+
+  deleteRecipient(receiverId: string) {
+    return this.httpClient.delete(`${environment.clientServiceURL}/api/payment/deleteReceivers/${receiverId}`, 
+        { headers: this.headers, responseType: 'text' });
+  }
+
+  getUserPayments(email: string){
+    return this.httpClient.get(`${environment.clientServiceURL}/api/payment/payments/${email}`, 
+      { headers: this.headers, responseType: 'json' });
+  }
+
 
 
 }

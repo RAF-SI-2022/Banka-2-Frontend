@@ -75,7 +75,7 @@
                     </div>
                     <div *ngIf="account.type === 'POSLOVNI'" class="stock-logo kiwi"><i class="pi pi-briefcase"></i>
                     </div>
-
+                    
                     <div class="stock-info">
                       <div class="stock-name">{{ account.currency }}</div>
                       <div class="stock-fullname">{{ selectedClient.name }} {{selectedClient.lastname}}</div>
@@ -91,4 +91,5 @@
 </div>
 
 <app-add-user-account (addAccountEmitter)="submitAddAccount($event)"></app-add-user-account>
+<app-single-user-balance (editBalanceNameEmitter)="submitEditBalanceName($event)"></app-single-user-balance>
 

@@ -205,6 +205,10 @@ export class ClientService {
       { headers: this.headers, responseType: 'json' });
   }
 
+  getClientLoans(email: string){
+    return this.httpClient.get(`${environment.clientServiceURL}/api/credit/${email}`, 
+    { headers: this.headers});
+  }
 
 
 }

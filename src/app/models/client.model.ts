@@ -89,3 +89,28 @@ export interface Recipient{
   paymentNumber: string,
   paymentDescription: string
 }
+
+
+export interface ExchangeMoney{
+  fromBalanceRegNum: string,
+  toBalanceRegNum: string,
+  exchange: string,
+  amount: number
+}
+
+
+
+export interface Loan {
+  id: string,
+  clientEmail: string,
+  name: string,
+  accountRegNumber: string,
+  creationDate: string,
+  amount: number,
+  remainingAmount: number,
+  ratePercentage: number,
+  monthlyRate: number,
+  dueDate: string,
+  currency: string,
+
+}

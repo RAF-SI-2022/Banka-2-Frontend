@@ -1,0 +1,10 @@
+.input {
+    opacity: 1;
+    filter: Alpha(Opacity=100);
+  }
+
+  .disable-input{
+    font-weight: bold;
+    opacity: 0.95;
+    filter: Alpha(Opacity=95);
+    }

@@ -74,7 +74,8 @@ export class ClientService {
     return this.httpClient.get<any>(`${environment.clientServiceURL}/api/client`, {headers: this.headers})
   }
 
-  getClientById(id: number) {
+  getClientById(id: string) {
+    console.log(id)
     return this.httpClient.get<any>(`${environment.clientServiceURL}/api/client/${id}`, {headers: this.headers})
   }
 

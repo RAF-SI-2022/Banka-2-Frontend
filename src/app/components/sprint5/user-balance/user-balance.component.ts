@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,  ViewChild } from '@angular/core';
 import {ClientService} from "../../../services/client.service";
+import { SingleUserBalanceComponent } from '../single-user-balance/single-user-balance.component';
 
 @Component({
   selector: 'app-user-balance',
@@ -10,18 +11,21 @@ export class UserBalanceComponent {
   accounts: any[] = [];
   clientEmail: string
 
+  @ViewChild(SingleUserBalanceComponent, {static: true}) singleUserBalanceComponent: SingleUserBalanceComponent
+
+
+
+
   constructor(private clientService: ClientService) {
   }
 
   ngOnInit(){
     this.clientService.getClientData().subscribe({
       next: value => {
-        console.log(value);
         this.clientEmail = value;
 
         this.clientService.getAccountsByClientEmail(value).subscribe({
           next: value => {
-            console.log(value);
             this.accounts = value;
           },
           error: err => {
@@ -36,6 +40,10 @@ export class UserBalanceComponent {
   }
 
   openLocalBalance(account: any) {
+    this.singleUserBalanceComponent.open(account);
+  }
 
+  submitEditBalanceName(account: any) {
+      // DO
   }
 }

@@ -8,6 +8,7 @@ import {User} from "../../../models/users.model";
 import {UserService} from "../../../services/user-service.service";
 import {error} from "cypress/types/jquery";
 import {Client} from "../../../models/client.model";
+import { SingleUserBalanceComponent } from '../single-user-balance/single-user-balance.component';
 
 @Component({
   selector: 'app-balance',
@@ -17,6 +18,7 @@ import {Client} from "../../../models/client.model";
 export class BalanceComponent {
 
   @ViewChild(AddUserAccountComponent, {static: true}) addUserAccountComponent: AddUserAccountComponent
+  @ViewChild(SingleUserBalanceComponent, {static: true}) singleUserBalanceComponent: SingleUserBalanceComponent
 
   accounts: any[] = [];
   users: Client[] = [];
@@ -56,7 +58,13 @@ export class BalanceComponent {
 
 
   openLocalBalance(account: any) {
-    console.log(account)
+    console.log(account);
+    
+    this.singleUserBalanceComponent.open(account);
+  }
+
+  submitEditBalanceName(account: any) {
+      // DO
   }
 
   showAddAccountTest() {

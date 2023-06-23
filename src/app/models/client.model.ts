@@ -91,6 +91,15 @@ export interface Recipient{
 }
 
 
+export interface ExchangeMoney{
+  fromBalanceRegNum: string,
+  toBalanceRegNum: string,
+  exchange: string,
+  amount: number
+}
+
+
+
 export interface Loan {
   id: string,
   clientEmail: string,

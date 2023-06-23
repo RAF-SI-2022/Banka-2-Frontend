@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {ClientService} from "../../../services/client.service";
 import { UserService } from 'src/app/services/user-service.service';
-import { PaymentInfo, Recipient, TransactionInfo } from '../../../models/client.model';
+import { ExchangeMoney, PaymentInfo, Recipient, TransactionInfo } from '../../../models/client.model';
 import { ToastrService } from 'ngx-toastr';
 import { OverlayPanel } from 'primeng/overlaypanel';
 
@@ -11,8 +11,8 @@ export enum Options {
   MONEY_TRANSFER = 'MONEY_TRANSFER',
   PAYMENT_RECIPIENTS = 'PAYMENT_RECIPIENTS',
   PAYMENT_OVERVIEW = 'PAYMENT_OVERVIEW',
+  EXCHANGE = "EXCHANGE",
 }
-
 
 
 @Component({
@@ -24,6 +24,7 @@ export class PaymentsComponent {
 
   @ViewChild('op') op: OverlayPanel;
 
+  formGroup: FormGroup;
 
   Options = Options;
   selectedOption: Options;
@@ -33,11 +34,14 @@ export class PaymentsComponent {
   addRecipientForm: FormGroup;
   editRecipientForm: FormGroup;
   oneTimePasswordForm: FormGroup;
+  exchangeForm: FormGroup;
 
   paymentAccounts: any[];
   newPayment: any[];
+  userPayments: any[];
 
-  recipients: any[] = [];
+  recipients: Recipient[] = [];
+  transactions: any[] = [];
 
   clientData: string;
 
@@ -52,6 +56,13 @@ export class PaymentsComponent {
   displayOTPDialog: boolean = false;
 
   selectedRecipient: any;
+  transactionCurrency: any;
+  exchangeFromCurrency: any;
+  exchangeToCurrency: any;
+
+  exchangeFromList: any[];
+  exchangeToList: any[];
+
 
   constructor(
     private formBuilder: FormBuilder, 
@@ -59,6 +70,7 @@ export class PaymentsComponent {
     private userService: UserService,
     private toastr: ToastrService) {
 
+      
     this.initForms()
 
   }
@@ -66,12 +78,11 @@ export class PaymentsComponent {
   ngOnInit() {
     this.selectedOption = Options.NEW_PAYMENT;
     this.init()
-    }
+  }
 
-    init(){
-      this.getClientData()
-      this.getRecipients()
-    }
+  init(){
+    this.getClientData()    
+  }
 
   showAddRecipientDialog() {
     this.displayAddDialog = true;
@@ -80,9 +91,13 @@ export class PaymentsComponent {
   showEditRecipientDialog(recipient: any) {
     this.displayEditDialog = true;
     this.selectedRecipient = recipient;
+    
     this.editRecipientForm.patchValue({
-      name: recipient.name,
-      accountNumber: recipient.accountNumber
+      editName: recipient.receiverName,
+      editAccountNumber: recipient.balanceRegistrationNumber,
+      editNumberReference: recipient.referenceNumber,
+      editPaymentCode: recipient.paymentNumber,
+      editPaymentPurpose: recipient.paymentDescription
     });
   }
 
@@ -90,13 +105,10 @@ export class PaymentsComponent {
     if (this.addRecipientForm.invalid) {
       return;
     }
-
     const newRecipient = this.getNewRecipient() 
     this.displayAddDialog = false;
-
     this.sendRecipient(newRecipient);
-
-    
+    this.resetForm()
   }
 
   editRecipient() {
@@ -104,22 +116,36 @@ export class PaymentsComponent {
       return;
     }
 
-    const recipient = {
-      recipientName: this.editRecipientForm.get('name')?.value,
-      accountNumber: this.editRecipientForm.get('accountNumber')?.value,
-    }
+    // this.selectedRecipient.name = this.editRecipientForm.get('name')?.value;
+    // this.selectedRecipient.balanceRegistrationNumber = this.editRecipientForm.get('accountNumber')?.value;
 
-    console.log(recipient)
+    const newRecipient: Recipient = {
+      id: this.selectedRecipient.id,
+      savedByClientEmail: this.selectedRecipient.savedByClientEmail,
+      receiverName: this.editRecipientForm.get('editName')?.value,
+      balanceRegistrationNumber: this.editRecipientForm.get('editAccountNumber')?.value,
+      referenceNumber: this.editRecipientForm.get('editNumberReference')?.value,
+      paymentNumber: this.editRecipientForm.get('editPaymentCode')?.value,
+      paymentDescription: this.editRecipientForm.get('editPaymentPurpose')?.value,
+    };
 
+    this.updateRecipient(newRecipient, this.selectedRecipient.id)
+    
     this.editRecipientForm.reset();
     this.displayEditDialog = false;
   }
 
   deleteRecipient(recipient: any) {
-    const index = this.recipients.indexOf(recipient);
-
-    console.log(recipient)
+    this.clientService.deleteRecipient(recipient.id).subscribe({
+      next: (response) => {
+        this.toastr.success("Uspešno obrisan primalac");
+      },
+      error: (error) => {
+        this.toastr.error("Greška pri brisanju");
+      }
+    });
   
+    const index = this.recipients.indexOf(recipient);
     if (index > -1) {
       this.recipients.splice(index, 1);
     }
@@ -127,18 +153,15 @@ export class PaymentsComponent {
 
   onRecipientSelect(recipient: Recipient) {
     this.createPaymentForm.patchValue({
-      recipientName: recipient.name,
-      recipientAccount: recipient.balanceRegistrationNumber
+      recipientName: recipient.receiverName,
+      recipientAccount: recipient.balanceRegistrationNumber,
+      numberReference: recipient.referenceNumber,
+      paymentCode: recipient.paymentNumber,
+      paymentPurpose: recipient.paymentDescription,
+
     });
   }
 
-
-
-  resetForm() {
-    this.createPaymentForm.reset();
-    this.moneyTransferForm.reset();
-    this.addRecipientForm.reset();
-  }
 
 
   onSubmitNewPayment() {
@@ -148,7 +171,6 @@ export class PaymentsComponent {
     this.displayOTPDialog = true;
     this.sendTokenToEmail()
   }
-
 
   sendTokenToEmail(){
     this.userService.sendTokenToEmail(this.clientData).subscribe({
@@ -173,17 +195,47 @@ export class PaymentsComponent {
   }
 
 
+
   onSelectedFromPaymentAccountChange(selectedAccount: any) {
     if (selectedAccount) {
       const selectedCurrency = selectedAccount.currency;
-  
+      this.transactionCurrency = selectedAccount.currency;
+
       this.transactionToAccount = this.transactionFromAccount.filter(account => account.currency === selectedCurrency && account !== selectedAccount);
     } else {
       this.transactionToAccount = [];
     }
   }
+
+  onSelectedExchange(selectedAccount: any){
+    if (selectedAccount) {
+      const selectedCurrency = selectedAccount.currency;
+      this.exchangeFromCurrency = selectedAccount.currency;
+
+      this.exchangeToList = this.exchangeFromList.filter(account => account.currency != selectedCurrency && account !== selectedAccount);
+
+
+    } else {
+      this.exchangeToList = [];
+    }
+  }
+
+  onSelectedToExchange(selectedAccount: any){
+    if(selectedAccount){
+      this.exchangeToCurrency = selectedAccount.currency
+    }
+  }
   
 
+  onSubmitExchange(){
+    if(this.exchangeForm.invalid){
+      return
+    }
+    const exchange = this.getExchangeFormData()
+    console.log(exchange);
+    
+    this.sendExchange(exchange);
+  }
 
   onSubmitOTP(){
    
@@ -214,7 +266,7 @@ export class PaymentsComponent {
     this.clientService.addRecipient(recipient).subscribe({
       next: val => {
         this.toastr.success('Uspešno dodat korisnik');
-        this.recipients.push(recipient)
+        this.recipients.push(val)
       },
       error: err => {
         this.toastr.error('Neuspešno dodavanje');
@@ -222,11 +274,49 @@ export class PaymentsComponent {
       }
     })
   }
+
+  sendExchange(exchange: ExchangeMoney){
+    this.clientService.exchangeCredits(exchange).subscribe({
+      next: val => {
+        this.toastr.success('Uspešna konverzija');
+        this.resetForm();
+      },
+      error: err => {
+        this.toastr.error('Neuspešna konverzija');
+        console.log(err);
+      }
+    })
+  }
+
+
+  updateRecipient(recipient: Recipient, id: string){
+    this.clientService.updateRecipient(recipient, id).subscribe({
+      next: val => {
+        this.updateEdited(val)
+        this.toastr.success("Uspešno izmenjen primalac")
+      },
+      error: err => {
+        this.toastr.error("Izmena nije uspela")
+        console.log(err);
+      }
+    })
+  }
+
+  updateEdited(recipient: Recipient) {
+    const index = this.recipients.findIndex(r => r.id === recipient.id);
+
+    if (index !== -1) {
+      this.recipients[index] = recipient;
+    } else {
+      console.log('Recipient nije pronađen');
+    }
+  }
   
 
   sendPayment(paymentInfo: any){
 
     const paymentData: PaymentInfo = {
+      senderEmail: this.clientData,
       receiverName: paymentInfo.recipientName,
       fromBalanceRegNum: paymentInfo.myAccount,
       toBalanceRegNum: paymentInfo.recipientAccount,
@@ -241,7 +331,7 @@ export class PaymentsComponent {
     this.clientService.sendPayment(paymentData).subscribe({
       next: val => {
         this.toastr.success('Uspešno slanje');
-        console.log(val)
+        this.getUserPayments()
       },
       error: err => {
         this.toastr.error('Neuspešno slanje');
@@ -259,13 +349,14 @@ export class PaymentsComponent {
     this.clientService.sendTransaction(transactionInfo).subscribe({
       next: val => {
         this.toastr.success('Uspešna transakcija');
-        console.log(val)
+        this.getUserPayments()
       },
       error: err => {
         this.toastr.error('Neuspešna transakcija');
         console.log(err);
       }
     })
+
   }
 
 
@@ -285,6 +376,22 @@ export class PaymentsComponent {
     return newPayment;
   }
 
+  getExchangeFormData(){
+
+    const fromCurrency = this.exchangeForm.get('selectedFromPaymentAccount')?.value.currency;
+    const toCurrency = this.exchangeForm.get('selectedToPaymentAccount')?.value.currency;
+    const exchangeValue = fromCurrency + '-' + toCurrency;
+
+    const exchange: ExchangeMoney = {
+      fromBalanceRegNum: this.exchangeForm.get('selectedFromPaymentAccount')?.value.registrationNumber,
+      toBalanceRegNum: this.exchangeForm.get('selectedToPaymentAccount')?.value.registrationNumber,
+      exchange: exchangeValue,
+      amount: this.exchangeForm.get('amount')?.value,
+    }
+
+    return exchange;
+  }
+
   getTransactionFormData(){
     const transactionInfo: TransactionInfo = {
       fromBalanceRegNum: this.moneyTransferForm.get('selectedFromPaymentAccount')?.value.registrationNumber,
@@ -293,15 +400,18 @@ export class PaymentsComponent {
       amount: this.moneyTransferForm.get('amount')?.value,
     };
 
-    console.log(transactionInfo)
     return transactionInfo;
   }
 
   getNewRecipient(){
     const newRecipient: Recipient = {
-      name: this.addRecipientForm.get('name')?.value,
+      id: "",
+      savedByClientEmail: this.clientData,
+      receiverName: this.addRecipientForm.get('name')?.value,
       balanceRegistrationNumber: this.addRecipientForm.get('accountNumber')?.value,
-      savedByClientId: this.clientData,
+      referenceNumber: this.addRecipientForm.get('numberReference')?.value,
+      paymentNumber: this.addRecipientForm.get('paymentCode')?.value,
+      paymentDescription: this.addRecipientForm.get('paymentPurpose')?.value,
     };
 
     return newRecipient;
@@ -315,6 +425,15 @@ export class PaymentsComponent {
     this.initAddRecipientForm();
     this.initEditRecipientForm();
     this.initOTPForm();
+    this.initExchangeForm();
+  }
+
+  initExchangeForm(){
+    this.exchangeForm = this.formBuilder.group({
+      selectedFromPaymentAccount: ['', Validators.required],
+      selectedToPaymentAccount: ['', Validators.required],
+      amount: ['', Validators.required]
+    });
   }
 
   initCreatePaymentForm(){
@@ -340,14 +459,20 @@ export class PaymentsComponent {
   initAddRecipientForm(){
     this.addRecipientForm = this.formBuilder.group({
       name: ['', Validators.required],
-      accountNumber: ['', Validators.required]
+      accountNumber: [null, [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      paymentCode: ['', Validators.required],
+      paymentPurpose: ['', Validators.required],
+      numberReference: ['', Validators.required],
     });
   }
 
-  initEditRecipientForm(){
+  initEditRecipientForm() {
     this.editRecipientForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      accountNumber: ['', Validators.required]
+      editName: [this.selectedRecipient?.name || '', Validators.required],
+      editAccountNumber: [this.selectedRecipient?.accountNumber.toString() || null, [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      editNumberReference: [this.selectedRecipient?.referenceNumber, Validators.required],
+      editPaymentCode: [this.selectedRecipient?.paymentCode, Validators.required],
+      editPaymentPurpose: [this.selectedRecipient?.paymentDescription, Validators.required],
     });
   }
 
@@ -362,6 +487,22 @@ export class PaymentsComponent {
       next: value => {
         this.clientData = value
         this.getMyAccounts()
+        this.getRecipients()
+        this.getUserPayments()
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+  }
+
+  getUserPayments(){
+    this.clientService.getUserPayments(this.clientData).subscribe({
+      next: val => {
+        this.transactions = []
+        if (Array.isArray(val)) {
+          this.transactions.push(...val);
+        }
       },
       error: err => {
         console.log(err);
@@ -388,7 +529,13 @@ export class PaymentsComponent {
           registrationNumber: account.registrationNumber
         }));
 
-        
+        this.exchangeFromList = value
+          .filter(account => ['USD', 'RSD', 'EUR'].includes(account.currency))
+          .map(account => ({
+            currency: account.currency,
+            registrationNumber: account.registrationNumber
+          }));
+
         this.transactionFromAccount = value.map(account => ({
           currency: account.currency,
           registrationNumber: account.registrationNumber
@@ -401,6 +548,13 @@ export class PaymentsComponent {
         console.log(err)
       }
     });
+  }
+
+  resetForm() {
+    this.createPaymentForm.reset();
+    this.moneyTransferForm.reset();
+    this.addRecipientForm.reset();
+    this.exchangeForm.reset();
   }
 
 

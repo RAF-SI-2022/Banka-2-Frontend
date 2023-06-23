@@ -97,6 +97,8 @@ import {StepsModule} from "primeng/steps";
 import {TagModule} from "primeng/tag";
 import { PaymentsComponent } from './components/sprint5/payments/payments.component';
 import { UserBalanceComponent } from './components/sprint5/user-balance/user-balance.component';
+import { SingleUserBalanceComponent } from './components/sprint5/single-user-balance/single-user-balance.component';
+import { LoanComponent } from './components/sprint5/loan/loan.component';
 
 
 
@@ -155,6 +157,8 @@ import { UserBalanceComponent } from './components/sprint5/user-balance/user-bal
     PaymentsComponent,
     AddUserAccountComponent,
     UserBalanceComponent,
+    SingleUserBalanceComponent,
+    LoanComponent,
     // FutureContractComponent,
 
   ],

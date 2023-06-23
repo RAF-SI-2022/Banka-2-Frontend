@@ -128,9 +128,9 @@ li span {
   margin: 10px 0 40px;
 }
 
-.row:last-child {
-  /* margin: 10px 0 0; */
-}
+/* .row:last-child {
+  /* margin: 10px 0 0; 
+} */
 
 .column {
   flex-direction: column;
@@ -152,9 +152,9 @@ li span {
   top: 5px;
 }
 
-.graph + .graph {
-  /* margin-left: 10px; */
-}
+/* .graph + .graph {
+  /* margin-left: 10px; 
+} */
 
 .asset-category {
   display: flex;

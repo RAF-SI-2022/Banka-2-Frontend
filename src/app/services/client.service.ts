@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {BusinessAccount, Client, ForeignAccount, LocalAccount, Recipient, TransactionInfo} from "../models/client.model";
+import {BusinessAccount, Client, ExchangeMoney, ForeignAccount, LocalAccount, Recipient, TransactionInfo} from "../models/client.model";
 import {cli} from "cypress";
 
 @Injectable({
@@ -74,7 +74,8 @@ export class ClientService {
     return this.httpClient.get<any>(`${environment.clientServiceURL}/api/client`, {headers: this.headers})
   }
 
-  getClientById(id: number) {
+  getClientById(id: string) {
+    console.log(id)
     return this.httpClient.get<any>(`${environment.clientServiceURL}/api/client/${id}`, {headers: this.headers})
   }
 
@@ -182,11 +183,37 @@ export class ClientService {
 
   addRecipient(recipient: Recipient){
     return this.httpClient.post<any>(`${environment.clientServiceURL}/api/payment/addReceiver`,
-    recipient, { headers: this.headers, responseType: 'text' as 'json'})
+    recipient, { headers: this.headers, responseType: 'json' })
   }
 
   getRecipients(email: string){
+    console.log(email)
     return this.httpClient.get<any>(`${environment.clientServiceURL}/api/payment/getReceivers/${email}`, {headers: this.headers})
+  }
+
+  updateRecipient(recipient: Recipient, receiverId: string){
+    return this.httpClient.patch<any>(`${environment.clientServiceURL}/api/payment/editReceiver/${receiverId}`, recipient, {headers: this.headers})
+  }
+
+
+  deleteRecipient(receiverId: string) {
+    return this.httpClient.delete(`${environment.clientServiceURL}/api/payment/deleteReceivers/${receiverId}`, 
+        { headers: this.headers, responseType: 'text' });
+  }
+
+  getUserPayments(email: string){
+    return this.httpClient.get(`${environment.clientServiceURL}/api/payment/payments/${email}`, 
+      { headers: this.headers, responseType: 'json' });
+  }
+
+  exchangeCredits(exchange: ExchangeMoney){
+    return this.httpClient.post(`${environment.clientServiceURL}/api/payment/exchangeMoney`, exchange, 
+      { headers: this.headers, responseType: 'json' });
+  }
+
+  getClientLoans(email: string){
+    return this.httpClient.get(`${environment.clientServiceURL}/api/credit/${email}`, 
+    { headers: this.headers});
   }
 
 

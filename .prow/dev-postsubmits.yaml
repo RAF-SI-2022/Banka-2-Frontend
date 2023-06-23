@@ -1,11 +1,9 @@
 postsubmits:
-  - name: post-banka-2-frontend-prod-postsubmits
+  - name: post-banka-2-frontend-dev-postsubmits
     labels:
       preset-harbor-robot-push: "true"
     decorate: true
     always_run: true
-    branches:
-      - ^main$
     extra_refs:
       - org: RAF-SI-2022
         repo: Banka-2-Infrastructure
@@ -25,10 +23,10 @@ postsubmits:
               # Define environment/namespace vars #
               #####################################
               
-              export ENV="prod"
+              export ENV="dev"
               export SIDE="frontend"
               export NAMESPACE="banka-2-$ENV"
-              export SERVICES="frontend-prod"
+              export SERVICES="frontend-dev"
               
               ##############
               # Call setup #

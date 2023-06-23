@@ -89,3 +89,12 @@ export interface Recipient{
   paymentNumber: string,
   paymentDescription: string
 }
+
+
+export interface ExchangeMoney{
+  fromBalanceRegNum: string,
+  toBalanceRegNum: string,
+  exchange: string,
+  amount: number
+}
+

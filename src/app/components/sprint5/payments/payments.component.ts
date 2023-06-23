@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {ClientService} from "../../../services/client.service";
 import { UserService } from 'src/app/services/user-service.service';
-import { PaymentInfo, Recipient, TransactionInfo } from '../../../models/client.model';
+import { ExchangeMoney, PaymentInfo, Recipient, TransactionInfo } from '../../../models/client.model';
 import { ToastrService } from 'ngx-toastr';
 import { OverlayPanel } from 'primeng/overlaypanel';
 
@@ -11,8 +11,8 @@ export enum Options {
   MONEY_TRANSFER = 'MONEY_TRANSFER',
   PAYMENT_RECIPIENTS = 'PAYMENT_RECIPIENTS',
   PAYMENT_OVERVIEW = 'PAYMENT_OVERVIEW',
+  EXCHANGE = "EXCHANGE",
 }
-
 
 
 @Component({
@@ -24,6 +24,7 @@ export class PaymentsComponent {
 
   @ViewChild('op') op: OverlayPanel;
 
+  formGroup: FormGroup;
 
   Options = Options;
   selectedOption: Options;
@@ -33,6 +34,7 @@ export class PaymentsComponent {
   addRecipientForm: FormGroup;
   editRecipientForm: FormGroup;
   oneTimePasswordForm: FormGroup;
+  exchangeForm: FormGroup;
 
   paymentAccounts: any[];
   newPayment: any[];
@@ -55,6 +57,12 @@ export class PaymentsComponent {
 
   selectedRecipient: any;
   transactionCurrency: any;
+  exchangeFromCurrency: any;
+  exchangeToCurrency: any;
+
+  exchangeFromList: any[];
+  exchangeToList: any[];
+
 
   constructor(
     private formBuilder: FormBuilder, 
@@ -62,17 +70,18 @@ export class PaymentsComponent {
     private userService: UserService,
     private toastr: ToastrService) {
 
+      
     this.initForms()
 
   }
 
-ngOnInit() {
-  this.selectedOption = Options.NEW_PAYMENT;
-  this.init()
+  ngOnInit() {
+    this.selectedOption = Options.NEW_PAYMENT;
+    this.init()
   }
 
   init(){
-    this.getClientData()
+    this.getClientData()    
   }
 
   showAddRecipientDialog() {
@@ -186,6 +195,7 @@ ngOnInit() {
   }
 
 
+
   onSelectedFromPaymentAccountChange(selectedAccount: any) {
     if (selectedAccount) {
       const selectedCurrency = selectedAccount.currency;
@@ -196,8 +206,36 @@ ngOnInit() {
       this.transactionToAccount = [];
     }
   }
+
+  onSelectedExchange(selectedAccount: any){
+    if (selectedAccount) {
+      const selectedCurrency = selectedAccount.currency;
+      this.exchangeFromCurrency = selectedAccount.currency;
+
+      this.exchangeToList = this.exchangeFromList.filter(account => account.currency != selectedCurrency && account !== selectedAccount);
+
+
+    } else {
+      this.exchangeToList = [];
+    }
+  }
+
+  onSelectedToExchange(selectedAccount: any){
+    if(selectedAccount){
+      this.exchangeToCurrency = selectedAccount.currency
+    }
+  }
   
 
+  onSubmitExchange(){
+    if(this.exchangeForm.invalid){
+      return
+    }
+    const exchange = this.getExchangeFormData()
+    console.log(exchange);
+    
+    this.sendExchange(exchange);
+  }
 
   onSubmitOTP(){
    
@@ -232,6 +270,19 @@ ngOnInit() {
       },
       error: err => {
         this.toastr.error('Neuspešno dodavanje');
+        console.log(err);
+      }
+    })
+  }
+
+  sendExchange(exchange: ExchangeMoney){
+    this.clientService.exchangeCredits(exchange).subscribe({
+      next: val => {
+        this.toastr.success('Uspešna konverzija');
+        this.resetForm();
+      },
+      error: err => {
+        this.toastr.error('Neuspešna konverzija');
         console.log(err);
       }
     })
@@ -325,6 +376,22 @@ ngOnInit() {
     return newPayment;
   }
 
+  getExchangeFormData(){
+
+    const fromCurrency = this.exchangeForm.get('selectedFromPaymentAccount')?.value.currency;
+    const toCurrency = this.exchangeForm.get('selectedToPaymentAccount')?.value.currency;
+    const exchangeValue = fromCurrency + '-' + toCurrency;
+
+    const exchange: ExchangeMoney = {
+      fromBalanceRegNum: this.exchangeForm.get('selectedFromPaymentAccount')?.value.registrationNumber,
+      toBalanceRegNum: this.exchangeForm.get('selectedToPaymentAccount')?.value.registrationNumber,
+      exchange: exchangeValue,
+      amount: this.exchangeForm.get('amount')?.value,
+    }
+
+    return exchange;
+  }
+
   getTransactionFormData(){
     const transactionInfo: TransactionInfo = {
       fromBalanceRegNum: this.moneyTransferForm.get('selectedFromPaymentAccount')?.value.registrationNumber,
@@ -358,6 +425,15 @@ ngOnInit() {
     this.initAddRecipientForm();
     this.initEditRecipientForm();
     this.initOTPForm();
+    this.initExchangeForm();
+  }
+
+  initExchangeForm(){
+    this.exchangeForm = this.formBuilder.group({
+      selectedFromPaymentAccount: ['', Validators.required],
+      selectedToPaymentAccount: ['', Validators.required],
+      amount: ['', Validators.required]
+    });
   }
 
   initCreatePaymentForm(){
@@ -453,7 +529,13 @@ ngOnInit() {
           registrationNumber: account.registrationNumber
         }));
 
-        
+        this.exchangeFromList = value
+          .filter(account => ['USD', 'RSD', 'EUR'].includes(account.currency))
+          .map(account => ({
+            currency: account.currency,
+            registrationNumber: account.registrationNumber
+          }));
+
         this.transactionFromAccount = value.map(account => ({
           currency: account.currency,
           registrationNumber: account.registrationNumber
@@ -472,6 +554,7 @@ ngOnInit() {
     this.createPaymentForm.reset();
     this.moneyTransferForm.reset();
     this.addRecipientForm.reset();
+    this.exchangeForm.reset();
   }
 
 

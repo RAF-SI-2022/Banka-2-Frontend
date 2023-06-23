@@ -61,7 +61,7 @@ const routes: Routes = [
   {
     path: "forgot-password",
     component: ForgotPasswordComponent,
-    canActivate: [LoginGuard, ClientGuard]
+    canActivate: [LoginGuard]
   },
   {
     path: "403-forbiden",

@@ -192,7 +192,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu -dark dropdown-menu-end"
                 aria-labelledby="navbarDarkDropdownMenuLink">
-              <li *ngIf="!checkIfUserIsClient"><a class="dropdown-item" [routerLink]="'/profile'">Profil</a></li>
+              <li *ngIf="checkIfUserIsClient()"><a class="dropdown-item" [routerLink]="'/profile'">Profil</a></li>
               <li><a class="dropdown-item" (click)="logOut()">Logout</a></li>
             </ul>
           </li>

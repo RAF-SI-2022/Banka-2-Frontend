@@ -14,6 +14,9 @@
       <a id="privacy" class="nav-link"  (click)="selectedOption = Options.PAYMENT_OVERVIEW">
         <i [ngClass]="{'active': selectedOption === Options.PAYMENT_OVERVIEW}" style="font-size: 1.3rem" class="pi pi-chart-line"></i>
       </a>
+      <a id="exchange" class="nav-link"  (click)="selectedOption = Options.EXCHANGE">
+        <i [ngClass]="{'active': selectedOption === Options.EXCHANGE}" style="font-size: 1.3rem" class="pi pi-arrows-h"></i>
+      </a>
     </nav>
   </div>
 
@@ -241,10 +244,9 @@
                         <div class="add-recipient-form">
 
                             <div class="p-float-label">
-                                <input id="editName" type="text" pInputText formControlName="editName">
+                                <input id="editName" type="text" style="width: 100%;" pInputText formControlName="editName">
                                 <label for="editName">Naziv</label>
                             </div>
-                            
                             
                             <div>
                                 <span class="p-float-label">
@@ -313,8 +315,44 @@
 
         </div>
 
+
+        <div *ngIf="selectedOption === Options.EXCHANGE">
+            <h3>Menjačnica</h3>
+
+            <form [formGroup]="exchangeForm" (ngSubmit)="onSubmitExchange()">
+                <div class="transfer-form">
+
+                    <div class="flex justify-content-center w-100">
+                        <p-dropdown [options]="exchangeFromList" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="registrationNumber" (onChange)="onSelectedExchange($event.value)"></p-dropdown>
+                    </div>                      
+                      
+
+                    <div class="flex justify-content-center w-100" >
+                      <p-dropdown class="w-100" [options]="exchangeToList" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="registrationNumber" (onChange)="onSelectedToExchange($event.value)"></p-dropdown>
+                    </div>
+
+                    <div class="flex justify-content-center" style="margin-top: 30px; width: 100%;">
+                        <span class="p-float-label">
+                            <input pInputText style="width: 95%;" id="transferAmount" formControlName="amount" type="number">
+                            <label for="transferAmount">Iznos</label>
+                        </span>
+                    </div>
+
+
+                    <div class="d-flex justify-content-between align-items-end mt-3" style="width: 95%;">
+                        <p style="color: #808080;">Konverzija: <b>{{exchangeFromCurrency}}</b> <i *ngIf="exchangeFromCurrency" class="pi pi-angle-right"></i> <b>{{exchangeToCurrency}}</b></p>
+                        <button type="submit" class="button button-solid background-blue">Nastavi</button>
+                    </div>
+                  </div>
+            </form>
+            
+        
+        </div>
+        
+
+
+
+
     </div>
-
-
 
 </div>

@@ -194,13 +194,6 @@ export class PaymentsComponent {
 
   }
 
-  submitExchange(){
-    if(this.exchangeForm.invalid){
-      return
-    }
-
-    console.log("radi")
-  }
 
 
   onSelectedFromPaymentAccountChange(selectedAccount: any) {

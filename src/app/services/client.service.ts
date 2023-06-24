@@ -1,8 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {BusinessAccount, Client, ExchangeMoney, ForeignAccount, LocalAccount, Recipient, TransactionInfo} from "../models/client.model";
+import {
+  BusinessAccount,
+  Client,
+  ExchangeMoney,
+  ForeignAccount,
+  LoanRequest,
+  LocalAccount,
+  Recipient,
+  TransactionInfo
+} from "../models/client.model";
 import {cli} from "cypress";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -197,23 +207,59 @@ export class ClientService {
 
 
   deleteRecipient(receiverId: string) {
-    return this.httpClient.delete(`${environment.clientServiceURL}/api/payment/deleteReceivers/${receiverId}`, 
+    return this.httpClient.delete(`${environment.clientServiceURL}/api/payment/deleteReceivers/${receiverId}`,
         { headers: this.headers, responseType: 'text' });
   }
 
   getUserPayments(email: string){
-    return this.httpClient.get(`${environment.clientServiceURL}/api/payment/payments/${email}`, 
+    return this.httpClient.get(`${environment.clientServiceURL}/api/payment/payments/${email}`,
       { headers: this.headers, responseType: 'json' });
   }
 
   exchangeCredits(exchange: ExchangeMoney){
-    return this.httpClient.post(`${environment.clientServiceURL}/api/payment/exchangeMoney`, exchange, 
+    return this.httpClient.post(`${environment.clientServiceURL}/api/payment/exchangeMoney`, exchange,
       { headers: this.headers, responseType: 'json' });
   }
 
   getClientLoans(email: string){
-    return this.httpClient.get(`${environment.clientServiceURL}/api/credit/${email}`, 
+    return this.httpClient.get(`${environment.clientServiceURL}/api/credit/${email}`,
     { headers: this.headers});
+  }
+
+  requestNewLoan(loanRequest: LoanRequest): Observable<any>{
+    return this.httpClient.post(`${environment.clientServiceURL}/api/credit/request`,
+      {
+        id: loanRequest.id,
+        clientEmail: loanRequest.clientEmail,
+        creditApproval: loanRequest.creditApproval,
+        amount: loanRequest.amount,
+        usedFor: loanRequest.usedFor,
+        monthlyRate: loanRequest.monthlyRate,
+        clientHasJob: loanRequest.clientHasJob,
+        jobLocation: loanRequest.jobLocation,
+        currentJobDuration: loanRequest.currentJobDuration,
+        dueDateInMonths: loanRequest.dueDateInMonths,
+        phoneNumber: loanRequest.phoneNumber
+      },
+      { headers: this.headers});
+  }
+
+  getWaitingLoans(){
+    return this.httpClient.get<any>(`${environment.clientServiceURL}/api/credit`,
+      { headers: this.headers});
+  }
+
+  //TODO TREBA I CREDIT DTO U PARAMETRE NE ZNAM ZASTO
+  approveLoanRequest(id: string){
+    return this.httpClient.post(`${environment.clientServiceURL}/api/credit/approve/${id}`,
+      {},
+      { headers: this.headers});
+  }
+
+  denyLoanRequest(id: string){
+    return this.httpClient.post(`${environment.clientServiceURL}/api/credit/deny/${id}`,
+      {},
+      { headers: this.headers});
   }
 
 

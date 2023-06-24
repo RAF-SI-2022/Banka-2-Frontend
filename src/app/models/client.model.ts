@@ -116,7 +116,9 @@ export interface Loan {
 }
 
 export interface LoanRequest {
+  id: string,
   clientEmail: string,
+  creditApproval: string,
   amount: number,
   usedFor: string,
   monthlyRate: number,//mesecno placanje

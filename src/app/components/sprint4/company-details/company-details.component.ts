@@ -142,10 +142,10 @@ export class CompanyDetailsComponent {
     this.companyService.changeCompany(
       this.companyId,
       this.companyForm.get('name')?.value,
+      this.companyForm.get('registrationNumber')?.value,
       this.companyForm.get('taxNumber')?.value,
-      this.companyForm.get('address')?.value,
       this.companyForm.get('activityCode')?.value,
-      this.companyForm.get('registrationNumber')?.value
+      this.companyForm.get('address')?.value
     ).subscribe({
       next: value => {
         // console.log(value);

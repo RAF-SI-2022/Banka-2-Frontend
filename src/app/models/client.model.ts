@@ -63,6 +63,7 @@ export interface Client {
 
 
 export interface PaymentInfo{
+  senderEmail: string,
   receiverName: string;
   fromBalanceRegNum: string,
   toBalanceRegNum: string,
@@ -80,7 +81,50 @@ export interface TransactionInfo{
 }
 
 export interface Recipient{
-  name: string,
+  id: string,
+  savedByClientEmail: string,
+  receiverName: string,
   balanceRegistrationNumber: string,
-  savedByClientId: string
+  referenceNumber: string,
+  paymentNumber: string,
+  paymentDescription: string
+}
+
+
+export interface ExchangeMoney{
+  fromBalanceRegNum: string,
+  toBalanceRegNum: string,
+  exchange: string,
+  amount: number
+}
+
+
+
+export interface Loan {
+  id: string,
+  clientEmail: string,
+  name: string,
+  accountRegNumber: string,
+  creationDate: string,
+  amount: number,
+  remainingAmount: number,
+  ratePercentage: number,
+  monthlyRate: number,
+  dueDate: string,
+  currency: string,
+
+}
+
+export interface LoanRequest {
+  id: string,
+  clientEmail: string,
+  creditApproval: string,
+  amount: number,
+  usedFor: string,
+  monthlyRate: number,//mesecno placanje
+  clientHasJob: boolean,
+  jobLocation: string,
+  currentJobDuration: string,
+  dueDateInMonths: number,
+  phoneNumber: string
 }

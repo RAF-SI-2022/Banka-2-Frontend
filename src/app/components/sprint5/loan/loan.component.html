@@ -1,85 +1,252 @@
 <div class="body-container">
 
+<!--  TABELA ZA AGENTE SUPERVIZORE I ADMINE --------------------------------------------------------------------------->
+
+  <div *ngIf="checkIfUserIsClient()" class="table-container">
+    <p-table  #dt [value]="waitingLoans" class="p-datatable-header"
+             [rowHover]="true" [rows]="6" [showCurrentPageReport]="true"
+             [paginator]="true" [alwaysShowPaginator]="false"
+             currentPageReportTemplate="Prikazani su {first}-{last} od ukupno {totalRecords} zahteva"
+             [globalFilterFields]="['status']">
+
+
+      <ng-template pTemplate="caption">
+
+        <div class="table-header row">
+          <div class="col-6 text-start table-name">
+            <div style="display:flex; align-items: center; gap: 8px;">
+              <h3 style="font-weight: bolder" class="mb-1">
+                Zahtevi za kredit
+              </h3>
+            </div>
+          </div>
+          <div class="col-6 text-end">
+            <!-- <button (click)="refresh()"
+              pButton pRipple styleClass="p-button-sm"
+              class="p-button-raised p-button-secondary add-employee-btn-lg"
+              label="Refresh" icon="bi bi-arrow-repeat"
+              style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
+            </button>
+            <button pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
+                    class="p-button-raised p-button-secondary add-employee-btn-sm"
+                    icon="bi bi-arrow-repeat" (click)="refresh()"></button> -->
+          </div>
+        </div>
+      </ng-template>
+
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="clientEmail" style="font-size: 12px;">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Email klijenta</p>
+                <p-sortIcon field="email"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="creditAmount" style="font-size: 12px;">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Količina</p>
+                <p-sortIcon field="amount"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="purpose" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Svrha kredita/Napomena</p>
+                <p-sortIcon field="loanMessage"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="monthly" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Mesečna plata</p>
+                <p-sortIcon field="paycheck"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="job" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Zaposlen</p>
+                <p-sortIcon field="employment"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="location" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Mesto zaposlenja</p>
+                <p-sortIcon field="jobPlace"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="workTime" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Period zaposlenja kod trenutnog poslodavca</p>
+                <p-sortIcon field="jobTime"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="rocch" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Ročnost (mesečno)</p>
+                <p-sortIcon field="mesecniRochh"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+          <th pSortableColumn="phone" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Broj telefona</p>
+                <p-sortIcon field="contact"></p-sortIcon>
+              </div>
+            </div>
+          </th>
+
+          <th *ngIf="checkIfUserIsClient()" style="font-size: 12px; ">
+            <div class="flex justify-content-between align-items-center">
+              <div class="icon-container">
+                <p style="margin-bottom: 0; margin-top: 2px;">Opcije</p>
+              </div>
+            </div>
+          </th>
+
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-loanRequest>
+        <tr style="font-size: 12px;">
+          <td>{{loanRequest.clientEmail}}</td>
+          <td>{{loanRequest.amount}}</td>
+          <td>{{loanRequest.usedFor}}</td>
+          <td>{{loanRequest.monthlyRate}}</td>
+          <td>{{loanRequest.clientHasJob}}</td>
+          <td>{{loanRequest.jobLocation}}</td>
+          <td>{{loanRequest.currentJobDuration}}</td>
+          <td>{{loanRequest.dueDateInMonths}}</td>
+          <td>{{loanRequest.phoneNumber}}</td>
+
+          <td *ngIf="checkIfUserIsClient()">
+            <button *ngIf="loanRequest.creditApproval === 'WAITING'" type="button"  (click)="approveRequest(loanRequest.id, loanRequest, randomRegNumber(16))"
+                    class="btn-i btn-circle" title="Prihvati zahtev">
+                <span>
+                  <i class="bi bi-check" style="font-size: 20px;"></i>
+                </span>
+              <div class="wave"></div>
+            </button>
+            <button *ngIf="loanRequest.creditApproval === 'WAITING'" type="button"
+                    class="btn-i btn-circle" (click)="declineRequest(loanRequest.id)" title="Odbij zahtev">
+                <span>
+                <i class="bi bi-x" style="font-size: 20px;"></i>
+              </span>
+              <div class="wave"></div>
+            </button>
+          </td>
+        </tr>
+
+
+      </ng-template>
+
+    </p-table>
+  </div>
+
+<!--   TABELA ZA LISTU SVIH KREDITA TRENUTNOG KORISNIKA --------------------------------------------------------------->
     <div class="table-container">
 
+      <p-table  #dt [value]="loans" class="p-datatable-header" [rowHover]="true" [rows]="6"
+      [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
+      currentPageReportTemplate="Prikaz svih kredita"
+      [globalFilterFields]="['loanAmount']">
+          <ng-template pTemplate="caption">
 
-    <p-table  #dt [value]="loans" class="p-datatable-header" [rowHover]="true" [rows]="6"
-    [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
-    currentPageReportTemplate="Prikaz svih kredita"
-    [globalFilterFields]="['loanAmount']">
-        <ng-template pTemplate="caption">
-
-            <div class="table-header row">
-            <div class="col-6 text-start table-name">
-                <div style="display:flex; align-items: center; gap: 8px;">
-                <h3 style="font-weight: bolder" class="mb-1">
-                    Krediti
-                </h3>
+              <div class="table-header row">
+                <div class="col-6 text-start table-name">
+                    <div style="display:flex; align-items: center; gap: 8px;">
+                    <h3 style="font-weight: bolder" class="mb-1">
+                        Krediti
+                    </h3>
+                    </div>
                 </div>
-            </div>
-            <div class="col-6 text-end">
-            </div>
-            </div>
-        </ng-template>
-
-
-        <ng-template pTemplate="header">
-            <tr>
-            <th pSortableColumn="loanName" style="font-size: 12px;">
-                <div class="flex justify-content-between align-items-center">
-                <div class="icon-container">
-                    <p style="margin-bottom: 0; margin-top: 2px;">Naziv kredita</p>
-                    <p-sortIcon ></p-sortIcon>
+                <div class="col-lg-6 col-md-6 col-6 text-end">
+                  <form action="" title="Da biste dobili kredit morate podneti zahtev koji vam vas agent mora prvo odobriti">
+                    <div class="loan-request-container">
+                      <button label="Podnesi zahtev za kredit" pButton pRipple style="background-color: #3d3d3d; cursor: pointer;"
+                              icon="pi pi-plus"
+                              (click)="openRequestLoanDialog()">
+                      </button>
+                    </div>
+                  </form>
                 </div>
-                </div>
-            </th>
-            <th pSortableColumn="loanID" style="font-size: 12px; ">
-                <div class="flex justify-content-between align-items-center">
-                <div class="icon-container">
-                    <p style="margin-bottom: 0; margin-top: 2px;">Broj kredita</p>
-                    <p-sortIcon></p-sortIcon>
-                </div>
-                </div>
-            </th>
-            <th pSortableColumn="loanAmount" style="font-size: 12px;">
-                <div class="flex justify-content-between align-items-center">
-                <div class="icon-container">
-                    <p style="margin-bottom: 0; margin-top: 2px;">Iznos kredita</p>
-                    <p-sortIcon></p-sortIcon>
-                </div>
-                </div>
-            </th>
-            <th style="font-size: 12px;">
-                <div class="flex justify-content-between align-items-center">
-                <div class="icon-container">
-                    <p style="margin-bottom: 0; margin-top: 2px;">Detalji kredita</p>
-                </div>
-                </div>
-            </th>
-            </tr>
-        </ng-template>
-
-        <ng-template pTemplate="body" let-kredit>
-            <tr class="rowHover" style="font-size: 12px;">
-            <td>{{kredit.loanName}}</td>
-            <td>{{kredit.loanID}}</td>
-            <td>{{kredit.loanAmount}}</td>
-            <td>
-                <button type="button"
-                        class="btn-i btn-circle" title="Detalji">
-                    <span>
-                      <i class="bi bi-info-circle-fill" style="font-size: 20px;"></i>
-                    </span>
-                  <div class="wave"></div>
-                </button>
-              </td>
-            </tr>
+              </div>
+          </ng-template>
 
 
-        </ng-template>
+          <ng-template pTemplate="header">
+              <tr>
+              <th pSortableColumn="loanName" style="font-size: 12px;">
+                  <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                      <p style="margin-bottom: 0; margin-top: 2px;">Naziv kredita</p>
+                      <p-sortIcon ></p-sortIcon>
+                  </div>
+                  </div>
+              </th>
+              <th pSortableColumn="loanID" style="font-size: 12px; ">
+                  <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                      <p style="margin-bottom: 0; margin-top: 2px;">Broj kredita</p>
+                      <p-sortIcon></p-sortIcon>
+                  </div>
+                  </div>
+              </th>
+              <th pSortableColumn="loanAmount" style="font-size: 12px;">
+                  <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                      <p style="margin-bottom: 0; margin-top: 2px;">Iznos kredita</p>
+                      <p-sortIcon></p-sortIcon>
+                  </div>
+                  </div>
+              </th>
+              <th style="font-size: 12px;">
+                  <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                      <p style="margin-bottom: 0; margin-top: 2px;">Detalji kredita</p>
+                  </div>
+                  </div>
+              </th>
+              </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-kredit>
+              <tr class="rowHover" style="font-size: 12px;">
+              <td>{{kredit.loanName}}</td>
+              <td>{{kredit.loanID}}</td>
+              <td>{{kredit.loanAmount}}</td>
+              <td>
+                  <button type="button"
+                          class="btn-i btn-circle" title="Detalji">
+                      <span>
+                        <i class="bi bi-info-circle-fill" style="font-size: 20px;"></i>
+                      </span>
+                    <div class="wave"></div>
+                  </button>
+                </td>
+              </tr>
+
+
+          </ng-template>
 
         </p-table>
     </div>
+
+<!--  TABELA ZA LISTU TRANSAKCIJA ODABRANOG KREDITA---------------------------------------------------------------- -->
     <div class="table-container">
 
 
@@ -93,7 +260,8 @@
                 <div class="col-6 text-start table-name">
                     <div style="display:flex; align-items: center; gap: 8px;">
                     <h3 style="font-weight: bolder" class="mb-1">
-                        Transakcije za kredit : {{activeLoan}}
+<!--                        Transakcije za kredit : {{activeLoan}}-->
+                            Transakcije za odabrani kredit:
                     </h3>
                     </div>
                 </div>
@@ -142,7 +310,8 @@
 
             </ng-template>
 
-            </p-table>
-        </div>
+        </p-table>
+    </div>
 </div>
 
+<app-request-loan (requestLoanEmitter)="requestLoan($event)"></app-request-loan>

@@ -114,3 +114,17 @@ export interface Loan {
   currency: string,
 
 }
+
+export interface LoanRequest {
+  id: string,
+  clientEmail: string,
+  creditApproval: string,
+  amount: number,
+  usedFor: string,
+  monthlyRate: number,//mesecno placanje
+  clientHasJob: boolean,
+  jobLocation: string,
+  currentJobDuration: string,
+  dueDateInMonths: number,
+  phoneNumber: string
+}

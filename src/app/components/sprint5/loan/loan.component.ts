@@ -16,11 +16,12 @@ export class LoanComponent {
 
   @ViewChild(RequestLoanComponent, {static: true}) requestLoanComponent: RequestLoanComponent;
 
-  loans!:any;
+  loans: Loan[];
   activeLoan:number=265000000546543564533;
   clientData!: string;
   waitingLoans: LoanRequest[];
   newRequest: LoanRequest;
+  newLoan: Loan;
 
 
   constructor(private router: Router, private clientService: ClientService,
@@ -48,6 +49,8 @@ export class LoanComponent {
   getLoans(email:string){
     this.clientService.getClientLoans(email).subscribe({
       next: value => {
+        // this.newLoan = value;
+        // this.loans.push(this.newLoan);
         this.loans = value;
         console.log(value)
       },

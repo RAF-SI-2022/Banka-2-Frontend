@@ -5,7 +5,7 @@ import {
   BusinessAccount,
   Client,
   ExchangeMoney,
-  ForeignAccount,
+  ForeignAccount, Loan,
   LoanRequest,
   LocalAccount,
   Recipient,
@@ -249,15 +249,27 @@ export class ClientService {
       { headers: this.headers});
   }
 
-  //TODO TREBA I CREDIT DTO U PARAMETRE NE ZNAM ZASTO
-  approveLoanRequest(id: string){
-    return this.httpClient.post(`${environment.clientServiceURL}/api/credit/approve/${id}`,
-      {},
+  //TODO TREBA I CREDIT DTO SREDITI JER NEMAM ODAKLE OVE PODATKE DA UBACIM
+  approveLoanRequest(id: string, request: LoanRequest, regNumber: number): Observable<any>{
+    return this.httpClient.post<any>(`${environment.clientServiceURL}/api/credit/approve/${id}`,
+      {
+        id: id,
+        clientEmail: request.clientEmail,
+        name: "", //nemamo ime
+        accountRegNumber: regNumber, //generisao sam novi broj racuna samo za ovaj kredit
+        creationDate: new Date().toLocaleDateString(),
+        amount: request.amount,
+        remainingAmount: request.amount,
+        ratePercentage: 10, //hardcode nemam odakle
+        monthlyRate: request.monthlyRate, //hardcore - nije odgovarajuci monthlyRate
+        dueDate: request.dueDateInMonths,
+        currency: "RSD" //hardcode nemam odakle
+      },
       { headers: this.headers});
   }
 
-  denyLoanRequest(id: string){
-    return this.httpClient.post(`${environment.clientServiceURL}/api/credit/deny/${id}`,
+  denyLoanRequest(id: string): Observable<any>{
+    return this.httpClient.patch<any>(`${environment.clientServiceURL}/api/credit/deny/${id}`,
       {},
       { headers: this.headers});
   }

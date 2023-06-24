@@ -73,8 +73,12 @@ export class LoanComponent {
     })
   }
 
-  approveRequest(id :string){
-    this.clientService.approveLoanRequest(id)
+  randomRegNumber(length: number) {
+    return Math.floor(Math.pow(10, length-1) + Math.random() * (Math.pow(10, length) - Math.pow(10, length-1) - 1));
+  }
+
+  approveRequest(id :string, request: LoanRequest, regNumber: number){
+    this.clientService.approveLoanRequest(id, request, regNumber)
       .subscribe({
         next: val => {
           console.log("KLIKNUT APPROVE")
@@ -98,6 +102,7 @@ export class LoanComponent {
         },
         error: err => {
           this.toastr.error(err.error)
+          console.log("PUCE KESA KUME")
           console.log(err)
         }
       });
@@ -121,6 +126,7 @@ export class LoanComponent {
     this.clientService.getWaitingLoans().subscribe({
       next: val => {
         this.waitingLoans=val
+        console.log(val)
 
         // for(var o in this.waitingLoans)
         // {

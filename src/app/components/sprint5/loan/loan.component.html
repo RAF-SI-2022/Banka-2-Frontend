@@ -134,7 +134,7 @@
           <td>{{loanRequest.phoneNumber}}</td>
 
           <td *ngIf="checkIfUserIsClient()">
-            <button *ngIf="loanRequest.creditApproval === 'WAITING'" type="button"  (click)="approveRequest(loanRequest.id)"
+            <button *ngIf="loanRequest.creditApproval === 'WAITING'" type="button"  (click)="approveRequest(loanRequest.id, loanRequest, randomRegNumber(16))"
                     class="btn-i btn-circle" title="Prihvati zahtev">
                 <span>
                   <i class="bi bi-check" style="font-size: 20px;"></i>

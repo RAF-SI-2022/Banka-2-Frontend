@@ -1,256 +1,258 @@
 <div class="body-container">
 
 
+  <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
 
-    <p-breadcrumb [model]="breadcrumbItems"></p-breadcrumb>
-
-    <div class="table-container">
-
-        <p-tabView>
-            <p-tabPanel header="Tekuci racun">
-
-                <p-table *ngIf="getPermission()" #dt [value]="balance" class="p-datatable-header" [rowHover]="true" [rows]="6"
-                [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
-
-                currentPageReportTemplate="Prikazani su {first}-{last} tekuci racuni"
-                [globalFilterFields]="['status']">
-
-
-                <ng-template pTemplate="caption">
-
-                    <div class="table-header row">
-                        <div class="col-6 text-start table-name">
-                            <div style="display:flex; align-items: center; gap: 8px;">
-                                <h3 style="font-size: medium;">
-                                    Tekući račun
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="col-6 text-end">
-                            <button (click)="toggleDepositWithdrawCapitalkDialog()" pButton pRipple styleClass="p-button-sm"
-                                class="p-button-raised p-button-secondary add-employee-btn-lg" label="Uplata"
-                                style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
-                            </button>
-                            <button pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
-                                class="p-button-raised p-button-secondary add-employee-btn-sm"
-                                label="U/I" (click)="toggleDepositWithdrawCapitalkDialog()"></button>
-                        </div>
-                    </div>
-                </ng-template>
-
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th pSortableColumn="currency.currencyCode" style="font-size: 12px;">
-                            <div class="flex justify-content-between align-items-center">
-                                <div class="icon-container">
-                                    <p style="margin-bottom: 0; margin-top: 2px;">Valuta</p>
-                                    <p-sortIcon field="valuta"></p-sortIcon>
-                                </div>
-                            </div>
-                        </th>
-                        <th pSortableColumn="amount" style="font-size: 12px;">
-                            <div class="flex justify-content-between align-items-center">
-                                <div class="icon-container">
-                                    <p style="margin-bottom: 0; margin-top: 2px;">Ukupno</p>
-                                    <p-sortIcon field="ukupno"></p-sortIcon>
-                                </div>
-                            </div>
-                        </th>
-                        <th pSortableColumn="reserved" style="font-size: 12px; ">
-                            <div class="flex justify-content-between align-items-center">
-                                <div class="icon-container">
-                                    <p style="margin-bottom: 0; margin-top: 2px;">Rezervisano</p>
-                                    <p-sortIcon field="rezervisano"></p-sortIcon>
-                                </div>
-                            </div>
-                        </th>
-                        <th pSortableColumn="free" style="font-size: 12px; ">
-                            <div class="flex justify-content-between align-items-center">
-                                <div class="icon-container">
-                                    <p style="margin-bottom: 0; margin-top: 2px;">Raspoloživo</p>
-                                    <p-sortIcon field="raspolozivo"></p-sortIcon>
-                                </div>
-                            </div>
-                        </th>
-                    </tr>
-                </ng-template>
-
-                <ng-template pTemplate="body" let-item>
-                    <tr class="rowHover" (click)="toggleTransactionListDialog(item.currency.currencyCode)"  style="font-size: 12px;">
-                        <td>{{item.currency.currencyCode}}</td>
-                        <td>{{item.amount}}</td>
-                        <td>{{item.reserved}}</td>
-                        <td>{{item.free}}</td>
-
-                    </tr>
-
-                </ng-template>
-
-
-            </p-table>
-            <!--AGENT TABELA-->
-            <p-card *ngIf="!getPermission()" header="{{newselectedBalance.currency.currencyCode}} tekući račun ">
-                <div class="row text-center mb-5">
-                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <p style="font-size: 30px; font-weight: bold;">Ukupno novca</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{newselectedBalance.amount}}</p>
-                  </div>
-                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <p style="font-size: 30px; font-weight: bold;">Raspoloživo novca</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{newselectedBalance.free}}</p>
-                  </div>
-                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
-                    <p style="font-size: 30px; font-weight: bold;">Rezervisano novca</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{newselectedBalance.reserved}}</p>
-                  </div>
-                </div>
-                <div class="row text-center">
-                    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <p style="font-size: 30px; font-weight: bold;">Limit</p>
-                        <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{user.dailyLimit}}</p>
-                    </div>                    
-                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <p style="font-size: 30px; font-weight: bold;">Limit</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{defaultLimit}}</p>
-                  </div>
-                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
-                    <p style="font-size: 30px; font-weight: bold;">Iskoriscenost limita</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{roundNumber(defaultLimit - currentDailyLimit)}}</p>
-                  </div>
-                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12" >
-                    <p style="font-size: 30px; font-weight: bold;">Raspolozivo limita</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{roundNumber(currentDailyLimit)}}</p>
-                  </div>
-                  <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <p style="font-size: 30px; font-weight: bold;">Raspolozivo</p>
-                    <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].free}}</p>
-                </div>
-                
-                </div>
-            </p-card>
-
-            </p-tabPanel>
-           <p-tabPanel header="Marzni racun">
-               <p-table *ngIf="getPermission()" #dt [value]="marginBalance" class="p-datatable-header" [rowHover]="true" [rows]="6"
-               [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
-               currentPageReportTemplate="Prikazani su {first}-{last} marzni racuni"
-                [globalFilterFields]="['status']">
-
-    <ng-template pTemplate="caption">
-        <div class="table-header row">
-            <div class="col-6 text-start table-name">
-                <div style="display:flex; align-items: center; gap: 8px;">
-                    <h3 style="font-size: medium;">
-                        Maržni račun
-                    </h3>
-                </div>
-            </div>
-            <div class="col-6 text-end">
-            </div>
-        </div>
-    </ng-template>
-    
-    <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="valuta" style="font-size: 12px;">
-                <div class="flex justify-content-between align-items-center">
-                    <div class="icon-container">
-                        <p style="margin-bottom: 0; margin-top: 2px;">Valuta</p>
-                        <p-sortIcon field="valuta"></p-sortIcon>
-                    </div>
-                </div>
-            </th>
-            <th pSortableColumn="investedResources" style="font-size: 12px;">
-                <div class="flex justify-content-between align-items-center">
-                    <div class="icon-container">
-                        <p style="margin-bottom: 0; margin-top: 2px;">Ukupno</p>
-                        <p-sortIcon field="investedResources"></p-sortIcon>
-                    </div>
-                </div>
-            </th>
-            <th pSortableColumn="loanedResources" style="font-size: 12px; ">
-                <div class="flex justify-content-between align-items-center">
-                    <div class="icon-container">
-                        <p style="margin-bottom: 0; margin-top: 2px;">Kredit</p>
-                        <p-sortIcon field="loanedResources"></p-sortIcon>
-                    </div>
-                </div>
-            </th>
-            <th pSortableColumn="listingGroup"style="font-size: 12px; ">
-                <div class="flex justify-content-between align-items-center">
-                    <div class="icon-container">
-                        <p style="margin-bottom: 0; margin-top: 2px;">Listing Group</p>
-                        <p-sortIcon field="listingGroup"></p-sortIcon>
-                    </div>
-                </div>
-            </th>
-            <th pSortableColumn="maintananceMargin" style="font-size: 12px; ">
-                <div class="flex justify-content-between align-items-center">
-                    <div class="icon-container">
-                        <p style="margin-bottom: 0; margin-top: 2px;">Maintenance Margin</p>
-                        <p-sortIcon field="maintananceMargin"></p-sortIcon>
-                    </div>
-                </div>
-            </th>
-            <th pSortableColumn="marginCall" style="font-size: 12px; ">
-                <div class="flex justify-content-between align-items-center">
-                    <div class="icon-container">
-                        <p style="margin-bottom: 0; margin-top: 2px;">Margin Call</p>
-                        <p-sortIcon field="marginCall"></p-sortIcon>
-                    </div>
-                </div>
-            </th>
-        </tr>
-    </ng-template>
-    
-    <ng-template pTemplate="body" let-m>
-        <tr class="rowHover" style="font-size: 12px;">
-            <td>{{m.currencyCode}}</td>
-            <td>{{m.investedResources}}</td>
-            <td>{{m.loanedResources}}</td>
-            <td>{{m.listingGroup}}</td>
-            <td>{{m.maintananceMargin ? m.maintananceMargin:0}}</td>
-            <td>{{m.marginCall}}</td>
-        </tr>
-    </ng-template>
-    
-    </p-table>
-    
-    </p-tabPanel>
-    
-
-        </p-tabView>
+  <div class="table-container">
 
     <p-tabView>
-        <p-table [value]="capitalOverview" class="p-datatable-header" [rowHover]="true" [rows]="2">
-            <ng-template pTemplate="caption">
-                <div class="table-header row">
-                    <div class="col-12 text-start table-name">
-                        <div style="display:flex; align-items: center; gap: 8px;">
-                            <h3 style="font-size: medium;">
-                                Pregled kapitala
-                            </h3>
-                        </div>
-                    </div>
+      <p-tabPanel header="Tekući račun">
+
+        <p-table *ngIf="getPermission()" #dt [value]="balance" class="p-datatable-header" [rowHover]="true" [rows]="6"
+                 [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
+
+                 currentPageReportTemplate="Prikazani su {first}-{last} tekuci racuni"
+                 [globalFilterFields]="['status']">
+
+
+          <ng-template pTemplate="caption">
+
+            <div class="table-header row">
+              <div class="col-6 text-start table-name">
+                <div style="display:flex; align-items: center; gap: 8px;">
+                  <h3 style="font-size: medium;">
+                    Tekući račun
+                  </h3>
                 </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th style="font-size: 12px;">Tip kapitala</th>
-                   <th style="font-size: 12px;">Ukupno</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-capital>
-                <tr class="rowHover" style="font-size: 12px;" (click)="onCapitalRowClick(capital.type)">
-                    <td>{{capital.type}}</td>
-                   <td>{{capital.total}}</td>
-                </tr>
-            </ng-template>
+              </div>
+              <div class="col-6 text-end">
+                <button (click)="toggleDepositWithdrawCapitalkDialog()" pButton pRipple styleClass="p-button-sm"
+                        class="p-button-raised p-button-secondary add-employee-btn-lg" label="Uplata"
+                        style="max-width: 200px; font-size: 14px; background-color: #3d3d3d;">
+                </button>
+                <button pButton pRipple styleClass="p-button-sm" style="background-color: #3d3d3d;"
+                        class="p-button-raised p-button-secondary add-employee-btn-sm"
+                        label="U/I" (click)="toggleDepositWithdrawCapitalkDialog()"></button>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="currency.currencyCode" style="font-size: 12px;">
+                <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                    <p style="margin-bottom: 0; margin-top: 2px;">Valuta</p>
+                    <p-sortIcon field="valuta"></p-sortIcon>
+                  </div>
+                </div>
+              </th>
+              <th pSortableColumn="amount" style="font-size: 12px;">
+                <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                    <p style="margin-bottom: 0; margin-top: 2px;">Ukupno</p>
+                    <p-sortIcon field="ukupno"></p-sortIcon>
+                  </div>
+                </div>
+              </th>
+              <th pSortableColumn="reserved" style="font-size: 12px; ">
+                <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                    <p style="margin-bottom: 0; margin-top: 2px;">Rezervisano</p>
+                    <p-sortIcon field="rezervisano"></p-sortIcon>
+                  </div>
+                </div>
+              </th>
+              <th pSortableColumn="free" style="font-size: 12px; ">
+                <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                    <p style="margin-bottom: 0; margin-top: 2px;">Raspoloživo</p>
+                    <p-sortIcon field="raspolozivo"></p-sortIcon>
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-item>
+            <tr class="rowHover" (click)="toggleTransactionListDialog(item.currency.currencyCode)"
+                style="font-size: 12px;">
+              <td>{{item.currency.currencyCode}}</td>
+              <td>{{item.amount}}</td>
+              <td>{{item.reserved}}</td>
+              <td>{{item.free}}</td>
+
+            </tr>
+
+          </ng-template>
+
+
         </p-table>
+        <!--AGENT TABELA-->
+        <p-card *ngIf="!getPermission()" header="{{newselectedBalance.currency.currencyCode}} tekući račun ">
+          <div class="row text-center mb-5">
+            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+              <p style="font-size: 30px; font-weight: bold;">Ukupno novca</p>
+              <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{newselectedBalance.amount}}</p>
+            </div>
+            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+              <p style="font-size: 30px; font-weight: bold;">Raspoloživo novca</p>
+              <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{newselectedBalance.free}}</p>
+            </div>
+            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+              <p style="font-size: 30px; font-weight: bold;">Rezervisano novca</p>
+              <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{newselectedBalance.reserved}}</p>
+            </div>
+          </div>
+          <div class="row text-center">
+<!--            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">-->
+<!--              <p style="font-size: 30px; font-weight: bold;">Limit</p>-->
+<!--              <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{user.dailyLimit}}</p>-->
+<!--            </div>-->
+            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+              <p style="font-size: 30px; font-weight: bold;">Limit</p>
+              <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{defaultLimit}}</p>
+            </div>
+            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+              <p style="font-size: 30px; font-weight: bold;">Raspolozivo limita</p>
+              <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{roundNumber(currentDailyLimit)}}</p>
+            </div>
+            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+              <p style="font-size: 30px; font-weight: bold;">Iskoriscenost limita</p>
+              <p
+                style="font-size: 30px; font-weight: bold; color: #724BCB;">{{roundNumber(defaultLimit - currentDailyLimit)}}</p>
+            </div>
+<!--            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">-->
+<!--              <p style="font-size: 30px; font-weight: bold;">Raspolozivo</p>-->
+<!--              <p style="font-size: 30px; font-weight: bold; color: #724BCB;">{{balance[0].free}}</p>-->
+<!--            </div>-->
+
+          </div>
+        </p-card>
+
+      </p-tabPanel>
+      <p-tabPanel header="Maržni račun">
+        <p-table *ngIf="getPermission()" #dt [value]="marginBalance" class="p-datatable-header" [rowHover]="true"
+                 [rows]="6"
+                 [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
+                 currentPageReportTemplate="Prikazani su {first}-{last} marzni racuni"
+                 [globalFilterFields]="['status']">
+
+          <ng-template pTemplate="caption">
+            <div class="table-header row">
+              <div class="col-6 text-start table-name">
+                <div style="display:flex; align-items: center; gap: 8px;">
+                  <h3 style="font-size: medium;">
+                    Maržni račun
+                  </h3>
+                </div>
+              </div>
+              <div class="col-6 text-end">
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="valuta" style="font-size: 12px;">
+                <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                    <p style="margin-bottom: 0; margin-top: 2px;">Valuta</p>
+                    <p-sortIcon field="valuta"></p-sortIcon>
+                  </div>
+                </div>
+              </th>
+              <th pSortableColumn="investedResources" style="font-size: 12px;">
+                <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                    <p style="margin-bottom: 0; margin-top: 2px;">Ukupno</p>
+                    <p-sortIcon field="investedResources"></p-sortIcon>
+                  </div>
+                </div>
+              </th>
+              <th pSortableColumn="loanedResources" style="font-size: 12px; ">
+                <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                    <p style="margin-bottom: 0; margin-top: 2px;">Kredit</p>
+                    <p-sortIcon field="loanedResources"></p-sortIcon>
+                  </div>
+                </div>
+              </th>
+              <th pSortableColumn="listingGroup" style="font-size: 12px; ">
+                <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                    <p style="margin-bottom: 0; margin-top: 2px;">Listing Group</p>
+                    <p-sortIcon field="listingGroup"></p-sortIcon>
+                  </div>
+                </div>
+              </th>
+              <th pSortableColumn="maintananceMargin" style="font-size: 12px; ">
+                <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                    <p style="margin-bottom: 0; margin-top: 2px;">Maintenance Margin</p>
+                    <p-sortIcon field="maintananceMargin"></p-sortIcon>
+                  </div>
+                </div>
+              </th>
+              <th pSortableColumn="marginCall" style="font-size: 12px; ">
+                <div class="flex justify-content-between align-items-center">
+                  <div class="icon-container">
+                    <p style="margin-bottom: 0; margin-top: 2px;">Margin Call</p>
+                    <p-sortIcon field="marginCall"></p-sortIcon>
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-m>
+            <tr (click)="toggleMarginTransactionListDialog(m.listingGroup)" class="rowHover" style="font-size: 12px;">
+              <td>{{m.currencyCode}}</td>
+              <td>{{m.investedResources}}</td>
+              <td>{{m.loanedResources}}</td>
+              <td>{{m.listingGroup}}</td>
+              <td>{{m.maintananceMargin ? m.maintananceMargin : 0}}</td>
+              <td>{{m.marginCall}}</td>
+            </tr>
+          </ng-template>
+
+        </p-table>
+
+      </p-tabPanel>
+
+
+    </p-tabView>
+
+    <p-tabView>
+      <p-table [value]="capitalOverview" class="p-datatable-header" [rowHover]="true" [rows]="2">
+        <ng-template pTemplate="caption">
+          <div class="table-header row">
+            <div class="col-12 text-start table-name">
+              <div style="display:flex; align-items: center; gap: 8px;">
+                <h3 style="font-size: medium;">
+                  Pregled kapitala
+                </h3>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="font-size: 12px;">Tip kapitala</th>
+            <th style="font-size: 12px;">Ukupno</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-capital>
+          <tr class="rowHover" style="font-size: 12px;" (click)="onCapitalRowClick(capital.type)">
+            <td>{{capital.type}}</td>
+            <td>{{capital.total}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </p-tabView>
 
 
-    </div>
+  </div>
 
 </div>
 <app-deposit-withdraw-capital (dwEmitter)="refresh($event)"></app-deposit-withdraw-capital>

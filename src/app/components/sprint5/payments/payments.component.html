@@ -1,0 +1,358 @@
+<div class="details-container">
+
+  <div class="leftbox">
+    <nav class="nav flex-column d-flex h-100">
+      <a id="profile" class="nav-link" (click)="selectedOption = Options.NEW_PAYMENT">
+        <i [ngClass]="{'active': selectedOption === Options.NEW_PAYMENT}" style="font-size: 1.3rem" class="pi pi-credit-card"></i>
+      </a>
+      <a id="payment" class="nav-link" (click)="selectedOption = Options.MONEY_TRANSFER">
+        <i [ngClass]="{'active': selectedOption === Options.MONEY_TRANSFER}" style="font-size: 1.3rem" class="pi pi-arrow-right"></i>
+      </a>
+      <a id="subscription" class="nav-link" (click)="selectedOption = Options.PAYMENT_RECIPIENTS">
+        <i [ngClass]="{'active': selectedOption === Options.PAYMENT_RECIPIENTS}" style="font-size: 1.3rem" class="pi pi-users"></i>
+      </a>
+      <a id="privacy" class="nav-link"  (click)="selectedOption = Options.PAYMENT_OVERVIEW">
+        <i [ngClass]="{'active': selectedOption === Options.PAYMENT_OVERVIEW}" style="font-size: 1.3rem" class="pi pi-chart-line"></i>
+      </a>
+      <a id="exchange" class="nav-link"  (click)="selectedOption = Options.EXCHANGE">
+        <i [ngClass]="{'active': selectedOption === Options.EXCHANGE}" style="font-size: 1.3rem" class="pi pi-arrows-h"></i>
+      </a>
+    </nav>
+  </div>
+
+
+  <div class="rightbox">
+
+
+
+
+
+        <div *ngIf="selectedOption === Options.NEW_PAYMENT">
+            <h3>Novo plaćanje</h3>
+            <form [formGroup]="createPaymentForm" (ngSubmit)="onSubmitNewPayment()">
+                <div class="payment-form">
+
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="payment-input" id="recipientName" type="text" formControlName="recipientName">
+                            <div class="input-with-icon">
+                                <button pButton type="button" class="p-button-rounded p-button-outlined icon-button" icon="pi pi-user-plus" (click)="op.toggle($event)"></button>
+                            </div>
+                            <label for="recipientName">Naziv primaoca</label>
+                        </span>
+        
+                        <p-overlayPanel #op styleClass="overlay-panel" [showCloseIcon]="true" [dismissable]="false">
+                            <ul>
+                                <li *ngFor="let recipient of recipients" (click)="onRecipientSelect(recipient); op.hide()">
+                                    {{recipient.receiverName}}
+                                </li>
+                            </ul>
+                        </p-overlayPanel>
+                    </div>
+                   
+                    <div>
+                        <span class="p-float-label">
+                            <p-dropdown [options]="paymentAccounts" optionLabel="registrationNumber" formControlName="myAccount"></p-dropdown>
+                            <label for="myAccount">Vaš račun</label>
+                        </span>
+                    </div>
+
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="payment-input" id="recipientAccount" type="text" formControlName="recipientAccount">
+                            <label for="recipientAccount">Račun primaoca</label>
+                          </span>
+                    </div>
+
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="payment-input" id="numberReference" type="text" formControlName="numberReference">
+                            <label for="numberReference">Poziv na broj</label>
+                        </span>
+                    </div>
+
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="payment-input" id="amount" type="number" formControlName="amount">
+                            <label for="amount">Iznos</label>
+                        </span>
+                    </div>
+
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="payment-input" id="paymentCode" type="text" formControlName="paymentCode">
+                            <label for="paymentCode">Šifra plaćanja</label>
+                          </span>
+                    </div>
+
+                    <div>
+                        <span class="p-float-label">
+                            <input pInputText class="payment-input" id="paymentPurpose" type="text" formControlName="paymentPurpose">
+                            <label for="paymentPurpose">Svrha plaćanja</label>
+                          </span>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-end" style="width: 95%;">
+                    <button type="submit" class="button button-solid background-blue">Nastavi</button>
+                </div>
+            </form>
+        </div>
+
+
+        <p-dialog id="otpDialog" header="Unesite jednokratnu šifru" [(visible)]="displayOTPDialog" [closable]="true" [modal]="true">
+            <form [formGroup]="oneTimePasswordForm" (ngSubmit)="onSubmitOTP()">
+
+                <div class="d-flex justify-content-center" style="width: 100%; padding-top:20px">
+                    <span class="p-float-label">
+                        <input pInputText id="paymentOTP" formControlName="paymentOTP">
+                        <label for="paymentOTP">Unesite jednokratnu šifru</label>
+                    </span>
+                </div>
+
+
+                <div class="d-flex justify-content-center" style="width: 100%;">
+                    <button type="submit" class="button button-solid background-blue">Nastavi</button>
+                </div>
+
+
+            </form>
+        </p-dialog>
+
+
+
+
+
+
+        <div *ngIf="selectedOption === Options.MONEY_TRANSFER">
+
+            <h3>Prenos</h3>
+
+            <form [formGroup]="moneyTransferForm" (ngSubmit)="submitMoneyTransfer()">
+                <div class="transfer-form">
+
+                    <div class="flex justify-content-center w-100">
+                        <p-dropdown [options]="transactionFromAccount" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="registrationNumber" (onChange)="onSelectedFromPaymentAccountChange($event.value)"></p-dropdown>
+                    </div>                      
+                      
+
+                    <div class="flex justify-content-center w-100" >
+                      <p-dropdown class="w-100" [options]="transactionToAccount" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="registrationNumber"></p-dropdown>
+                    </div>
+
+                    <div class="flex justify-content-center" style="margin-top: 30px; width: 100%;">
+                        <span class="p-float-label">
+                            <input pInputText style="width: 95%;" id="transferAmount" formControlName="amount" type="number">
+                            <label for="transferAmount">Iznos</label>
+                        </span>
+                    </div>
+
+
+                    <div class="d-flex justify-content-between align-items-end mt-3" style="width: 95%;">
+                        <p style="color: #808080;">Valuta: <b>{{transactionCurrency}}</b></p>
+                        <button type="submit" class="button button-solid background-blue">Nastavi</button>
+                    </div>
+                  </div>
+            </form>
+
+        </div>
+
+
+        <div *ngIf="selectedOption === Options.PAYMENT_RECIPIENTS">
+
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-sm-8"><h3>Primaoci plaćanja</h3></div>
+                <div class="col-sm-4">
+                    <div class="d-flex justify-content-end align-items-end mt-3" style="width: 95%;">
+                        <button type="submit" (click)="showAddRecipientDialog()" class="button button-solid background-blue">Dodaj</button>
+                      </div>
+                </div>
+              </div>
+
+
+            <p-table [value]="recipients">
+               <ng-template pTemplate="header">
+                  <tr>
+                     <th>Naziv</th>
+                     <th>Broj računa</th>
+                     <th></th>
+                  </tr>
+               </ng-template>
+               <ng-template pTemplate="body" let-recipient>
+                  <tr>
+                     <td>{{recipient.receiverName}}</td>
+                     <td>{{recipient.balanceRegistrationNumber}}</td>
+                     <td style="text-align: right;">
+                        <button pButton type="button" icon="pi pi-pencil" (click)="showEditRecipientDialog(recipient)"></button>
+                        <button pButton type="button" icon="pi pi-trash" (click)="deleteRecipient(recipient)" style="margin-left: 10px;"></button>
+                     </td>
+                  </tr>
+               </ng-template>
+            </p-table>
+
+            <p-dialog header="Dodaj primaoca" [(visible)]="displayAddDialog" [modal]="true" [style]="{width: '50vw', height: '51vh'}">
+               <div style="margin-top: 20px;">
+                <form [formGroup]="addRecipientForm" (ngSubmit)="addRecipient()">
+                    <div class="add-recipient-form">
+
+                        <div class="p-float-label">
+                            <input id="name" style="width: 100%;" type="text" pInputText formControlName="name">
+                            <label for="name">Naziv</label>
+                        </div>
+                        
+                        
+                        <div>
+                            <span class="p-float-label">
+                                <input pInputText class="payment-input" style="width: 100%;" id="numberReference" type="text" formControlName="numberReference">
+                                <label for="numberReference">Poziv na broj</label>
+                            </span>
+                        </div>
+    
+                        <div>
+                            <span class="p-float-label">
+                                <input pInputText class="payment-input" style="width: 100%;" id="paymentCode" type="text" formControlName="paymentCode">
+                                <label for="paymentCode">Šifra plaćanja</label>
+                              </span>
+                        </div>
+    
+                        <div>
+                            <span class="p-float-label">
+                                <input pInputText class="payment-input" style="width: 100%;" id="paymentPurpose" type="text" formControlName="paymentPurpose">
+                                <label for="paymentPurpose">Svrha plaćanja</label>
+                              </span>
+                        </div>
+                    </div>  
+
+                    <div class="p-float-label">
+                        <input id="accountNumber" style="width: 100%;" type="number" pInputText formControlName="accountNumber">
+                        <label for="accountNumber">Broj računa</label>
+                    </div>
+                    
+                    <div class="button-container">
+                        <button type="submit" pButton label="Potvrdi"></button>
+                        <button type="button" pButton label="Poništi" (click)="displayAddDialog=false" style="margin-left: 10px;"></button>
+                    </div>
+                </form>
+               </div>
+            </p-dialog>
+
+
+            <p-dialog header="Izmeni primaoca" [(visible)]="displayEditDialog" [modal]="true" [style]="{width: '50vw', height: '51vh'}">
+                <div style="margin-top: 20px;">
+                    <form [formGroup]="editRecipientForm" (ngSubmit)="editRecipient()">
+                        <div class="add-recipient-form">
+
+                            <div class="p-float-label">
+                                <input id="editName" type="text" style="width: 100%;" pInputText formControlName="editName">
+                                <label for="editName">Naziv</label>
+                            </div>
+                            
+                            <div>
+                                <span class="p-float-label">
+                                    <input pInputText class="payment-input" style="width: 100%;" id="editNumberReference" type="text" formControlName="editNumberReference">
+                                    <label for="editNumberReference">Poziv na broj</label>
+                                </span>
+                            </div>
+        
+                            <div>
+                                <span class="p-float-label">
+                                    <input pInputText class="payment-input" style="width: 100%;" id="editPaymentCode" type="text" formControlName="editPaymentCode">
+                                    <label for="editPaymentCode">Šifra plaćanja</label>
+                                  </span>
+                            </div>
+        
+                            <div>
+                                <span class="p-float-label">
+                                    <input pInputText class="payment-input" style="width: 100%;" id="editPaymentPurpose" type="text" formControlName="editPaymentPurpose">
+                                    <label for="editPaymentPurpose">Svrha plaćanja</label>
+                                  </span>
+                            </div>
+                        </div>  
+    
+                        <div class="p-float-label">
+                            <input id="editAccountNumber" style="width: 100%;" type="number" pInputText formControlName="editAccountNumber">
+                            <label for="editAccountNumber">Broj računa</label>
+                        </div>
+                        
+                        <div class="button-container">
+                            <button type="submit" pButton label="Potvrdi"></button>
+                            <button type="button" pButton label="Poništi" (click)="displayEditDialog=false" style="margin-left: 10px;"></button>
+                        </div>
+
+                    </form>
+                </div>
+            </p-dialog>
+
+
+        </div>
+
+
+
+
+        <div *ngIf="selectedOption === Options.PAYMENT_OVERVIEW">
+
+            <h3>Pregled plaćanja</h3>
+
+            <p-table [value]="transactions">
+                <ng-template pTemplate="header">
+                   <tr>
+                      <th>Primalac</th>
+                      <th>Sa računa</th>
+                      <th>Na račun</th>
+                      <th>Količina</th>
+                   </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-transaction>
+                   <tr>
+                      <td>{{transaction.receiverName}}</td>
+                      <td>{{transaction.balanceRegistrationNumber}}</td>
+                      <td>{{transaction.toBalanceRegistrationNumber}}</td>
+                      <td>{{transaction.amount}}</td>
+                   </tr>
+                </ng-template>
+             </p-table>
+
+        </div>
+
+
+        <div *ngIf="selectedOption === Options.EXCHANGE">
+            <h3>Menjačnica</h3>
+
+            <form [formGroup]="exchangeForm" (ngSubmit)="onSubmitExchange()">
+                <div class="transfer-form">
+
+                    <div class="flex justify-content-center w-100">
+                        <p-dropdown [options]="exchangeFromList" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="registrationNumber" (onChange)="onSelectedExchange($event.value)"></p-dropdown>
+                    </div>                      
+                      
+
+                    <div class="flex justify-content-center w-100" >
+                      <p-dropdown class="w-100" [options]="exchangeToList" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="registrationNumber" (onChange)="onSelectedToExchange($event.value)"></p-dropdown>
+                    </div>
+
+                    <div class="flex justify-content-center" style="margin-top: 30px; width: 100%;">
+                        <span class="p-float-label">
+                            <input pInputText style="width: 95%;" id="transferAmount" formControlName="amount" type="number">
+                            <label for="transferAmount">Iznos</label>
+                        </span>
+                    </div>
+
+
+                    <div class="d-flex justify-content-between align-items-end mt-3" style="width: 95%;">
+                        <p style="color: #808080;">Konverzija: <b>{{exchangeFromCurrency}}</b> <i *ngIf="exchangeFromCurrency" class="pi pi-angle-right"></i> <b>{{exchangeToCurrency}}</b></p>
+                        <button type="submit" class="button button-solid background-blue">Nastavi</button>
+                    </div>
+                  </div>
+            </form>
+            
+        
+        </div>
+        
+
+
+
+
+    </div>
+
+</div>

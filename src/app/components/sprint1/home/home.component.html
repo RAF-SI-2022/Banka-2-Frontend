@@ -54,8 +54,10 @@
 
       <form>
         <!--TODO: dodati putanju za dugme i neku mini funkcionalnost za FAQ-->
-        <button pButton pRipple label="IDI NA BERZU" class="submit mb-3" loadingIcon="pi pi-spinner"
+        <button *ngIf="checkIfUserIsClient()" pButton pRipple label="IDI NA BERZU" class="submit mb-3" loadingIcon="pi pi-spinner"
                 [routerLink]="'/stocks'"></button>
+        <button *ngIf="!checkIfUserIsClient()" pButton pRipple label="IDI NA RAČUNE" class="submit mb-3" loadingIcon="pi pi-spinner"
+                [routerLink]="'/user-balance'"></button>
 
 
         <small><a class="pointer text-end text-nowrap" style="max-width: 320px; text-decoration: none; color: black;"

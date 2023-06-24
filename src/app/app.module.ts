@@ -61,6 +61,8 @@ import {SellFutureWithLimitComponent} from './components/sprint2/futures/sell-fu
 import {BuyFutureWithLimitComponent} from './components/sprint2/futures/buy-future-with-limit/buy-future-with-limit.component';
 import { TabViewModule } from 'primeng/tabview';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 
 import {AllowNumbersOnlyDirective} from 'src/app/directives/allow-numbers-only.directive';
@@ -88,6 +90,16 @@ import { SingleContactComponent } from './components/sprint4/single-contact/sing
 import { RegisterComponent } from './components/newSpec/register/register.component';
 import { TransactionElementCreationComponent } from './components/sprint4/transaction-element-creation/transaction-element-creation.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { BalanceComponent } from './components/sprint5/balance/balance.component';
+import { AddAccountComponent } from './components/sprint5/add-account/add-account.component';
+import { AddUserAccountComponent } from './components/sprint5/add-user-account/add-user-account.component';
+import {StepsModule} from "primeng/steps";
+import {TagModule} from "primeng/tag";
+import { PaymentsComponent } from './components/sprint5/payments/payments.component';
+import { UserBalanceComponent } from './components/sprint5/user-balance/user-balance.component';
+import { SingleUserBalanceComponent } from './components/sprint5/single-user-balance/single-user-balance.component';
+import { LoanComponent } from './components/sprint5/loan/loan.component';
+import { RequestLoanComponent } from './components/sprint5/request-loan/request-loan.component';
 
 
 
@@ -141,6 +153,14 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     SingleContactComponent,
     RegisterComponent,
     TransactionElementCreationComponent,
+    BalanceComponent,
+    AddAccountComponent,
+    PaymentsComponent,
+    AddUserAccountComponent,
+    UserBalanceComponent,
+    SingleUserBalanceComponent,
+    LoanComponent,
+    RequestLoanComponent,
     // FutureContractComponent,
 
   ],
@@ -181,6 +201,10 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     InputTextareaModule,
     ConfirmDialogModule,
     RadioButtonModule,
+    StepsModule,
+    TagModule,
+    AutoCompleteModule,
+    OverlayPanelModule
   ],
   // exports: [
   //   ActivityPipe

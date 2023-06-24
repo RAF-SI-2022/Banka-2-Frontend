@@ -256,12 +256,17 @@ export interface MarginBalance {
   marginCall: boolean,
 }
 
-export interface MarginTransactions {
+export interface MarginTransaction {
+  id: string,
   accountType: string,
-  orderID: number,
+  dateTime: Date,
+  orderId: number,
+  userEmail: string,
   transactionComment: string,
   currencyCode: string,
   transactionType: string,
   initialMargin: number,
+  loanValue: number,
   maintananceMargin: number,
+  interest: number
 }

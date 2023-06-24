@@ -1,5 +1,5 @@
-<!--  -->
-<div class="background">
+
+<!-- <div class="background">
     <div class="container" id="container">
         <div class="form-container sign-in-container">
             <input type="text" placeholder="Name" />
@@ -31,54 +31,107 @@
             </div>
         </div>
     </div>
-</div>
- <!--  
- <h2>Weekly Coding Challenge #1: Sign in/up Form</h2>
-<div class="container" id="container">
-	<div class="form-container sign-up-container">
-		<form action="#">
-			<h1>Create Account</h1>
-			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-			</div>
-			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" />
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<button>Sign Up</button>
-		</form>
-	</div>
-	<div class="form-container sign-in-container">
-		<form action="#">
-			<h1>Sign in</h1>
-			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-			</div>
-			<span>or use your account</span>
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<a href="#">Forgot your password?</a>
-			<button>Sign In</button>
-		</form>
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-			<div class="overlay-panel overlay-left">
-				<h1>Welcome Back!</h1>
-				<p>To keep connected with us please login with your personal info</p>
-				<button class="ghost" (click)="changeSignIn()" id="signIn">Sign In</button>
-			</div>
-			<div class="overlay-panel overlay-right">
-				<h1>Hello, Friend!</h1>
-				<p>Enter your personal details and start journey with us</p>
-				<button class="ghost" (click)="changeSignUp()" id="signUp">Sign Up</button>
+</div> -->
+
+<div class="background">
+	<div class="container" id="container">
+		<div class="form-container sign-up-container">
+			<form action="#">
+				<h1 class="mb-5">Kreiranje naloga</h1>
+				<p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex" styleClass="steps-login"
+				(activeIndexChange)="onActiveIndexChange($event)"></p-steps>
+				<div>
+					<div *ngIf="firstVisible">
+						<form [formGroup]="registerForm" (submit)="registerPart1()" class="edit-user-form gap-3">
+							<input formControlName="firstName" type="text" class="mt-3" placeholder="Ime" />
+							<input formControlName="lastName" type="text" placeholder="Prezime" />
+							<input formControlName="email" type="email" placeholder="Email" />
+							<input formControlName="dateOfBirth" type="date" placeholder="Datum rodjenja" />
+							<input formControlName="phone" type="text" placeholder="Broj telefona" />
+							<input formControlName="address" type="text" placeholder="Adresa" />
+							<p-dropdown styleClass="gender-dropdown" formControlName="selectedGender" [options]="genders" placeholder="Vas pol" optionLabel="name"></p-dropdown>
+							<!-- <input type="text" placeholder="Pol (m ili z)" />	 -->
+							<!-- <input type="pass" placeholder="Sifra" /> -->
+							<!-- <button>Sledeci korak</button> -->
+							<button pButton pRipple label="Sledeci korak" class="submit" loadingIcon="pi pi-spinner " [disabled]="!isRegisterFormValid"
+							[loading]="isLoading"></button>
+						</form>
+					</div>
+					<div *ngIf="secondVisible">
+						<form [formGroup]="validationForm" (submit)="registerPart2()" class="edit-user-form gap-3">
+							<input formControlName="code" type="text" class="mt-3" placeholder="Unesite kod" />
+							<button pButton pRipple label="Sledeci korak" class="submit" loadingIcon="pi pi-spinner " [disabled]="!isValidationFormValid"
+							[loading]="isLoading"></button>
+						</form>
+					</div>
+					<div *ngIf="thirdVisible">
+						<form [formGroup]="passwordForm" (submit)="registerPart3()" class="edit-user-form gap-3">
+							<input formControlName="password" type="password" class="mt-3" placeholder="Unesite sifru" />
+							<input formControlName="confirmPassword" type="password" class="mt-3" placeholder="Potvrdite sifru" />
+							<button pButton pRipple label="Kreirajte nalog" class="submit" loadingIcon="pi pi-spinner " [disabled]="!isPasswordFormValid"
+							[loading]="isLoading"></button>
+						</form>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="form-container sign-in-container">
+			<p class="title">Dobrodošli u Banku 2!</p>
+			<div class="separator"></div>
+			<p class="welcome-message">Unesite svoj email i lozinku kako biste pristupili svim našim servisima:</p>
+			<form class="login-form-container" [formGroup]="loginForm" (submit)="login()">
+				<div class="form-control">
+					<input class="w-100" [formControlName]="'email'" id="email" type="email" pInputText required
+							placeholder="Email">
+					<i class="pi pi-user"></i>
+				</div>
+				<div class="form-control">
+					<input class="w-100" [formControlName]="'password'" id="password" type="password" pInputText required
+							placeholder="Password">
+					<i class="pi pi-key"></i>
+				</div>
+				<button pButton pRipple label="LOGIN" class="submit" loadingIcon="pi pi-spinner " [disabled]="!isLoginFormValid"
+						[loading]="isLoading"></button>
+
+        <!-- <button  [routerLink]="'/login-admin'">Go to admin login</button> -->
+
+
+        		<div class="row mt-2 w-100" style="max-width: 320px;">
+					<div class="col-6">
+						<div class="d-flex align-items-center remember-me">
+							<p-checkbox [formControlName]="'remember'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
+							<small>Zapamti me</small>
+						</div>
+					</div>
+
+					<div class="col-6 text-end text-nowrap">
+					<!-- <small class="pointer" [routerLink]="'/forgot-password'">Zaboravili ste lozinku?</small> -->
+					<small class="pointer" style="padding-right: 10px;"  [routerLink]="'/login-admin'">Admin login</small>
+					</div>
+				</div>
+				<!-- <button  [routerLink]="'/login-admin'">Go to admin login</button> -->
+			</form>
+		</div>
+		
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1 class="mb-3">Dobrodošli nazad!</h1>
+					<section class="side">
+                        <img class="login-image" src="../../../assets/icons/blogo.png" alt="">
+                    </section>
+					<p style="margin-top: 100px; color: white">Ako već imate nalog pređite</p>
+					<button class="ghost" (click)="changeSignIn()" id="signIn">Uloguj se</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+          <section class="side">
+            <img class="login-image" src="../../../assets/icons/blogo.png" alt="">
+          </section>
+					<h1>Zdravo!</h1>
+					<p style="margin-top: 100px; color: white">Ako nemate kreiran nalog</p>
+					<button class="ghost" (click)="changeSignUp()" id="signUp">Kreiraj nalog</button>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
--->

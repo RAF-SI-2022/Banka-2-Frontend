@@ -124,7 +124,7 @@ export class RegisterComponent implements OnInit {
 
   login() {
 
-    let remember = this.loginForm.get('rembember')?.value
+    let remember = this.loginForm.get('remember')?.value
 
     this.clientService.loginClient(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
       .subscribe({

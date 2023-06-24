@@ -61,6 +61,8 @@ import {SellFutureWithLimitComponent} from './components/sprint2/futures/sell-fu
 import {BuyFutureWithLimitComponent} from './components/sprint2/futures/buy-future-with-limit/buy-future-with-limit.component';
 import { TabViewModule } from 'primeng/tabview';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 
 import {AllowNumbersOnlyDirective} from 'src/app/directives/allow-numbers-only.directive';
@@ -95,6 +97,9 @@ import {StepsModule} from "primeng/steps";
 import {TagModule} from "primeng/tag";
 import { PaymentsComponent } from './components/sprint5/payments/payments.component';
 import { UserBalanceComponent } from './components/sprint5/user-balance/user-balance.component';
+import { SingleUserBalanceComponent } from './components/sprint5/single-user-balance/single-user-balance.component';
+import { LoanComponent } from './components/sprint5/loan/loan.component';
+import { RequestLoanComponent } from './components/sprint5/request-loan/request-loan.component';
 
 
 
@@ -153,6 +158,9 @@ import { UserBalanceComponent } from './components/sprint5/user-balance/user-bal
     PaymentsComponent,
     AddUserAccountComponent,
     UserBalanceComponent,
+    SingleUserBalanceComponent,
+    LoanComponent,
+    RequestLoanComponent,
     // FutureContractComponent,
 
   ],
@@ -195,6 +203,8 @@ import { UserBalanceComponent } from './components/sprint5/user-balance/user-bal
     RadioButtonModule,
     StepsModule,
     TagModule,
+    AutoCompleteModule,
+    OverlayPanelModule
   ],
   // exports: [
   //   ActivityPipe

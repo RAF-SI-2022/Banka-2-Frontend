@@ -1,5 +1,5 @@
-presubmits:
-  - name: post-banka-2-frontend-dev-presubmits
+postsubmits:
+  - name: post-banka-2-frontend-dev-postsubmits
     labels:
       preset-harbor-robot-push: "true"
     decorate: true
@@ -28,25 +28,18 @@ presubmits:
               export NAMESPACE="banka-2-$ENV"
               export SERVICES="frontend-dev"
               
-              ##########################
-              # Delete existing config #
-              ##########################
-              
-              start-docker.sh
-              docker login -u $HARBOR_USERNAME -p $HARBOR_PASSWORD harbor.k8s.elab.rs
-              
-              INFRA_SRC=/home/prow/go/src/infra/kubernetes
-              rsync -av --exclude='.git' ${INFRA_SRC} .
-              
-              chmod +x kubernetes/remove.sh
-              bash kubernetes/remove.sh
-              
               ##############
               # Call setup #
               ##############
+  
+              start-docker.sh
+              docker login -u $HARBOR_USERNAME -p $HARBOR_PASSWORD harbor.k8s.elab.rs
+              
+              INFRA_SRC=/home/prow/go/src/infra/
+              rsync -av --exclude='.git' ${INFRA_SRC} .
               
               chmod +x kubernetes/upgrade.sh
-              bash kubernetes/upgrade.sh
+              bash kubernetes/upgrade.sh --update
 
           securityContext:
             privileged: true

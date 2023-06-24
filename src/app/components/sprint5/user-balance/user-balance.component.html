@@ -73,8 +73,10 @@
             </div>
 
             <div class="stock-info">
-              <div class="stock-name">{{ account.currency }}</div>
-<!--              <div class="stock-fullname">{{ selectedClient.name }} {{selectedClient.lastname}}</div>-->
+              <div class="stock-name">{{ account.availableBalance }} {{ account.currency }}</div>
+              <div class="stock-fullname">REG: {{ account.registrationNumber }} </div>
+
+              <!--              <div class="stock-fullname">{{ selectedClient.name }} {{selectedClient.lastname}}</div>-->
             </div>
           </div>
         </div>
@@ -86,3 +88,4 @@
 
 </div>
 
+<app-single-user-balance (editBalanceNameEmitter)="submitEditBalanceName($event)"></app-single-user-balance>

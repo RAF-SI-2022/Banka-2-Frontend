@@ -33,6 +33,7 @@ import { PaymentsComponent } from './components/sprint5/payments/payments.compon
 import { ClientGuard} from "./guards/client.guard";
 import {ClientOnlyGuard} from "./guards/client-only.guard";
 import {UserBalanceComponent} from "./components/sprint5/user-balance/user-balance.component";
+import { LoanComponent } from './components/sprint5/loan/loan.component';
 
 const routes: Routes = [
   {
@@ -61,7 +62,7 @@ const routes: Routes = [
   {
     path: "forgot-password",
     component: ForgotPasswordComponent,
-    canActivate: [LoginGuard, ClientGuard]
+    canActivate: [LoginGuard]
   },
   {
     path: "403-forbiden",
@@ -175,6 +176,11 @@ const routes: Routes = [
     path: 'user-balance',
     component: UserBalanceComponent,
     canActivate: [ClientOnlyGuard]
+  },
+  {
+    path: 'loans',
+    component: LoanComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**', redirectTo: '404-not-found'

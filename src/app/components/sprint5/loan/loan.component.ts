@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import {Loan, LoanRequest} from 'src/app/models/client.model';
 import { ClientService } from 'src/app/services/client.service';
 import { RequestLoanComponent } from "../request-loan/request-loan.component";
+import {LoanDetailsComponent} from "../loan-details/loan-details.component";
 
 
 @Component({
@@ -14,6 +15,7 @@ import { RequestLoanComponent } from "../request-loan/request-loan.component";
 
 export class LoanComponent {
 
+  @ViewChild(LoanDetailsComponent, {static: true}) loanDetailsComponent: LoanDetailsComponent;
   @ViewChild(RequestLoanComponent, {static: true}) requestLoanComponent: RequestLoanComponent;
 
   loans: Loan[];
@@ -114,6 +116,13 @@ export class LoanComponent {
 
   openRequestLoanDialog() {
     this.requestLoanComponent.open();
+  }
+
+  openLoanDetailsDialog(loan: any) {
+    console.log("STIZEM KUMEEEE")
+    console.log(loan)
+    this.newLoan = loan;
+    this.loanDetailsComponent.open(this.newLoan);
   }
 
   checkIfUserIsClient(){

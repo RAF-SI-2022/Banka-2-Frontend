@@ -271,7 +271,10 @@ export class ClientService {
   denyLoanRequest(id: string): Observable<any>{
     return this.httpClient.patch<any>(`${environment.clientServiceURL}/api/credit/deny/${id}`,
       {},
-      { headers: this.headers});
+      {
+        responseType: 'text' as 'json',
+        headers: this.headers
+      });
   }
 
 

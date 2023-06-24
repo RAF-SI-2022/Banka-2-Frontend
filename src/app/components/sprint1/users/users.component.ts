@@ -152,7 +152,7 @@ export class UsersComponent {
           else{
             this.toastr.error(err.error)
           }
-          
+
           this.selectedUserId = -1
           this.displayConfirmationDialog = !this.displayConfirmationDialog
         }
@@ -264,7 +264,7 @@ export class UsersComponent {
       },
       error: err => {
         // console.log(err.error);
-        
+
         this.toastr.error(err.error)
       }
     })
@@ -280,5 +280,10 @@ export class UsersComponent {
         this.toastr.error(err.error)
       }
     })
+  }
+
+  roundNumber(num: number){
+    return Math.round(num * 10) / 10
+    // Math.round((num + Number.EPSILON) * 100) / 100
   }
 }

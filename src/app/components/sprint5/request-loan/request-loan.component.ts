@@ -23,9 +23,10 @@ export class RequestLoanComponent {
       //TODO proveriti da li ovi validatori ista valjaju
       amount: ['', Validators.required],
       purposeMessage: ['', Validators.required],
+      employed: ['', Validators.required],
       monthlyPay: ['', Validators.required],
-      // jobLocation: ['', Validators.required],
-      // timeEmployed: ['', Validators.required],
+      jobLocation: ['', Validators.required],
+      timeEmployed: ['', Validators.required],
       remainingPeriodOfValidity: ['', Validators.required],
       phoneNumber: ['', Validators.required],
     });
@@ -54,7 +55,7 @@ export class RequestLoanComponent {
     this.requestLoanForm.get('amount')?.reset();
     this.requestLoanForm.get('purposeMessage')?.reset();
     this.requestLoanForm.get('monthlyPay')?.reset();
-    // this.requestLoanForm.get('employed')?.reset();
+    this.requestLoanForm.get('employed')?.reset();
     this.requestLoanForm.get('jobLocation')?.reset();
     this.requestLoanForm.get('timeEmployed')?.reset();
     this.requestLoanForm.get('remainingPeriodOfValidity')?.reset();
@@ -64,7 +65,9 @@ export class RequestLoanComponent {
   submitRequestLoan() {
 
     let loan: LoanRequest = {
+      id: '1', //cisto da se udovolji modelu
       clientEmail: this.currentClientEmail,
+      creditApproval: 'WAITING', //uvek je na cekanju kad se napravi request
       amount: this.requestLoanForm.get('amount')?.value,
       usedFor: this.requestLoanForm.get('purposeMessage')?.value,
       monthlyRate: this.requestLoanForm.get('monthlyPay')?.value,

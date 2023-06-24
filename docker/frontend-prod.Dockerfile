@@ -26,6 +26,11 @@ RUN npm run prod
 # Use official nginx image as the base image
 FROM nginx:latest
 
+# Add try_files (see https://angular.io/guide/deployment#server-configuration)
+RUN sed -i '13i\\ \\' /etc/nginx/conf.d/default.conf
+RUN sed -i '14i\\    # Route everything to Angular' /etc/nginx/conf.d/default.conf
+RUN sed -i '15i\\    try_files $uri $uri/ /index.html;' /etc/nginx/conf.d/default.conf
+
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /usr/local/app/dist/banka2-front /usr/share/nginx/html
 

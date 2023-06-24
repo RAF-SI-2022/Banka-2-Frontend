@@ -27,7 +27,7 @@ RUN npm run prod
 FROM nginx:latest
 
 # Add try_files (see https://angular.io/guide/deployment#server-configuration)
-RUN sed -i $'12 a \\n' /etc/nginx/conf.d/default.conf
+RUN sed -i '13i\\    ' /etc/nginx/conf.d/default.conf
 RUN sed -i '14i\\    # Route everything to Angular' /etc/nginx/conf.d/default.conf
 RUN sed -i '15i\\    try_files $uri $uri/ /index.html;' /etc/nginx/conf.d/default.conf
 

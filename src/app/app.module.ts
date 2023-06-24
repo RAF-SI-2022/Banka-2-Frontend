@@ -99,6 +99,7 @@ import { PaymentsComponent } from './components/sprint5/payments/payments.compon
 import { UserBalanceComponent } from './components/sprint5/user-balance/user-balance.component';
 import { SingleUserBalanceComponent } from './components/sprint5/single-user-balance/single-user-balance.component';
 import { LoanComponent } from './components/sprint5/loan/loan.component';
+import { RequestLoanComponent } from './components/sprint5/request-loan/request-loan.component';
 
 
 
@@ -159,6 +160,7 @@ import { LoanComponent } from './components/sprint5/loan/loan.component';
     UserBalanceComponent,
     SingleUserBalanceComponent,
     LoanComponent,
+    RequestLoanComponent,
     // FutureContractComponent,
 
   ],

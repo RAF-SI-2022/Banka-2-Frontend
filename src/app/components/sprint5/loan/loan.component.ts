@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Loan } from 'src/app/models/client.model';
 import { ClientService } from 'src/app/services/client.service';
+import { RequestLoanComponent } from "../request-loan/request-loan.component";
 
 
 @Component({
@@ -12,6 +13,9 @@ import { ClientService } from 'src/app/services/client.service';
 })
 
 export class LoanComponent {
+
+  @ViewChild(RequestLoanComponent, {static: true}) requestLoanComponent: RequestLoanComponent;
+
   loans!:any;
   activeLoan:number=265000000546543564533;
   clientData!: string;
@@ -32,6 +36,9 @@ export class LoanComponent {
         console.log(err);
       }
     })
+    // if (this.requestLoanComponent.requestLoanVisible === undefined) {
+    //   this.requestLoanComponent.requestLoanVisible = false;
+    // }
   }
 
   getLoans(email:string){
@@ -44,6 +51,10 @@ export class LoanComponent {
         console.log(error);
       }
     });
+  }
+
+  openRequestLoanDialog() {
+    this.requestLoanComponent.open();
   }
 
 }

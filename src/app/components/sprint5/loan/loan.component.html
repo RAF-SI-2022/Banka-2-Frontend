@@ -224,7 +224,7 @@
                 </th>
                 <th style="font-size: 12px;">
                     <div class="flex justify-content-between align-items-center">
-                    <div class="icon-container">
+                    <div class="icon-container" >
                         <p style="margin-bottom: 0; margin-top: 2px;">Detalji kredita</p>
                     </div>
                     </div>
@@ -232,14 +232,14 @@
               </tr>
           </ng-template>
 
-          <ng-template pTemplate="body" let-kredit>
+          <ng-template pTemplate="body" let-loan>
               <tr class="rowHover" style="font-size: 12px;">
-                <td>{{kredit.clientEmail}}</td>
-                <td>{{kredit.accountRegNumber}}</td>
-                <td>{{kredit.remainingAmount}}</td>
-                <td>{{kredit.currency}}</td>
+                <td>{{loan.clientEmail}}</td>
+                <td>{{loan.accountRegNumber}}</td>
+                <td>{{loan.remainingAmount}}</td>
+                <td>{{loan.currency}}</td>
                 <td>
-                  <button type="button"
+                  <button type="button" (click)="openLoanDetailsDialog(loan)"
                           class="btn-i btn-circle" title="Detalji">
                       <span>
                         <i class="bi bi-info-circle-fill" style="font-size: 20px;"></i>

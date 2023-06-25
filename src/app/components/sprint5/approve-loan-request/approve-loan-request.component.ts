@@ -18,6 +18,7 @@ export class ApproveLoanRequestComponent {
   isFormValid = false;
   currentClientEmail: string;
   recievedLoanRequest: LoanRequest;
+  paymentAccounts: any[];
 
   constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private clientService: ClientService) {
     this.approvedLoanForm = this.formBuilder.group({
@@ -45,7 +46,20 @@ export class ApproveLoanRequestComponent {
 
   open(approvedLoan: any){
     this.recievedLoanRequest = approvedLoan
+    this.currentClientEmail = this.recievedLoanRequest.clientEmail
+    this.getUserAccounts(this.currentClientEmail)
     this.approvedLoanVisible = true;
+  }
+
+  getUserAccounts(email: string){
+    this.clientService.getAccountsByClientEmail(email).subscribe({
+      next: value => {
+        this.paymentAccounts = value;
+      },
+      error: err => {
+
+      }
+    })
   }
 
   resetForm() {

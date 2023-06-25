@@ -265,7 +265,10 @@ export class ClientService {
         dueDate: request.dueDate,
         currency: request.currency //hardcode nemam odakle
       },
-      { headers: this.headers});
+      {
+        responseType: 'text' as 'json',
+        headers: this.headers
+      });
   }
 
   denyLoanRequest(id: string): Observable<any>{

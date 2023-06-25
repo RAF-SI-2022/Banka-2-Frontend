@@ -9,9 +9,13 @@
   <p-divider/>
   <div class="request-loan-form">
     <form (submit)="submitApprovedLoan()" [formGroup]="approvedLoanForm" class="request-loan-form pt-4 pb-4 gap-4">
+<!--      <span class="p-float-label">-->
+<!--        <input pInputText class="w-100" id="type-input" [formControlName]="'accRegNumber'">-->
+<!--        <label for="type-input">Izaberite racun</label>-->
+<!--      </span>-->
       <span class="p-float-label">
-        <input pInputText class="w-100" id="type-input" [formControlName]="'accRegNumber'">
-        <label for="type-input">Izaberite racun</label>
+        <p-dropdown [options]="paymentAccounts" optionLabel="registrationNumber" id="accRegNumber" [formControlName]="'accRegNumber'"></p-dropdown>
+        <label for="accRegNumber">Vaš račun</label>
       </span>
       <span class="p-float-label">
         <input pInputText class="w-100" id="type-input1" type="number" min="0" [formControlName]="'rate'">

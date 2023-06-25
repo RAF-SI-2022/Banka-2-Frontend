@@ -250,20 +250,20 @@ export class ClientService {
   }
 
   //TODO TREBA I CREDIT DTO SREDITI JER NEMAM ODAKLE OVE PODATKE DA UBACIM
-  approveLoanRequest(id: string, request: LoanRequest, regNumber: number): Observable<any>{
+  approveLoanRequest(id: string, request: Loan): Observable<any>{
     return this.httpClient.post<any>(`${environment.clientServiceURL}/api/credit/approve/${id}`,
       {
         id: id,
         clientEmail: request.clientEmail,
         name: "", //nemamo ime
-        accountRegNumber: regNumber, //generisao sam novi broj racuna samo za ovaj kredit
-        creationDate: new Date().toLocaleDateString(),
+        accountRegNumber: request.accountRegNumber, //generisao sam novi broj racuna samo za ovaj kredit
+        creationDate: request.creationDate,
         amount: request.amount,
         remainingAmount: request.amount,
-        ratePercentage: 10, //hardcode nemam odakle
-        monthlyRate: request.monthlyRate, //hardcore - nije odgovarajuci monthlyRate
-        dueDate: request.dueDateInMonths,
-        currency: "RSD" //hardcode nemam odakle
+        ratePercentage: request.ratePercentage, //hardcode nemam odakle
+        monthlyRate: request.monthlyRate,
+        dueDate: request.dueDate,
+        currency: request.currency //hardcode nemam odakle
       },
       { headers: this.headers});
   }

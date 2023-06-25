@@ -2,7 +2,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {ClientService} from "../../../services/client.service";
-import {LoanRequest} from "../../../models/client.model";
+import {Loan, LoanRequest} from "../../../models/client.model";
 
 @Component({
   selector: 'app-approve-loan-request',
@@ -11,28 +11,24 @@ import {LoanRequest} from "../../../models/client.model";
 })
 export class ApproveLoanRequestComponent {
 
-  @Output() requestLoanEmitter = new EventEmitter<any>();
+  @Output() approveLoanEmitter = new EventEmitter<any>();
 
-  requestLoanVisible: boolean = false;
-  requestLoanForm: FormGroup;
+  approvedLoanVisible: boolean = false;
+  approvedLoanForm: FormGroup;
   isFormValid = false;
-  currentClientEmail: string
+  currentClientEmail: string;
+  recievedLoanRequest: LoanRequest;
 
   constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private clientService: ClientService) {
-    this.requestLoanForm = this.formBuilder.group({
+    this.approvedLoanForm = this.formBuilder.group({
       //TODO proveriti da li ovi validatori ista valjaju
-      amount: ['', Validators.required],
-      purposeMessage: ['', Validators.required],
-      employed: ['', Validators.required],
-      monthlyPay: ['', Validators.required],
-      jobLocation: ['', Validators.required],
-      timeEmployed: ['', Validators.required],
-      remainingPeriodOfValidity: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      accRegNumber: ['', Validators.required],
+      rate: ['', Validators.required],
+      currency: ['', Validators.required]
     });
 
-    this.requestLoanForm.valueChanges.subscribe(() => {
-      this.isFormValid = this.requestLoanForm.valid;
+    this.approvedLoanForm.valueChanges.subscribe(() => {
+      this.isFormValid = this.approvedLoanForm.valid;
     });
   }
 
@@ -47,40 +43,41 @@ export class ApproveLoanRequestComponent {
     })
   }
 
-  open(){
-    this.requestLoanVisible = true;
+  open(approvedLoan: any){
+    this.recievedLoanRequest = approvedLoan
+    this.approvedLoanVisible = true;
   }
 
   resetForm() {
-    this.requestLoanForm.get('amount')?.reset();
-    this.requestLoanForm.get('purposeMessage')?.reset();
-    this.requestLoanForm.get('monthlyPay')?.reset();
-    this.requestLoanForm.get('employed')?.reset();
-    this.requestLoanForm.get('jobLocation')?.reset();
-    this.requestLoanForm.get('timeEmployed')?.reset();
-    this.requestLoanForm.get('remainingPeriodOfValidity')?.reset();
-    this.requestLoanForm.get('phoneNumber')?.reset();
+    this.approvedLoanForm.get('amount')?.reset();
+    this.approvedLoanForm.get('purposeMessage')?.reset();
+    this.approvedLoanForm.get('monthlyPay')?.reset();
+    this.approvedLoanForm.get('employed')?.reset();
+    this.approvedLoanForm.get('jobLocation')?.reset();
+    this.approvedLoanForm.get('timeEmployed')?.reset();
+    this.approvedLoanForm.get('remainingPeriodOfValidity')?.reset();
+    this.approvedLoanForm.get('phoneNumber')?.reset();
   }
 
-  submitRequestLoan() {
+  submitApprovedLoan() {
 
-    let loan: LoanRequest = {
+    let loan: Loan = {
       id: '1', //cisto da se udovolji modelu
       clientEmail: this.currentClientEmail,
-      creditApproval: 'WAITING', //uvek je na cekanju kad se napravi request
-      amount: this.requestLoanForm.get('amount')?.value,
-      usedFor: this.requestLoanForm.get('purposeMessage')?.value,
-      monthlyRate: this.requestLoanForm.get('monthlyPay')?.value,
-      clientHasJob: this.requestLoanForm.get('employed')?.value,
-      jobLocation: this.requestLoanForm.get('jobLocation')?.value,
-      currentJobDuration: this.requestLoanForm.get('timeEmployed')?.value,
-      dueDateInMonths: this.requestLoanForm.get('remainingPeriodOfValidity')?.value,
-      phoneNumber: this.requestLoanForm.get('phoneNumber')?.value,
+      name: '', //uvek je na cekanju kad se napravi request
+      accountRegNumber: this.approvedLoanForm.get('accRegNumber')?.value,
+      creationDate: new Date().toLocaleDateString(),
+      amount: this.recievedLoanRequest.amount,
+      remainingAmount: this.recievedLoanRequest.amount,
+      ratePercentage: this.approvedLoanForm.get('rate')?.value,
+      monthlyRate: this.recievedLoanRequest.monthlyRate,
+      dueDate: this.recievedLoanRequest.dueDateInMonths.toString(),
+      currency: this.approvedLoanForm.get('currency')?.value,
     }
 
-    this.requestLoanEmitter.emit(loan);
+    this.approveLoanEmitter.emit(loan);
     this.resetForm();
-    this.requestLoanVisible = false;
+    this.approvedLoanVisible = false;
   }
 
 }

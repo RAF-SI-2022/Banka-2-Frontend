@@ -1,57 +1,27 @@
 
 <p-dialog [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
           [draggable]="false"
-          [(visible)]="requestLoanVisible" *ngIf="true" [modal]="true" (onHide)="resetForm()">
+          [(visible)]="approvedLoanVisible" *ngIf="true" [modal]="true" (onHide)="resetForm()">
   <ng-template pTemplate="header">
     <h2 style="font-weight: bolder" class="mb-3">Zahtev za kredit</h2>
 
   </ng-template>
   <p-divider/>
   <div class="request-loan-form">
-    <form (submit)="submitRequestLoan()" [formGroup]="requestLoanForm" class="request-loan-form pt-4 pb-4 gap-4">
-      <!--      <span class="p-float-label">-->
-      <!--        <input pInputText class="w-100" id="type-input" [formControlName]="'type'">-->
-      <!--        <label for="type-input">Vrsta kredita</label>-->
-      <!--      </span>-->
+    <form (submit)="submitApprovedLoan()" [formGroup]="approvedLoanForm" class="request-loan-form pt-4 pb-4 gap-4">
       <span class="p-float-label">
-        <input pInputText class="w-100" id="amount-input" [formControlName]="'amount'">
-        <label for="amount-input">Iznos</label>
+        <input pInputText class="w-100" id="type-input" [formControlName]="'accRegNumber'">
+        <label for="type-input">Izaberite racun</label>
       </span>
       <span class="p-float-label">
-        <input pInputText class="w-100" id="purpose-message-input" [formControlName]="'purposeMessage'">
-        <label for="purpose-message-input">Svrha kredita/napomena</label>
+        <input pInputText class="w-100" id="type-input1" type="number" min="0" [formControlName]="'rate'">
+        <label for="type-input1">Unesite kamatnu stopu</label>
       </span>
       <span class="p-float-label">
-        <input pInputText class="w-100" id="monthly-pay-input" [formControlName]="'monthlyPay'">
-        <label for="monthly-pay-input">Iznos mesečne plate</label>
+        <input pInputText class="w-100" id="amount-input" [formControlName]="'currency'">
+        <label for="amount-input">Izaberite valutu</label>
       </span>
-      <span class="p-float-label">
-<!--        <input pInputText class="w-100" id="employed-input" [formControlName]="'employed'">-->
-        <!--        <label for="employed-input">Zaposlen</label>-->
-        <p-checkbox [formControlName]="'employed'" class="me-2" [binary]="true" inputId="binary"></p-checkbox>
-        <small>Zaposlen</small>
-      </span>
-      <span class="p-float-label">
-        <input pInputText class="w-100" id="job-location-input" [formControlName]="'jobLocation'">
-        <label for="job-location-input">Mesto zaposlenja</label>
-      </span>
-      <span class="p-float-label">
-        <input pInputText class="w-100" id="time-employed-input" [formControlName]="'timeEmployed'">
-        <label for="time-employed-input">Period zaposlenja kod trenutnog poslodavca</label>
-      </span>
-      <span class="p-float-label">
-        <input pInputText class="w-100" id="remaining-period-of-validity-input" [formControlName]="'remainingPeriodOfValidity'">
-        <label for="remaining-period-of-validity-input">Ročnost</label>
-      </span>
-      <!--      <span class="p-float-label">-->
-      <!--        <input pInputText class="w-100" id="branch-company-input" [formControlName]="'branchCompany'">-->
-      <!--        <label for="branch-company-input">Ekspozitura</label>-->
-      <!--      </span>-->
-      <span class="p-float-label">
-        <input pInputText class="w-100" id="phone-number-input" [formControlName]="'phoneNumber'">
-        <label for="phone-number-input">Broj mobilnog telefona</label>
-      </span>
-      <button type="submit" pButton pRipple label="Pošalji zahtev" [disabled]="!isFormValid" class="w-100"></button>
+      <button type="submit" pButton pRipple label="Potvrdi zahtev" [disabled]="!isFormValid" class="w-100"></button>
     </form>
   </div>
 </p-dialog>

@@ -62,8 +62,8 @@ export class ApproveLoanRequestComponent {
   submitApprovedLoan() {
 
     let loan: Loan = {
-      id: '1', //cisto da se udovolji modelu
-      clientEmail: this.currentClientEmail,
+      id: this.recievedLoanRequest.id, //cisto da se udovolji modelu
+      clientEmail: this.recievedLoanRequest.clientEmail,
       name: '', //uvek je na cekanju kad se napravi request
       accountRegNumber: this.approvedLoanForm.get('accRegNumber')?.value,
       creationDate: new Date().toLocaleDateString(),

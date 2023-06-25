@@ -119,6 +119,18 @@ export class LoanComponent {
 
   }
 
+  payRate(loanId:string){
+    this.clientService.payRate(loanId).subscribe({
+      next: value => {
+        console.log("RATA PLACENA")
+
+      },
+      error: err => {
+        console.log("DOSLO JE DO GRESKE PRILIKOM PLACANJA RATE")
+      }
+    })
+  }
+
   openRequestLoanDialog() {
     this.requestLoanComponent.open();
   }

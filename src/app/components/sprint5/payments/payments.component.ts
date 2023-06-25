@@ -459,7 +459,7 @@ export class PaymentsComponent {
   initAddRecipientForm(){
     this.addRecipientForm = this.formBuilder.group({
       name: ['', Validators.required],
-      accountNumber: [null, [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      accountNumber: [null, [Validators.required, Validators.pattern(/^\d{9}$/)]],
       paymentCode: ['', Validators.required],
       paymentPurpose: ['', Validators.required],
       numberReference: ['', Validators.required],
@@ -469,7 +469,7 @@ export class PaymentsComponent {
   initEditRecipientForm() {
     this.editRecipientForm = this.formBuilder.group({
       editName: [this.selectedRecipient?.name || '', Validators.required],
-      editAccountNumber: [this.selectedRecipient?.accountNumber.toString() || null, [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      editAccountNumber: [this.selectedRecipient?.accountNumber.toString() || null, [Validators.required, Validators.pattern(/^\d{9}$/)]],
       editNumberReference: [this.selectedRecipient?.referenceNumber, Validators.required],
       editPaymentCode: [this.selectedRecipient?.paymentCode, Validators.required],
       editPaymentPurpose: [this.selectedRecipient?.paymentDescription, Validators.required],

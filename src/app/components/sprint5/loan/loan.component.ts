@@ -26,6 +26,7 @@ export class LoanComponent {
   waitingLoans: LoanRequest[];
   newRequest: LoanRequest;
   newLoan: Loan;
+  toSub: Loan;
   clientInfo: Client
 
 
@@ -120,7 +121,10 @@ export class LoanComponent {
   }
 
   payRate(loanId:string){
-    this.clientService.payRate(loanId).subscribe({
+    this.toSub=this.loans.find(element=>element.id==loanId)!
+    console.log(loanId)
+    console.log(this.toSub)
+    this.clientService.payRate(loanId,this.toSub).subscribe({
       next: value => {
         console.log("RATA PLACENA")
 

@@ -69,8 +69,8 @@ export class LoanComponent {
       next: value => {
         console.log("ISPOD JE REQUEST")
         console.log(value);
-        this.newRequest = value;
-        this.waitingLoans.push(this.newRequest);
+        // this.newRequest = value;
+        // this.waitingLoans.push(this.newRequest);
         console.log("ISPOD SU SVI REQUESTOVI")
         console.log(this.waitingLoans)
         this.getRequests();
@@ -121,8 +121,7 @@ export class LoanComponent {
   openLoanDetailsDialog(loan: any) {
     console.log("STIZEM KUMEEEE")
     console.log(loan)
-    this.newLoan = loan;
-    this.loanDetailsComponent.open(this.newLoan);
+    this.loanDetailsComponent.open(loan);
   }
 
   checkIfUserIsClient(){

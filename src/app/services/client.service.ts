@@ -279,14 +279,22 @@ export class ClientService {
 
   //RATE ZA KREDIT
 
-  payRate(loanId: string){
-    return this.httpClient.post<any>(`${environment.clientServiceURL}/api/credit/pay/${loanId}`,loanId,
-    { headers: this.headers, responseType: 'json' })
+  payRate(loanId: string,loan:Loan){
+    return this.httpClient.post<any>(`${environment.clientServiceURL}/api/credit/pay/${loanId}`,      
+    {clientEmail: loan.clientEmail,
+    name: loan.name,
+    accountRegNumber: loan.accountRegNumber,
+    amount: loan.amount,
+    ratePercentage: loan.ratePercentage,
+    monthlyRate: loan.monthlyRate,
+    dueDate: loan.dueDate,
+    currency: loan.currency},
+    {responseType: 'text' as 'json', headers: this.headers})
   }
 
   getRatePayments(loanId: string){
     return this.httpClient.get<any>(`${environment.clientServiceURL}/api/interests/pay/${loanId}`,
-    { headers: this.headers, responseType: 'json' })
+    {responseType: 'text' as 'json' ,headers: this.headers})
   }
 
 }

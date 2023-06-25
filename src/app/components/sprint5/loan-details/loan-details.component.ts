@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Client, Loan} from "../../../models/client.model";
 import {ClientService} from "../../../services/client.service";
 
@@ -9,7 +9,8 @@ import {ClientService} from "../../../services/client.service";
 })
 export class LoanDetailsComponent {
 
-  // @Output() loanDetailsEmitter = new EventEmitter<any>();
+  @Output() loanDetailsEmitter = new EventEmitter<any>();
+
   singleLoanVisible: boolean = false;
   // balance
   selectedLoan: Loan;
@@ -22,24 +23,24 @@ export class LoanDetailsComponent {
     console.log("USAO SAM KUMEEEE")
     this.singleLoanVisible = true;
     this.selectedLoan = loan;
-    this.clientService.getClientLoans(this.selectedLoan.clientEmail).subscribe({
-      next: value => {
-        this.selectedLoan = value;
-        // this.name = this.selectedLoan.name+ " " + this.selectedLoan.lastname
-      },
-      error: err => {
-      }
-    })
+    this.loanDetailsEmitter.emit(this.selectedLoan);
+    // this.clientService.getClientLoans(this.selectedLoan.clientEmail).subscribe({
+    //   next: value => {
+    //     this.selectedLoan = value;
+    //     // this.name = this.selectedLoan.name+ " " + this.selectedLoan.lastname
+    //   },
+    //   error: err => {
+    //   }
+    // })
   }
 
   // open() {
   //   this.singleLoanVisible = true;
   // }
 
-  submitLoan(){
-    //DOO
-    // this.loanDetailsEmitter.emit(this.loan)
-  }
+  // submitLoan(){
+  //   this.loanDetailsEmitter.emit(this.loan)
+  // }
 
   close() {
     this.singleLoanVisible = false;

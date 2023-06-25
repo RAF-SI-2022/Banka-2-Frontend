@@ -555,6 +555,7 @@ export class PaymentsComponent {
     this.moneyTransferForm.reset();
     this.addRecipientForm.reset();
     this.exchangeForm.reset();
+    this.oneTimePasswordForm.reset();
   }
 
 

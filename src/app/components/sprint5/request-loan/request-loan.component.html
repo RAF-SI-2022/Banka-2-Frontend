@@ -13,7 +13,7 @@
 <!--        <label for="type-input">Vrsta kredita</label>-->
 <!--      </span>-->
       <span class="p-float-label">
-        <input pInputText class="w-100" id="amount-input" [formControlName]="'amount'">
+        <input pInputText class="w-100" type="number" min="0" id="amount-input" [formControlName]="'amount'">
         <label for="amount-input">Iznos</label>
       </span>
       <span class="p-float-label">
@@ -21,7 +21,7 @@
         <label for="purpose-message-input">Svrha kredita/napomena</label>
       </span>
       <span class="p-float-label">
-        <input pInputText class="w-100" id="monthly-pay-input" [formControlName]="'monthlyPay'">
+        <input pInputText class="w-100" type="number" min="0" id="monthly-pay-input" [formControlName]="'monthlyPay'">
         <label for="monthly-pay-input">Iznos mesečne plate</label>
       </span>
       <span class="p-float-label">
@@ -39,7 +39,7 @@
         <label for="time-employed-input">Period zaposlenja kod trenutnog poslodavca</label>
       </span>
       <span class="p-float-label">
-        <input pInputText type="number" class="w-100" id="remaining-period-of-validity-input" [formControlName]="'remainingPeriodOfValidity'">
+        <input pInputText type="number" min="0" class="w-100" id="remaining-period-of-validity-input" [formControlName]="'remainingPeriodOfValidity'">
         <label for="remaining-period-of-validity-input">Ročnost</label>
       </span>
 <!--      <span class="p-float-label">-->

@@ -134,7 +134,8 @@
           <td>{{loanRequest.phoneNumber}}</td>
 
           <td *ngIf="checkIfUserIsClient()">
-            <button *ngIf="loanRequest.creditApproval === 'WAITING'" type="button"  (click)="approveRequest(loanRequest.id, loanRequest, randomRegNumber(16))"
+<!--            <button *ngIf="loanRequest.creditApproval === 'WAITING'" type="button"  (click)="approveRequest(loanRequest.id, loanRequest, randomRegNumber(16))"-->
+            <button *ngIf="loanRequest.creditApproval === 'WAITING'" type="button"  (click)="openApproveDialog(loanRequest)"
                     class="btn-i btn-circle" title="Prihvati zahtev">
                 <span>
                   <i class="bi bi-check" style="font-size: 20px;"></i>
@@ -341,3 +342,4 @@
 
 <app-request-loan (requestLoanEmitter)="requestLoan($event)"></app-request-loan>
 <app-loan-details></app-loan-details>
+<app-approve-loan-request (approveLoanEmitter)="approveRequest($event)"></app-approve-loan-request>

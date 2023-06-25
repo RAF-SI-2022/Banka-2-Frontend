@@ -24,9 +24,9 @@ export class RequestLoanComponent {
       amount: ['', Validators.required],
       purposeMessage: ['', Validators.required],
       employed: [''],
-      monthlyPay: ['', Validators.required],
-      jobLocation: ['', Validators.required],
-      timeEmployed: ['', Validators.required],
+      monthlyPay: [''],
+      jobLocation: [''],
+      timeEmployed: [''],
       remainingPeriodOfValidity: ['', Validators.required],
       phoneNumber: ['', Validators.required],
     });

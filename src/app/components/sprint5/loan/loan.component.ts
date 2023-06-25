@@ -1,10 +1,11 @@
 import {Component, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import {Loan, LoanRequest} from 'src/app/models/client.model';
+import {Client, Loan, LoanRequest} from 'src/app/models/client.model';
 import { ClientService } from 'src/app/services/client.service';
 import { RequestLoanComponent } from "../request-loan/request-loan.component";
 import {LoanDetailsComponent} from "../loan-details/loan-details.component";
+import {ApproveLoanRequestComponent} from "../approve-loan-request/approve-loan-request.component";
 
 
 @Component({
@@ -17,6 +18,7 @@ export class LoanComponent {
 
   @ViewChild(LoanDetailsComponent, {static: true}) loanDetailsComponent: LoanDetailsComponent;
   @ViewChild(RequestLoanComponent, {static: true}) requestLoanComponent: RequestLoanComponent;
+  @ViewChild(ApproveLoanRequestComponent, {static: true}) approveLoanRequestComponent: ApproveLoanRequestComponent;
 
   loans: Loan[];
   activeLoan:number=265000000546543564533;
@@ -24,6 +26,7 @@ export class LoanComponent {
   waitingLoans: LoanRequest[];
   newRequest: LoanRequest;
   newLoan: Loan;
+  clientInfo: Client
 
 
   constructor(private router: Router, private clientService: ClientService,
@@ -34,6 +37,7 @@ export class LoanComponent {
     this.clientService.getClientData().subscribe({
       next: value => {
         this.clientData = value
+        this.clientInfo = value
         console.log(value)
         this.getLoans(this.clientData)
       },
@@ -82,13 +86,14 @@ export class LoanComponent {
     return Math.floor(Math.pow(10, length-1) + Math.random() * (Math.pow(10, length) - Math.pow(10, length-1) - 1));
   }
 
-  approveRequest(id :string, request: LoanRequest, regNumber: number){
-    this.clientService.approveLoanRequest(id, request, regNumber)
+  approveRequest(request: Loan){
+    this.clientService.approveLoanRequest(request.id, request)
       .subscribe({
         next: val => {
           console.log("KLIKNUT APPROVE")
           this.toastr.success("Zahtev uspesno prihvacen")
           this.getRequests();
+          // this.getLoans(this.clientData) //TODO SREDITI
         },
         error: err => {
           this.toastr.error(err.error)
@@ -134,6 +139,12 @@ export class LoanComponent {
     console.log("STIZEM KUMEEEE")
     console.log(loan)
     this.loanDetailsComponent.open(loan);
+  }
+
+  openApproveDialog(approvedLoan: any) {
+    console.log("STIZEM KUMEEEE")
+    console.log(approvedLoan)
+    this.approveLoanRequestComponent.open(approvedLoan);
   }
 
   checkIfUserIsClient(){

@@ -145,7 +145,7 @@ export class LoanComponent {
     console.log(loan)
     this.loanDetailsComponent.open(loan);
     this.payments=[]
-    this.activeLoan=loan.id;
+    this.activeLoan=loan.accountRegNumber;
     this.getPayments(loan.id);
   }
 
@@ -208,6 +208,14 @@ export class LoanComponent {
 
   onRowClick(id:string){
 
+  }
+
+  onCapitalRowClick(type: string) {
+    if (type === 'AKCIJA') {
+      this.router.navigate(['/stocks-table/sell']);
+    } else if (type === 'FUTURE_UGOVOR') {
+      this.router.navigate(['/future-contract']);
+    }
   }
 
 }

@@ -317,8 +317,8 @@ export class ClientService {
   }
 
   getRatePayments(loanId: string){
-    return this.httpClient.get<any>(`${environment.clientServiceURL}/api/interests/pay/${loanId}`,
-    {responseType: 'text' as 'json' ,headers: this.headers})
+    return this.httpClient.get<any>(`${environment.clientServiceURL}/api/credit/interests/${loanId}`,
+    {headers: this.headers})
   }
 
 }

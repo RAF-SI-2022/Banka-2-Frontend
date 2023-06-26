@@ -122,7 +122,7 @@
       </ng-template>
 
       <ng-template pTemplate="body" let-loanRequest>
-        <tr style="font-size: 12px;">
+        <tr style="font-size: 12px;" (click)="onRowClick(loanRequest.id)">
           <td>{{loanRequest.clientEmail}}</td>
           <td>{{loanRequest.amount}}</td>
           <td>{{loanRequest.usedFor}}</td>
@@ -276,7 +276,7 @@
     <div class="table-container">
 
 
-        <p-table  #dt [value]="loans" class="p-datatable-header" [rowHover]="true" [rows]="6"
+        <p-table  #dt [value]="payments" class="p-datatable-header" [rowHover]="true" [rows]="6"
         [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
         currentPageReportTemplate="Prikaz svih kredita"
         [globalFilterFields]="['loanAmount']">
@@ -287,7 +287,7 @@
                     <div style="display:flex; align-items: center; gap: 8px;">
                     <h3 style="font-weight: bolder" class="mb-1">
 <!--                        Transakcije za kredit : {{activeLoan}}-->
-                            Transakcije za odabrani kredit:
+                            Uplate za kredit {{activeLoan}}
                     </h3>
                     </div>
                 </div>
@@ -327,10 +327,10 @@
             </ng-template>
 
             <ng-template pTemplate="body" let-kredit>
-                <tr class="rowHover" style="font-size: 12px;">
-                <td>{{kredit.loanName}}</td>
-                <td>{{kredit.loanID}}</td>
-                <td>{{kredit.loanAmount}}</td>
+                <tr  class="rowHover" style="font-size: 12px;">
+                <td>{{kredit.name}}</td>
+                <td>{{kredit.id}}</td>
+                <td>{{kredit.amount}}</td>
                 </tr>
 
 

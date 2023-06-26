@@ -21,13 +21,14 @@ export class LoanComponent {
   @ViewChild(ApproveLoanRequestComponent, {static: true}) approveLoanRequestComponent: ApproveLoanRequestComponent;
 
   loans: Loan[];
-  activeLoan:number=265000000546543564533;
+  activeLoan:string;
   clientData!: string;
   waitingLoans: LoanRequest[];
   newRequest: LoanRequest;
   newLoan: Loan;
   toSub: Loan;
   clientInfo: Client
+  payments:any[]
 
 
   constructor(private router: Router, private clientService: ClientService,
@@ -143,6 +144,25 @@ export class LoanComponent {
     console.log("STIZEM KUMEEEE")
     console.log(loan)
     this.loanDetailsComponent.open(loan);
+    this.payments=[]
+    this.activeLoan=loan.id;
+    this.getPayments(loan.id);
+  }
+
+  getPayments(id:string){
+    this.clientService.getRatePayments(id).subscribe({
+      next: value => {
+        this.payments = value;
+        console.log(this.payments)
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+    console.log("111111111111111111111111")
+    console.log(this.activeLoan)
+
+
   }
 
   openApproveDialog(approvedLoan: any) {
@@ -184,6 +204,10 @@ export class LoanComponent {
       }
 
     });
+  }
+
+  onRowClick(id:string){
+
   }
 
 }

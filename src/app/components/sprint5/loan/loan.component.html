@@ -249,7 +249,7 @@
           </ng-template>
 
           <ng-template pTemplate="body" let-loan>
-              <tr class="rowHover" style="font-size: 12px;">
+              <tr class="rowHover" style="font-size: 12px;" (click)="onRowClick(loan)">
                 <td>{{loan.clientEmail}}</td>
                 <td>{{loan.id}}</td>
                 <td>{{loan.accountRegNumber}}</td>

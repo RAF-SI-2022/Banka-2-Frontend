@@ -144,9 +144,6 @@ export class LoanComponent {
     console.log("STIZEM KUMEEEE")
     console.log(loan)
     this.loanDetailsComponent.open(loan);
-    this.payments=[]
-    this.activeLoan=loan.accountRegNumber;
-    this.getPayments(loan.id);
   }
 
   getPayments(id:string){
@@ -206,16 +203,10 @@ export class LoanComponent {
     });
   }
 
-  onRowClick(id:string){
-
-  }
-
-  onCapitalRowClick(type: string) {
-    if (type === 'AKCIJA') {
-      this.router.navigate(['/stocks-table/sell']);
-    } else if (type === 'FUTURE_UGOVOR') {
-      this.router.navigate(['/future-contract']);
-    }
+  onRowClick(loan: any){
+    this.payments=[]
+    this.activeLoan=loan.accountRegNumber;
+    this.getPayments(loan.id);
   }
 
 }

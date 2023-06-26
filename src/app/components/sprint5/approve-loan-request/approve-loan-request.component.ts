@@ -19,6 +19,11 @@ export class ApproveLoanRequestComponent {
   currentClientEmail: string;
   recievedLoanRequest: LoanRequest;
   paymentAccounts: any[];
+  currenciesList: any[] = [
+    { name: 'USD', key: 'USD' },
+    { name: 'RSD', key: 'RSD' },
+    { name: 'EUR', key: 'EUR' },
+  ];
 
   constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private clientService: ClientService) {
     this.approvedLoanForm = this.formBuilder.group({
@@ -49,6 +54,8 @@ export class ApproveLoanRequestComponent {
     this.currentClientEmail = this.recievedLoanRequest.clientEmail
     this.getUserAccounts(this.currentClientEmail)
     this.approvedLoanVisible = true;
+    console.log('ODJE KUMEEEE')
+    console.log(this.currenciesList)
   }
 
   getUserAccounts(email: string){

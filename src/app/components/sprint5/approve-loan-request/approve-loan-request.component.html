@@ -21,8 +21,16 @@
         <input pInputText class="w-100" id="type-input1" type="number" min="0" [formControlName]="'rate'">
         <label for="type-input1">Unesite kamatnu stopu</label>
       </span>
+<!--      <div *ngFor="let currency of currenciesList; let i = index" class="field-checkbox" style="margin-top: 10px;">-->
+<!--        <p-radioButton formControlName="currency" [inputId]="currency.key" name="currency" [value]="currency"></p-radioButton>-->
+<!--        <label [for]="currency.key" class="ml-2">{{ currency.name }}</label>-->
+<!--      </div>-->
+<!--      <span class="p-float-label mt-3">-->
+<!--        <p-dropdown [options]="currenciesList" optionLabel="skracenoImeValute" id="currency" formControlName="currency"></p-dropdown>-->
+<!--        <label for="currency">Izaberite odgovarajucu valutu za racun</label>-->
+<!--      </span>-->
       <span class="p-float-label">
-        <input pInputText class="w-100" id="amount-input" [formControlName]="'currency'">
+        <input pInputText class="w-100" type="text" title="(RSD za tekuci, EUR ili USD za devizni)" id="amount-input" [formControlName]="'currency'">
         <label for="amount-input">Izaberite valutu</label>
       </span>
       <button type="submit" pButton pRipple label="Potvrdi zahtev" [disabled]="!isFormValid" class="w-100"></button>

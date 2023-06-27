@@ -221,8 +221,8 @@ export class ClientService {
       { headers: this.headers, responseType: 'json' });
   }
 
-  getClientLoans(email: string){
-    return this.httpClient.get(`${environment.clientServiceURL}/api/credit/${email}`,
+  getClientLoans(email: string): Observable<any>{
+    return this.httpClient.get<any>(`${environment.clientServiceURL}/api/credit/${email}`,
     { headers: this.headers});
   }
 
@@ -250,22 +250,36 @@ export class ClientService {
   }
 
   //TODO TREBA I CREDIT DTO SREDITI JER NEMAM ODAKLE OVE PODATKE DA UBACIM
-  approveLoanRequest(id: string, request: LoanRequest, regNumber: number): Observable<any>{
+  approveLoanRequest(id: string, request: any): Observable<any>{
+    console.log("KUME OVDE SMO")
+    console.log(request)
+    console.log(request.accountRegNumber.registrationNumber)
     return this.httpClient.post<any>(`${environment.clientServiceURL}/api/credit/approve/${id}`,
       {
-        id: id,
         clientEmail: request.clientEmail,
         name: "", //nemamo ime
-        accountRegNumber: regNumber, //generisao sam novi broj racuna samo za ovaj kredit
-        creationDate: new Date().toLocaleDateString(),
+        accountRegNumber: request.accountRegNumber.registrationNumber, //generisao sam novi broj racuna samo za ovaj kredit
         amount: request.amount,
-        remainingAmount: request.amount,
-        ratePercentage: 10, //hardcode nemam odakle
-        monthlyRate: request.monthlyRate, //hardcore - nije odgovarajuci monthlyRate
-        dueDate: request.dueDateInMonths,
-        currency: "RSD" //hardcode nemam odakle
+        ratePercentage: request.ratePercentage, //hardcode nemam odakle
+        monthlyRate: request.monthlyRate,
+        dueDate: request.dueDate,
+        currency: request.currency //hardcode nemam odakle
+        // id: id,
+        // clientEmail: request.clientEmail,
+        // name: "", //nemamo ime
+        // accountRegNumber: request.accountRegNumber, //generisao sam novi broj racuna samo za ovaj kredit
+        // creationDate: request.creationDate,
+        // amount: request.amount,
+        // remainingAmount: request.amount,
+        // ratePercentage: request.ratePercentage, //hardcode nemam odakle
+        // monthlyRate: request.monthlyRate,
+        // dueDate: request.dueDate,
+        // currency: request.currency //hardcode nemam odakle
       },
-      { headers: this.headers});
+      {
+        responseType: 'text' as 'json',
+        headers: this.headers
+      });
   }
 
   denyLoanRequest(id: string): Observable<any>{
@@ -277,5 +291,34 @@ export class ClientService {
       });
   }
 
+  //RATE ZA KREDIT
+
+  payRate(loanId: string,loan:Loan){
+    return this.httpClient.post<any>(`${environment.clientServiceURL}/api/credit/pay/${loanId}`,
+    {
+      clientEmail: loan.clientEmail,
+      name: loan.name,
+      accountRegNumber: loan.accountRegNumber,
+      amount: loan.amount,
+      ratePercentage: loan.ratePercentage,
+      monthlyRate: loan.monthlyRate,
+      dueDate: loan.dueDate,
+      currency: loan.currency
+    },
+      // "clientEmail": "test@gmail.com",
+      // "name": "John Doe",
+      // "accountRegNumber": "147051057",
+      // "amount": 1000.0,
+      // "ratePercentage": 5,
+      // "monthlyRate": 50.0,
+      // "dueDate": "20/05/2020",
+      // "currency": "USD"
+    {responseType: 'text' as 'json', headers: this.headers})
+  }
+
+  getRatePayments(loanId: string){
+    return this.httpClient.get<any>(`${environment.clientServiceURL}/api/credit/interests/${loanId}`,
+    {headers: this.headers})
+  }
 
 }

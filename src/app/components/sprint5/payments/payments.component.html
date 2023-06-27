@@ -40,7 +40,7 @@
                             </div>
                             <label for="recipientName">Naziv primaoca</label>
                         </span>
-        
+
                         <p-overlayPanel #op styleClass="overlay-panel" [showCloseIcon]="true" [dismissable]="false">
                             <ul>
                                 <li *ngFor="let recipient of recipients" (click)="onRecipientSelect(recipient); op.hide()">
@@ -49,7 +49,7 @@
                             </ul>
                         </p-overlayPanel>
                     </div>
-                   
+
                     <div>
                         <span class="p-float-label">
                             <p-dropdown [options]="paymentAccounts" optionLabel="registrationNumber" formControlName="myAccount"></p-dropdown>
@@ -73,7 +73,7 @@
 
                     <div>
                         <span class="p-float-label">
-                            <input pInputText class="payment-input" id="amount" type="number" formControlName="amount">
+                            <input pInputText class="payment-input" id="amount" type="number" min="0" formControlName="amount">
                             <label for="amount">Iznos</label>
                         </span>
                     </div>
@@ -134,8 +134,8 @@
 
                     <div class="flex justify-content-center w-100">
                         <p-dropdown [options]="transactionFromAccount" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="registrationNumber" (onChange)="onSelectedFromPaymentAccountChange($event.value)"></p-dropdown>
-                    </div>                      
-                      
+                    </div>
+
 
                     <div class="flex justify-content-center w-100" >
                       <p-dropdown class="w-100" [options]="transactionToAccount" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="registrationNumber"></p-dropdown>
@@ -143,7 +143,7 @@
 
                     <div class="flex justify-content-center" style="margin-top: 30px; width: 100%;">
                         <span class="p-float-label">
-                            <input pInputText style="width: 95%;" id="transferAmount" formControlName="amount" type="number">
+                            <input pInputText style="width: 95%;" type="number" min="0" id="transferAmount" formControlName="amount">
                             <label for="transferAmount">Iznos</label>
                         </span>
                     </div>
@@ -200,35 +200,35 @@
                             <input id="name" style="width: 100%;" type="text" pInputText formControlName="name">
                             <label for="name">Naziv</label>
                         </div>
-                        
-                        
+
+
                         <div>
                             <span class="p-float-label">
                                 <input pInputText class="payment-input" style="width: 100%;" id="numberReference" type="text" formControlName="numberReference">
                                 <label for="numberReference">Poziv na broj</label>
                             </span>
                         </div>
-    
+
                         <div>
                             <span class="p-float-label">
                                 <input pInputText class="payment-input" style="width: 100%;" id="paymentCode" type="text" formControlName="paymentCode">
                                 <label for="paymentCode">Šifra plaćanja</label>
                               </span>
                         </div>
-    
+
                         <div>
                             <span class="p-float-label">
                                 <input pInputText class="payment-input" style="width: 100%;" id="paymentPurpose" type="text" formControlName="paymentPurpose">
                                 <label for="paymentPurpose">Svrha plaćanja</label>
                               </span>
                         </div>
-                    </div>  
+                    </div>
 
                     <div class="p-float-label">
                         <input id="accountNumber" style="width: 100%;" type="number" pInputText formControlName="accountNumber">
                         <label for="accountNumber">Broj računa</label>
                     </div>
-                    
+
                     <div class="button-container">
                         <button type="submit" pButton label="Potvrdi"></button>
                         <button type="button" pButton label="Poništi" (click)="displayAddDialog=false" style="margin-left: 10px;"></button>
@@ -247,34 +247,34 @@
                                 <input id="editName" type="text" style="width: 100%;" pInputText formControlName="editName">
                                 <label for="editName">Naziv</label>
                             </div>
-                            
+
                             <div>
                                 <span class="p-float-label">
                                     <input pInputText class="payment-input" style="width: 100%;" id="editNumberReference" type="text" formControlName="editNumberReference">
                                     <label for="editNumberReference">Poziv na broj</label>
                                 </span>
                             </div>
-        
+
                             <div>
                                 <span class="p-float-label">
                                     <input pInputText class="payment-input" style="width: 100%;" id="editPaymentCode" type="text" formControlName="editPaymentCode">
                                     <label for="editPaymentCode">Šifra plaćanja</label>
                                   </span>
                             </div>
-        
+
                             <div>
                                 <span class="p-float-label">
                                     <input pInputText class="payment-input" style="width: 100%;" id="editPaymentPurpose" type="text" formControlName="editPaymentPurpose">
                                     <label for="editPaymentPurpose">Svrha plaćanja</label>
                                   </span>
                             </div>
-                        </div>  
-    
+                        </div>
+
                         <div class="p-float-label">
                             <input id="editAccountNumber" style="width: 100%;" type="number" pInputText formControlName="editAccountNumber">
                             <label for="editAccountNumber">Broj računa</label>
                         </div>
-                        
+
                         <div class="button-container">
                             <button type="submit" pButton label="Potvrdi"></button>
                             <button type="button" pButton label="Poništi" (click)="displayEditDialog=false" style="margin-left: 10px;"></button>
@@ -324,8 +324,8 @@
 
                     <div class="flex justify-content-center w-100">
                         <p-dropdown [options]="exchangeFromList" formControlName="selectedFromPaymentAccount" placeholder="Sa računa..." optionLabel="registrationNumber" (onChange)="onSelectedExchange($event.value)"></p-dropdown>
-                    </div>                      
-                      
+                    </div>
+
 
                     <div class="flex justify-content-center w-100" >
                       <p-dropdown class="w-100" [options]="exchangeToList" formControlName="selectedToPaymentAccount" placeholder="Na račun..." optionLabel="registrationNumber" (onChange)="onSelectedToExchange($event.value)"></p-dropdown>
@@ -333,7 +333,7 @@
 
                     <div class="flex justify-content-center" style="margin-top: 30px; width: 100%;">
                         <span class="p-float-label">
-                            <input pInputText style="width: 95%;" id="transferAmount" formControlName="amount" type="number">
+                            <input pInputText style="width: 95%;" id="transferAmount" formControlName="amount" type="number" min="0">
                             <label for="transferAmount">Iznos</label>
                         </span>
                     </div>
@@ -345,10 +345,10 @@
                     </div>
                   </div>
             </form>
-            
-        
+
+
         </div>
-        
+
 
 
 

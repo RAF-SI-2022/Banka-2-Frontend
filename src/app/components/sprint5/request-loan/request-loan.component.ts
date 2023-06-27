@@ -23,10 +23,10 @@ export class RequestLoanComponent {
       //TODO proveriti da li ovi validatori ista valjaju
       amount: ['', Validators.required],
       purposeMessage: ['', Validators.required],
-      employed: ['', Validators.required],
-      monthlyPay: ['', Validators.required],
-      jobLocation: ['', Validators.required],
-      timeEmployed: ['', Validators.required],
+      employed: [''],
+      monthlyPay: [''],
+      jobLocation: [''],
+      timeEmployed: [''],
       remainingPeriodOfValidity: ['', Validators.required],
       phoneNumber: ['', Validators.required],
     });

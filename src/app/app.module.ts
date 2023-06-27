@@ -100,6 +100,8 @@ import { UserBalanceComponent } from './components/sprint5/user-balance/user-bal
 import { SingleUserBalanceComponent } from './components/sprint5/single-user-balance/single-user-balance.component';
 import { LoanComponent } from './components/sprint5/loan/loan.component';
 import { RequestLoanComponent } from './components/sprint5/request-loan/request-loan.component';
+import { ApproveLoanRequestComponent } from './components/sprint5/approve-loan-request/approve-loan-request.component';
+import { LoanDetailsComponent } from './components/sprint5/loan-details/loan-details.component';
 
 
 
@@ -161,6 +163,8 @@ import { RequestLoanComponent } from './components/sprint5/request-loan/request-
     SingleUserBalanceComponent,
     LoanComponent,
     RequestLoanComponent,
+    ApproveLoanRequestComponent,
+    LoanDetailsComponent,
     // FutureContractComponent,
 
   ],

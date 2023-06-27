@@ -1,9 +1,11 @@
 import {Component, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import {Loan, LoanRequest} from 'src/app/models/client.model';
+import {Client, Loan, LoanRequest} from 'src/app/models/client.model';
 import { ClientService } from 'src/app/services/client.service';
 import { RequestLoanComponent } from "../request-loan/request-loan.component";
+import {LoanDetailsComponent} from "../loan-details/loan-details.component";
+import {ApproveLoanRequestComponent} from "../approve-loan-request/approve-loan-request.component";
 
 
 @Component({
@@ -14,13 +16,19 @@ import { RequestLoanComponent } from "../request-loan/request-loan.component";
 
 export class LoanComponent {
 
+  @ViewChild(LoanDetailsComponent, {static: true}) loanDetailsComponent: LoanDetailsComponent;
   @ViewChild(RequestLoanComponent, {static: true}) requestLoanComponent: RequestLoanComponent;
+  @ViewChild(ApproveLoanRequestComponent, {static: true}) approveLoanRequestComponent: ApproveLoanRequestComponent;
 
-  loans!:any;
-  activeLoan:number=265000000546543564533;
+  loans: Loan[];
+  activeLoan:string;
   clientData!: string;
   waitingLoans: LoanRequest[];
   newRequest: LoanRequest;
+  newLoan: Loan;
+  toSub: Loan;
+  clientInfo: Client
+  payments:any[]
 
 
   constructor(private router: Router, private clientService: ClientService,
@@ -31,6 +39,7 @@ export class LoanComponent {
     this.clientService.getClientData().subscribe({
       next: value => {
         this.clientData = value
+        this.clientInfo = value
         console.log(value)
         this.getLoans(this.clientData)
       },
@@ -48,6 +57,8 @@ export class LoanComponent {
   getLoans(email:string){
     this.clientService.getClientLoans(email).subscribe({
       next: value => {
+        // this.newLoan = value;
+        // this.loans.push(this.newLoan);
         this.loans = value;
         console.log(value)
       },
@@ -64,8 +75,8 @@ export class LoanComponent {
       next: value => {
         console.log("ISPOD JE REQUEST")
         console.log(value);
-        this.newRequest = value;
-        this.waitingLoans.push(this.newRequest);
+        // this.newRequest = value;
+        // this.waitingLoans.push(this.newRequest);
         console.log("ISPOD SU SVI REQUESTOVI")
         console.log(this.waitingLoans)
         this.getRequests();
@@ -77,13 +88,14 @@ export class LoanComponent {
     return Math.floor(Math.pow(10, length-1) + Math.random() * (Math.pow(10, length) - Math.pow(10, length-1) - 1));
   }
 
-  approveRequest(id :string, request: LoanRequest, regNumber: number){
-    this.clientService.approveLoanRequest(id, request, regNumber)
+  approveRequest(request: Loan){
+    this.clientService.approveLoanRequest(request.id, request)
       .subscribe({
         next: val => {
           console.log("KLIKNUT APPROVE")
           this.toastr.success("Zahtev uspesno prihvacen")
           this.getRequests();
+          // this.getLoans(this.clientData) //TODO SREDITI
         },
         error: err => {
           this.toastr.error(err.error)
@@ -109,8 +121,51 @@ export class LoanComponent {
 
   }
 
+  payRate(loanId:string){
+    this.toSub=this.loans.find(element=>element.id==loanId)!
+    console.log(loanId)
+    console.log(this.toSub)
+    this.clientService.payRate(loanId,this.toSub).subscribe({
+      next: value => {
+        console.log("RATA PLACENA")
+
+      },
+      error: err => {
+        console.log("DOSLO JE DO GRESKE PRILIKOM PLACANJA RATE")
+      }
+    })
+  }
+
   openRequestLoanDialog() {
     this.requestLoanComponent.open();
+  }
+
+  openLoanDetailsDialog(loan: any) {
+    console.log("STIZEM KUMEEEE")
+    console.log(loan)
+    this.loanDetailsComponent.open(loan);
+  }
+
+  getPayments(id:string){
+    this.clientService.getRatePayments(id).subscribe({
+      next: value => {
+        this.payments = value;
+        console.log(this.payments)
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+    console.log("111111111111111111111111")
+    console.log(this.activeLoan)
+
+
+  }
+
+  openApproveDialog(approvedLoan: any) {
+    console.log("STIZEM KUMEEEE")
+    console.log(approvedLoan)
+    this.approveLoanRequestComponent.open(approvedLoan);
   }
 
   checkIfUserIsClient(){
@@ -146,6 +201,12 @@ export class LoanComponent {
       }
 
     });
+  }
+
+  onRowClick(loan: any){
+    this.payments=[]
+    this.activeLoan=loan.accountRegNumber;
+    this.getPayments(loan.id);
   }
 
 }

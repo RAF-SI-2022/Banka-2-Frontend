@@ -132,7 +132,8 @@
 
       </p-tabPanel>
       <p-tabPanel header="Maržni račun">
-        <p-table *ngIf="getPermission()" #dt [value]="marginBalance" class="p-datatable-header" [rowHover]="true"
+<!--        *ngIf="getPermission()"-->
+        <p-table #dt [value]="marginBalance" class="p-datatable-header" [rowHover]="true"
                  [rows]="6"
                  [showCurrentPageReport]="true" [paginator]="true" [alwaysShowPaginator]="false"
                  currentPageReportTemplate="Prikazani su {first}-{last} marzni racuni"

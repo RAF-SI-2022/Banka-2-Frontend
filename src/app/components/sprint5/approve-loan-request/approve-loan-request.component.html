@@ -1,0 +1,39 @@
+
+<p-dialog [style]="{width: '30vw'}" [breakpoints]="{'1280px': '75vw', '900px': '85vw', '600px': '90vw'}"
+          [draggable]="false"
+          [(visible)]="approvedLoanVisible" *ngIf="true" [modal]="true" (onHide)="resetForm()">
+  <ng-template pTemplate="header">
+    <h2 style="font-weight: bolder" class="mb-3">Zahtev za kredit</h2>
+
+  </ng-template>
+  <p-divider/>
+  <div class="request-loan-form">
+    <form (submit)="submitApprovedLoan()" [formGroup]="approvedLoanForm" class="request-loan-form pt-4 pb-4 gap-4">
+<!--      <span class="p-float-label">-->
+<!--        <input pInputText class="w-100" id="type-input" [formControlName]="'accRegNumber'">-->
+<!--        <label for="type-input">Izaberite racun</label>-->
+<!--      </span>-->
+      <span class="p-float-label">
+        <p-dropdown [options]="paymentAccounts" optionLabel="registrationNumber" id="accRegNumber" formControlName="accRegNumber"></p-dropdown>
+        <label for="accRegNumber">Zeljeni račun</label>
+      </span>
+      <span class="p-float-label">
+        <input pInputText class="w-100" id="type-input1" type="number" min="0" [formControlName]="'rate'">
+        <label for="type-input1">Unesite kamatnu stopu</label>
+      </span>
+<!--      <div *ngFor="let currency of currenciesList; let i = index" class="field-checkbox" style="margin-top: 10px;">-->
+<!--        <p-radioButton formControlName="currency" [inputId]="currency.key" name="currency" [value]="currency"></p-radioButton>-->
+<!--        <label [for]="currency.key" class="ml-2">{{ currency.name }}</label>-->
+<!--      </div>-->
+<!--      <span class="p-float-label mt-3">-->
+<!--        <p-dropdown [options]="currenciesList" optionLabel="skracenoImeValute" id="currency" formControlName="currency"></p-dropdown>-->
+<!--        <label for="currency">Izaberite odgovarajucu valutu za racun</label>-->
+<!--      </span>-->
+      <span class="p-float-label">
+        <input pInputText class="w-100" type="text" title="(RSD za tekuci, EUR ili USD za devizni)" id="amount-input" [formControlName]="'currency'">
+        <label for="amount-input">Izaberite valutu</label>
+      </span>
+      <button type="submit" pButton pRipple label="Potvrdi zahtev" [disabled]="!isFormValid" class="w-100"></button>
+    </form>
+  </div>
+</p-dialog>

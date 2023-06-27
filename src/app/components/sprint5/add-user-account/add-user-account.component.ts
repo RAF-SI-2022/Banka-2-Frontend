@@ -140,7 +140,9 @@ export class AddUserAccountComponent {
 
   initData() {
 
-    this.currencies = ['EUR', 'CHF', 'USD', 'GBP', 'JPY', 'CAD', 'AUD']
+    // this.currencies = ['EUR', 'CHF', 'USD', 'GBP', 'JPY', 'CAD', 'AUD']
+
+    this.currencies = ['EUR', 'USD']
 
     this.userService.getUserData()
       .subscribe({

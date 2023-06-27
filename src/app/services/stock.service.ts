@@ -189,7 +189,7 @@ export class StockService {
   }
 
   getExchangeStatus(micCode: string): Observable<any> {
-    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/futures/status/${micCode}`,
+    return this.httpClient.get<any>(`${environment.mainServiceURL}/api/exchange/status/${micCode}`,
       {headers: this.headers})
   }
 
